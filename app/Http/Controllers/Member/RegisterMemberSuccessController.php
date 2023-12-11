@@ -12,6 +12,8 @@ use App\Models\MemberPartner;
 use App\Models\MemberRegisterInfo;
 use App\Models\MemberRegisterPersonSource;
 use App\Models\Product;
+use App\Models\StaffUsers;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -36,41 +38,65 @@ class RegisterMemberSuccessController extends Controller
 
     public function memberStand(Request $request, $id)
     {
+        $isAdmin = (new HomeController())->checkAdmin();
+        if (!$isAdmin) {
+            (new HomeController())->getLocale($request);
+            $company = MemberRegisterInfo::find($id);
+            if ($company && $company->member == RegisterMember::TRUST) {
+                return back();
+            }
+            $memberAccounts = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->get();
+            if (!$memberAccounts->isEmpty()) {
+                $products = \App\Models\Product::where(function ($query) use ($company, $memberAccounts) {
+                    if (count($memberAccounts) == 2) {
+                        $user1 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
+                        $user2 = \App\Models\User::where('email', $memberAccounts[1]->email)->first();
+                    } else {
+                        $user1 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
+                        $user2 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
+                    }
+
+                    $query->where([['user_id', $company->user_id], ['status', \App\Enums\ProductStatus::ACTIVE]])
+                        ->orWhere([['user_id', $user1->id], ['status', \App\Enums\ProductStatus::ACTIVE]])
+                        ->orWhere([['user_id', $user2->id], ['status', \App\Enums\ProductStatus::ACTIVE]]);
+                })->paginate(6);
+            } else {
+                $products = \App\Models\Product::where([['user_id', $company->user_id], ['status', \App\Enums\ProductStatus::ACTIVE]])->paginate(6);
+            }
+            $currency = (new \App\Http\Controllers\Frontend\HomeController())->getLocation($request);
+            if ($request->ajax()) {
+                $view = view('products-member', compact('products', 'currency'))->render();
+                return response()->json(['html' => $view]);
+            }
+            $firstProduct = null;
+            if (!$products->isEmpty()) {
+                $firstProduct = $products[0];
+            }
+            return view('frontend.pages.member.stand-member', compact('company', 'currency', 'products', 'firstProduct', 'id'));
+        } else {
+            return back();
+        }
+    }
+
+    public function staffInfo(Request $request, $memberId)
+    {
         (new HomeController())->getLocale($request);
-        $company = MemberRegisterInfo::find($id);
+        $staffUsers = StaffUsers::where('parent_user_id', Auth::user()->id)->get();
+        $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+        $company = null;
+        $memberList = null;
+        if ($memberPerson) {
+            $company = MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
+            $memberList = MemberPartner::where([
+                ['company_id_source', $company->id],
+                ['status', MemberPartnerStatus::ACTIVE]
+            ])->get();
+        }
+        session()->forget('region');
         if ($company && $company->member == RegisterMember::TRUST) {
             return back();
         }
-        $memberAccounts = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->get();
-        if (!$memberAccounts->isEmpty()) {
-            $products = \App\Models\Product::where(function ($query) use ($company, $memberAccounts) {
-                if (count($memberAccounts) == 2) {
-                    $user1 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
-                    $user2 = \App\Models\User::where('email', $memberAccounts[1]->email)->first();
-                } else {
-                    $user1 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
-                    $user2 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
-                }
-
-                $query->where([['user_id', $company->user_id], ['status', \App\Enums\ProductStatus::ACTIVE]])
-                    ->orWhere([['user_id', $user1->id], ['status', \App\Enums\ProductStatus::ACTIVE]])
-                    ->orWhere([['user_id', $user2->id], ['status', \App\Enums\ProductStatus::ACTIVE]]);
-            })->paginate(6);
-        } else {
-            $products = \App\Models\Product::where([['user_id', $company->user_id], ['status', \App\Enums\ProductStatus::ACTIVE]])->paginate(6);
-        }
-        $currency = (new \App\Http\Controllers\Frontend\HomeController())->getLocation($request);
-        if ($request->ajax()) {
-            $view = view('products-member', compact('products', 'currency'))->render();
-            return response()->json(['html' => $view]);
-        }
-        $firstProduct = null;
-        if (!$products->isEmpty()) {
-            $firstProduct = $products[0];
-        }
-
-
-        return view('frontend.pages.member.stand-member', compact('company', 'currency','products', 'firstProduct'));
+        return view('frontend.pages.member.tab-staff-member', compact('staffUsers', 'company', 'memberList'));
     }
 
     public function memberParent(Request $request, $id)
@@ -88,31 +114,48 @@ class RegisterMemberSuccessController extends Controller
 
     public function memberPartner(Request $request)
     {
+        $isAdmin = (new HomeController())->checkAdmin();
+        if ($isAdmin) {
+            return back();
+        }
         (new HomeController())->getLocale($request);
         $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
         $company = null;
         $memberList = null;
+        $locale = app()->getLocale();
+        if (!$locale) {
+            $locale = $request->session()->get('locale');
+        }
+        if (!$locale) {
+            $locale = 'kr';
+        }
+
         if ($memberPerson) {
             $company = MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
-
-//            $memberList = MemberPartner::where('status', MemberPartnerStatus::ACTIVE)
-//                ->orWhere('company_id_source', $company->id)
-//                ->orWhere('company_id_follow', $company->id)->get();
-
-            $memberList = MemberPartner::where([
-                ['company_id_source', $company->id],
-                ['status', MemberPartnerStatus::ACTIVE]
-            ])->get();
+            $memberList = DB::table('member_register_infos')
+                ->join('member_register_person_sources', 'member_register_person_sources.member_id', '=', 'member_register_infos.id')
+                ->join('users', 'users.email', '=', 'member_register_person_sources.email')
+                ->where('member_register_infos.id', '!=', $company->id)
+                ->where('users.region', $locale)
+                ->where('member_register_infos.member', $company->member)
+                ->where('member_register_infos.status', MemberRegisterInfoStatus::ACTIVE)
+                ->select('member_register_infos.*', 'users.region')
+                ->distinct()
+                ->paginate(30);
         }
         session()->forget('region');
-        if ($company && $company->member == RegisterMember::TRUST) {
+        if (!$company || $company->member == RegisterMember::TRUST) {
             return back();
         }
-        return view('frontend.pages.member.member-partner', compact('company', 'memberList'));
+        return view('frontend.pages.member.member-partner', compact('company', 'memberList', 'locale'));
     }
 
     public function memberPartnerLocale($locale, Request $request)
     {
+        $isAdmin = (new HomeController())->checkAdmin();
+        if ($isAdmin) {
+            return back();
+        }
         $homeController = new HomeController();
         $homeController->getLocale($request);
 
@@ -133,16 +176,13 @@ class RegisterMemberSuccessController extends Controller
         $memberList = DB::table('member_register_infos')
             ->join('member_register_person_sources', 'member_register_person_sources.member_id', '=', 'member_register_infos.id')
             ->join('users', 'users.email', '=', 'member_register_person_sources.email')
-            ->where([
-                ['users.region', $locale],
-                ['member_register_infos.id', '!=', $company->id],
-                ['member_register_infos.member', $company->member],
-                ['member_register_infos.type_business', $company->type_business],
-                ['member_register_infos.status', MemberRegisterInfoStatus::ACTIVE]
-            ])
+            ->where('users.region', $locale)
+            ->where('member_register_infos.id', '!=', $company->id)
+            ->where('member_register_infos.member', $company->member)
+            ->where('member_register_infos.status', MemberRegisterInfoStatus::ACTIVE)
             ->select('member_register_infos.*', 'users.region')
-            ->get();
-        $memberList = $memberList->unique();
+            ->distinct()
+            ->paginate(30);
 
         return view('frontend.pages.member.member-partner-locale', compact('company', 'memberList', 'locale'));
     }

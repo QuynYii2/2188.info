@@ -555,7 +555,7 @@
                     </div>
                     <div class="section-seller-overview__item-text">
                         <div class="section-seller-overview__item-text-name">
-                            Người theo dõi:&nbsp;
+                            {{ __('home.follower') }}:&nbsp;
                         </div>
                         <div class="section-seller-overview__item-text-value">
                             @php
@@ -606,9 +606,8 @@
             </div>
 
         </div>
-        <div class="container-fluid">
+        <div class="container-fluid mt-5">
             <div class="row">
-
                 <div class="productView-description">
                     <div class="tab-content container-fluid" id="myTabContent">
                         <div class="tab-pane fade show active" id="product" role="tabpanel"

@@ -3,15 +3,18 @@
 @section('title', 'Register Member')
 @section('content')
     <div class="container-fluid">
-        <div class="d-flex">
+        <div class="d-flex mt-5">
             <a href="{{route('login')}}" class="btn btn-success mr-3">{{ __('home.info_company') }}</a>
             <a href="{{route('login')}}" class="btn btn-success mr-3">{{ __('home.Registrator Information') }}</a>
             <a href="{{route('login')}}" class="btn btn-success mr-3">{{ __('home.Representative Information') }}</a>
-            <a href="{{route('login')}}" class="btn btn-success">{{ __('home.Staffs Information') }}</a>
+            <a href="{{route('login')}}" class="btn btn-success mr-3">{{ __('home.Staffs Information') }}</a>
+            <a href="{{route('homepage')}}" class="btn btn-success">{{ __('home.Home') }}</a>
         </div>
 
-        <h3 class="text-center mt-5">{{ __('home.Congratulations, you have registered as a member') }} {{$company->member}}</h3>
+        <h3 class="text-center mt-5">{{ __('home.Congratulations, you have registered as a member') }}</h3>
         <div class="d-flex justify-content-around mt-5">
+            <img style="margin-bottom: 100px" src="{{asset('images/img/logo-carousel/kasa22.jpg')}}">
+
             @php
                 $listPermissionID = $member->permission_id;
                 $arrayPermissionID = null;
@@ -19,39 +22,7 @@
                     $arrayPermissionID = explode(',', $listPermissionID);
                 }
             @endphp
-{{--            <div class="">--}}
-{{--                <p>{{ __('home.Membership benefits') }}</p>--}}
-{{--                <ol class="text-success">--}}
-{{--                    @if($arrayPermissionID)--}}
-{{--                        @foreach($arrayPermissionID as $permissionID)--}}
-{{--                            <li>--}}
-
-{{--                                @php--}}
-{{--                                    $permission = \App\Models\Permission::find($permissionID);--}}
-{{--                                    $ld = new \App\Http\Controllers\TranslateController();--}}
-{{--                                @endphp--}}
-{{--                                {{ $ld->translateText($permission->name, locationPermissionHelper()) }}--}}
-{{--                            </li>--}}
-{{--                        @endforeach--}}
-{{--                    @endif--}}
-{{--                </ol>--}}
-{{--            </div>--}}
-{{--            <div class="">--}}
-{{--                @if($memberSource)--}}
-{{--                    <p>{{ __('home.Representative member') }}:{{$memberSource->name}}</p>--}}
-{{--                @endif--}}
-
-{{--                @if($memberRepresent)--}}
-{{--                    <p>{{ __('home.Registered member') }}:{{$memberRepresent->name}}</p>--}}
-{{--                @endif--}}
-{{--                <p>--}}
-{{--                    <i class="fa-solid fa-star"></i>--}}
-{{--                    <i class="fa-solid fa-star"></i>--}}
-{{--                    <i class="fa-solid fa-star"></i>--}}
-{{--                    <i class="fa-solid fa-star"></i>--}}
-{{--                    <i class="fa-regular fa-star"></i>--}}
-{{--                </p>--}}
-{{--            </div>--}}
         </div>
     </div>
+
 @endsection

@@ -1,1 +1,2 @@
 *.sqlite*
+migrations/2023_11_03_024443_insert_column_from_members_table.php

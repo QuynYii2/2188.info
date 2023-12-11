@@ -16,7 +16,7 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         (new HomeController())->getLocale($request);
-        $categories = Category::where('status', CategoryStatus::ACTIVE)->orderBy('stt', 'asc')->get();
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->orderBy('stt', 'asc')->paginate(10);
         return view('backend/categories/index', [
             'categories' => $categories
         ]);
@@ -106,6 +106,12 @@ class CategoryController extends Controller
                 $thumbnail = $request->file('thumbnail');
                 $thumbnailPath = $thumbnail->store('categories', 'public');
                 $category->thumbnail = $thumbnailPath;
+            }
+
+            if ($request->hasFile('icon')) {
+                $icon = $request->file('icon');
+                $iconPath = $icon->store('categories', 'public');
+                $category->icon = $iconPath;
             }
 
             if ($validatedData['category_parentID']) {
@@ -211,6 +217,12 @@ class CategoryController extends Controller
                 $thumbnail = $request->file('thumbnail');
                 $thumbnailPath = $thumbnail->store('categories', 'public');
                 $category->thumbnail = $thumbnailPath;
+            }
+
+            if ($request->hasFile('icon')) {
+                $icon = $request->file('icon');
+                $iconPath = $icon->store('categories', 'public');
+                $category->icon = $iconPath;
             }
 
             $updateCategory = $category->save();

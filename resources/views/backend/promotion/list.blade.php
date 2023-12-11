@@ -1,4 +1,7 @@
 @extends('backend.layouts.master')
+@section('title')
+    {{ __('home.Danh sách khuyến mãi') }}
+@endsection
 @section('content')
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">

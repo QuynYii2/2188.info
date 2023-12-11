@@ -16,9 +16,10 @@ use App\Models\ProductInterested;
 use App\Models\TimeLevelTable;
 use App\Models\User;
 use App\Models\Voucher;
-use App\Models\VoucherItem;
 use App\Models\wishlists;
 use Carbon\Carbon;
+use GuzzleHttp\Client;
+use GuzzleHttp\Cookie\SetCookie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -30,6 +31,120 @@ use Mockery\Exception;
 
 class UserController extends Controller
 {
+    public function changePassword(Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        $oldPassword = Auth::user()->password;
+        $currentPassword = $request->input('current-password');
+        $check = Hash::check($currentPassword, $oldPassword);
+        if ($check) {
+            $newPassword = $request->input('new-password');
+            $user = Auth::user();
+            $user->password = Hash::make($newPassword);
+            $success = $user->save();
+            if ($success) {
+                $request->session()->flush();
+                alert()->success('Success', 'Change Password Success!');
+            } else {
+                alert()->error('Error', 'Change Password error!');
+            }
+            return redirect(route('profile.show'));
+
+        } else {
+            alert()->error('Error', 'Change Password error!');
+            return redirect(route('profile.show'));
+        }
+
+    }
+
+    public function changeEmail(Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        try {
+            $user = Auth::user();
+            $email = $request->input('edit-email');
+            $oldUser = User::where('email', $email)->first();
+            if ($oldUser) {
+                alert()->error('Error', 'Email already used!');
+                return back();
+            } else {
+                $person = MemberRegisterPersonSource::where('email', $email)->where('status',
+                    MemberRegisterPersonSourceStatus::ACTIVE)->first();
+
+                if ($person) {
+                    alert()->error('Error', 'Email already used!');
+                    return back();
+                }
+
+                $myPerson = MemberRegisterPersonSource::where('email', $user->email)->where('status',
+                    MemberRegisterPersonSourceStatus::ACTIVE)->first();
+
+                $user->email = $email;
+                $myPerson->email = $email;
+
+                $myPerson->save();
+                $success = $user->save();
+                if ($success) {
+                    alert()->success('Success', 'Change Email Success!');
+                } else {
+                    alert()->error('Error', 'Change Email error!');
+                }
+            }
+        } catch (Exception $exception) {
+            alert()->error('Error', 'Change Email error!');
+            return back();
+        }
+        return redirect(route('profile.show'));
+    }
+
+    public function changePhoneNumber(Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        try {
+            $user = Auth::user();
+            $user->phone = $request->input('edit-phone');
+            $success = $user->save();
+            if ($success) {
+                alert()->success('Success', 'Change PhoneNumber Success!');
+            } else {
+                alert()->error('Error', 'Change PhoneNumber error!');
+            }
+        } catch (Exception $exception) {
+            return back([400], ['Error']);
+        }
+        return redirect(route('profile.show'));
+    }
+
+    public function updateInfo(Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        $user = Auth::user();
+        $listParam = $request->input();
+
+        foreach ($listParam as $key => $value) {
+            if ($value != null && $key != '_token') {
+                $user->$key = $value;
+            }
+        }
+
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+            $avatarPath = $avatar->store('avatar', 'public');
+            $user->image = $avatarPath;
+        }
+
+
+        $user->region = strtolower($user->region);
+        $success = $user->save();
+        if ($success) {
+            alert()->success('Success', 'Update Info Success!');
+        } else {
+            alert()->error('Error', 'Update Info Error!');
+        }
+        return redirect(route('profile.show'));
+
+    }
+
     public function store(Request $request)
     {
         (new HomeController())->getLocale($request);
@@ -41,8 +156,7 @@ class UserController extends Controller
         $existingUser = User::where('email', $request->email)->first();
         if ($existingUser) {
             toast('Địa chỉ email đã tồn tại.', 'error', 'top-right');
-            return redirect(route('register.show'))->withErrors($validator)
-                ->withInput();
+            return redirect(route('register.show'))->withErrors($validator)->withInput();
         }
 
         if ($request->type_account == 'seller') {
@@ -120,7 +234,7 @@ class UserController extends Controller
             $categories = Category::get()->toTree();
             $listCategoryName[] = null;
             foreach ($categories as $category) {
-                $name = 'category-' . $category->id;
+                $name = 'category-'.$category->id;
                 $listCategoryName[] = $name;
             }
             if ($listCategoryName != null) {
@@ -149,8 +263,7 @@ class UserController extends Controller
         $data = array('mail' => $mail, 'name' => $mail, 'password' => $password);
 
         Mail::send('frontend/widgets/mailWelcome', $data, function ($message) use ($mail) {
-            $message->to($mail, 'Welcome mail!')->subject
-            ('Welcome mail');
+            $message->to($mail, 'Welcome mail!')->subject('Welcome mail');
             $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
         });
 
@@ -184,10 +297,13 @@ class UserController extends Controller
         Notification::create($noti);
 
         // Save off list permission
-        $permissions = DB::table('permissions')->where([['name', '!=', 'view_all_products'], ['name', '!=', 'view_profile']])->get();
+        $permissions = DB::table('permissions')->where([
+            ['name', '!=', 'view_all_products'],
+            ['name', '!=', 'view_profile']
+        ])->get();
         $listRequest[] = null;
         foreach ($permissions as $permission) {
-            $name = 'permission-' . $permission->id;
+            $name = 'permission-'.$permission->id;
             $listRequest[] = $name;
         }
 
@@ -253,128 +369,14 @@ class UserController extends Controller
 
     }
 
-    public function changePassword(Request $request)
-    {
-        (new HomeController())->getLocale($request);
-        $oldPassword = Auth::user()->password;
-        $currentPassword = $request->input('current-password');
-        $check = Hash::check($currentPassword, $oldPassword);
-        if ($check) {
-            $newPassword = $request->input('new-password');
-            $user = Auth::user();
-            $user->password = Hash::make($newPassword);
-            $success = $user->save();
-            if ($success) {
-                $request->session()->flush();
-                alert()->success('Success', 'Change Password Success!');
-            } else {
-                alert()->error('Error', 'Change Password error!');
-            }
-            return redirect(route('profile.show'));
-
-        } else {
-            alert()->error('Error', 'Change Password error!');
-            return redirect(route('profile.show'));
-        }
-
-    }
-
-    public function changeEmail(Request $request)
-    {
-        (new HomeController())->getLocale($request);
-        try {
-            $user = Auth::user();
-            $email = $request->input('edit-email');
-            $oldUser = User::where('email', $email)->first();
-            if ($oldUser) {
-                alert()->error('Error', 'Email already used!');
-                return back();
-            } else {
-                $person = MemberRegisterPersonSource::where('email', $email)
-                    ->where('status', MemberRegisterPersonSourceStatus::ACTIVE)
-                    ->first();
-
-                if ($person) {
-                    alert()->error('Error', 'Email already used!');
-                    return back();
-                }
-
-                $myPerson = MemberRegisterPersonSource::where('email', $user->email)
-                    ->where('status', MemberRegisterPersonSourceStatus::ACTIVE)
-                    ->first();
-
-                $user->email = $email;
-                $myPerson->email = $email;
-
-                $myPerson->save();
-                $success = $user->save();
-                if ($success) {
-                    alert()->success('Success', 'Change Email Success!');
-                } else {
-                    alert()->error('Error', 'Change Email error!');
-                }
-            }
-        } catch (Exception $exception) {
-            alert()->error('Error', 'Change Email error!');
-            return back();
-        }
-        return redirect(route('profile.show'));
-    }
-
-    public function changePhoneNumber(Request $request)
-    {
-        (new HomeController())->getLocale($request);
-        try {
-            $user = Auth::user();
-            $user->phone = $request->input('edit-phone');
-            $success = $user->save();
-            if ($success) {
-                alert()->success('Success', 'Change PhoneNumber Success!');
-            } else {
-                alert()->error('Error', 'Change PhoneNumber error!');
-            }
-        } catch (Exception $exception) {
-            return back([400], ['Error']);
-        }
-        return redirect(route('profile.show'));
-    }
-
-    public function updateInfo(Request $request)
-    {
-        (new HomeController())->getLocale($request);
-        $user = Auth::user();
-        $listParam = $request->input();
-
-        foreach ($listParam as $key => $value) {
-            if ($value != null && $key != '_token') {
-                $user->$key = $value;
-            }
-        }
-
-        if ($request->hasFile('avatar')) {
-            $avatar = $request->file('avatar');
-            $avatarPath = $avatar->store('avatar', 'public');
-            $user->image = $avatarPath;
-        }
-
-
-        $user->region = strtolower($user->region);
-        $success = $user->save();
-        if ($success) {
-            alert()->success('Success', 'Update Info Success!');
-        } else {
-            alert()->error('Error', 'Update Info Error!');
-        }
-        return redirect(route('profile.show'));
-
-    }
-
     public function myVoucher(Request $request)
     {
         (new HomeController())->getLocale($request);
         $listVouchers = Voucher::all();
-        $sellerIds = DB::table('role_user')->where('role_id', '=', '2')->get(); // Lấy tất cả ca user_id là seller trong bảng role_user
-        $adminIds = DB::table('role_user')->where('role_id', '=', '1')->get(); // Lấy tất cả ca user_id là admin  trong bảng role_user
+        $sellerIds = DB::table('role_user')->where('role_id', '=',
+            '2')->get(); // Lấy tất cả ca user_id là seller trong bảng role_user
+        $adminIds = DB::table('role_user')->where('role_id', '=',
+            '1')->get(); // Lấy tất cả ca user_id là admin  trong bảng role_user
         $sellers = [];
         $admins = [];
         foreach ($sellerIds as $sellerId) {
@@ -385,8 +387,10 @@ class UserController extends Controller
             array_push($admins, $adminId->user_id);
         }
 
-        $voucherWithSellers = Voucher::whereIn('user_id', $sellers)->get(); // Viết câu truy vấn lấy tất cả các voucher có user_id có trong mảng  $sellerIds
-        $voucherWithAdmin = Voucher::whereIn('user_id', $admins)->get(); // Viết câu truy vấn lấy tất cả các voucher có user_id có trong mảng  $adminIds
+        $voucherWithSellers = Voucher::whereIn('user_id',
+            $sellers)->get(); // Viết câu truy vấn lấy tất cả các voucher có user_id có trong mảng  $sellerIds
+        $voucherWithAdmin = Voucher::whereIn('user_id',
+            $admins)->get(); // Viết câu truy vấn lấy tất cả các voucher có user_id có trong mảng  $adminIds
 
 
         return view('frontend.pages.profile.my-voucher', [
@@ -396,18 +400,68 @@ class UserController extends Controller
         ]);
     }
 
-//    public function wishLists()
-//    {
-//        $idProduct = $_POST['idProduct'];
-//        $userId = Auth::id();
-//        if (isset($idProduct)) {
-//            $idProduct = $_POST['product_id'];
-//            $userId = $_POST['user_id'];
-//
-//            return view('frontend.pages.profile.wish-lists');
-//
-//        }
-//
-//    }
+    public function getNumberPhoneByEmail(Request $request)
+    {
+        $email = $request->email;
+        $phone = $request->phone;
+        $user = User::where('email', $email)->first();
+        if ($user) {
+            if ($user->phone == $phone) {
+                $verifyCode = rand(100000, 999999);
+                $verifyCodeHash = base64_encode($verifyCode);
+                $code = $this->sendVerifyCodeLogin($phone, $verifyCode);
 
+                return response()->json([
+                    'status' => 200,
+                    'message' => "Success",
+                    'code' => $code,
+                    'deaswr' => $verifyCodeHash,
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 400,
+                    'message' => "Số điện thoại không đúng",
+                ]);
+            }
+        } else {
+            return response()->json([
+                'status' => 400,
+                'message' => "User không tồn tại",
+            ]);
+        }
+    }
+
+    public function sendVerifyCodeLogin($phoneTo, $code = null)
+    {
+        $site = env('SMS_Site');
+        $loginName = env('SMS_LoginName');
+        $password = env('SMS_Password');
+        $sendServiceCode = env('SMS_SendServiceCode');
+        $brandName = env('SMS_BrandName');
+        $unicode = env('SMS_Unicode');
+
+        $site = "ILVIETNAM";
+        $loginName = "admin";
+        $password = "ILVIETNAM@1";
+        $sendServiceCode = "11";
+        $brandName = "IL VIETNAM";
+        $unicode = "0";
+
+
+        $timestamp = time();
+        $randomValue = rand(0, 999);
+        $smsId = $timestamp.$randomValue;
+
+        $content = "Your verification code is " . $code . ". Do not share this code with anyone.";
+
+        $apiUrl = "https://api.s247.vn:8443/api/sms?site=".$site."&LoginName=".$loginName."&Password=".$password."&SendServiceCode=".$sendServiceCode."&BrandName=".$brandName."&mobile=".$phoneTo."&Message=".$content."&SmsId=".$smsId."&Unicode=".$unicode;
+
+        $client = new Client();
+
+        $response = $client->get($apiUrl);
+
+        $data = $response->getBody()->getContents();
+
+        return json_decode($data)->code;
+    }
 }

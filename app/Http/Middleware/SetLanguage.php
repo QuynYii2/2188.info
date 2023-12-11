@@ -19,7 +19,8 @@ class SetLanguage
         if ($request->session()->has('locale')) {
             app()->setLocale($request->session()->get('locale'));
         } else {
-            app()->setLocale(config('app.locale'));
+//            app()->setLocale(config('app.locale'));
+            app()->setLocale('kr');
         }
 
         return $next($request);

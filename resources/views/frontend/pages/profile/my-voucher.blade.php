@@ -1,15 +1,15 @@
-@extends('frontend.layouts.profile')
-
-@section('title', 'My Voucher')
-
-@section('sub-content')
+@extends('backend.layouts.master')
+@section('title', __('home.Kho Voucher'))
+<link rel="stylesheet" href="{{asset('css/style.css')}}">
+<link rel="stylesheet" href="{{asset('css/responsive.css')}}">
+@section('content')
     <div class="p-4 list-voucher">
         <p class="category">{{ __('home.Kho Voucher') }}</p>
         <div class="search">
             <div class="form-search d-flex align-items-center">
                 <div class="mr-3 voucher">{{ __('home.Voucher') }}</div>
                 <div class="input-group">
-                    <input type="text" class="form-control mr-3" placeholder={{ __('home.Nhập mã voucher tại đây') }} aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <input type="text" class="form-control mr-3" placeholder="{{ __('home.Nhập mã voucher tại đây') }}" aria-label="Recipient's username" aria-describedby="basic-addon2">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button">{{ __('home.Lưu') }}</button>
                     </div>
@@ -37,7 +37,12 @@
                             <div class="content align-self-center">
                                 <div class="voucher-details">
                                         <span class="voucher-percent">{{ __('home.Voucher giảm') }} {{ $voucher->percent }}%</span>
-                                        <div class="voucher-apply-products">{{ __('home.Áp dụng cho') }} {{ ($voucher->description) }}</div>
+                                        <div class="voucher-apply-products">{{ __('home.Áp dụng cho') }}
+                                            @php
+                                                $ld = new \App\Http\Controllers\TranslateController();
+                                            @endphp
+                                            {{ $ld->translateText($voucher->description, locationPermissionHelper()) }}
+                                            </div>
                                         <div class="voucher-end-date">{{ __('home.Ngày kết thúc') }} {{ $voucher->endDate }}</div>
                                         <div class="d-flex justify-content-between">
                                             <span class="voucher-code" id="voucher-code-{{ $voucher->id }}">{{ $voucher->code }}</span>
@@ -58,8 +63,13 @@
                                 <img src="{{asset('images/img.png')}}" alt="">
                                 <div class="content align-self-center">
                                     <div class="voucher-details">
-                                        <span class="voucher-percent">{{ __('home'.'Voucher giảm ') }}{{ $voucher->percent }}%</span>
-                                        <div class="voucher-apply-products">{{ __('home.Áp dụng cho ') }}{{ __('home.Áp dụng cho') }}  {{ $voucher->description }}</div>
+                                        <span class="voucher-percent">{{ __('home.Voucher giảm ') }}{{ $voucher->percent }}%</span>
+                                        <div class="voucher-apply-products">{{ __('home.Áp dụng cho') }}
+                                            @php
+                                                $ld = new \App\Http\Controllers\TranslateController();
+                                            @endphp
+                                            {{ $ld->translateText($voucher->description, locationPermissionHelper()) }}
+                                            </div>
                                         <div class="voucher-end-date">{{ __('home.Ngày kết thúc ') }}{{ $voucher->endDate }}</div>
                                         <div class="d-flex justify-content-between">
                                             <span class="voucher-code" id="voucher-code-{{ $voucher->id }}">{{ $voucher->code }}</span>
@@ -81,7 +91,12 @@
                                 <div class="content align-self-center">
                                     <div class="voucher-details">
                                         <span class="voucher-percent">{{ __('home.Voucher giảm ') }}{{ $voucher->percent }}%</span>
-                                        <div class="voucher-apply-products">{{ __('home.Áp dụng cho') }} {{ ($voucher->description) }}</div>
+                                        <div class="voucher-apply-products">{{ __('home.Áp dụng cho') }}
+                                            @php
+                                                $ld = new \App\Http\Controllers\TranslateController();
+                                            @endphp
+                                            {{ $ld->translateText($voucher->description, locationPermissionHelper()) }}
+                                           </div>
                                         <div class="voucher-end-date">{{ __('home.Ngày kết thúc') }} {{ $voucher->endDate }}</div>
                                         <div class="d-flex justify-content-between">
                                             <span class="voucher-code" id="voucher-code-{{ $voucher->id }}">{{ $voucher->code }}</span>

@@ -27,9 +27,11 @@
     .btn-success {
         color: white !important;
     }
-    .labelCheckboxCategory{
+
+    .labelCheckboxCategory {
         display: inline-table;
     }
+
     .name {
         margin-top: 20px;
         font-size: 14px;
@@ -83,7 +85,7 @@
         display: none;
     }
 
-    #selectAttribute{
+    #selectAttribute {
         display: block !important;
     }
 </style>
@@ -189,15 +191,18 @@
                                                            name="ends[]" placeholder={{ __('home.Đến (sản phẩm)') }}>
                                                 </div>
                                                 <div class="">
-                                                    <input type="number" required class="form-control form-price" name="sales[]"
+                                                    <input type="number" required class="form-control form-price"
+                                                           name="sales[]"
                                                            placeholder={{ __('home.Giảm %') }}>
                                                 </div>
                                                 <div class="">
-                                                    <input type="number" required class="form-control form-price" name="days[]"
+                                                    <input type="number" required class="form-control form-price"
+                                                           name="days[]"
                                                            placeholder={{ __('home.Ngày giao hàng dự kiến') }}>
                                                 </div>
                                                 <div class="">
-                                                    <input type="number" required class="form-control form-price" name="ships[]"
+                                                    <input type="number" required class="form-control form-price"
+                                                           name="ships[]"
                                                            placeholder={{ __('home.Ngày giao hàng dự kiến') }}>
                                                 </div>
                                                 <div class="">
@@ -264,13 +269,18 @@
                                                         <button type="button" class="btn btn-secondary"
                                                                 data-dismiss="modal">Cancel
                                                         </button>
-                                                        <button type="button" class="btn btn-primary addCategory" data-cate="{{$category->id}}" href="{{route('categories.register', $category->id)}}">Add now</button>
+                                                        <button type="button" class="btn btn-primary addCategory"
+                                                                data-cate="{{$category->id}}"
+                                                                href="{{route('categories.register', $category->id)}}">
+                                                            Add now
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     @else
-                                        <label class="ml-2" for="category-{{$category->id}}" id="label-{{$category->id}}">
+                                        <label class="ml-2" for="category-{{$category->id}}"
+                                               id="label-{{$category->id}}">
                                             <input type="checkbox" id="category-{{$category->id}}"
                                                    name="category-{{$category->id}}"
                                                    value="{{$category->id}}"
@@ -336,20 +346,27 @@
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                This type of category of yours has not been registered.<br>
+                                                                This type of category of yours has not been
+                                                                registered.<br>
                                                                 Would you like to add this category?
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary"
                                                                         data-dismiss="modal">Cancel
                                                                 </button>
-                                                                <button type="button" class="btn btn-primary addCategory" data-cate="{{$child->id}}" href="{{route('categories.register', $child->id)}}">Add now</button>
+                                                                <button type="button"
+                                                                        class="btn btn-primary addCategory"
+                                                                        data-cate="{{$child->id}}"
+                                                                        href="{{route('categories.register', $child->id)}}">
+                                                                    Add now
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             @else
-                                                <label class="ml-4" for="category-{{$child->id}}" id="label-{{$child->id}}">
+                                                <label class="ml-4" for="category-{{$child->id}}"
+                                                       id="label-{{$child->id}}">
                                                     <input type="checkbox" id="category-{{$child->id}}"
                                                            name="category-{{$child->id}}"
                                                            value="{{$child->id}}"
@@ -375,7 +392,8 @@
                                             @endphp
                                             @foreach($listChild2 as $child2)
                                                 @if(!in_array($child2->id, $categoriesRegister))
-                                                    <div class="unregister" data-toggle="modal" data-id="{{$child2->id}}"
+                                                    <div class="unregister" data-toggle="modal"
+                                                         data-id="{{$child2->id}}"
                                                          data-target="#exampleModal-{{$child2->id}}">
                                                         <label class="ml-5" for="category-{{$child2->id}}">
                                                             <input type="checkbox" id="category-{{$child2->id}}"
@@ -415,20 +433,27 @@
                                                                     </button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    This type of category of yours has not been registered.<br>
+                                                                    This type of category of yours has not been
+                                                                    registered.<br>
                                                                     Would you like to add this category?
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
                                                                             data-dismiss="modal">Cancel
                                                                     </button>
-                                                                    <button type="button" class="btn btn-primary addCategory" data-cate="{{$child2->id}}" href="{{route('categories.register', $child2->id)}}">Add now</button>
+                                                                    <button type="button"
+                                                                            class="btn btn-primary addCategory"
+                                                                            data-cate="{{$child2->id}}"
+                                                                            href="{{route('categories.register', $child2->id)}}">
+                                                                        Add now
+                                                                    </button>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 @else
-                                                    <label class="ml-5" for="category-{{$child2->id}}" id="label-{{$child2->id}}">
+                                                    <label class="ml-5" for="category-{{$child2->id}}"
+                                                           id="label-{{$child2->id}}">
                                                         <input type="checkbox" id="category-{{$child2->id}}"
                                                                name="category-{{$child2->id}}"
                                                                value="{{$child2->id}}"
@@ -480,7 +505,6 @@
     <script>
         var url = `{{ route('product.v2.create.attribute') }}`;
         var token = `{{ csrf_token() }}`;
-        var urlCategory = `{{ route('categories.register', ['id' => ':categoryID']) }}`;
         var urlCategory = `{{ route('categories.register', ['id' => ':categoryID']) }}`;
     </script>
     <script src="{{ asset('js/backend/products-create.js') }}"></script>

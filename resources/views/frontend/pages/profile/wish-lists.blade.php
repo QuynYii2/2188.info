@@ -1,6 +1,9 @@
-@extends('frontend.layouts.profile')
-@section('sub-content')
-    <h2>{{ __('home.Wishlist') }}</h2>
+@extends('backend.layouts.master')
+@section('title', 'Wish List')
+<link rel="stylesheet" href="{{asset('css/style.css')}}">
+<link rel="stylesheet" href="{{asset('css/responsive.css')}}">
+@section('content')
+    <h2 class="mt-5">{{ __('home.Wishlist') }}</h2>
     <div class="row">
         @foreach($wishListItems as $wishLis)
             {{--                @foreach($productLists as $product)--}}
@@ -10,8 +13,11 @@
             <div class="col-md-4 mb-4">
                 <div class="card">
                     <div class="card-body">
+                        @php
+                            $thumbnail = checkThumbnail($product->thumbnail);
+                        @endphp
                         <div class="item-img">
-                            <img src="{{ asset('/storage/' . $product->thumbnail) }}"
+                            <img src="{{ $thumbnail }}"
                                  alt="">
                         </div>
                         Tên sản phẩm: {{ ($product->name) }}<br>

@@ -28,9 +28,25 @@ $(".toggleProduct").click(function () {
     setProduct(productID);
 });
 
+async function callListFunction() {
+    await getAllStatisticAccess();
 
-function getAllStatisticAccess() {
-    $.ajax({
+    await getAllStatisticRevenue();
+
+    await getAllStatisticUser();
+
+    var item = localStorage.getItem('item');
+    let arrayItem = item.split(',');
+
+    await getCustomerChart(parseInt(arrayItem[0]), parseInt(arrayItem[1]));
+
+    await getAllStatisticShops();
+}
+
+callListFunction();
+
+async function getAllStatisticAccess() {
+    await $.ajax({
         url: urla,
         method: 'GET',
         data: {
@@ -46,11 +62,42 @@ function getAllStatisticAccess() {
     });
 }
 
-getAllStatisticAccess();
+async function getAllStatisticRevenue() {
+    await $.ajax({
+        url: urlb,
+        method: 'GET',
+        data: {
+            _token: token
+        },
+        success: function (response) {
+            var data = response[0];
+            getRevenueChar(data[0], data[1])
+        },
+        error: function (exception) {
+            console.log(exception)
+        }
+    });
+}
 
-getAllStatisticRevenue();
+async function getAllStatisticUser() {
+    await $.ajax({
+        url: urlc,
+        method: 'GET',
+        data: {
+            _token: token
+        },
+        success: function (response) {
+            let customerChart = [];
+            customerChart.push(response[0], response[1])
+            localStorage.setItem('item', customerChart);
+        },
+        error: function (exception) {
+            console.log(exception)
+        }
+    });
+}
 
-function getChar(data, datatime) {
+async function getChar(data, datatime) {
     document.addEventListener("DOMContentLoaded", () => {
         new ApexCharts(document.querySelector("#reportsChart"), {
             series: [{
@@ -97,103 +144,61 @@ function getChar(data, datatime) {
     });
 }
 
-function getAllStatisticRevenue() {
-    $.ajax({
-        url: urlb,
-        method: 'GET',
-        data: {
-            _token: token
-        },
-        success: function (response) {
-            var data = response[0];
-            getRevenueChar(data[0], data[1])
-        },
-        error: function (exception) {
-            console.log(exception)
-        }
-    });
-
-    function getRevenueChar(data, datatime) {
-        document.addEventListener("DOMContentLoaded", () => {
-            new ApexCharts(document.querySelector("#revenueChart"), {
-                series: [{
-                    name: 'Net Profit',
-                    data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
-                }, {
-                    name: 'Revenue',
-                    data: data
-                }, {
-                    name: 'Free Cash Flow',
-                    data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
-                }],
-                chart: {
-                    type: 'bar',
-                    height: 350
+async function getRevenueChar(data, datatime) {
+    document.addEventListener("DOMContentLoaded", () => {
+        new ApexCharts(document.querySelector("#revenueChart"), {
+            series: [{
+                name: 'Net Profit',
+                data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
+            }, {
+                name: 'Revenue',
+                data: data
+            }, {
+                name: 'Free Cash Flow',
+                data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
+            }],
+            chart: {
+                type: 'bar',
+                height: 350
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '55%',
+                    endingShape: 'rounded'
                 },
-                plotOptions: {
-                    bar: {
-                        horizontal: false,
-                        columnWidth: '55%',
-                        endingShape: 'rounded'
-                    },
-                },
-                dataLabels: {
-                    enabled: false
-                },
-                stroke: {
-                    show: true,
-                    width: 2,
-                    colors: ['transparent']
-                },
-                xaxis: {
-                    categories: datatime,
-                },
-                yaxis: {
-                    title: {
-                        text: '$ (thousands)'
-                    }
-                },
-                fill: {
-                    opacity: 1
-                },
-                tooltip: {
-                    y: {
-                        formatter: function (val) {
-                            return "$ " + val + " thousands"
-                        }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                show: true,
+                width: 2,
+                colors: ['transparent']
+            },
+            xaxis: {
+                categories: datatime,
+            },
+            yaxis: {
+                title: {
+                    text: '$ (thousands)'
+                }
+            },
+            fill: {
+                opacity: 1
+            },
+            tooltip: {
+                y: {
+                    formatter: function (val) {
+                        return "$ " + val + " thousands"
                     }
                 }
-            }).render();
-        });
-    }
-}
-
-getAllStatisticUser();
-
-function getAllStatisticUser() {
-    $.ajax({
-        url: urlc,
-        method: 'GET',
-        data: {
-            _token: token
-        },
-        success: function (response) {
-            let customerChart = [];
-            customerChart.push(response[0], response[1])
-            localStorage.setItem('item', customerChart);
-        },
-        error: function (exception) {
-            console.log(exception)
-        }
+            }
+        }).render();
     });
 }
 
-var item = localStorage.getItem('item');
-arrayItem = item.split(',');
-
-getCustomerChart(parseInt(arrayItem[0]), parseInt(arrayItem[1]));
-
-function getCustomerChart(customerChart, testChart) {
+async function getCustomerChart(customerChart, testChart) {
     document.addEventListener("DOMContentLoaded", () => {
         new ApexCharts(document.querySelector("#customerChart"), {
             series: [customerChart, testChart],
@@ -209,7 +214,7 @@ function getCustomerChart(customerChart, testChart) {
     });
 }
 
-function getAllStatisticShops() {
+async function getAllStatisticShops() {
     var access = document.getElementById('countAccess')
     var accessPercent = document.getElementById('countAccessPercent')
     var views = document.getElementById('countViews')
@@ -218,7 +223,7 @@ function getAllStatisticShops() {
     var orderPercent = document.getElementById('countOrderPercent')
 
     var listTodoRender = $('#listTodoRender');
-    $.ajax({
+    await $.ajax({
         url: urld,
         method: 'GET',
         data: {
@@ -244,5 +249,3 @@ function getAllStatisticShops() {
         }
     });
 }
-
-getAllStatisticShops();

@@ -40,16 +40,16 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         (new HomeController())->getLocale($request);
-        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->paginate(10);
         $isAdmin = (new HomeController())->checkAdmin();
         if ($isAdmin) {
-            $products = Product::where('status', '!=', ProductStatus::DELETED)->orderByDesc('id')->get();
+            $products = Product::where('status', '!=', ProductStatus::DELETED)->orderByDesc('id')->paginate(10);
         } else {
             $check_ctv_shop = StaffUsers::where('user_id', Auth::user()->id)->first();
             if ($check_ctv_shop) {
-                $products = Product::where([['user_id', $check_ctv_shop->parent_user_id], ['status', '!=', ProductStatus::DELETED]])->orderByDesc('id')->get();
+                $products = Product::where([['user_id', $check_ctv_shop->parent_user_id], ['status', '!=', ProductStatus::DELETED]])->orderByDesc('id')->paginate(10);
             } else {
-                $products = Product::where([['user_id', Auth::user()->id], ['status', '!=', ProductStatus::DELETED]])->orderByDesc('id')->get();
+                $products = Product::where([['user_id', Auth::user()->id], ['status', '!=', ProductStatus::DELETED]])->orderByDesc('id')->paginate(10);
             }
         }
         return view('backend/products/index', ['products' => $products, 'categories' => $categories]);
@@ -58,41 +58,46 @@ class ProductController extends Controller
     public function search(Request $request)
     {
         (new HomeController())->getLocale($request);
-        $query = [];
+
+        $query = Product::query();
+
         $fullName = $request->input('fullName');
         $phoneNumber = $request->input('phoneNumber');
         $email = $request->input('email');
         $from_date = $request->input('from_date');
         $to_date = $request->input('to_date');
 
+        if ($fullName) {
+            $query->whereHas('user', function ($userQuery) use ($fullName) {
+                $userQuery->where('name', 'like', '%' . $fullName . '%');
+            });
+        }
+
         if ($phoneNumber) {
-            $str = ['phone', 'like', '%'.$phoneNumber.'%'];
-            array_push($query, $str);
+            $query->whereHas('user', function ($userQuery) use ($phoneNumber) {
+                $userQuery->where('phone', 'like', '%' . $phoneNumber . '%');
+            });
         }
 
         if ($email) {
-            $str = ['email', 'like', '%'.$email.'%'];
-            array_push($query, $str);
+            $query->whereHas('user', function ($userQuery) use ($email) {
+                $userQuery->where('email', 'like', '%' . $email . '%');
+            });
         }
 
         if ($from_date) {
-            $str = ['created_at', '>=', $from_date . ' 00:00:00'];
-            array_push($query, $str);
+            $query->where('created_at', '>=', $from_date . ' 00:00:00');
         }
 
         if ($to_date) {
-            $str = ['created_at', '<=', $to_date . ' 23:59:59'];
-            array_push($query, $str);
+            $query->where('created_at', '<=', $to_date . ' 23:59:59');
         }
 
-        $listIdUser = User::where('name', 'like', '%'.$fullName.'%')->pluck('id')->toArray();
+        $products = $query->paginate(10);
 
-        if (!empty($listIdUser)) {
-            $products = Product::whereIn('user_id', $listIdUser)->where($query)->get();
-        }
-
-        return view('backend.products.index', compact('products', 'fullName', 'phoneNumber', 'email', 'from_date', 'to_date' ));
+        return view('backend.products.index', compact('products', 'fullName', 'phoneNumber', 'email', 'from_date', 'to_date'));
     }
+
 
     public function home(Request $request)
     {
@@ -173,47 +178,47 @@ class ProductController extends Controller
         $sellerID = $request->input('user_seller');
         $listUserId = null;
         if ($isAdmin) {
-            $products = Product::where('status', '!=', ProductStatus::DELETED)->get();
+            $products = Product::where('status', '!=', ProductStatus::DELETED)->paginate(10);
             foreach ($products as $product) {
                 $listUserId[] = $product->user_id;
                 $listUserId = array_unique($listUserId);
             }
             if ($sellerID == null && $views == null) {
-                $products = Product::where('status', '!=', ProductStatus::DELETED)->get();
+                $products = Product::where('status', '!=', ProductStatus::DELETED)->paginate(10);
             } elseif ($sellerID == null && $views != null) {
                 if ($views == 'asc') {
-                    $products = Product::where('status', '!=', ProductStatus::DELETED)->orderBy('views', 'ASC')->get();
+                    $products = Product::where('status', '!=', ProductStatus::DELETED)->orderBy('views', 'ASC')->paginate(10);
                 } elseif ($views == 'desc') {
-                    $products = Product::where('status', '!=', ProductStatus::DELETED)->orderBy('views', 'DESC')->get();
+                    $products = Product::where('status', '!=', ProductStatus::DELETED)->orderBy('views', 'DESC')->paginate(10);
                 } else {
-                    $products = Product::where('status', '!=', ProductStatus::DELETED)->get();
+                    $products = Product::where('status', '!=', ProductStatus::DELETED)->paginate(10);
                 }
             } elseif ($sellerID != null && $views == null) {
                 if ($sellerID == '0') {
-                    $products = Product::where('status', '!=', ProductStatus::DELETED)->get();
+                    $products = Product::where('status', '!=', ProductStatus::DELETED)->paginate(10);
                 } else {
-                    $products = Product::where([['status', '!=', ProductStatus::DELETED], ['user_id', $sellerID]])->get();
+                    $products = Product::where([['status', '!=', ProductStatus::DELETED], ['user_id', $sellerID]])->paginate(10);
                 }
             } elseif ($sellerID != null && $views != null) {
                 if ($sellerID == '0' && $views == 'asc') {
-                    $products = Product::where('status', '!=', ProductStatus::DELETED)->orderBy('views', 'ASC')->get();
+                    $products = Product::where('status', '!=', ProductStatus::DELETED)->orderBy('views', 'ASC')->paginate(10);
                 } elseif ($sellerID == '0' && $views == 'desc') {
-                    $products = Product::where('status', '!=', ProductStatus::DELETED)->orderBy('views', 'DESC')->get();
+                    $products = Product::where('status', '!=', ProductStatus::DELETED)->orderBy('views', 'DESC')->paginate(10);
                 } elseif ($sellerID != '0' && $views == 'asc') {
-                    $products = Product::where([['status', '!=', ProductStatus::DELETED], ['user_id', $sellerID]])->orderBy('views', 'ASC')->get();
+                    $products = Product::where([['status', '!=', ProductStatus::DELETED], ['user_id', $sellerID]])->orderBy('views', 'ASC')->paginate(10);
                 } elseif ($sellerID != '0' && $views == 'desc') {
-                    $products = Product::where([['status', '!=', ProductStatus::DELETED], ['user_id', $sellerID]])->orderBy('views', 'DESC')->get();
+                    $products = Product::where([['status', '!=', ProductStatus::DELETED], ['user_id', $sellerID]])->orderBy('views', 'DESC')->paginate(10);
                 } else {
-                    $products = Product::where([['status', '!=', ProductStatus::DELETED], ['user_id', $sellerID]])->get();
+                    $products = Product::where([['status', '!=', ProductStatus::DELETED], ['user_id', $sellerID]])->paginate(10);
                 }
             }
         } else {
             if ($views == 'asc') {
-                $products = Product::where([['user_id', $user], ['status', '!=', ProductStatus::DELETED]])->orderBy('views', 'ASC')->get();
+                $products = Product::where([['user_id', $user], ['status', '!=', ProductStatus::DELETED]])->orderBy('views', 'ASC')->paginate(10);
             } elseif ($views == 'desc') {
-                $products = Product::where([['user_id', $user], ['status', '!=', ProductStatus::DELETED]])->orderBy('views', 'DESC')->get();
+                $products = Product::where([['user_id', $user], ['status', '!=', ProductStatus::DELETED]])->orderBy('views', 'DESC')->paginate(10);
             } elseif ($views == 'no' || $views == null) {
-                $products = Product::where([['user_id', $user], ['status', '!=', ProductStatus::DELETED]])->get();
+                $products = Product::where([['user_id', $user], ['status', '!=', ProductStatus::DELETED]])->paginate(10);
             }
         }
         return view('backend/products/views', compact('products', 'isAdmin', 'listUserId'));
@@ -223,13 +228,13 @@ class ProductController extends Controller
     {
         (new HomeController())->getLocale($request);
         $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
-        $registerCate = MemberRegisterPersonSource::where('email', Auth::user()->email)->get();
-        $registerCategories = MemberRegisterInfo::where('id', $registerCate[0]['member_id'])->get();
+        $registerCate = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+        $registerCategories = MemberRegisterInfo::where('id', $registerCate->member_id)->first();
         $categoriesRegister = [];
-        $arrayCategory = explode(',', $registerCategories[0]['category_id']);
-        foreach ($arrayCategory as $registerCategor) {
-            array_push($categoriesRegister, $registerCategor);
-        }
+        $arrayCategory = explode(',', $registerCategories->category_id);
+//        foreach ($arrayCategory as $registerCategor) {
+//            array_push($categoriesRegister, $registerCategor);
+//        }
 
         $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', Auth::user()->id]])->get();
 
@@ -248,7 +253,7 @@ class ProductController extends Controller
             'categories' => $categories,
             'attributes' => $attributes,
             'storages' => $storages,
-            'categoriesRegister' => $categoriesRegister,
+            'categoriesRegister' => $arrayCategory,
         ]);
     }
 
@@ -389,11 +394,14 @@ class ProductController extends Controller
     {
         (new HomeController())->getLocale($request);
         $product = Product::findOrFail($id);
-        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', \Illuminate\Support\Facades\Auth::user()->id]])->get();
         $att_of_product = DB::table('product_attribute')->where('product_id', $product->id)->get();
         $productDetails = Variation::where([['product_id', $id], ['status', VariationStatus::ACTIVE]])->get();
         $price_sales = ProductSale::where('product_id', $id)->get();
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
+        $registerCate = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+        $registerCategories = MemberRegisterInfo::where('id', $registerCate->member_id)->first();
+        $categoriesRegister = explode(',', $registerCategories->category_id);
 
         session()->forget('att_of_product');
         session()->push('att_of_product', $att_of_product);
@@ -404,7 +412,8 @@ class ProductController extends Controller
             'attributes',
             'price_sales',
             'product',
-            'productDetails'));
+            'productDetails',
+            'categoriesRegister'));
 
     }
 
@@ -417,6 +426,7 @@ class ProductController extends Controller
             $nameValue = $request->input('name');
             $descriptionValue = $request->input('description');
             $shortDescriptionValue = $request->input('short_description');
+            $product->category_id = $request->input('category_id');
 
             $arrThumbnail = $request->input('imgThumbnail');
             $arrGallery = $request->input('imgGallery');
@@ -490,35 +500,36 @@ class ProductController extends Controller
             }
 
             $starts = $request->input('starts');
-            $ends = $request->input('ends');
+            if ($starts) {
+                $ends = $request->input('ends');
 
-            $sales = $request->input('sales');
-            $days = $request->input('days');
+                $sales = $request->input('sales');
+                $days = $request->input('days');
 
-            $ships = $request->input('ships');
+                $ships = $request->input('ships');
 
-            $counts = count($starts);
-            for ($i = 0; $i < $counts; $i++) {
-                $newProductSale = null;
-                if (!$starts[$i]) {
-                    $starts[$i] = $product->min;
+                $counts = count($starts);
+                for ($i = 0; $i < $counts; $i++) {
+                    $newProductSale = null;
+                    if (!$starts[$i]) {
+                        $starts[$i] = $product->min;
+                    }
+                    if (!$ends[$i]) {
+                        $quantity = $starts[$i];
+                    } else {
+                        $quantity = $starts[$i] . '-' . $ends[$i];
+                    }
+                    $newProductSale = [
+                        'user_id' => $product->user_id,
+                        'product_id' => $product->id,
+                        'quantity' => $quantity,
+                        'sales' => $sales[$i],
+                        'days' => $days[$i],
+                        'ship' => $ships[$i],
+                    ];
+                    ProductSale::create($newProductSale);
                 }
-                if (!$ends[$i]) {
-                    $quantity = $starts[$i];
-                } else {
-                    $quantity = $starts[$i] . '-' . $ends[$i];
-                }
-                $newProductSale = [
-                    'user_id' => $product->user_id,
-                    'product_id' => $product->id,
-                    'quantity' => $quantity,
-                    'sales' => $sales[$i],
-                    'days' => $days[$i],
-                    'ship' => $ships[$i],
-                ];
-                ProductSale::create($newProductSale);
             }
-
 
             if ($isNew) {
                 $newArray = $this->getAttributeProperty($request);

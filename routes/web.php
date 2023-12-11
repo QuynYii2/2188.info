@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CoinController;
 use App\Http\Controllers\CurrencyController;
+use App\Http\Controllers\DetailMarketingController;
 use App\Http\Controllers\EvaluateProductController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\Frontend\AddressController;
@@ -38,18 +39,23 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+//
+//Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+//    \UniSharp\LaravelFilemanager\Lfm::routes();
+//});
 
-
-Route::get('/lang/kr', function ($locale) {
-    session()->put('locale', 'kr');
+Route::get('/lang/en', function ($locale) {
+    session()->put('locale', 'en');
     return redirect()->back();
 })->name('language');
 
-Route::get('/set-locale/kr', [HomeController::class, 'setLocale'])->name('app.set.locale');
+Route::get('/set-locale/en', [HomeController::class, 'setLocale'])->name('app.set.locale');
+Route::post('/change-locale', [HomeController::class, 'changeLanguage'])->name('app.change.locale');
 
 Route::post('/register', [UserController::class, 'store'])->name('register.store');
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', [AuthController::class, 'showLogin'])->name('home.login');
+Route::get('/home', [HomeController::class, 'index'])->name('homepage');
 
 Route::get('/get-all-products', [\App\Http\Controllers\ProductController::class, 'getAllProduct'])->name('get-all-product');
 
@@ -72,7 +78,7 @@ Route::get('/login-kakaotalk', [SocialController::class, 'getKakaoSignUrl'])->na
 Route::post('/login-kakaotalk', [SocialController::class, 'getFacebookSignInUrl'])->name('login.kakaotalk.post');
 Route::get('/callback/kakaotalk', [SocialController::class, 'callbackKakaotalk'])->name('login.kakaotalk.callback');
 //
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/register/', [HomeController::class, 'register'])->name('register.show');
 Route::post('/file/img/store', [FileController::class, 'saveImgByUser'])->name('file.img.save');
@@ -130,7 +136,7 @@ Route::get(
     '/register-member-ship/{member}',
     [RegisterMemberController::class, 'registerMemberShip']
 )->name('show.register.member.ship');
-Route::post('/register-member-ship/create-staff/{id}',[RegisterMemberController::class, 'createNewStaff']
+Route::post('/register-member-ship/create-staff/{id}', [RegisterMemberController::class, 'createNewStaff']
 )->name('create.staff.register');
 Route::get(
     '/congratulation-register-member/{member}',
@@ -205,6 +211,7 @@ Route::get('/products-shop-category/{category}/{shop}',
     [ProductController::class, 'getListByCategoryAndShops'])->name('list.products.shop.category.show');
 
 Route::get('/chat-message/{from}/{to}', [SampleController::class, 'findAllMessage'])->name('chat.message.show.to.way');
+Route::post('get-number-phone-by-email', [UserController::class, 'getNumberPhoneByEmail'])->name('user.get.number.phone');
 
 // Product
 Route::get('/product', [ProductController::class, 'index'])->name('product.index');
@@ -221,6 +228,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/chat-message-received',
         [SampleController::class, 'getListMessageReceived'])->name('chat.message.received');
     //Setup marketing
+    //
+    //Detail marketing
+    Route::get('/detail-marketing/{id}', [DetailMarketingController::class, 'index'])->name('detail-marketing.show');
+    Route::delete('/detail-marketing/{id}/{product}', [DetailMarketingController::class, 'delete'])->name('detail-marketing.delete');
     // Product member
     Route::get('/member/product-buy-lot/attribute/{id}',
         [ProductController::class, 'detailProduct'])->name('detail_product.member.attribute');
@@ -245,16 +256,18 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/info-member-person', [ProfileController::class, 'memberPerson'])->name('profile.member.person');
     Route::get('/info-member-represent',
         [ProfileController::class, 'memberRepresent'])->name('profile.member.represent');
+    Route::get('/info-member-ship/{member}',
+        [ProfileController::class, 'memberShip'])->name('profile.member.ship');
 //    Route::get('/my-notification/', [\App\Http\Controllers\ProfileController::class, 'my_notification']);
 //    Route::get('/order-management/', [\App\Http\Controllers\ProfileController::class, 'order_management']);
     Route::get('/return-management/', [ProfileController::class, 'return_management']);
 //    Route::get('/address-book/', [\App\Http\Controllers\ProfileController::class, 'address_book']);
     Route::get('/payment-information/', [ProfileController::class, 'payment_information']);
-    Route::get('/product-evaluation/', [ProfileController::class, 'product_evaluation']);
+    Route::get('/product-evaluation/', [ProfileController::class, 'product_evaluation'])->name('my.product.evaluation');
     Route::get('/product-evaluation/delete/{id}',
         [EvaluateProductController::class, 'destroy'])->name('product_evaluation.delete');
     Route::get('/favorite-product/', [ProfileController::class, 'favorite_product']);
-    Route::get('/product-viewed/', [ProfileController::class, 'product_viewed']);
+    Route::get('/product-viewed/', [ProfileController::class, 'product_viewed'])->name('my.product.viewed');
     Route::get('/my-review/', [ProfileController::class, 'my_review']);
     // Đánh giá sản phẩm
     Route::post('/evaluate', [EvaluateProductController::class, 'store'])->name('create.evaluate');
@@ -350,27 +363,40 @@ Route::middleware(['auth'])->group(function () {
 
 // Backend v2
 Route::group(['prefix' => 'seller', 'middleware' => 'role.seller-or-admin'], function () {
-    require_once __DIR__.'/backend.php';
+    require_once __DIR__ . '/backend.php';
 });
 
 // Admin
 Route::group(['prefix' => 'admin', 'middleware' => 'role.admin'], function () {
-    require_once __DIR__.'/admin.php';
+    require_once __DIR__ . '/admin.php';
 });
 
 Route::prefix('address')->group(function () {
     Route::get('index', [\App\Http\Controllers\Seller\AddressController::class, 'index'])->name('address.manage.index');
+    Route::get('detail/{id}', [\App\Http\Controllers\Seller\AddressController::class, 'detail'])->name('address.manage.detail');
+    Route::get('add', [\App\Http\Controllers\Seller\AddressController::class, 'create'])->name('address.manage.add');
+    Route::post('update-star-nation/{id}', [\App\Http\Controllers\Seller\AddressController::class, 'updateStarNation'])->name('address.manage.update.star.nation');
+    Route::post('update-star-state/{id}', [\App\Http\Controllers\Seller\AddressController::class, 'updateStarState'])->name('address.manage.update.star.state');
+    Route::post('update-star-city/{id}', [\App\Http\Controllers\Seller\AddressController::class, 'updateStarCity'])->name('address.manage.update.star.city');
 });
 
 // Seller
 Route::group(['prefix' => 'seller', 'middleware' => 'role.seller-or-admin'], function () {
-    require_once __DIR__.'/seller.php';
+    require_once __DIR__ . '/seller.php';
 });
 
 // Buyer
 Route::group(['prefix' => 'buyer', 'middleware' => 'role.buyer'], function () {
-    require_once __DIR__.'/buyer.php';
+    require_once __DIR__ . '/buyer.php';
 });
 
-//Test
-Route::get('/test', [\App\Http\Controllers\TestController::class, 'testAttribute']);
+//showCart
+Route::get('/showCart', [CartController::class, 'showCart'])->name('showCart');
+Route::get('/renderCart', [CartController::class, 'renderCart'])->name('renderCart');
+Route::post('deleteCart/{id}', [CartController::class, 'deleteCart'])->name('deleteCart');
+// CheckID
+Route::post('/checkID', [RegisterMemberController::class, 'checkID'])->name('member.checkId');
+
+Route::get('/address/list', [\App\Http\Controllers\AddressController::class, 'index'])->name('address.index');
+Route::get('/address/detail/{code}', [\App\Http\Controllers\AddressController::class, 'show'])->name('address.detail');
+Route::get('/address/detail-region/{code}', [\App\Http\Controllers\AddressController::class, 'showRegion'])->name('address.show.region');

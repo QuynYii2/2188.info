@@ -1,21 +1,18 @@
 <link rel="stylesheet" href="{{asset('css/register_member.css')}}">
 <link href="{{asset('css/voucher.css')}}" rel="stylesheet">
-
 <div class="container-fluid">
-    <div class="d-flex">
-        <a href="{{route('profile.show')}}" class="btn btn-success mr-3">{{ __('home.info_company') }}</a>
-        <a href="{{route('profile.member.person')}}" class="btn btn-success mr-3">{{ __('home.Registrator Information') }}</a>
-        <a href="{{route('profile.member.represent')}}" class="btn btn-success mr-3">{{ __('home.Representative Information') }}</a>
-        <a href="#" class="btn btn-success">{{ __('home.Staffs Information') }}</a>
-    </div>
-
-    <h3 class="text-center mt-5">{{ __('home.Congratulations, you have registered as a member') }} {{$company->member}}</h3>
+    @if(!isset($isAdminUpdate))
+        @include('frontend.pages.member.header-button')
+        <h3 class="text-center mt-5">{{ __('home.Congratulations, you have registered as a member') }} {{$company->member}}</h3>
+    @endif
     <div class="start-page mb-3">
         <div class="background pt-3 justify-content-center pb-3">
-            <div class="form-title text-center solid-3x pt-2 pb-3 bg-member-green">
-                <div class="title text-primary"
-                     style="font-size: 35px; font-weight: 600">{{ __('home.Sign up company information') }}</div>
-            </div>
+            @if(!isset($isAdminUpdate))
+                <div class="form-title text-center solid-3x pt-2 pb-3 bg-member-green">
+                    <div class="title text-primary"
+                         style="font-size: 35px; font-weight: 600">{{ __('home.Sign up company information') }}</div>
+                </div>
+            @endif
             <div class="">
                 @if($company->member == \App\Enums\RegisterMember::BUYER)
                     @include('frontend.pages.registerMember.buyer')
@@ -39,12 +36,8 @@
                     @include('frontend.pages.registerMember.regionAddress')
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="r_getListNation()">
-                        {{ __('home.Back') }}
-                    </button>
-                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                            data-target="#modal-create-region">{{ __('home.tao moi vi tri') }}
-                    </button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('home.Close') }}</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="handleSelectRegion()">{{ __('home.save changes') }}</button>
                 </div>
             </div>
         </div>

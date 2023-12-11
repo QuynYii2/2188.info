@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminAddressController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\ConfigProjectController;
@@ -28,6 +29,7 @@ Route::prefix('user')->group(function () {
     Route::delete('/delete-users/{id}', [AdminUserController::class, 'delete'])->name('admin.delete.users');
     Route::get('/detail-users-company/{id}', [AdminUserController::class, 'showCompany'])->name('admin.detail.users.company');
     Route::put('/edit-users-company/{id}', [AdminUserController::class, 'updateCompany'])->name('admin.edit.users.company');
+    Route::post('/search-users', [AdminUserController::class, 'searchUser'])->name('admin.search.users');
 });
 //    Route::post('down-permission', [\App\Http\Controllers\PermissionRankController::class, 'downRank'])->name('permission.down.rank');
 // Admin Config
@@ -60,16 +62,19 @@ Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])-
 //
 Route::post('/toggle-products-all/{id}', [ProductController::class, 'toggleProduct'])->name('admin.toggle.products');
 //
-//Detail marketing
-Route::get('/detail-marketing/{id}', [\App\Http\Controllers\DetailMarketingController::class, 'index'])->name('detail-marketing.show');
-Route::delete('/detail-marketing/{id}/{product}', [\App\Http\Controllers\DetailMarketingController::class, 'delete'])->name('detail-marketing.delete');
-//
 Route::get('/setup-marketing/', [SetupMarketingController::class, 'index'])->name('setup-marketing.show');
 Route::get('/setup-marketing/create', [SetupMarketingController::class, 'create'])->name('create-setup-marketing');
 Route::post('/setup-marketing/create', [SetupMarketingController::class, 'store'])->name('store-setup-marketing');
 Route::delete('/setup-marketing/create/{id}', [SetupMarketingController::class, 'delete'])->name('setup-marketing.delete');
 Route::get('/setup-marketing/edit/{id}', [SetupMarketingController::class, 'edit'])->name('setup-marketing.edit');
 Route::post('/setup-marketing/update/{id}', [SetupMarketingController::class, 'update'])->name('setup-marketing.update');
+//
+Route::get('/address/list', [AdminAddressController::class, 'index'])->name('admin.address.index');
+Route::get('/address/detail/{code}', [AdminAddressController::class, 'show'])->name('admin.address.show');
+Route::get('/address/detail-region/{code}', [AdminAddressController::class, 'showRegion'])->name('admin.address.show.region');
+Route::post('/address/modify', [AdminAddressController::class, 'modifyAddress'])->name('admin.address.modify');
+Route::get('/address/get-by-id/{id}', [AdminAddressController::class, 'getById'])->name('admin.address.get.by.id');
 
-
-
+Route::delete('/address/delete/{id}', [AdminAddressController::class, 'delete'])->name('admin.address.delete');
+Route::post('/address/change-status/{id}', [AdminAddressController::class, 'changeStatus'])->name('admin.address.change.status');
+Route::get('/address/change-show/{id}', [AdminAddressController::class, 'changeShow'])->name('admin.address.change.show');

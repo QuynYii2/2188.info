@@ -43,6 +43,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use PragmaRX\Countries\Package\Countries;
 
 
@@ -64,7 +65,7 @@ class HomeController extends Controller
             'en' => 'USD'
         ];
 
-        $currentProducts = Product::where([['location', $locale], ['status', ProductStatus::ACTIVE]])->get();
+        $currentProducts = Product::where([['location', $locale], ['status', ProductStatus::ACTIVE]])->limit(10)->get();
 
         if (array_key_exists($locale, $currencies)) {
             $currency = $currencies[$locale];
@@ -72,6 +73,7 @@ class HomeController extends Controller
 
 
         $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
+        $categoriesParent = Category::where('status', CategoryStatus::ACTIVE)->where('parent_id', null)->get();
         $categories = DB::table('categories')
             ->where([
                 ['status', CategoryStatus::ACTIVE],
@@ -86,16 +88,16 @@ class HomeController extends Controller
             ->limit(10)
             ->get();
 
-        $productByVi = Product::where([['location', 'vi'], ['status', ProductStatus::ACTIVE]])->limit(10)->get();
-        $productByKr = Product::where([['location', 'kr'], ['status', ProductStatus::ACTIVE]])->limit(10)->get();
-        $productByJp = Product::where([['location', 'jp'], ['status', ProductStatus::ACTIVE]])->limit(10)->get();
-        $productByCn = Product::where([['location', 'cn'], ['status', ProductStatus::ACTIVE]])->limit(10)->get();
+        $productByVi = Product::where([['location', 'vi'], ['status', ProductStatus::ACTIVE]])->orderBy('id', 'desc')->limit(10)->get();
+        $productByKr = Product::where([['location', 'kr'], ['status', ProductStatus::ACTIVE]])->orderBy('id', 'desc')->limit(10)->get();
+        $productByJp = Product::where([['location', 'jp'], ['status', ProductStatus::ACTIVE]])->orderBy('id', 'desc')->limit(10)->get();
+        $productByCn = Product::where([['location', 'cn'], ['status', ProductStatus::ACTIVE]])->orderBy('id', 'desc')->limit(10)->get();
 
         $arrayProducts = [
-            'vi' => $productByVi,
             'kr' => $productByKr,
             'cn' => $productByCn,
-            'jp' => $productByJp
+            'jp' => $productByJp,
+            'vi' => $productByVi
         ];
 
         $newProducts = Product::where('status', ProductStatus::ACTIVE)->orderBy('created_at', 'desc')->limit(10)->get();
@@ -115,9 +117,9 @@ class HomeController extends Controller
 
         $products = Product::where([
             ['status', ProductStatus::ACTIVE]
-        ])->orderBy('hot', 'desc')->get();
+        ])->orderBy('hot', 'desc')->limit(10)->get();
         $products = $products->unique('slug');
-        $productHots[] = $products;
+        $productHots = $products;
 //        dd($productHots);
         $permissionFeature = Permission::where('name', 'Nâng cấp sản phẩm nổi bật')->first();
         $permissionSellerFeatures = DB::table('permission_user')->where('permission_id', $permissionFeature->id)->get();
@@ -133,9 +135,9 @@ class HomeController extends Controller
 
         $products = Product::where([
             ['status', ProductStatus::ACTIVE]
-        ])->orderBy('feature', 'desc')->get();
+        ])->orderBy('feature', 'desc')->limit(10)->get();
         $products = $products->unique('slug');
-        $productFeatures[] = $products;
+        $productFeatures = $products;
 
         $configsTop1 = TopSellerConfig::where('local', TopSellerConfigLocation::OptionOne)->orderBy('created_at', 'desc')->limit(3)->get();
         $configsTop2 = TopSellerConfig::where('local', TopSellerConfigLocation::OptionTwo)->orderBy('created_at', 'desc')->limit(3)->get();
@@ -175,6 +177,7 @@ class HomeController extends Controller
             'currency' => $currency,
             'countryCode' => $locale,
             'categories' => $categories,
+            'categoriesParent' => $categoriesParent,
             'productByVi' => $productByVi,
             'productByKr' => $productByKr,
             'productByJp' => $productByJp,
@@ -210,18 +213,18 @@ class HomeController extends Controller
 
     public function getLocale(Request $request)
     {
-        if ($request->session()->has('locale')) {
-            $locale = $request->session()->get('locale');
-            app()->setLocale('kr');
-        } else {
-            $ipAddress = $request->ip();
-            $geoIp = new GeoIP();
-            $locale = $geoIp->get_country_from_ip($ipAddress);
-            if ($locale !== null && is_array($locale)) {
-                $locale = $locale['countryCode'];
-            }
-        }
-        app()->setLocale('kr');
+//        if ($request->session()->has('locale')) {
+//            $locale = $request->session()->get('locale');
+//            app()->setLocale('kr');
+//        } else {
+//            $ipAddress = $request->ip();
+//            $geoIp = new GeoIP();
+//            $locale = $geoIp->get_country_from_ip($ipAddress);
+//            if ($locale !== null && is_array($locale)) {
+//                $locale = $locale['countryCode'];
+//            }
+//        }
+//        app()->setLocale('kr');
     }
 
     public function getLangDisplay()
@@ -242,7 +245,6 @@ class HomeController extends Controller
         }
     }
 
-
     public function notifiCreate($id, $content, $desc)
     {
         $noti = [
@@ -259,7 +261,7 @@ class HomeController extends Controller
 
     public function generateRandomString($length)
     {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';
         for ($i = 0; $i < $length; $i++) {
@@ -270,12 +272,14 @@ class HomeController extends Controller
 
     public function checkAdmin()
     {
-        $user = Auth::user()->id;
-        $role_id = DB::table('role_user')->where('user_id', $user)->get();
         $isAdmin = false;
-        foreach ($role_id as $item) {
-            if ($item->role_id == 1) {
-                $isAdmin = true;
+        if (Auth::check()) {
+            $user = Auth::user()->id;
+            $role_id = DB::table('role_user')->where('user_id', $user)->get();
+            foreach ($role_id as $item) {
+                if ($item->role_id == 1) {
+                    $isAdmin = true;
+                }
             }
         }
         return $isAdmin;
@@ -341,6 +345,16 @@ class HomeController extends Controller
         $this->createMultilNewUser();
     }
 
+    public function changeLanguage(Request $request)
+    {
+        $locale = $request->input('locale');
+        if (!$locale) {
+            $locale = 'kr';
+        }
+        Session::put('locale', $locale);
+        return redirect()->back();
+    }
+
     public function getLocation(Request $request)
     {
         $geoIp = new GeoIP();
@@ -354,6 +368,12 @@ class HomeController extends Controller
 //        }
         $currency = 'KRW';
         return $currency;
+    }
+
+    public function replaceString($search, $replace, $string)
+    {
+        $res = str_replace(array($search), $replace, $string);
+        return $res;
     }
 
     //Api convert currency
@@ -390,142 +410,56 @@ class HomeController extends Controller
                 }
 
                 $companyArray = explode('&&', $company);
+
                 $email = $companyArray[0];
                 $email = str_replace('!', '', $email);
 
-                for ($k = 1; $k < 7; $k++) {
+                for ($k = 1; $k < 10; $k++) {
                     if (!$companyArray[$k] || $companyArray[$k] == 'item_is_null') {
                         $companyArray[$k] = 'default';
                     }
                 }
 
-                list($companyName, $companyCode, $companyTEL, $companyFAX, $companyAddress, $categoryCompany) = array_slice($companyArray, 1, 6);
+                list($companyName, $companyCode, $companyTEL, $companyFAX, $companyAddress,
+                    $categoryCompany, $userEmail, $userName, $userTel, $companyNo) = array_slice($companyArray, 1, 10);
 
                 $language = $this->getLanguageCode((new TranslateController())->detectLanguage($companyAddress));
 
                 $arrayNameCategory = $this->getCategoryIds($categoryCompany, $categoryDefault);
 
                 if (empty($arrayNameCategory)) {
-                    $arrayNameCategory[] = 'default';
+                    $arrayNameCategory[] = $categoryDefault[0]->id;
                 }
 
                 $category_id = implode(',', $arrayNameCategory);
 
-                $oldUser = User::where('email', $email)->first();
+                $companyName = $this->replaceStringCheck($companyName);
+                $email = $this->replaceStringCheck($email);
+                $companyTEL = $this->replaceStringCheck($companyTEL);
+                $companyAddress = $this->replaceStringCheck($companyAddress);
 
-                if (!$oldUser) {
-                    $newUser = User::create([
-                        'name' => 'default name',
-                        'email' => $email,
-                        'phone' => $companyTEL,
-                        'address' => 'default address',
-                        'region' => $language,
-                        'password' => $passwordHash,
-                        'type_account' => 'seller',
-                        'email_verified_at' => now(),
-                        'image' => 'default image',
-                        'member' => RegisterMember::LOGISTIC
-                    ]);
+                $userEmail = $this->replaceStringCheck($userEmail);
+                $userName = $this->replaceStringCheck($userName);
+                $userTel = $this->replaceStringCheck($userTel);
 
-                    Mail::send('frontend/widgets/mailWelcome', ['mail' => $email, 'name' => $email, 'password' => Contains::PASSWORD_DEFAULT], function ($message) use ($email) {
-                        $message->to($email, 'Welcome mail!')->subject('Welcome mail');
-                        $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
-                    });
+                $newUser = $this->createUser($companyName, $email, $companyTEL, $companyAddress, $language, $passwordHash);
 
-                    DB::table('role_user')->insert([
-                        'role_id' => 2,
-                        'user_id' => $newUser->id
-                    ]);
+                $member = Member::where('name', RegisterMember::LOGISTIC)->first();
 
-                    $member = Member::where('name', RegisterMember::LOGISTIC)->first();
+                $exitMember = $this->createOrUpdateMember($newUser, $companyName, $companyTEL, $companyFAX,
+                    $companyCode, $category_id, $member, $companyAddress, $email, $companyNo);
 
-                    $memberInfo = [
-                        'user_id' => $newUser->id,
-                        'name' => $companyName,
-                        'name_en' => $companyName,
-                        'name_kr' => $companyName,
-                        'phone' => $companyTEL,
-                        'fax' => $companyFAX,
-                        'code_fax' => $companyCode,
-                        'category_id' => $category_id,
-                        'code_business' => $category_id,
-                        'type_business' => $category_id,
-                        'number_business' => 'default number business',
-                        'member' => RegisterMember::LOGISTIC,
-                        'member_id' => $member->id,
-                        'address' => $companyAddress,
-                        'address_en' => $companyAddress,
-                        'address_kr' => $companyAddress,
-                        'status' => MemberRegisterInfoStatus::ACTIVE
-                    ];
+                $exitMemberPer = $this->updateOrCreatePerson($email, $companyName, $passwordHash, $companyTEL, $exitMember);
 
-                    MemberRegisterInfo::create($memberInfo);
+                $this->updateOrCreatePersonRepresent($userEmail, $userName, $userTel,
+                    $companyAddress, $language, $passwordHash,
+                    $exitMemberPer, $exitMember);
 
-                    $exitMember = MemberRegisterInfo::where('user_id', $newUser->id)->orderBy('created_at', 'desc')->first();
-
-                    $exitMemberPersonSource = MemberRegisterPersonSource::where([
-                        ['email', $email],
-                        ['type', MemberRegisterType::SOURCE]
-                    ])->first();
-
-                    if (!$exitMemberPersonSource) {
-                        $memberPersonSource = [
-                            'user_id' => $newUser->id,
-                            'name' => $companyName,
-                            'password' => $passwordHash,
-                            'phone' => $companyTEL,
-                            'email' => $email,
-                            'staff' => 'default',
-                            'member_id' => $exitMember->id,
-                            'price' => 0,
-                            'rank' => '0',
-                            'sns_account' => 'default',
-                            'type' => MemberRegisterType::SOURCE,
-                            'verifyCode' => '',
-                            'isVerify' => 0,
-                            'status' => MemberRegisterPersonSourceStatus::ACTIVE
-                        ];
-
-                        MemberRegisterPersonSource::create($memberPersonSource);
-                    }
-
-                    $exitMemberPer = MemberRegisterPersonSource::where([
-                        ['user_id', $newUser->id],
-                        ['email', $email],
-                        ['type', MemberRegisterType::SOURCE]
-                    ])->first();
-
-                    if ($exitMemberPer) {
-                        $exitMemberPersonRepresent = MemberRegisterPersonSource::where([
-                            ['email', $email],
-                            ['type', MemberRegisterType::REPRESENT]
-                        ])->first();
-
-                        if (!$exitMemberPersonRepresent) {
-                            $memberPersonRepresent = [
-                                'user_id' => $newUser->id,
-                                'name' => $companyName,
-                                'password' => $passwordHash,
-                                'phone' => $companyTEL,
-                                'email' => $email,
-                                'staff' => 'default',
-                                'person' => $exitMemberPer->id,
-                                'member_id' => $exitMember->id,
-                                'price' => 0,
-                                'rank' => '0',
-                                'sns_account' => 'default',
-                                'type' => MemberRegisterType::REPRESENT,
-                                'verifyCode' => '',
-                                'isVerify' => 0,
-                                'status' => MemberRegisterPersonSourceStatus::ACTIVE
-                            ];
-
-                            MemberRegisterPersonSource::create($memberPersonRepresent);
-                        }
-                    }
-                }
             }
+
+            echo('done');
         } catch (Exception $exception) {
+            echo($exception);
             return $exception;
         }
     }
@@ -568,6 +502,7 @@ class HomeController extends Controller
 
         return $arrayNameCategory;
     }
+
     //End import user form nn21
 
     // Private function
@@ -635,4 +570,172 @@ class HomeController extends Controller
         }
     }
 
+    private function createUser($name, $email, $tel, $address, $language, $passwordHash)
+    {
+        $oldUser = User::where('email', $email)->first();
+        if ($oldUser) {
+            $oldUser->name = $name;
+            $oldUser->email = $email;
+            $oldUser->phone = $tel;
+            $oldUser->address = $address;
+            $oldUser->region = $language;
+            $oldUser->password = $passwordHash;
+            $oldUser->save();
+        } else {
+            $oldUser = User::create([
+                'name' => $name,
+                'email' => $email,
+                'phone' => $tel,
+                'address' => $address,
+                'region' => $language,
+                'password' => $passwordHash,
+                'type_account' => 'seller',
+                'email_verified_at' => now(),
+                'image' => 'default image',
+                'member' => RegisterMember::LOGISTIC
+            ]);
+
+//            if ($this->checkEmail($email)) {
+//                Mail::send('frontend/widgets/mailWelcome', ['mail' => $email, 'name' => $email, 'password' => Contains::PASSWORD_DEFAULT],
+//                    function ($message) use ($email) {
+//                        $message->to($email, 'Welcome mail!')->subject('Welcome mail');
+//                        $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
+//                    });
+//            }
+
+            DB::table('role_user')->insert([
+                'role_id' => 2,
+                'user_id' => $oldUser->id
+            ]);
+        }
+        return $oldUser;
+    }
+
+    private function createOrUpdateMember($newUser, $companyName, $companyTEL, $companyFAX, $companyCode,
+                                          $category_id, $member, $companyAddress, $email, $companyNo)
+    {
+        $memberInfo = [
+            'user_id' => $newUser->id,
+            'name' => $companyName,
+            'name_en' => $companyName,
+            'name_kr' => $companyName,
+            'phone' => $companyTEL,
+            'fax' => $companyFAX,
+            'code_fax' => $companyCode,
+            'category_id' => $category_id,
+            'code_business' => $category_id,
+            'type_business' => $category_id,
+            'number_business' => $companyNo,
+            'member' => RegisterMember::LOGISTIC,
+            'member_id' => $member->id,
+            'address' => $companyAddress,
+            'address_en' => $companyAddress,
+            'address_kr' => $companyAddress,
+            'email' => $email,
+            'homepage' => '',
+            'datetime_register' => Carbon::now()->addHours(7),
+            'status' => MemberRegisterInfoStatus::ACTIVE
+        ];
+
+        $exitMember = MemberRegisterInfo::create($memberInfo);
+        return $exitMember;
+    }
+
+    private function updateOrCreatePerson($email, $companyName, $passwordHash, $companyTEL, $exitMember)
+    {
+        $exitMemberPersonSource = MemberRegisterPersonSource::where([
+            ['email', $email],
+            ['type', MemberRegisterType::SOURCE]
+        ])->first();
+
+        if (!$exitMemberPersonSource) {
+            $memberPersonSource = [
+                'user_id' => 0,
+                'name' => $companyName,
+                'password' => $passwordHash,
+                'phone' => $companyTEL,
+                'email' => $email,
+                'staff' => 'default',
+                'member_id' => $exitMember->id,
+                'price' => 0,
+                'rank' => '0',
+                'sns_account' => 'default',
+                'type' => MemberRegisterType::SOURCE,
+                'verifyCode' => '',
+                'isVerify' => 0,
+                'status' => MemberRegisterPersonSourceStatus::ACTIVE
+            ];
+
+            $exitMemberPersonSource = MemberRegisterPersonSource::create($memberPersonSource);
+        } else {
+            $exitMemberPersonSource->name = $companyName;
+            $exitMemberPersonSource->password = $passwordHash;
+            $exitMemberPersonSource->phone = $companyTEL;
+            $exitMemberPersonSource->email = $email;
+            $exitMemberPersonSource->member_id = $exitMember->id;
+            $exitMemberPersonSource->type = MemberRegisterType::SOURCE;
+            $exitMemberPersonSource->verifyCode = '';
+            $exitMemberPersonSource->isVerify = 0;
+            $exitMemberPersonSource->status = MemberRegisterPersonSourceStatus::ACTIVE;
+            $exitMemberPersonSource->save();
+        }
+
+        return $exitMemberPersonSource;
+    }
+
+    private function updateOrCreatePersonRepresent($userEmail, $userName, $userTel,
+                                                   $companyAddress, $language, $passwordHash,
+                                                   $exitMemberPer, $exitMember)
+    {
+        $exitMemberPersonRepresent = MemberRegisterPersonSource::where('email', $userEmail)->first();
+
+        $user = $this->createUser($userName, $userEmail, $userTel, $companyAddress, $language, $passwordHash);
+
+        if (!$exitMemberPersonRepresent) {
+            $memberPersonRepresent = [
+                'user_id' => 0,
+                'name' => $userName,
+                'password' => $passwordHash,
+                'phone' => $userTel,
+                'email' => $userEmail,
+                'staff' => 'default',
+                'person' => $exitMemberPer->id,
+                'member_id' => $exitMember->id,
+                'price' => 0,
+                'rank' => '0',
+                'sns_account' => 'default',
+                'type' => MemberRegisterType::REPRESENT,
+                'verifyCode' => '',
+                'isVerify' => 0,
+                'status' => MemberRegisterPersonSourceStatus::ACTIVE
+            ];
+
+            MemberRegisterPersonSource::create($memberPersonRepresent);
+        } else {
+            $exitMemberPersonRepresent->name = $userName;
+            $exitMemberPersonRepresent->password = $passwordHash;
+            $exitMemberPersonRepresent->phone = $userTel;
+            $exitMemberPersonRepresent->person = $exitMemberPer->id;
+            $exitMemberPersonRepresent->member_id = $exitMember->id;
+            $exitMemberPersonRepresent->type = MemberRegisterType::REPRESENT;
+            $exitMemberPersonRepresent->verifyCode = '';
+            $exitMemberPersonRepresent->isVerify = 0;
+            $exitMemberPersonRepresent->status = MemberRegisterPersonSourceStatus::ACTIVE;
+            $exitMemberPersonRepresent->save();
+        }
+
+    }
+
+    private function checkEmail($email)
+    {
+        $find1 = strpos($email, '@');
+        $find2 = strpos($email, '.');
+        return ($find1 !== false && $find2 !== false && $find2 > $find1);
+    }
+
+    private function replaceStringCheck($str)
+    {
+        $res = $this->replaceString('!', '', $str);
+        return $res;
+    }
 }

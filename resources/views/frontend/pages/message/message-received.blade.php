@@ -1,6 +1,7 @@
-@extends('frontend.layouts.master')
+@extends('backend.layouts.master')
 @section('title', 'List Message Received')
-
+<link rel="stylesheet" href="{{asset('css/style.css')}}">
+<link rel="stylesheet" href="{{asset('css/responsive.css')}}">
 @section('content')
     <h3 class="text-center">{{ __('home.Message received') }}</h3>
     @if($company)
@@ -10,8 +11,7 @@
             $oldUser = \App\Models\User::where('email', $companyPerson->email)->first();
         @endphp
         <div class="container mb-2">
-            <h3 class="text-center">{{ __('home.Member booth') }}{{$company->member}}</h3>
-            <h3 class="text-left">{{ __('home.Member') }}{{$company->member}}</h3>
+            <h3 class="text-center">{{ __('home.Member booth') }}</h3>
             @include('frontend.pages.member.header_member')
             <div class="row m-0">
                 <div class="col-md-6 border">
@@ -67,24 +67,26 @@
                                     @php
                                         $category = \App\Models\Category::find($itemArrayCategory);
                                     @endphp
-                                    <div class="col-md-6">
-                                        <div class="mt-2 d-flex">
-                                            <a href="{{route('category.show', $category->id)}}" class="mb-3 size">
-                                                @if(locationHelper() == 'kr')
-                                                    {{ ($category->name_ko) }}
-                                                @elseif(locationHelper() == 'cn')
-                                                    {{ ($category->name_zh) }}
-                                                @elseif(locationHelper() == 'jp')
-                                                    {{ ($category->name_ja) }}
-                                                @elseif(locationHelper() == 'vi')
-                                                    {{ ($category->name_vi) }}
-                                                @else
-                                                    {{ ($category->name_en) }}
-                                                @endif
-                                                <i class="fa-solid fa-angle-right"></i>
-                                            </a>
+                                    @if($category)
+                                        <div class="col-md-6">
+                                            <div class="mt-2 d-flex">
+                                                <a href="{{route('category.show', $category->id)}}" class="mb-3 size">
+                                                    @if(locationHelper() == 'kr')
+                                                        {{ ($category->name_ko) }}
+                                                    @elseif(locationHelper() == 'cn')
+                                                        {{ ($category->name_zh) }}
+                                                    @elseif(locationHelper() == 'jp')
+                                                        {{ ($category->name_ja) }}
+                                                    @elseif(locationHelper() == 'vi')
+                                                        {{ ($category->name_vi) }}
+                                                    @else
+                                                        {{ ($category->name_en) }}
+                                                    @endif
+                                                    <i class="fa-solid fa-angle-right"></i>
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
+                                    @endif
                                 @endforeach
                             </div>
                         </div>
@@ -99,12 +101,14 @@
                                 @php
                                     $user = \App\Models\User::find($message->from_user_id);
                                 @endphp
-                                <div class="card-item-message card-item mb-3" data-message="{{$message}}"
-                                     data-user="{{$user}}" style="cursor: pointer">
-                                    <img src="{{ asset('storage/'.$user->image) }}" alt="" width="60px"
-                                         height="60xp">
-                                    <h5 class="card-title">{{$user->name}}</h5>
-                                </div>
+                                @if($user)
+                                    <div class="card-item-message card-item mb-3" data-message="{{$message}}"
+                                         data-user="{{$user}}" style="cursor: pointer">
+                                        <img src="{{ asset('storage/'.$user->image) }}" alt="" width="60px"
+                                             height="60xp">
+                                        <h5 class="card-title">{{$user->name}}</h5>
+                                    </div>
+                                @endif
                             @endforeach
                         </div>
                         {{--        {{ $listMessage->links() }}--}}

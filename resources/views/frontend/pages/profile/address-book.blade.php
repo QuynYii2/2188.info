@@ -1,8 +1,8 @@
-@extends('frontend.layouts.profile')
-
-@section('title', 'Return Management')
-
-@section('sub-content')
+@extends('backend.layouts.master')
+@section('title', __('home.address book'))
+<link rel="stylesheet" href="{{asset('css/style.css')}}">
+<link rel="stylesheet" href="{{asset('css/responsive.css')}}">
+@section('content')
     <div class="container-fluid" id="address-book">
         <div class="row mt-2 bg-white rounded">
             <div class="row  rounded pt-1 ml-5">
@@ -49,7 +49,7 @@
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalLabel">Thêm mới địa chỉ</h5>
+                    <h5 class="modal-title" id="modalLabel">{{ __('home.Thêm mới địa chỉ') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span>&times;</span>
                     </button>
@@ -59,56 +59,56 @@
                     <div class="modal-body">
                         <input type="text" name="id" hidden value="">
                         <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Họ và tên</label>
+                            <label class="col-sm-3 col-form-label">{{ __('home.Họ và tên') }}</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" name="username" required>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Công ty</label>
+                            <label class="col-sm-3 col-form-label">{{ __('home.Công ty') }}</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" name="company" required>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Số điện thoại</label>
+                            <label class="col-sm-3 col-form-label">{{ __('home.Số điện thoại') }}</label>
                             <div class="col-sm-9">
                                 <input type="number" class="form-control" name="phone" required
                                        pattern="(84|0[3|5|7|8|9])+([0-9]{8})\b">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Tỉnh/Thành phố</label>
+                            <label class="col-sm-3 col-form-label">{{ __('home.Tỉnh/Thành phố') }}</label>
                             <div class="col-sm-9">
                                 <select class="form-control" id="city" name="city" required>
-                                    <option value="" selected>Chọn tỉnh thành</option>
+                                    <option value="" selected>{{ __('home.Chọn tỉnh thành') }}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Quận huyện</label>
+                            <label class="col-sm-3 col-form-label">{{ __('home.Quận huyện') }}</label>
                             <div class="col-sm-9">
                                 <select class="form-control" id="district" name="province" required>
-                                    <option value="" selected>Chọn quận huyện</option>
+                                    <option value="" selected>{{ __('home.Chọn quận huyện') }}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Phường xã</label>
+                            <label class="col-sm-3 col-form-label">{{ __('home.Phường xã') }}</label>
                             <div class="col-sm-9">
                                 <select class="form-control" id="ward" name="location" required>
-                                    <option value="" selected>Chọn phường xã</option>
+                                    <option value="" selected>{{ __('home.Chọn phường xã') }}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Địa chỉ</label>
+                            <label class="col-sm-3 col-form-label">{{ __('home.Địa chỉ') }}</label>
                             <div class="col-sm-9">
                                 <textarea type="text" class="form-control" name="address_detail" required></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Loại địa chỉ</label>
+                            <label class="col-sm-3 col-form-label">{{ __('home.Loại địa chỉ') }}</label>
                             <div class="col-sm-9">
                                 <div class="row">
                                     <div class="form-check col-sm-6">
@@ -116,7 +116,7 @@
                                                id="exampleRadios1"
                                                value="{{\App\Enums\AddressOrderOption::HOME_PRIVATE}}" checked>
                                         <label class="form-check-label" for="exampleRadios1">
-                                            Nhà riêng / Chung cư
+                                            {{ __('home.Nhà riêng / Chung cư') }}
                                         </label>
                                     </div>
                                     <div class="form-check col-sm-6">
@@ -124,7 +124,7 @@
                                                id="exampleRadios2"
                                                value="{{\App\Enums\AddressOrderOption::COMPANY}}">
                                         <label class="form-check-label" for="exampleRadios2">
-                                            Cơ quan / Công ty
+                                            {{ __('home.Cơ quan / Công ty') }}
                                         </label>
                                     </div>
                                 </div>
@@ -136,13 +136,13 @@
                                 <div class="input-group">
                                     <input type="checkbox" name="default" class="mr-2"
                                            value="{{\App\Enums\AddressOrder::DEFAULT}}">
-                                    Đặt làm địa chỉ mặc định
+                                    {{ __('home.Đặt làm địa chỉ mặc định') }}
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                        <button type="submit" class="btn btn-primary">{{ __('home.Lưu thay đổi') }}</button>
                     </div>
                 </form>
             </div>
@@ -155,7 +155,7 @@
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalLabel">Sửa địa chỉ</h5>
+                    <h5 class="modal-title" id="modalLabel">{{ __('home.Sửa địa chỉ') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span>&times;</span>
                     </button>
@@ -165,56 +165,56 @@
                     <div class="modal-body">
                         <input type="text" name="id" id="id-edit" hidden value="">
                         <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Họ và tên</label>
+                            <label class="col-sm-3 col-form-label">{{ __('home.Họ và tên') }}</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" name="username" id="username-edit" required>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Công ty</label>
+                            <label class="col-sm-3 col-form-label">{{ __('home.Công ty') }}</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" name="company" id="company-edit" required>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Số điện thoại</label>
+                            <label class="col-sm-3 col-form-label">{{ __('home.Số điện thoại') }}</label>
                             <div class="col-sm-9">
                                 <input type="number" class="form-control" name="phone"
                                        pattern="(84|0[3|5|7|8|9])+([0-9]{8})\b" id="phone-edit" required>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Tỉnh/Thành phố</label>
+                            <label class="col-sm-3 col-form-label">{{ __('home.Tỉnh/Thành phố') }}</label>
                             <div class="col-sm-9">
                                 <select class="form-control" name="city" id="city-edit" required>
-                                    <option value="" selected>Chọn tỉnh thành</option>
+                                    <option value="" selected>{{ __('home.Chọn tỉnh thành') }}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Quận huyện</label>
+                            <label class="col-sm-3 col-form-label">{{ __('home.Quận huyện') }}</label>
                             <div class="col-sm-9">
                                 <select class="form-control" name="province" id="province-edit" required>
-                                    <option value="" selected>Chọn quận huyện</option>
+                                    <option value="" selected>{{ __('home.Chọn quận huyện') }}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Phường xã</label>
+                            <label class="col-sm-3 col-form-label">{{ __('home.Phường xã') }}</label>
                             <div class="col-sm-9">
                                 <select class="form-control" name="location" id="location-edit" required>
-                                    <option value="" selected>Chọn phường xã</option>
+                                    <option value="" selected>{{ __('home.Chọn phường xã') }}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Địa chỉ</label>
+                            <label class="col-sm-3 col-form-label">{{ __('home.Địa chỉ') }}</label>
                             <div class="col-sm-9">
                                 <textarea type="text" class="form-control" name="address_detail" id="address_detail-edit" required></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Loại địa chỉ</label>
+                            <label class="col-sm-3 col-form-label">{{ __('home.Loại địa chỉ') }}</label>
                             <div class="col-sm-9">
                                 <div class="row">
                                     <div class="form-check col-sm-6">
@@ -222,7 +222,7 @@
                                                id="address_option-edit-1"
                                                value="{{\App\Enums\AddressOrderOption::HOME_PRIVATE}}">
                                         <label class="form-check-label" for="exampleRadios1">
-                                            Nhà riêng / Chung cư
+                                            {{ __('home.Nhà riêng / Chung cư') }}
                                         </label>
                                     </div>
                                     <div class="form-check col-sm-6">
@@ -230,7 +230,7 @@
                                                id="address_option-edit-2"
                                                value="{{\App\Enums\AddressOrderOption::COMPANY}}">
                                         <label class="form-check-label" for="exampleRadios2">
-                                            Cơ quan / Công ty
+                                            {{ __('home.Cơ quan / Công ty') }}
                                         </label>
                                     </div>
                                 </div>
@@ -241,13 +241,13 @@
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <input type="checkbox" name="default" class="mr-2" id="default-edit">
-                                    Đặt làm địa chỉ mặc định
+                                    {{ __('home.Đặt làm địa chỉ mặc định') }}
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                        <button type="submit" class="btn btn-primary">{{ __('home.Lưu thay đổi') }}</button>
                     </div>
                 </form>
             </div>

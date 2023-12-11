@@ -1,7 +1,6 @@
 @charset "UTF-8";
 body {
   background-color: #f6f6f6;
-  font-family: "DM Sans", sans-serif;
 }
 
 .wpcontent {
@@ -199,6 +198,8 @@ body {
 
 .header-card {
   margin-top: 56px;
+  /* style profile */
+  /* end style profile */
 }
 .header-card--left {
   padding-bottom: 30px;
@@ -217,8 +218,16 @@ body {
   padding: 0;
   font-size: 18px;
 }
+.header-card--left .wrapper .items .border-list_profile {
+  border-radius: 8px;
+  border: 1px solid var(--White-Light, #F3F3F3);
+  background: var(--White, #FFF);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  padding-bottom: 10px;
+}
 .header-card--left .wrapper .items li {
   list-style: none;
+  padding: 8px;
 }
 .header-card--left .wrapper .items li .item {
   font-size: 16px;
@@ -230,10 +239,130 @@ body {
 }
 .header-card--left .wrapper .items li a {
   color: black;
-  font-size: 14px;
+  font-size: 18px;
+  font-weight: 500;
 }
 .header-card--left .wrapper .items li a:hover {
-  color: #fd6506;
+  color: var(--secon-1, #F47621) !important;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+}
+.header-card #profile-info .rounded label {
+  color: #000;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.header-card #profile-info .rounded .star-red {
+  color: #e10600;
+}
+.header-card #profile-info .rounded input, .header-card #profile-info .rounded select, .header-card #profile-info .rounded textarea {
+  border: 1px solid var(--Grey-light, #D6D6D6);
+  border-radius: 0;
+  color: var(--Grey, #A9A9A9);
+  font-size: 16px;
+  font-weight: 400;
+}
+.header-card #profile-info .rounded input[type=radio] {
+  accent-color: #F42621;
+  width: 16px;
+  height: 16px;
+}
+.header-card #profile-info .rounded .form-check-label {
+  color: #000;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.header-card #profile-info .rounded .text-align__end {
+  text-align: end;
+}
+.header-card #profile-info .rounded .experience span {
+  color: #000;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.header-card #profile-info .rounded .list-group-flush .list-group-item span {
+  color: #000;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.header-card #profile-info .rounded .ud-profile-btn {
+  display: flex;
+  width: 300px;
+  padding: 12px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  background: var(--secon-1, #F47621);
+  color: var(--White, #FFF);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.header-card #profile-info .rounded .avatar-upload .avatar-edit .bg-img_input {
+  border-radius: 119px;
+  background: #F47621;
+}
+.header-card .modal-content form {
+  padding: 16px;
+}
+.header-card .modal-content .modal-header {
+  color: #000;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.header-card .modal-content .modal-header span {
+  border: 1px #000 solid;
+  border-radius: 35px;
+  padding: 2px 8px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+}
+.header-card .modal-content .modal-body {
+  color: #000;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding: 8px 0;
+}
+.header-card .modal-content .modal-footer {
+  border-top: 0;
+}
+.header-card .modal-content .modal-footer .btn-primary {
+  background: var(--secon-1, #F47621);
+  display: flex;
+  width: 140px;
+  padding: 12px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.header-card .modal-content .modal-footer .btn-secondary {
+  display: flex;
+  width: 140px;
+  padding: 12px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  background: var(--Grey-Medium, #BFBFBF);
+  color: var(--White, #FFF);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
 .header-card--right {
   background-color: #f6f6f6;

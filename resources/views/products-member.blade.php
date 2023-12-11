@@ -15,8 +15,11 @@
                                     @endif
                          ">
             <div class="standsMember-item section" style="background-color: white">
+                @php
+                    $thumbnail = checkThumbnail($product->thumbnail);
+                @endphp
                 <img data-id="{{$product->id}}"
-                     src="{{ asset('storage/' . $product->thumbnail) }}" alt=""
+                     src="{{ $thumbnail }}" alt=""
                      class="thumbnailProduct" data-value="{{$product}}"
 
                      width="150px" height="150px">

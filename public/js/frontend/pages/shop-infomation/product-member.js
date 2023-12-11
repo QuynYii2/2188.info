@@ -4,7 +4,13 @@ $('.thumbnailProduct').on('click', function () {
     productName = product['name'];
     productMin = product['min'];
     let imgMain = product['thumbnail'];
-    let imageUrl = imageUrlMain + '/' + imgMain;
+    let imageUrl;
+    if (imgMain.includes("http")) {
+        imageUrl = imgMain;
+    } else {
+        imageUrl = imageUrlMain + '/' + imgMain;
+    }
+
     let idImg = '#imgProductMain';
     let linkImg = '#linkProductImg';
 
@@ -31,7 +37,11 @@ $('.thumbnailProduct').on('click', function () {
     let arrayGallery = gallery.split(',');
     let arrayUrlImg = []
     for (let i = 0; i < arrayGallery.length; i++) {
-        arrayUrlImg.push(imageUrlMain + '/' + arrayGallery[i])
+        if (!arrayGallery[i].includes("http")) {
+            arrayUrlImg.push(imageUrlMain + '/' + arrayGallery[i])
+        } else {
+            arrayUrlImg.push(arrayGallery[i])
+        }
     }
 
     let string = '';
@@ -78,43 +88,6 @@ function changeUrl(id, url) {
     link.href = url;
 }
 
-// {{--$(document).ready(function () {--}}
-// {{--    const $document = $(document);--}}
-//
-// {{--    $document.on('click', '#partnerBtn', function () {--}}
-// {{--        const product = $(this).data('value');--}}
-//
-// {{--        renderProduct(product);--}}
-// {{--    });--}}
-//
-// {{--    function renderProduct(product) {--}}
-// {{--        let listInputQuantity = document.querySelectorAll('.input-quantity');--}}
-// {{--        let listQuantity = '';--}}
-// {{--        listInputQuantity.forEach(input => {--}}
-// {{--            listQuantity += input.value + ',';--}}
-// {{--        });--}}
-// {{--        listQuantity = JSON.stringify(listQuantity.slice(0, -1));--}}
-// {{--        const requestData = {--}}
-// {{--            _token: '{{ csrf_token() }}',--}}
-// {{--            quantity: listQuantity,--}}
-// {{--            value: JSON.stringify(localStorage.getItem('listID')),--}}
-// {{--        };--}}
-//
-// {{--        $.ajax({--}}
-// {{--            url: `/add-to-cart-register-member/${product}`,--}}
-// {{--            method: 'POST',--}}
-// {{--            data: requestData,--}}
-// {{--        })--}}
-// {{--            .done(function (response) {--}}
-// {{--                alert('Success!');--}}
-// {{--                localStorage.removeItem('listID')--}}
-// {{--                window.location.reload();--}}
-// {{--            })--}}
-// {{--            .fail(function (_, textStatus) {--}}
-// {{--            });--}}
-// {{--    }--}}
-// {{--});--}}
-
 $(document).ready(function () {
     $('#btnViewAttribute').on('click', function () {
         let id = $(this).data('id');
@@ -152,16 +125,11 @@ function getCheckboxs() {
     localStorage.setItem('listID', listItem);
 }
 
-// $(document).ready(function () {
-//     let id = {{$firstProduct->id}};
-//     renderProduct(id);
-// })
-
-function renderProduct(product) {
+async function renderProduct(product) {
     let url = detailProductAttribute;
     url = url.replace(':id', product);
 
-    $.ajax({
+    await $.ajax({
         url: url,
         method: 'GET',
     })
@@ -173,12 +141,12 @@ function renderProduct(product) {
         });
 }
 
-function renderCart() {
+async function renderCart() {
     //member.view.carts
     const requestData = {
         _token: token,
     };
-    $.ajax({
+    await $.ajax({
         url: memberViewCart,
         method: 'GET',
         data: requestData,

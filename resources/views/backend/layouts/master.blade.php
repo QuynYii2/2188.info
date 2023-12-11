@@ -18,6 +18,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+
+
     {{--    <script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/classic/ckeditor.js"></script>--}}
     {{--    <script> CKEDITOR.replace('editor1'); </script>--}}
     <link rel="stylesheet" href="{{ mix('css/custom.css') }}">
@@ -45,13 +49,14 @@
     <script src="{{ asset('js/vendor/bootstrap.min.js') }}"></script>
     <script src="{{ asset('mail/jqBootstrapValidation.min.js') }}"></script>
     <script src="{{ asset('js/backend.js') }}"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
 </head>
 <body>
 @include('sweetalert::alert')
 <!-- Header -->
 <header class="container-fluid header_back d-flex">
     <div class="name"><a href="{{ route('seller.products.home') }}">{{ __('home.Kênh người bán') }}</a></div>
-    <div class="name"><a href="{{ route('home') }}" target="_blank">{{ __('home.Xem trang chủ') }}</a></div>
+    <div class="name"><a href="{{ route('homepage') }}" target="_blank">{{ __('home.Xem trang chủ') }}</a></div>
     @if(getTypeMember()->member == 'LOGISTIC')
         <div class="name">
             <a href="{{ route('stand.register.member.index', ['id' => getTypeMember()->id]) }}" target="_blank">
@@ -91,12 +96,10 @@
     let desc = document.querySelectorAll('.description');
     for (let i = 0; i < desc.length; i++) {
         CKEDITOR.replace(desc[i], {
-            filebrowserBrowseUrl: '{{ asset('ckfinder/ckfinder.html') }}',
-            filebrowserImageBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Images') }}',
-            filebrowserFlashBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Flash') }}',
-            filebrowserUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files') }}',
-            filebrowserImageUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images') }}',
-            filebrowserFlashUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash') }}'
+            filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+            filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+            filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+            filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
         });
         // CKEDITOR.replace(desc[i]);
     }

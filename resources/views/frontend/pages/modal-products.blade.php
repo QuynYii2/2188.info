@@ -44,7 +44,7 @@
                                 <input id="product_id" hidden value="">
                             </div>
                             <div class="count__wrapper count__wrapper--ml mt-3">
-                                <span>Còn lại: </span>
+                                <span>{{ __('home.Còn lại') }}: </span>
                                 <label for="qty" id="qty"></label>
                             </div>
                             <div class="d-flex buy justify-content-center">

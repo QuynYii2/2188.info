@@ -88,7 +88,11 @@
                                 {{$order->created_at}}
                             </td>
                             <td>
-                                {{$order->orders_method}}
+                                @php
+                                    $ld = new \App\Http\Controllers\TranslateController();
+                                @endphp
+                                {{ $ld->translateText($order->orders_method, locationPermissionHelper()) }}
+
                             </td>
                             <td>
                                 {{$order->total}}

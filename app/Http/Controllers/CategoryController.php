@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Enums\CategoryStatus;
 use App\Enums\ProductStatus;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Models\Category;
@@ -24,13 +25,13 @@ class CategoryController extends Controller
     public function category(Request $request, $id)
     {
         (new HomeController())->getLocale($request);
-        $categories = Category::get()->toTree();
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->where('parent_id', null)->get();
         $category = Category::find($id);
         $childCategories = Category::where('parent_id', $id)->get();
         $listPayment = PaymentMethod::all();
         $listTransport = TransportMethod::all();
         $priceProductOfCategory = Product::selectRaw('MAX(price) AS maxPrice, MIN(price) AS minPrice')
-            ->where([['products.status', '=', ProductStatus::ACTIVE]])
+            ->where('products.status', '=', ProductStatus::ACTIVE)
             ->whereRaw("FIND_IN_SET(?, products.list_category)", [$id])
             ->first();
         if ($priceProductOfCategory->maxPrice === null) {
@@ -39,8 +40,14 @@ class CategoryController extends Controller
         if ($priceProductOfCategory->minPrice === null) {
             $priceProductOfCategory->minPrice = 0;
         }
-        $listProduct = [];
-        return view('frontend/pages/category', compact('categories', 'listProduct', 'listPayment', 'listTransport', 'priceProductOfCategory', 'category', 'childCategories'));
+        $currency = (new HomeController())->getLocation($request);
+        $listProduct = Product::whereRaw("FIND_IN_SET(?, list_category) > 0", [$id])
+            ->where('status', ProductStatus::ACTIVE)
+            ->orderBy('id', 'desc')
+            ->paginate(12);
+        return view('frontend/pages/category',
+            compact('categories', 'listProduct', 'listPayment', 'listTransport', 'priceProductOfCategory', 'category',
+                'childCategories', 'currency'));
     }
 
     public function filterInCategory(Request $request, $id)
@@ -54,10 +61,14 @@ class CategoryController extends Controller
         $maxPrice = $request->data['maxPrice'];
         $isSale = $request->data['isSale'];
 
-        $query = Product::select('products.*', 'users.payment_method', 'users.transport_method')
-            ->where([['products.status', '=', ProductStatus::ACTIVE]])
-            ->whereRaw("FIND_IN_SET(?, products.list_category)", [$id])
-            ->join('users', 'products.user_id', '=', 'users.id');
+        $query = Product::select('products.*', 'users.payment_method', 'users.transport_method')->where([
+            [
+                'products.status',
+                '=',
+                ProductStatus::ACTIVE
+            ]
+        ])->whereRaw("FIND_IN_SET(?, products.list_category)", [$id])->join('users', 'products.user_id', '=',
+            'users.id');
 
         $selectedPaymentsArray = [];
         foreach ($selectedPayments as $payment) {
@@ -105,8 +116,7 @@ class CategoryController extends Controller
             $query->whereNotNull('products.old_price');
         }
 
-        $listProduct = $query->orderBy('products.' . $sortArr[0], $sortArr[1])
-            ->paginate($request->data['countPerPage']);
+        $listProduct = $query->orderBy('products.' . $sortArr[0], $sortArr[1])->paginate($request->data['countPerPage']);
 
         return response()->json($this->renderDataToHTML($listProduct, $request));
     }
@@ -116,6 +126,24 @@ class CategoryController extends Controller
         (new HomeController())->getLocale($request);
         $str = '';
         $currency = (new HomeController())->getLocation($request);
+        switch (locationHelper()) {
+            case 'cn':
+                $nameProduct = 'name_zh';
+                break;
+            case 'jp':
+                $nameProduct = 'name_ja';
+                break;
+            case 'vi':
+                $nameProduct = 'name_vi';
+                break;
+            case 'kr':
+                $nameProduct = 'name_ko';
+                break;
+            default:
+                $nameProduct = 'name_en';
+                break;
+        }
+
         foreach ($listProduct as $product) {
             $str .= '<div class="col-xl-2 col-md-3 col-6 section mb-4">
             <div class="item">
@@ -135,15 +163,17 @@ class CategoryController extends Controller
                 </div>
                 <div class="item-body">
                     <div class="card-title1">
-                        <a href="' . route('detail_product.show', $product['id']) . '">' . $product['name'] . '</a>
+                        <a href="' . route('detail_product.show', $product['id']) . '">' . $product[$nameProduct] . '</a>
                     </div>
                     <div class="card-price">
                         <div class="price-sale">
-                            <strong>' . number_format(convertCurrency('USD', $currency, $product['price']), 0, ',', '.') . $currency . '</strong>
+                            <strong>' . number_format(convertCurrency('USD', $currency, $product['price']), 0, ',',
+                    '.') . $currency . '</strong>
                         </div>
                         <div class="price-cost">';
             if ($product['old_price'] != null) {
-                $str .= '<strike>' . number_format(convertCurrency('USD', $currency, $product['old_price']), 0, ',', '.') . $currency . '</strike>';
+                $str .= '<strike>' . number_format(convertCurrency('USD', $currency, $product['old_price']), 0, ',',
+                        '.') . $currency . '</strike>';
             }
             $str .= '</div>
                     </div>
@@ -158,7 +188,7 @@ class CategoryController extends Controller
                 </div>
             </div>
         </div>';
-        };
+        }
         return $str;
     }
 }

@@ -61,10 +61,10 @@
                         </tr>
                         <tr class="form-field term-description-wrap">
                             <th scope="row"><label for="category_description">{{ __('home.Mô tả') }}</label></th>
-                            <td><textarea name="category_description" id="category_description" rows="5" cols="50"
-                                          class="large-text"
-                                          aria-describedby="description-description">{{$category->description}}</textarea>
-                              </td>
+                            <td>
+                                <textarea name="category_description" id="category_description" rows="5" cols="50" class="large-text" aria-describedby="description-description">{{$category->description}}
+                                </textarea>
+                            </td>
                         </tr>
                         {{--                        <tr class="form-field term-display-type-wrap">--}}
                         {{--                            <th scope="row" valign="top"><label>Display type</label></th>--}}
@@ -85,15 +85,19 @@
                                 <input name="thumbnail" id="thumbnail" type="file">
                             </td>
                         </tr>
+                        <tr class="form-field">
+                            <th scope="row" valign="top"><label>{{ __('home.icon') }}</label></th>
+                            <td>
+                                <img width="60px" height="60px"
+                                     src="{{ asset('storage/'.$category->icon) }}" alt="Thumbnail">
+                                <input name="icon" id="icon" type="file">
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
-
                     <div class="edit-tag-actions">
-
                         <input type="submit" class="button button-primary" value="{{ __('home.Cập nhật') }}">
-
                     </div>
-
                 </form>
             </div>
         </div>

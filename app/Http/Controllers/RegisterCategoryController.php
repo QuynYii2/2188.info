@@ -20,7 +20,7 @@ class RegisterCategoryController extends Controller
 {
 
     public function registerCategory($id, Request $request){
-        var_dump($id);
+
         (new HomeController())->getLocale($request);
         try {
             $registerCate = MemberRegisterPersonSource::where('email', Auth::user()->email)->get();

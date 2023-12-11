@@ -34,7 +34,7 @@
                     <input required type="password" class="form-control" id="password" name="password" disabled>
                     <input type="checkbox" id="inputCheckboxPassword">
                     <label for="inputCheckboxPassword">
-                       Cập nhập password
+                        {{ __('home.Cập nhập password') }}
                     </label>
                 </div>
                 <div class="form-group col-md-4">

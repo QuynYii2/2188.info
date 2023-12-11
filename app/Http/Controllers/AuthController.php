@@ -60,7 +60,7 @@ class AuthController extends Controller
 //                StatisticAccess::create($statisticRevenue);
 //            }
             // nếu đăng nhập thàng công thì
-            return redirect()->route('home');
+            return redirect()->route('homepage');
         } else {
             return view('frontend/pages/login');
         }
@@ -70,7 +70,7 @@ class AuthController extends Controller
     {
         app()->setLocale($locale);
         if (Auth::check()) {
-            return redirect()->route('home');
+            return redirect()->route('homepage');
         } else {
             return view('frontend/pages/login');
         }
@@ -101,28 +101,18 @@ class AuthController extends Controller
             return back();
         }
 
-        $locale = $this->getLocale($request);
-//        dd($locale, $user->region);
+        $locale = app()->getLocale();
 
+        $isAdmin = false;
         if ($user) {
             $role_id = DB::table('role_user')->where('user_id', $user->id)->get();
 
-            $isAdmin = false;
             foreach ($role_id as $item) {
                 if ($item->role_id == 1) {
                     $isAdmin = true;
                 }
             }
 
-            if ($isAdmin == false) {
-                if ($locale != 'en') {
-                    if ($user->region != $locale) {
-                        toast('Tài khoản của bạn không dành cho khu vực này. Vui lòng chọn khu vực khách phù hợp',
-                            'error', 'top-right');
-                        return back();
-                    }
-                }
-            }
         }
 
         if (Auth::attempt($credentials)) {
@@ -132,6 +122,10 @@ class AuthController extends Controller
             User::where('id', Auth::id())->update(['token' => $token]);
 
             $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+
+            $memberLogistic = Member::where('name', RegisterMember::LOGISTIC)->first();
+            $memberTrust = Member::where('name', RegisterMember::TRUST)->first();
+
             $isMember = null;
             if ($memberPerson) {
                 $member = MemberRegisterInfo::where([
@@ -141,13 +135,17 @@ class AuthController extends Controller
                 if ($member) {
                     $isMember = true;
                 }
-//                dd($isMember, $member->member, RegisterMember::BUYER);
-                if ($isMember && $member->member == RegisterMember::LOGISTIC) {
+
+                if ($isAdmin == true) {
+                    return redirect()->route('seller.products.home');
+                }
+
+                if ($isMember && $member->member_id == $memberLogistic->id) {
                     return redirect()->route('stand.register.member.index', ['id' => $member->id]);
-                } elseif ($isMember && $member->member == RegisterMember::TRUST) {
+                } elseif ($isMember && $member->member_id == $memberTrust->id) {
                     return redirect()->route('trust.register.member.index');
                 } else {
-                    return redirect()->route('home');
+                    return redirect()->route('homepage');
                 }
             }
         } else {
@@ -243,7 +241,7 @@ class AuthController extends Controller
             $request->session()->put('login', $googleUser);
             $login = $request->session()->get('login');
 
-            return redirect()->route('home');
+            return redirect()->route('homepage');
 
         } catch (\Exception $exception) {
             return $exception;
@@ -293,7 +291,7 @@ class AuthController extends Controller
         for ($i = 0; $i < $maxAttempts; $i++) {
             $random_char1 = $characters[rand(0, strlen($characters) - 1)];
             $random_char2 = $characters[rand(0, strlen($characters) - 1)];
-            $random_string = $random_char1.$random_char2;
+            $random_string = $random_char1 . $random_char2;
 
             // Kiểm tra xem $random_string đã tồn tại trong bảng hay chưa
             $existingIsoCodes = DB::table($table)->pluck($column)->toArray();
@@ -315,7 +313,7 @@ class AuthController extends Controller
             $random_char1 = $characters[rand(0, strlen($characters) - 1)];
             $random_char2 = $characters[rand(0, strlen($characters) - 1)];
             $random_char3 = $characters[rand(0, strlen($characters) - 1)];
-            $random_string = $random_char1.$random_char2.$random_char3;
+            $random_string = $random_char1 . $random_char2 . $random_char3;
 
             $existingIsoCodes = DB::table($table)->pluck($column)->toArray();
 
@@ -343,7 +341,7 @@ class AuthController extends Controller
             case "2":
                 $this->createDistrict($request);
         }
-        return redirect(route('show.register.member.info', $id_reg));
+        return back();
     }
 
     public function createNation($request)
@@ -452,11 +450,9 @@ class AuthController extends Controller
         return response()->json($listWard);
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
         Auth::logout();
-        Session::forget('login');
-
         return redirect('/');
     }
 

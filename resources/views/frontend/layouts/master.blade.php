@@ -1,6 +1,6 @@
 @php use App\Http\Controllers\Frontend\HomeController;use Illuminate\Support\Facades\Auth;
  $currentRouteName = Route::getCurrentRoute()->getName();
- $arrNameNeedHid = ['stand.register.member.index', 'partner.register.member.index', 'parent.register.member.locale', 'chat.message.received', 'chat.message.sent', 'chat.message.show'];
+ $arrNameNeedHid = ['stand.register.member.index','home.login','show.register.member.ship','show.register.member.logistic.congratulation','register.show','show.register.member','show.register.member.info','show.register.member.person.source', 'partner.register.member.index', 'parent.register.member.locale', 'chat.message.received', 'chat.message.sent', 'chat.message.show','staff.member.info'];
 $isRoute = in_array($currentRouteName, $arrNameNeedHid);
 @endphp
         <!DOCTYPE html>
@@ -70,6 +70,7 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,400;1,700&family=Inter:wght@400;500;600;700&family=Nunito+Sans:wght@400;500&family=Poppins:wght@300&family=Roboto+Slab:wght@400;500&family=Roboto:wght@500&family=Rubik:wght@300;400;500&display=swap"
           rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100&family=Roboto:wght@100&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
     <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -107,19 +108,109 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
 @include('frontend.layouts.partials.header', ['infoUser' => $infoUser ?? '', 'isRoute' => $isRoute ])
 @include('sweetalert::alert')
 
-<div class="{{ $isRoute ? ' mt-5' : 'marginTop-body' }}" id="mt-body {{ $isRoute ? ' booth' : '' }} ">
-    @yield('content')
-</div>
+<div class="{{ $isRoute ? '' : 'marginTop-body' }} body" id="mt-body {{ $isRoute ? ' booth' : '' }} ">
+    <div>
+        @yield('content')
+    </div>
 
-<!-- Footer -->
-@include('frontend.layouts.partials.footer', ['isRoute' => $isRoute])
-
-<!-- Back to top -->
-<div class="btn-back-to-top" id="myBtn">
+    <!-- Footer -->
+    @include('frontend.layouts.partials.footer', ['isRoute' => $isRoute])
+    {{----}}
+    <!-- Back to top -->
+    <div class="btn-back-to-top" id="myBtn">
     <span class="symbol-btn-back-to-top">
         <i class="zmdi zmdi-chevron-up"></i>
     </span>
+    </div>
 </div>
 </body>
 <script src="{{ asset('js/frontend.js') }}"></script>
+<script>
+    /* thành xóa d-none */
+    function hidden() {
+        const arrayHidden = ['header-bottom'];
+        for (let i = 0; i < arrayHidden.length; i++) {
+            $('.' + arrayHidden[i]).addClass('');
+        }
+    }
+
+    hidden();
+
+    async function getLanguage() {
+        let mainHost = location.hostname;
+        const userLocale = navigator.language || navigator.userLanguage;
+        console.log(userLocale)
+
+        let lang = null;
+
+        switch (userLocale) {
+            case 'vi':
+                lang = 'vi';
+                break;
+            case 'ko':
+                lang = 'kr';
+                break;
+            case 'zh-CN':
+                lang = 'cn';
+                break;
+            case 'ja':
+                lang = 'jp';
+                break;
+            default:
+                lang = 'en';
+                break;
+        }
+
+        let url = `{{route('app.change.locale')}}`;
+
+        await changeUrl(url, lang);
+
+        $('#localeInput').val(lang);
+
+        if (sessionStorage.getItem('languageRedirected') === 'true' || mainHost === 'localhost' || mainHost === '127.0.0.1') {
+            return;
+        }
+
+        sessionStorage.setItem('languageRedirected', 'true');
+
+        var redirectURL = 'https://2188.info/';
+
+        var localeMappings = {
+            'vi': 'https://vn.2188.info/',
+            'ko': 'https://kr.2188.info/',
+            'zh': 'https://cn.2188.info/',
+            'ja': 'https://jp.2188.info/'
+        };
+
+        for (var locale in localeMappings) {
+            if (userLocale.startsWith(locale)) {
+                redirectURL = localeMappings[locale];
+                break;
+            }
+        }
+
+        window.location.href = redirectURL;
+    }
+
+    async function changeUrl(url, lang) {
+        await $.ajax({
+            url: url,
+            method: 'POST',
+            data: {
+                _token: `{{csrf_token()}}`,
+                locale: lang
+            },
+        })
+            .done(function (response) {
+                let item = `{{app()->getLocale()}}`;
+                console.log(item)
+            })
+            .fail(function (_, textStatus) {
+                console.log(textStatus)
+            });
+    }
+
+    getLanguage();
+
+</script>
 </html>

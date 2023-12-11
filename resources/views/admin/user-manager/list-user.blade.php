@@ -1,45 +1,112 @@
+@php use App\Models\MemberRegisterInfo;use App\Models\Role; @endphp
+@php use App\Models\Order; @endphp
+@php use App\Models\Product; @endphp
 @extends('backend.layouts.master')
 @section('title')
     User Manager
 @endsection
 @section('content')
-    <div class="container">
+    <style>
+        .pagination {
+            height: 100px;
+            font-size: 24px;
+        }
+
+        .pagination li a{
+            margin: 4px;
+            padding: 4px;
+            color: #cccccc;
+            text-decoration: none;
+        }
+
+        .pagination li.active{
+            color: rgba(255, 165, 0, 0.93);
+        }
+
+        .pagination li a:hover{
+            color: rgba(238, 207, 51, 0.82);
+        }
+
+        ul.pagination > li:first-child {
+            margin-right: 8px;
+        }
+
+        ul.pagination > li:last-child {
+            margin-left: 8px;
+        }
+    </style>
+    <div class="">
         <section class="section ">
             <div class="">
-                <div class="row mt-3">
-                    <div class="col-md-6 mb-3">
-                        <h5>Search User</h5>
-                        <input class="form-control" id="inputSearchUser" type="text" placeholder="Search..">
+                <form id="form-search">
+                    <div class="row mt-3 mb-3">
+                        <div class="form-group col-md-4">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" placeholder="name">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="email">Email</label>
+                            <input type="text" class="form-control" id="email" placeholder="email">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="email">Phone</label>
+                            <input type="text" class="form-control" id="phone" placeholder="phone">
+                        </div>
                     </div>
-                </div>
-                <div class="row mt-3 mb-3">
-                    <div class="form-group col-md-3">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" placeholder="name">
+                    <div class="row mt-3 mb-3">
+                        <div class="form-group col-md-4">
+                            <label for="member">Member</label>
+                            <select id="member" class="form-control" name="member">
+                                <option value="" selected></option>
+                                @if($members->isNotEmpty())
+                                    @foreach($members as $member)
+                                        <option value="{{$member->name}}">{{$member->name}}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4 d-none">
+                            <label for="role">Role</label>
+                            <select id="role" class="form-control" name="role">
+                                <option value="" selected></option>
+                                @if($roles->isNotEmpty())
+                                    @foreach($roles as $role)
+                                        <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="role">Category</label>
+                            <select id="category" class="form-control" name="category">
+                                <option value="" selected></option>
+                                @if($categories->isNotEmpty())
+                                    @foreach($categories as $category)
+                                        @switch(locationHelper())
+                                            @case('kr')
+                                                <option value="{{ $category->id }}">{{ $category->name_kr }}</option>
+                                                @break
+                                            @case('cn')
+                                                <option value="{{ $category->id }}">{{ $category->name_zh }}</option>
+                                                @break
+                                            @case('jp')
+                                                <option value="{{ $category->id }}">{{ $category->name_ja }}</option>
+                                                @break
+                                            @case('vi')
+                                                <option value="{{ $category->id }}">{{ $category->name_vi }}</option>
+                                                @break
+                                            @default
+                                                <option value="{{ $category->id }}">{{ $category->name_en }}</option>
+                                        @endswitch
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group col-md-3">
-                        <label for="email">Email</label>
-                        <input type="text" class="form-control" id="email" placeholder="email">
+                    <div class="row float-right mb-3">
+                        <button class="btn btn-primary" type="button" onclick="searchListUser()">search</button>
                     </div>
-                    <div class="form-group col-md-3">
-                        <label for="member">Member</label>
-                        <select id="member" class="form-control" name="member">
-                            @if($members->isNotEmpty())
-                                @foreach($members as $member)
-                                    <option value="{{$member->name}}">{{$member->name}}</option>
-                                @endforeach
-                            @endif
-                        </select>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="role">Role</label>
-                        <select id="role" class="form-control" name="role">
-                            <option value="buyer">BUYER</option>
-                            <option value="seller">SELLER</option>
-                            <option value="super_admin">ADMIN</option>
-                        </select>
-                    </div>
-                </div>
+                </form>
                 <br>
                 <table class="table table-bordered" id="tableUser">
                     <thead>
@@ -50,6 +117,7 @@
                         <th scope="col">Phone</th>
                         <th scope="col">Role</th>
                         <th scope="col">Member</th>
+                        <th scope="col">Category</th>
                         <th scope="col">Region</th>
                         <th scope="col">Order</th>
                         <th scope="col">Products</th>
@@ -57,7 +125,7 @@
                         <th scope="col">Action</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tbody-user">
                     @if(!$users->isEmpty())
                         @foreach($users as $user)
                             <tr>
@@ -74,25 +142,52 @@
                                     @endif
                                     @foreach($user_roles as $user_role)
                                         @php
-                                            $role = \App\Models\Role::find($user_role->role_id)
+                                            $role = Role::find($user_role->role_id)
                                         @endphp
                                         {{$role->name}}
                                         <br>
                                     @endforeach
                                 </td>
                                 <td class="table-member">{{$user->member}}</td>
+                                @php
+                                    $cates = MemberRegisterInfo::where('user_id', $user->id)->first('category_id');
+                                    $cateName = [];
+                                    if($cates){
+                                    $cates = explode(',', $cates->category_id);
+                                    $listCate = \App\Models\Category::whereIn('id', $cates)->get();
+                                    foreach ($listCate as $cate) {
+                                        switch (locationHelper()) {
+                                            case 'kr':
+                                                array_push($cateName, $cate->name_kr);
+                                                break;
+                                            case 'cn':
+                                                array_push($cateName, $cate->name_zh);
+                                                break;
+                                            case 'jp':
+                                                array_push($cateName, $cate->name_ja);
+                                                break;
+                                            case 'vi':
+                                                array_push($cateName, $cate->name_vi);
+                                                break;
+                                            default:
+                                                array_push($cateName, $cate->name_en);
+                                        }
+                                    }
+                                    }
+                                @endphp
+                                <td>{{ implode(', ', $cateName) }}</td>
                                 <td>{{$user->region}}</td>
 
                                 <td>
                                     @php
-                                        $orders = \App\Models\Order::where('user_id', $user->id)->get();
+                                        $orders = Order::where('user_id', $user->id)->get();
                                     @endphp
                                     {{count($orders)}}
                                 </td>
 
                                 <td>
                                     @php
-                                        $products = \App\Models\Product::where('user_id', $user->id)->get();
+                                        $products = Product::where('user_id', $user->id)->get();
                                     @endphp
                                     {{count($products)}}
                                 </td>
@@ -113,10 +208,41 @@
                     @endif
                     </tbody>
                 </table>
-                {{ $users->links() }}
+                {{ $users->links('vendor.pagination.default') }}
             </div>
         </section>
     </div>
 
-    <script src="{{ asset('js/admin/list-user.js') }}"></script>
+    <script>
+        function searchListUser() {
+            let name = $('#name').val();
+            let email = $('#email').val();
+            let phone = $('#phone').val();
+            let member = $('#member').val();
+            let role = $('#role').val();
+            let category = $('#category').val();
+
+            let url = "{{route('admin.search.users')}}";
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: {
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    member: member,
+                    role: role,
+                    category: category,
+                    _token: '{{csrf_token()}}'
+                },
+                success: function (data) {
+                    $('#tbody-user').html(data);
+                }
+            });
+        }
+
+        function renderJson2Html() {
+
+        }
+    </script>
 @endsection

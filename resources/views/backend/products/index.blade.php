@@ -4,7 +4,7 @@
     List Products
 @endsection
 @php
-    use Illuminate\Support\Facades\Auth;
+    use App\Http\Controllers\Frontend\HomeController;use App\Http\Controllers\TranslateController;use App\Models\ProductSale;use App\Models\Properties;use App\Models\Variation;use Illuminate\Support\Facades\Auth;
     use Illuminate\Support\Facades\DB;
     use App\Enums\PermissionUserStatus;
 
@@ -18,7 +18,7 @@
         $permissionUsers[]= null;
     }
 
-    $isAdmin = (new  \App\Http\Controllers\Frontend\HomeController())->checkAdmin();
+    $isAdmin = (new  HomeController())->checkAdmin();
 @endphp
 @section('content')
     <div id="wpbody-content" class="snipcss-PfbzX">
@@ -26,27 +26,33 @@
             <form action="{{ route('seller.products.search') }}" id="searchInput" class="row my-2 pl-3">
                 @csrf
                 <div class="col-sm-2">
-                    <input placeholder={{ __('home.full name') }} type="text" class="form-control" id="fullName" name="fullName" value="{{ isset($phoneNumber) ? $phoneNumber : '' }}"
+                    <input placeholder={{ __('home.full name') }} type="text" class="form-control" id="fullName"
+                           name="fullName" value="{{ isset($fullName) ? $fullName : '' }}"
                            data-date-split-input="true">
                 </div>
                 <div class="col-sm-2">
-                    <input placeholder="Phone Number" type="text" class="form-control" id="phoneNumber" name="phoneNumber" value="{{ isset($phoneNumber) ? $phoneNumber : '' }}"
+                    <input placeholder="Phone Number" type="text" class="form-control" id="phoneNumber"
+                           name="phoneNumber" value="{{ isset($phoneNumber) ? $phoneNumber : '' }}"
                            data-date-split-input="true">
                 </div>
                 <div class="col-sm-2">
-                    <input placeholder="Email" type="text" class="form-control" id="email" name="email" value="{{ isset($email) ? $email : '' }}"
+                    <input placeholder="Email" type="text" class="form-control" id="email" name="email"
+                           value="{{ isset($email) ? $email : '' }}"
                            data-date-split-input="true">
                 </div>
                 <div class="col-sm-2">
-                    <input placeholder={{ __('home.từ ngày') }}"" type="date" class="form-control" id="from_date" name="from_date" value="{{ isset($from_date) ? $from_date : '' }}"
+                    <input placeholder={{ __('home.từ ngày') }}"" type="date" class="form-control" id="from_date"
+                           name="from_date" value="{{ isset($from_date) ? $from_date : '' }}"
                            data-date-split-input="true">
                 </div>
                 <div class="col-sm-2">
-                    <input placeholder={{ __('home.đến ngày') }} type="date" class="form-control" id="to_date" name="to_date" value="{{ isset($to_date) ? $to_date : '' }}"
+                    <input placeholder={{ __('home.đến ngày') }} type="date" class="form-control" id="to_date"
+                           name="to_date" value="{{ isset($to_date) ? $to_date : '' }}"
                            data-date-split-input="true">
                 </div>
                 <div class="col-sm-2">
-                    <button type="submit" class="btn btn-success position-absolute" style="bottom: 0">{{ __('home.search') }}</button>
+                    <button type="submit" class="btn btn-success position-absolute"
+                            style="bottom: 0">{{ __('home.search') }}</button>
                 </div>
             </form>
             {{--START TABLE--}}
@@ -138,9 +144,12 @@
                             </th>
                             <td class="thumb column-thumb" data-colname="Image">
                                 <a href="#">
+                                    @php
+                                        $thumbnail = checkThumbnail($product->thumbnail);
+                                    @endphp
                                     @if($product->thumbnail)
                                         <img width="150" height="150"
-                                             src="{{ asset('storage/'.$product->thumbnail) }}"
+                                             src="{{ $thumbnail }}"
                                              class="woocommerce-placeholder wp-post-image" alt="Placeholder"
                                              decoding="async"
                                              loading="lazy">
@@ -157,11 +166,17 @@
                                 <strong>
                                     <a class="row-title"
                                        href="{{route('seller.products.edit', $product->id)}}">
-                                        @php
-                                            $ld = new \App\Http\Controllers\TranslateController();
-                                        @endphp
-                                        {{$product->name}}
-                                        {{ $ld->translateText($product->name, locationPermissionHelper()) }}
+                                        @if(locationHelper() == 'kr')
+                                            <div class="item-text">{{ $product->name_ko }}</div>
+                                        @elseif(locationHelper() == 'cn')
+                                            <div class="item-text">{{$product->name_zh}}</div>
+                                        @elseif(locationHelper() == 'jp')
+                                            <div class="item-text">{{$product->name_ja}}</div>
+                                        @elseif(locationHelper() == 'vi')
+                                            <div class="item-text">{{$product->name_vi}}</div>
+                                        @else
+                                            <div class="item-text">{{$product->name_en}}</div>
+                                        @endif
 
                                     </a>
                                 </strong>
@@ -204,7 +219,7 @@
                                                             </button>
                                                           </div>
                                                                 @php
-                                                                    $productDetails = \App\Models\Variation::where('product_id', $product->id)->get();
+                                                                    $productDetails = Variation::where('product_id', $product->id)->get();
                                                                 @endphp
                                                           <div class="modal-body">
 
@@ -221,20 +236,20 @@
                                                                             name="category_id">
                                                                         <option value="">-- Select Category --</option>
 {{--                                                                        @foreach ($categories as $category)--}}
-{{--                                                                            <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>--}}
-{{--                                                                                @if(locationHelper() == 'kr')--}}
-{{--                                                                                    <div class="text">{{ $category->name_ko }}</div>--}}
-{{--                                                                                @elseif(locationHelper() == 'cn')--}}
-{{--                                                                                    <div class="text">{{$category->name_zh}}</div>--}}
-{{--                                                                                @elseif(locationHelper() == 'jp')--}}
-{{--                                                                                    <div class="text">{{$category->name_ja}}</div>--}}
-{{--                                                                                @elseif(locationHelper() == 'vi')--}}
-{{--                                                                                    <div class="text">{{$category->name_vi}}</div>--}}
-{{--                                                                                @else--}}
-{{--                                                                                    <div class="text">{{$category->name_en}}</div>--}}
-{{--                                                                                @endif--}}
-{{--                                                                            </option>--}}
-{{--                                                                        @endforeach--}}
+                                                                        {{--                                                                            <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>--}}
+                                                                        {{--                                                                                @if(locationHelper() == 'kr')--}}
+                                                                        {{--                                                                                    <div class="text">{{ $category->name_ko }}</div>--}}
+                                                                        {{--                                                                                @elseif(locationHelper() == 'cn')--}}
+                                                                        {{--                                                                                    <div class="text">{{$category->name_zh}}</div>--}}
+                                                                        {{--                                                                                @elseif(locationHelper() == 'jp')--}}
+                                                                        {{--                                                                                    <div class="text">{{$category->name_ja}}</div>--}}
+                                                                        {{--                                                                                @elseif(locationHelper() == 'vi')--}}
+                                                                        {{--                                                                                    <div class="text">{{$category->name_vi}}</div>--}}
+                                                                        {{--                                                                                @else--}}
+                                                                        {{--                                                                                    <div class="text">{{$category->name_en}}</div>--}}
+                                                                        {{--                                                                                @endif--}}
+                                                                        {{--                                                                            </option>--}}
+                                                                        {{--                                                                        @endforeach--}}
                                                                     </select>
                                                                 </div>
                         <div class="form-group">
@@ -263,7 +278,7 @@
                                     </div>
                                     <div id="base-package-fields" hidden>
                                         @php
-                                            $price_sales = \App\Models\ProductSale::where('product_id', '=', $product->id)->get();
+                                            $price_sales = ProductSale::where('product_id', '=', $product->id)->get();
                                         @endphp
                                         @if(!$price_sales->isEmpty())
                                             @foreach($price_sales as $price_sale)
@@ -308,24 +323,24 @@
                                 </div>
                             </div>
                         </div>
-                                                                <div class="form-group">
+                                                              <div class="form-group">
                                                                     @if(!$productDetails->isEmpty())
-                                                                        @if(count($productDetails)>1)
-                                                                            @foreach($productDetails as $productDetail)
-                                                                                @if($productDetail->variation && $productDetail->variation != 0)
-                                                                                    <div class="form-group">
+                                                                      @if(count($productDetails)>1)
+                                                                          @foreach($productDetails as $productDetail)
+                                                                              @if($productDetail->variation && $productDetail->variation != 0)
+                                                                                  <div class="form-group">
                                                                                 <label class="control-label">{{ __('home.Thông số sản phẩm') }}</label>
                                                                                 @php
                                                                                     $variable = $productDetail->variation;
                                                                                     $arrayVariation = explode(',', $variable);
                                                                                 @endphp
-                                                                                        @foreach($arrayVariation as $itemVariation)
-                                                                                            @php
-                                                                                                $arrayItemVariation = explode('-', $itemVariation);
-                                                                                                $attributeVariation = \App\Models\Attribute::find($arrayItemVariation[0]);
-                                                                                                $propertyVariation = \App\Models\Properties::find($arrayItemVariation[1]);
-                                                                                            @endphp
-                                                                                            <div class="">
+                                                                                      @foreach($arrayVariation as $itemVariation)
+                                                                                          @php
+                                                                                              $arrayItemVariation = explode('-', $itemVariation);
+                                                                                              $attributeVariation = \App\Models\Attribute::find($arrayItemVariation[0]);
+                                                                                              $propertyVariation = Properties::find($arrayItemVariation[1]);
+                                                                                          @endphp
+                                                                                          <div class="">
                                                                                             <label class="control-label"
                                                                                                    for="color">{{$attributeVariation->name}}</label>
                                                                                         <div class="col-md-12 overflow-scroll custom-scrollbar">
@@ -344,10 +359,10 @@
                                                                                                 </ul>
                                                                                             </div>
                                                                                         </div>
-                                                                                        @endforeach
+                                                                                      @endforeach
                                                                             </div>
 
-                                                                                    <div class="form-group">
+                                                                                  <div class="form-group">
                                                                                     <label for="price">{{ __('home.Giá bán') }}</label>
                                                                                     <input type="number"
                                                                                            class="form-control"
@@ -356,7 +371,7 @@
                                                                                            value="{{ $productDetail->old_price }}">
                                                                             </div>
 
-                                                                                    <div class="form-group">
+                                                                                  <div class="form-group">
                                                                                     <label for="qty">{{ __('home.Giá khuyến mãi') }}</label>
                                                                                     <input type="number"
                                                                                            class="form-control"
@@ -365,7 +380,7 @@
                                                                                            value="{{$productDetail->price }}">
                                                                             </div>
 
-                                                                                    <div class="form-group">
+                                                                                  <div class="form-group">
                                                                                         <div class="name">{{ __('home.Nhập số lượng') }}</div>
                                                                                         <input type="number"
                                                                                                class="form-control"
@@ -375,7 +390,7 @@
                                                                                                min="1">
                                                                                     </div>
 
-                                                                                    <div class="form-group">
+                                                                                  <div class="form-group">
                                                                                 <label for="thumbnail">{{ __('home.thumbnail') }}</label>
                                                                                 <input type="file"
                                                                                        class="form-control-file"
@@ -383,25 +398,25 @@
                                                                                        name="thumbnail{{$productDetail->id}}"
                                                                                        accept="image/*">
                                                                                 @if ($productDetail->thumbnail)
-                                                                                            <img class="mt-2"
-                                                                                                 style="height: 100px"
-                                                                                                 src="{{ asset('storage/' . $productDetail->thumbnail) }}"
-                                                                                                 alt="Thumbnail">
-                                                                                            </a>
-                                                                                        @endif
+                                                                                          <img class="mt-2"
+                                                                                               style="height: 100px"
+                                                                                               src="{{ asset('storage/' . $productDetail->thumbnail) }}"
+                                                                                               alt="Thumbnail">
+                                                                                          </a>
+                                                                                      @endif
                                                                             </div>
-                                                                                @endif
-                                                                                <input hidden=""
-                                                                                       name="id{{$loop->index+1}}"
-                                                                                       value="{{$productDetail->id}}">
-                                                                            @endforeach
-                                                                            <input hidden="" name="countBegin"
-                                                                                   value="{{count($productDetails)}}">
-                                                                        @else
-                                                                            @php
-                                                                                $productDetail = $productDetails[0];
-                                                                            @endphp
-                                                                            <div class="form-group">
+                                                                              @endif
+                                                                              <input hidden=""
+                                                                                     name="id{{$loop->index+1}}"
+                                                                                     value="{{$productDetail->id}}">
+                                                                          @endforeach
+                                                                          <input hidden="" name="countBegin"
+                                                                                 value="{{count($productDetails)}}">
+                                                                      @else
+                                                                          @php
+                                                                              $productDetail = $productDetails[0];
+                                                                          @endphp
+                                                                          <div class="form-group">
                                                                                     <label for="price">{{ __('home.Giá bán') }}</label>
                                                                                     <input type="number"
                                                                                            class="form-control"
@@ -410,7 +425,7 @@
                                                                                            value="{{ $productDetail->old_price }}">
                                                                             </div>
 
-                                                                            <div class="form-group">
+                                                                          <div class="form-group">
                                                                                 <label for="qty">{{ __('home.Giá khuyến mãi') }}</label>
                                                                                 <input type="number"
                                                                                        class="form-control"
@@ -418,7 +433,7 @@
                                                                                        name="price1"
                                                                                        value="{{$productDetail->price }}">
                                                                             </div>
-                                                                            <div class="form-group">
+                                                                          <div class="form-group">
                                                                                 <label for="thumbnail">{{ __('home.thumbnail') }}</label>
                                                                                 <input type="file"
                                                                                        class="form-control-file"
@@ -426,22 +441,21 @@
                                                                                        name="thumbnail{{$loop->index+1}}"
                                                                                        accept="image/*">
                                                                                 @if ($productDetail->thumbnail)
-                                                                                    <img class="mt-2"
-                                                                                         style="height: 100px"
-                                                                                         src="{{ asset('storage/' . $productDetail->thumbnail) }}"
-                                                                                         alt="Thumbnail">
-                                                                                    </a>
-                                                                                @endif
+                                                                                  <img class="mt-2"
+                                                                                       style="height: 100px"
+                                                                                       src="{{ asset('storage/' . $productDetail->thumbnail) }}"
+                                                                                       alt="Thumbnail">
+                                                                                  </a>
+                                                                              @endif
                                                                             </div>
-                                                                            <input hidden="" name="countBegin"
-                                                                                   value="1">
-                                                                        @endif
-                                                                    @endif
+                                                                          <input hidden="" name="countBegin"
+                                                                                 value="1">
+                                                                      @endif
+                                                                  @endif
                                                                 </div>
-
-                                                                <input id="inputHotProduct{{$product->id}}" type="text"
-                                                                       class="d-none"
-                                                                       value="{{ $product->hot }}">
+                                                              <input id="inputHotProduct{{$product->id}}" type="text"
+                                                                     class="d-none"
+                                                                     value="{{ $product->hot }}">
                                                                 <input id="inputFeatureProduct{{$product->id}}"
                                                                        type="text"
                                                                        class="d-none"
@@ -493,12 +507,15 @@
                                                                     @endphp
                                                                     @if ($product->gallery )
                                                                         @foreach ($modifiedArray as $image)
-                                                                            <a href="{{ asset('storage/' . $image) }}"
+                                                                            @php
+                                                                                $thumbnail = checkThumbnail($image);
+                                                                            @endphp
+                                                                            <a href="{{ $thumbnail }}"
                                                                                data-fancybox="group"
                                                                                data-caption="This image has a caption 1">
                                                                                 <img class="mt-2"
                                                                                      style="height: 100px; width: 100px "
-                                                                                     src="{{ asset('storage/' . $image) }}"
+                                                                                     src="{{ $thumbnail }}"
                                                                                      alt="Gallery Image" width="100">
                                                                             </a>
                                                                         @endforeach
@@ -545,7 +562,7 @@
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <h5 class="text-center">
-                                                                        {{ __('home.Bạn có chắc chắn muốn xoá') }} : {{$product->name}}
+                                                                        {{ __('home.Bạn có chắc chắn muốn xoá') }}
                                                                     </h5>
                                                                     <p class="text-danger">
                                                                         {{ __('home.Nếu xoá bạn sẽ không thể không thể tìm thấy nó!Chúng tôi sẽ không chịu trách nhiệm cho việc này!') }}
@@ -563,25 +580,7 @@
                                                     </div>
                                           |
                                     </span>
-                                    <span class="view">
-                                          <a href="#" rel="bookmark"
-                                             aria-label="Xem “{{$product->name}}”">
-                                            Xem
-                                          </a>
-                                          |
-                                    </span>
-                                    <span class="duplicate">
-                                        <a href="#"
-                                           aria-label="Make a duplicate from this product" rel="permalink">
-                                            Duplicate
-                                        </a>
-                                    </span>
                                 </div>
-                                <button type="button" class="toggle-row">
-                                    <span class="screen-reader-text">
-                                        Hiển thị chi tiết
-                                    </span>
-                                </button>
                             </td>
                             <td class="sku column-sku" data-colname="SKU">
                                 @php
@@ -698,10 +697,16 @@
             </table>
         </div>
     </div>
+    {{ $products->links() }}
     <script>
         var url = `{{ route('seller.products.hot', ['id' => ':productID']) }}`;
         var urla = `{{ route('seller.products.feature', ['id' => ':productID']) }}`;
         var token = `{{ csrf_token() }}`;
     </script>
+    <script>
+        localStorage.setItem('searchInput', document.getElementById('fullName').value);
+        document.getElementById('fullName').value = localStorage.getItem('searchInput');
+    </script>
+    <script src="{{ asset('js/backend/list.js') }}"></script>
     <script src="{{ asset('js/backend/products-index.js') }}"></script>
 @endsection

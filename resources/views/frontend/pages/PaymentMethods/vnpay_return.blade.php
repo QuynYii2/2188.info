@@ -116,7 +116,10 @@ $secureHash = hash_hmac('sha512', $hashData, $vnp_HashSecret);
                 <div class="product-item col-12 d-flex justify-content-between">
                     <div class="d-flex align-items-center">
                         <div class="img">
-                            <img src="{{asset('storage/'. $product->thumbnail)}}" alt="">
+                            @php
+                                $thumbnail = checkThumbnail($product->thumbnail);
+                            @endphp
+                            <img src="{{$thumbnail}}" alt="">
                         </div>
                         <div class="name">{{$product->name}}</div>
                     </div>
@@ -135,7 +138,7 @@ $secureHash = hash_hmac('sha512', $hashData, $vnp_HashSecret);
             @endif
         @endforeach
     </div>
-    <form class="text-center mt-4 mb-4" action="{{ route('home') }}" method="GET">
+    <form class="text-center mt-4 mb-4" action="{{ route('homepage') }}" method="GET">
         @csrf
         <button class="btn-success btn button" type="submit">{{ __('home.Home') }}</button>
     </form>

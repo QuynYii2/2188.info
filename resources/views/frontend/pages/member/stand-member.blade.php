@@ -12,10 +12,9 @@
 @section('content')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
-    <div class="container stand-member">
+    <div class="container stand-member mt-5">
         @if($company)
-            <h3 class="text-center">{{ __('home.Member booth') }}{{$company->member}}</h3>
-            {{--            <h3 class="text-left">{{ __('home.Member') }}{{$company->member}}</h3>--}}
+            <h3 class="text-center">{{ __('home.Member booth') }}</h3>
             @include('frontend.pages.member.header_member')
             <div class="row m-0">
                 <div class="col-md-6 border">
@@ -126,6 +125,7 @@
                 </div>
             </div>
     </div>
+
     <div class="mt-3 container">
         <div id="data-wrapper">
             @include('products-member')
@@ -301,6 +301,22 @@
         var page = 1;
         let isLoading = false;
 
+        function checkItem() {
+            let products = document.getElementsByClassName('thumbnailProduct');
+            if(products.length < 6){
+                $('.auto-load').hide();
+            }
+        }
+
+        checkItem();
+
+        function loadMore() {
+            if (!isLoading) {
+                isLoading = true;
+                page++;
+                infinteLoadMore(page);
+            }
+        }
         /*------------------------------------------
         --------------------------------------------
         Call on Scroll
@@ -308,9 +324,13 @@
         --------------------------------------------*/
         $(window).scroll(function () {
             if ($(window).scrollTop() + $(window).height() >= ($(document).height() - 20)) {
+                let products = document.getElementsByClassName('thumbnailProduct');
+                console.log(products.length)
                 setTimeout(() => {
                     page++;
-                    infinteLoadMore(page);
+                    if(products.length > 6){
+                        infinteLoadMore(page);
+                    }
                 }, 1500);
             }
         });

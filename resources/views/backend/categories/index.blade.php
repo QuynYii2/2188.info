@@ -82,7 +82,13 @@
                                 <div>
                                     <input type="file" name="thumbnail" class="upload_image_button" required>
                                 </div>
-                                <div class="clear">
+                            </div>
+                            <div class="form-field term-thumbnail-wrap">
+                                <label>
+                                    {{ __('home.icon') }}
+                                </label>
+                                <div>
+                                    <input type="file" name="icon" class="upload_icon_button" required>
                                 </div>
                             </div>
                             <p class="submit">
@@ -231,11 +237,16 @@
                                                                             </tr>
 
                                                                             <tr class="form-field term-slug-wrap">
-                                                                                <th scope="row"><label for="category_stt">
+                                                                                <th scope="row"><label
+                                                                                            for="category_stt">
                                                                                         {{ __('home.nhập số thứ tự') }}
                                                                                     </label>
                                                                                 </th>
-                                                                                <td><input name="category_stt" id="category_stt" type="number" value="{{$category->stt}}" min="1" required>
+                                                                                <td><input name="category_stt"
+                                                                                           id="category_stt"
+                                                                                           type="number"
+                                                                                           value="{{$category->stt}}"
+                                                                                           min="1" required>
                                                                                 </td>
                                                                             </tr>
 
@@ -383,6 +394,8 @@
                         @endif
                         </tbody>
                     </table>
+                    <div class="mt-3"></div>
+                    {{ $categories->links() }}
                     <div class="form-wrap edit-term-notes">
                         <p>
                             <strong>

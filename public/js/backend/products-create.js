@@ -543,13 +543,11 @@ $(document).ready(function () {
         var modalId_cate = 'exampleModal-' + categoryID;
         var checkboxId = 'category-' + categoryID;
         var originalChecked = this.checked;
-        var urlCategory = `{{ route('categories.register', ['id' => ':categoryID']) }}`;
         $.ajax({
             type: 'GET',
             url: urlCategory,
             data: {
                 _token: token,
-                // id: post_id,
             },
             dataType: 'json',
             success: function (data) {
@@ -572,5 +570,7 @@ $(document).ready(function () {
             }
         });
     })
+
+
 
 })

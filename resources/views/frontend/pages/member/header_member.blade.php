@@ -1,26 +1,51 @@
-<div class="d-flex justify-content-between align-items-center p-3">
-    <div>
-        <a href="{{ route('stand.register.member.index', $company->id) }}"
-           class="btn btn-warning mr-2 d-inline-block">{{ __('home.Booth') }}</a>
-        <a href="{{route('partner.register.member.index')}}"
-           class="btn btn-primary d-inline-block">{{ __('home.Partner List') }}</a>
-        @if(getTypeMember()->member == 'LOGISTIC')
-            <a href="{{ route('seller.products.index') }}"
-               class="btn btn-primary d-inline-block">{{ __('home.manager_products') }}</a>
-        @endif
-    </div>
-    <div>
-        <a href="{{route('chat.message.received')}}"
-           class="btn btn-primary mr-2 d-inline-block">{{ __('home.Message received') }}</a>
-        <a href="{{route('chat.message.sent')}}"
-           class="btn btn-primary mr-2 d-inline-block">{{ __('home.Message sent') }}</a>
-    </div>
-    <div>
-        <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
-           data-target="#exampleModalDemo">{{ __('home.Purchase') }}</a>
-        <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
-           data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
-    </div>
+<div class="">
+    @php
+        $getMemberId = \App\Models\MemberRegisterPersonSource::where('email' , Auth::user()->email)->value('member_id');
+        $memberId = \App\Models\MemberRegisterPersonSource::where('member_id',$getMemberId)->value('id');
+    @endphp
+    @if($getMemberId == $company->id)
+        <div class="d-flex justify-content-start align-items-center p-3">
+            <a href="{{route('homepage')}}" class="btn btn-success">{{ __('home.2188 Main') }}</a>
+        </div>
+        <div  class="d-flex justify-content-between align-items-center p-3">
+            <div>
+                <a href="{{ route('stand.register.member.index', $company->id) }}"
+                   class="btn btn-warning mr-2 d-inline-block">{{ __('home.Booth') }}</a>
+                <a href="{{route('partner.register.member.index')}}"
+                   class="btn btn-primary d-inline-block">{{ __('home.Partner List') }}</a>
+                @switch(getTypeMember()->member)
+                    @case('LOGISTIC')
+                        <a href="{{ route('seller.products.index') }}" class="btn btn-primary d-inline-block">{{ __('home.manager page') }}</a>
+                        @break
+                    @case('물류회원')
+                        <a href="{{ route('seller.products.index') }}" class="btn btn-primary d-inline-block">{{ __('home.manager page') }}</a>
+                        @break
+                    @case('ロジスティック')
+                        <a href="{{ route('seller.products.index') }}" class="btn btn-primary d-inline-block">{{ __('home.manager page') }}</a>
+                        @break
+                    @case('物流')
+                        <a href="{{ route('seller.products.index') }}" class="btn btn-primary d-inline-block">{{ __('home.manager page') }}</a>
+                        @break
+                    @default
+                @endswitch
+            </div>
+            <div>
+                <a href="{{route('chat.message.received')}}"
+                   class="btn btn-primary mr-2 d-inline-block">{{ __('home.Message received') }}</a>
+                <a href="{{route('chat.message.sent')}}"
+                   class="btn btn-primary mr-2 d-inline-block">{{ __('home.Message sent') }}</a>
+            </div>
+            <div>
+                <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
+                   data-target="#exampleModalDemo">{{ __('home.Purchase') }}</a>
+                <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
+                   data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
+            </div>
+        </div>
+
+{{--        </div>--}}
+    @endif
+
 </div>
 
 <div class="modal fade" id="exampleModalDemo" role="dialog" aria-labelledby="exampleModal" aria-hidden="true">

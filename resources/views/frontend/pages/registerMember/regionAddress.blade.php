@@ -1,286 +1,195 @@
 <style>
-    table.table-region {
-        border: 1px solid gray;
-        border-collapse: collapse;
-        padding: 10px;
+    .nation {
+        display: inline-block;
+        width: 250px;
+        padding: 7px;
     }
 
-    .table-region tr {
-        border: 1px solid gray;
-        padding: 10px;
+    .cursor-pointer {
+        cursor: pointer;
     }
 
-    .table-region th {
-        border: 1px solid gray;
-        padding: 10px;
+    .bg-color-th1 {
+        background-color: #e1dddd !important;
     }
 
-    .table-region .name-region {
-        min-width: 150px;
-        padding-left: 5px;
-        text-align: center;
+    .bg-color-th2 {
+        background-color: #c8e2f3 !important;
     }
 
-    .table-region td {
-        border: 1px solid gray;
-        padding: 10px;
+    .bg-color-td1 {
+        background-color: #fbf8f8 !important;
     }
 
-    .table-region .name-region-lv-1 {
-        padding-left: 5px;
-        text-align: center;
+    .bg-color-td2 {
+        background-color: #f4f9fd !important;
+    }
+
+    .layer_tbl th {
+        text-align: left;
+        background: #f5f5f5;
+        letter-spacing: -1px;
+    }
+
+    .layer_tbl th, .layer_tbl td {
+        padding: 4px 5px;
+        overflow: hidden;
+        border-bottom: 1px dotted #e5e5e5;
+    }
+
+    .orange {
+        color: orange;
+    }
+
+    .grey {
+        color: grey;
     }
 </style>
-<script>
-    let dataNation, dataState, dataCity, dataWard;
-    let numberOfCol = 4;
-    let level = 0;
-    let nameTh, idTh, codeTh;
-    let nationValue_Selected = provinceValue_Selected = districtValue_Selected =
-        nationName_Selected = provinceName_Selected = districtName_Selected = '';
-    let nationValue_Selected1 = provinceValue_Selected1 = districtValue_Selected1 =
-        nationName_Selected1 = provinceName_Selected1 = districtName_Selected1 = '';
-    let nationValue_check = nationName_check = '';
-    r_getListNation();
 
-    async function r_getListNation() {
-        const apiUrl = '{{ route('location.nation.get') }}';
-        const response = await fetch(apiUrl);
-        if (response.ok) {
-            dataNation = await response.json();
-            r_renderDataToHtmlLv0();
-        }
-    }
-
-    async function r_getListState(id) {
-        let url = '{{ route('location.state.get.by.nation', ['id' => ':id']) }}';
-        url = url.replace(':id', id);
-        const response = await fetch(url);
-        if (response.ok) {
-            dataState = await response.json();
-            r_renderDataToTable(dataState);
-        }
-    }
-
-    function r_handleSelectNation(id, name) {
-        const checkWhereSelect = whereSelectRegion == 0;
-        if (nationName_check != name && name) {
-            nationName_check = name;
-            nationValue_check = id;
-            if (checkWhereSelect) {
-                nationValue_Selected = nationValue_check;
-                nationName_Selected = nationName_check;
-            } else {
-                nationValue_Selected1 = nationValue_check;
-                nationName_Selected1 = nationName_check;
-            }
-        } else if (nationName_check != name) {
-            if (checkWhereSelect) {
-                nationValue_Selected = nationValue_check;
-                nationName_Selected = nationName_check;
-            } else {
-                nationValue_Selected1 = nationValue_check;
-                nationName_Selected1 = nationName_check;
-            }
-        } else {
-            if (checkWhereSelect) {
-                nationValue_Selected = id;
-                nationName_Selected = name;
-            } else {
-                nationValue_Selected1 = id;
-                nationName_Selected1 = name;
-            }
-        }
-
-        r_getListState(id);
-    }
-
-
-    function selectRegion(provinceName, provinceValue, districtName, districtValue) {
-
-        // Kiểm tra xem dòng address bên trên hay bên dưới nhấn modal, để render
-        // biến whereSelectRegion lấy từ file show-register-member-info
-
-        r_handleSelectNation();
-
-        const checkWhereSelect = whereSelectRegion == 0;
-
-        resetFieldAddress(checkWhereSelect);
-
-        if (checkWhereSelect) {
-            document.getElementById(ID_COUNTRY).value = nationName_Selected;
-            if (provinceName) {
-                provinceName_Selected = provinceName;
-                document.getElementById(ID_STATE).value = provinceName_Selected;
-            }
-            if (provinceValue) {
-                provinceValue_Selected = provinceValue;
-            }
-
-            if (districtName) {
-                districtName_Selected = districtName;
-                document.getElementById(ID_CITY).value = districtName_Selected;
-            }
-            if (districtValue) {
-                districtValue_Selected = districtValue;
-            }
-        } else {
-            document.getElementById(ID_COUNTRY_1).value = nationName_Selected1;
-            if (provinceName) {
-                provinceName_Selected1 = provinceName;
-                document.getElementById(ID_STATE_1).value = provinceName_Selected1;
-            }
-            if (provinceValue) {
-                provinceValue_Selected1 = provinceValue;
-            }
-
-            if (districtName) {
-                districtName_Selected1 = districtName;
-                document.getElementById(ID_CITY_1).value = districtName_Selected1;
-            }
-            if (districtValue) {
-                districtValue_Selected1 = districtValue;
-            }
-        }
-
-    }
-
-    function handleAfterSelectRegion() {
-        document.getElementById(ID_COUNTRY).value = nationValue_Selected;
-        document.getElementById(ID_STATE).value = provinceValue_Selected;
-        document.getElementById(ID_CITY).value = districtValue_Selected;
-
-        document.getElementById(ID_COUNTRY_1).value = nationValue_Selected1;
-        document.getElementById(ID_STATE_1).value = provinceValue_Selected1;
-        document.getElementById(ID_CITY_1).value = districtValue_Selected1;
-    }
-
-    function resetFieldAddress(checkWhereSelect) {
-        if (checkWhereSelect) {
-            document.getElementById(ID_STATE).value = '';
-            document.getElementById(ID_CITY).value = '';
-            document.getElementById(ID_COUNTRY).value = '';
-        } else {
-            document.getElementById(ID_STATE_1).value = '';
-            document.getElementById(ID_CITY_1).value = '';
-            document.getElementById(ID_COUNTRY_1).value = '';
-        }
-    }
-
-
-    async function r_renderDataToHtmlLv0() {
-        let str = '';
-        let index = 0;
-        let check = 0;
-        let continentNow = '';
-        let continentCheck = dataNation[0].continents ?? '';
-        let rowSpan = r_calcRowSpanLv0(dataNation, continentCheck);
-        for (let i = 0; i < dataNation.length; i++) {
-            let region = dataNation[i];
-            continentNow = region.continents;
-            if (continentNow != continentCheck) {
-                continentCheck = continentNow;
-                check = 0;
-                index = 0;
-                str += `<tr>`
-                rowSpan = r_calcRowSpanLv0(dataNation, continentCheck);
-            }
-            if (index == 0) {
-                str += `<tr>`
-            }
-
-            if (!check) {
-                str += `<th class="name-region" rowspan="${rowSpan}">${continentCheck}</th>`
-                check++;
-            }
-
-            str += `<td class="name-region-lv-1" onclick="r_handleSelectNation('${region.iso2}', '${region.name}')">
-                                        <span class="cursor-pointer">
-                    ${region.name}</span>`
-            index++;
-            if (index == numberOfCol) {
-                str += `</tr>`
-                index = 0;
-            }
-
-        }
-        document.getElementById('body_table_region').innerHTML = str;
-    }
-
-    function r_renderDataToTable(data) {
-        let str = '';
-        let index = 0;
-        let check = true;
-        let continentNow = '';
-        let continentCheck = data[0].continents ?? '';
-        for (let i = 0; i < data.length; i++) {
-
-            let region = data[i];
-            let rowSpan = r_calcRowSpan(region);
-
-            if (index == 0) {
-                str += `<tr>`
-            }
-
-            let arrChild = region.child;
-
-            if (arrChild) {
-                arrChild.forEach((child) => {
-                    if (index == 0 || check) {
-                        str += `<tr>`
-                    }
-                    index++;
-
-                    if (check) {
-                        str += `<th class="name-region" rowspan="${rowSpan}">${region.name}</th>`
-                        check = false;
-                        index--;
-                    }
-
-                    str += `<td class="name-region-lv-1" data-dismiss="modal" onclick="selectRegion('${region.name}','${region.state_code}','${child.name}','${child.city_code}',)">
-                                        <span class="cursor-pointer">
-                    ${child.name}</span>`
-                    if (index == numberOfCol) {
-
-                        str += `</tr>`;
-                        index = 0;
-                    }
-                });
-                check = true;
-
-            } else {
-                str += `<tr><th class="name-region cursor-pointer" style="width: 100px" rowspan="${rowSpan}" data-dismiss="modal" onclick="selectRegion('${region.name}','${region.state_code}')">${region.name}</th></tr>`
-            }
-        }
-
-        document.getElementById('body_table_region').innerHTML = str;
-    }
-
-    function r_calcRowSpanLv0(dataNation, continentCheck) {
-        return Math.ceil(r_countObjectsWithContinentCode(dataNation, continentCheck) / numberOfCol)
-    }
-
-    function r_calcRowSpan(data) {
-        if (data.total_child % numberOfCol == 0) {
-            return data.total_child / numberOfCol + 1;
-        }
-        return Math.ceil(data.total_child / numberOfCol);
-    }
-
-    function r_countObjectsWithContinentCode(array, continents) {
-        return array.reduce((count, obj) => {
-            if (obj.continents == continents) {
-                return count + 1;
-            }
-            return count;
-        }, 0);
-    }
-
-</script>
-<td valign="top" style="width: 600px">
-    <div style="display: inline-block" id="Region_Name" onclick="getDataRegionLv0()">
+<div class="jumbotron jumbotron-fluid" id="title-div" style="display: none">
+    <div class="container">
+        <h1 class="title-main cursor-pointer" id="title-main"
+            onclick="getListAddress()">{{ __('home.Address management ') }}</h1>
     </div>
-    <table class="table-region w-100">
-        <tbody id="body_table_region"></tbody>
-    </table>
-</td>
+</div>
+<div class="card">
+    <div class="card-body">
+        <table cellspacing="0" cellpadding="0" class="regionWrap layer_tbl mt10 border" style="display: table;">
+            <colgroup>
+                <col width="230">
+                <col width="/">
+            </colgroup>
+            <tbody id="p-r-table"></tbody>
+        </table>
+    </div>
+</div>
+
+<tr>
+    <script>
+        $(document).ready(function () {
+            $('#modal-address').on('shown.bs.modal', function () {
+                getListAddress();
+            });
+        });
+    </script>
+    <script>
+        getListAddress();
+        let nation_code = nation_name = '';
+        let arrAddress = [];
+        let checkLevel = 1;
+
+        const MODE_CREATE = 'create'
+        const MODE_EDIT = 'edit'
+
+        async function getListAddress() {
+            let url = '{{ route('address.index') }}';
+            let result = await fetch(url);
+            if (result.ok) {
+                checkLevel = 1;
+                arrAddress = [];
+                let data = await result.json();
+                document.getElementById('p-r-table').innerHTML = '';
+                document.getElementById('title-div').style.display = 'none';
+                if (typeof data === 'object') {
+                    data = Object.values(data);
+                }
+                makeHTMLFromJson(data);
+            }
+        }
+
+        async function getListAddressChild(code, name, name_en) {
+            let url = '';
+            if (checkLevel == 1) {
+                url = '{{ route('address.show.region', ['code' => ':code']) }}';
+                url = url.replace(':code', code);
+            } else {
+                url = '{{ route('address.show.region', ['code' => ':code']) }}';
+                url = url.replace(':code', code);
+            }
+            let result = await fetch(url);
+            arrAddress.push({
+                name: name,
+                name_en: name_en
+            });
+            if (result.ok) {
+                let data = await result.json();
+                nation_code = code;
+                nation_name = name ?? name_en;
+                document.getElementById('title-div').style.display = 'block';
+                document.getElementById('title-main').innerHTML = name ?? name_en;
+                if (typeof data === 'object') {
+                    data = Object.values(data);
+                }
+                makeHTMLFromJson(data);
+                checkLevel++;
+            }
+        }
+
+        function makeHTMLFromJson(data) {
+            let str = '';
+
+            data.forEach((pItem, index) => {
+                const classTh = index % 2 == 0 ? 'bg-color-th2' : 'bg-color-th1';
+                const classTd = index % 2 == 0 ? 'bg-color-td2' : 'bg-color-td1';
+
+                str += `<tr><th class="cont ${classTh} "><div class="text-center"><span class="cursor-pointer">${pItem.name_en ?? pItem.name ?? ''}</span></div>
+                                </th>`
+                if (pItem.total_child) {
+                    str += `<td class="${classTd}">`;
+
+                    if (typeof pItem.child === 'object') {
+                        pItem.child = Object.values(pItem.child);
+                    }
+
+                    pItem.child.forEach((cItem) => {
+                        str += ` <span class="nation">
+                    <span
+                            class="tit cursor-pointer"
+                            onclick="getListAddressChild('${cItem.code}', '${cItem.name}', '${cItem.name_en}')">${cItem.name_en ?? ''} ${cItem.name ?? ''}</span>
+                    <span class="skyblue ml10">
+                    </span></span>`
+                    });
+                    str += `</td>`;
+                }
+                str += `</tr>`
+            })
+            const t_p_Body = document.getElementById('p-r-table');
+            t_p_Body.innerHTML = str;
+
+        }
+
+        function handleSelectRegion() {
+            let add_3 = '';
+            let add_3_en = '';
+            resetAddress();
+            arrAddress.forEach((value, index) => {
+                if (index == 0) {
+                    $('#countries-select').val(value.name_en)
+                    $('#countries-select-1').val(value.name)
+                } else if (index == 1) {
+                    $('#cities-select').val(value.name_en)
+                    $('#cities-select-1').val(value.name)
+                } else {
+                    add_3 += value.name + ', '
+                    add_3_en += value.name_en + ', '
+                }
+            });
+            if (add_3) {
+                add_3 = add_3.slice(0, -2);
+                add_3_en = add_3_en.slice(0, -2);
+                $('#provinces-select').val(add_3_en);
+                $('#provinces-select-1').val(add_3);
+            }
+            $('#address_code').val(nation_code);
+        }
+
+        function resetAddress() {
+            $('#countries-select').val('')
+            $('#countries-select-1').val('')
+            $('#cities-select').val('')
+            $('#cities-select-1').val('')
+            $('#provinces-select').val('');
+            $('#provinces-select-1').val('');
+            $('#address_code').val('');
+        }
+    </script>

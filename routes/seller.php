@@ -145,6 +145,8 @@ Route::get('/list-products-shop', [\App\Http\Controllers\ProductController::clas
 // Register member
 //    Route::get('/products-register-member', [RegisterMemberSuccessController::class, 'index'])->name('products.register.member.index');
 Route::get('/stands-register-member/{id}', [RegisterMemberSuccessController::class, 'memberStand'])->name('stand.register.member.index');
+Route::get('/staff-member-info/{memberId}', [RegisterMemberSuccessController::class, 'staffInfo'])->name('staff.member.info');
+
 Route::get('/parents-register-member', [RegisterMemberSuccessController::class, 'memberPartner'])->name('partner.register.member.index');
 Route::get('/parents-register-member/{locale}', [RegisterMemberSuccessController::class, 'memberPartnerLocale'])->name('parent.register.member.locale');
 Route::post('/products-register-member', [RegisterMemberSuccessController::class, 'saveProduct'])->name('products.register.member.create');
