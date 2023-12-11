@@ -3,10 +3,20 @@
 <link rel="stylesheet" href="{{asset('css/style.css')}}">
 <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
 @section('content')
+    <style>
+        td {
+            padding: 0.75rem;
+            vertical-align: top;
+            border-top: 1px solid #dee2e6;
+            color: #000;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+        }
+    </style>
     <div class="row mt-2 bg-white rounded" id="address-book">
-        <div class="row rounded pt-1 ml-5">
-            <h5>{{ __('home.order management') }}</h5>
-        </div>
+
         <div class="border-bottom"></div>
         <div class="col-md-12">
             <nav>
@@ -41,6 +51,9 @@
             @php
                 $currencyController = new \App\Http\Controllers\CurrencyController();
             @endphp
+            <div class="row rounded pt-4  d-flex align-center justify-content-center">
+                <span class="order-mana">{{ __('home.order management') }}</span>
+            </div>
             <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
                 <div class="tab-pane fade text-center active show" id="nav-1" role="tabpanel"
                      aria-labelledby="nav-contact-tab">
@@ -68,16 +81,16 @@
                             @foreach ($orderAll as $order)
                                 <tr>
                                     <td>
-                                        <button class="text-decoration-none" data-toggle="modal"
+                                        <a class="text-decoration-none" data-toggle="modal"
                                                 data-target="#updateOrder{{$order->id}}"
-                                                style="cursor: pointer">{{ $loop->index+1 }}</button>
+                                                style="cursor: pointer;color: red;">#{{ $loop->index+1 }}</a>
                                         <div class="modal fade" id="updateOrder{{$order->id}}" tabIndex="-1"
                                              role="dialog"
                                              aria-labelledby="editModalLabel">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Detail
+                                                <div class="modal-content border-content">
+                                                    <div class="modal-header" style="border-bottom: 0;">
+                                                        <h5 class="modal-title title-modal" id="exampleModalLabel">Detail
                                                             Order</h5>
                                                         <button type="button" class="close" data-dismiss="modal"
                                                                 aria-label="Close">
@@ -120,7 +133,7 @@
                                                                                 $currencyValue = $currencyController->getCurrency(request(), $order_item->price);
                                                                             @endphp
 
-                                                                            <td>
+                                                                            <td class="currency-color">
                                                                                 {{ ($currencyValue) }}
                                                                             </td>
                                                                         </tr>
@@ -131,17 +144,17 @@
                                                             <div class="d-flex justify-content-around">
                                                                 @if($order->status == \App\Enums\OrderStatus::PROCESSING  || $order->status == \App\Enums\OrderStatus::WAIT_PAYMENT)
                                                                     <button type="submit"
-                                                                            class="btn w-25 btn-danger">
-                                                                        Cancel
+                                                                            class="btn w-25 btn-danger btn-cancel m-2">
+                                                                        Cancel order
                                                                     </button>
                                                                 @else
-                                                                    <button class="btn w-25 btn-danger"
+                                                                    <button class="btn w-25 btn-danger btn-cancel m-2"
                                                                             disabled>
-                                                                        Cancel
+                                                                        Cancel order
                                                                     </button>
                                                                 @endif
                                                                 <button type="button"
-                                                                        class="btn w-25 btn-secondary"
+                                                                        class="btn w-25 btn-secondary-back m-2"
                                                                         data-dismiss="modal">Back
                                                                 </button>
                                                             </div>

@@ -496,12 +496,33 @@ a {
 }
 
 #address-book {
+  .order-mana {
+    color: #000;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+  .nav-tabs {
+    border-bottom: none;
+  }
   .link-tabs {
-    background-color: #f7f7f7 !important;
+    display: flex;
+    padding: 13px 16px 14px 16px;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+    flex: 1 0 0;
+    border-radius: 86px;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    color: var(--Grey-Dark, #929292);
   }
 
   .link-tabs:hover {
-    color: #c69500 !important;
+    //color: #c69500 !important;
   }
 }
 
