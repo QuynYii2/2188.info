@@ -1715,6 +1715,147 @@ td.priceTransport {
   padding: 0 30px;
 }
 
+/*Detail product*/
+/*START MODAL ORDER*/
+.modal-order {
+  position: relative;
+  z-index: 10;
+  margin-right: 2px;
+}
+.modal-order .order-detail {
+  text-align: start;
+  overflow-y: auto;
+  padding: 30px;
+  z-index: 3;
+  max-width: 700px;
+  width: 60%;
+  background: white;
+  position: fixed;
+  top: -15px;
+  height: 105vh;
+  right: -100%;
+  transition: all 0.5s ease-in-out;
+}
+.modal-order .order-detail .order-title {
+  margin-bottom: 50px;
+}
+.modal-order .order-detail .order-title .title {
+  font-size: 20px;
+  font-weight: 600;
+}
+.modal-order .order-detail .order-title .close svg {
+  font-size: 24px;
+}
+.modal-order .order-detail .list-variable {
+  margin-bottom: 50px;
+}
+.modal-order .order-detail .list-variable .title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.modal-order .order-detail .list-variable .variable-item {
+  border-bottom: 1px solid #A9A9A9;
+  margin-top: 16px;
+  padding-bottom: 20px;
+}
+.modal-order .order-detail .list-variable .variable-item .normal-text {
+  font-size: 16px;
+  font-weight: 500;
+}
+.modal-order .order-detail .list-variable .variable-item .bold-text {
+  font-size: 18px;
+  font-weight: 600;
+}
+.modal-order .order-detail .render-order {
+  margin-bottom: 50px;
+}
+.modal-order .order-detail .render-order .title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.modal-order .order-detail .render-order .order-item {
+  border-bottom: 1px solid #A9A9A9;
+  margin-top: 16px;
+  padding-bottom: 20px;
+}
+.modal-order .order-detail .render-order .order-item .variable-name {
+  font-size: 20px;
+  font-weight: 600;
+}
+.modal-order .order-detail .render-order .order-item .quantity input {
+  max-width: 120px;
+}
+.modal-order .order-detail .render-order .order-item .bold-text {
+  font-size: 18px;
+  font-weight: 600;
+}
+.modal-order .order-detail .confirm-order {
+  position: absolute;
+  bottom: 0;
+  padding: 16px 16px 50px 16px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  box-shadow: 0px -4px 10px 0px rgba(0, 0, 0, 0.25);
+}
+.modal-order .order-detail .confirm-order .price-product .title {
+  font-size: 20px;
+  font-weight: 400;
+}
+.modal-order .order-detail .confirm-order .price-product .value {
+  font-size: 20px;
+  font-weight: 400;
+}
+.modal-order .order-detail .confirm-order .price-ship .title {
+  font-size: 20px;
+  font-weight: 400;
+}
+.modal-order .order-detail .confirm-order .price-ship .value {
+  font-size: 20px;
+  font-weight: 400;
+}
+.modal-order .order-detail .confirm-order .price-total .title {
+  font-size: 24px;
+  font-weight: 600;
+}
+.modal-order .order-detail .confirm-order .price-total .value {
+  color: var(--secon-1, #F47621);
+  font-size: 24px;
+  font-weight: 600;
+}
+.modal-order .order-detail .confirm-order #supBtnOrder {
+  margin: 12px 0;
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--secon-1, #F47621);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--White, #FFF);
+}
+.modal-order .active-modal {
+  right: 0 !important;
+}
+
+.closeModalOrder {
+  top: 0 !important;
+  left: 0;
+  z-index: -1;
+  background: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.show-modal {
+  position: fixed;
+  opacity: 9999;
+  z-index: 2;
+  height: 100%;
+  width: 100%;
+}
+
+/*END MODAL ORDER*/
 .detail .product-name {
   color: gray;
   text-decoration: underline;
