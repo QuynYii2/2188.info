@@ -27,6 +27,7 @@
         "srmklive/paypal": "*",
         "stichoza/google-translate-php": "^4.1",
         "torann/geoip": "^3.0",
+        "unisharp/laravel-filemanager": "^2.6",
         "wyndow/fuzzywuzzy": "^0.6.0"
     },
     "require-dev": {
@@ -52,12 +53,10 @@
             "app/helpers.php",
             "app/Hepper/location_helper.php",
             "app/Hepper/money_helper.php",
+            "app/Hepper/VnPay_helper.php",
             "app/Hepper/BreadcrumbsHelper.php",
             "app/Hepper/checkAdmin_helper.php",
-            "app/Hepper/VnPay_helper.php",
-            "app/Hepper/checkThumbnail.php",
             "app/Hepper/membershiptypeHelper.php"
-
         ]
     },
     "autoload-dev": {
