@@ -63,7 +63,7 @@
         <div class="list-icon float-right">
             <a class="icon-item" href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
             <a class="icon-item" href="#"><i class="fa-solid fa-rotate-right"></i></a>
-            <a class="icon-item" href="#"><i class="fa-regular fa-heart"></i></a>
+            <a class="icon-item icon-heart" data-id="{{ $product->id }}"><i class="fa-regular fa-heart"></i></a>
             <a class="icon-item" href="#"><i class="fa-solid fa-cart-shopping"></i></a>
         </div>
     </div>
