@@ -1346,6 +1346,111 @@ td.priceTransport {
   left: 12%;
 }
 
+/* START MODAL PRODUCT ITEM*/
+.modalProductItem {
+  border-bottom: none;
+}
+.modalProductItem .product-images {
+  padding: 16px;
+}
+.modalProductItem .product-images .product-image-main {
+  max-width: 321px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--Grey-Medium, #BFBFBF);
+}
+.modalProductItem .product-images .images-gallery {
+  height: auto;
+  margin-top: 8px;
+  width: 100%;
+  display: flex;
+  overflow-x: scroll;
+}
+.modalProductItem .product-images .images-gallery li {
+  margin: 4px;
+}
+.modalProductItem .product-images .images-gallery img {
+  cursor: pointer;
+  object-fit: cover;
+  width: 56px;
+  border-radius: 6px;
+  border: 1px solid var(--Grey-Light, #D6D6D6);
+}
+.modalProductItem .product-info {
+  padding: 16px;
+}
+.modalProductItem .product-info .product-name {
+  font-size: 24px;
+  font-weight: 600;
+}
+.modalProductItem .product-info .product-price {
+  display: flex;
+  align-items: center;
+}
+.modalProductItem .product-info .product-price .real-price {
+  color: #E60000;
+  margin-right: 8px;
+  font-size: 24px;
+  font-weight: 600;
+}
+.modalProductItem .product-info .product-price .del-price {
+  color: var(--Grey-Dark, #929292);
+  font-size: 20px;
+  font-weight: 400;
+}
+.modalProductItem .product-info .share .title {
+  font-size: 24px;
+  font-weight: 600;
+}
+.modalProductItem .product-info .share .list-social {
+  display: flex;
+  align-items: center;
+}
+.modalProductItem .product-info .share .list-social .social-product-twitter {
+  background-color: #000;
+  padding: 10px 8px;
+  border-radius: 50%;
+  margin-bottom: 3px;
+}
+.modalProductItem .product-info .show-order .input-quantity {
+  padding: 12px 8px;
+  width: 112px;
+  border: 1px solid var(--Grey-Dark, #929292);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.modalProductItem .product-info .show-order .input-quantity .decrease-input {
+  cursor: pointer;
+}
+.modalProductItem .product-info .show-order .input-quantity .increase-input {
+  cursor: pointer;
+}
+.modalProductItem .product-info .show-order .input-quantity .inputQuantity {
+  border: none;
+  width: 60px;
+}
+.modalProductItem .product-info .show-order .heart i {
+  font-size: 32px;
+}
+.modalProductItem .product-info .show-order .order button {
+  cursor: pointer;
+  width: 347px;
+  padding: 12px 16px;
+  border: 1px solid var(--Grey-Dark, #929292);
+  color: var(--Grey-Dark, #929292);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* END MODAL PRODUCT ITEM*/
+/* START MODAL PRODUCT CART*/
+.modalProductCart {
+  border-bottom: none;
+}
+
+/* END MODAL PRODUCT CART*/
 .list-flag .item-flag {
   display: flex;
   align-items: center;

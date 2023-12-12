@@ -61,10 +61,12 @@
     </div>
     <div class="icon-hover">
         <div class="list-icon float-right">
-            <a class="icon-item" href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
+            <a class="icon-item" data-toggle="modal" data-target="#modalProductItem_{{$product->id}}"><i
+                        class="fa-solid fa-magnifying-glass"></i></a>
             <a class="icon-item" href="#"><i class="fa-solid fa-rotate-right"></i></a>
             <a class="icon-item icon-heart" data-id="{{ $product->id }}"><i class="fa-regular fa-heart"></i></a>
-            <a class="icon-item" href="#"><i class="fa-solid fa-cart-shopping"></i></a>
+            <a class="icon-item" data-toggle="modal" data-target="#modalProductCart__{{$product->id}}"><i
+                        class="fa-solid fa-cart-shopping"></i></a>
         </div>
     </div>
     <div class="button-hover">
@@ -76,4 +78,3 @@
         <img src=" {{ asset('images/gif/feature.gif') }}" alt="" class="img-feature">
     </div>
 </div>
-

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Enums\BannerStatus;
+use App\Enums\CartStatus;
 use App\Enums\CategoryStatus;
 use App\Enums\Contains;
 use App\Enums\MemberRegisterInfoStatus;
@@ -19,6 +20,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\TranslateController;
 use App\Libraries\GeoIP;
 use App\Models\Banner;
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Member;
 use App\Models\MemberRegisterInfo;
@@ -171,6 +173,7 @@ class HomeController extends Controller
         ])->update(['status' => PromotionStatus::ACTIVE]);
 
         $banner = Banner::where('status', BannerStatus::ACTIVE)->orderBy('created_at', 'desc')->first();
+        $listCart = Cart::where('user_id', Auth::user()->id)->where('status', CartStatus::WAIT_ORDER)->get();
 
         return view('frontend/index', [
             'productByLocal' => $productByLocal,
@@ -190,6 +193,7 @@ class HomeController extends Controller
             'configsTop4' => $configsTop4,
             'configsTop5' => $configsTop5,
             'banner' => $banner,
+            'listCart' => $listCart,
             'newProducts' => $newProducts,
             'currentProducts' => $currentProducts,
             'arrayProducts' => $arrayProducts,
