@@ -648,5 +648,30 @@
         var token = '{{ csrf_token() }}';
     </script>
     <script src="{{ asset('js/frontend/index.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('.decrease-input').on('click', function () {
+                let dataID = $(this).data('id');
+                let min = $(this).data('min');
+                let quantity = $('#inputQuantity' + dataID);
+                let value = quantity.val();
+                if (value > 0) {
+                    value = parseFloat - 1;
+                    if (value === min) {
+                        value = 0;
+                    }
+                    quantity.val(value);
+                }
+            })
+
+            $('.increase-input').on('click', function () {
+                let dataID = $(this).data('id');
+                let quantity = $('#inputQuantity' + dataID);
+                let value = quantity.val();
+                value = parseFloat(value) + 1;
+                quantity.val(value);
+            })
+        })
+    </script>
 @endsection
 
