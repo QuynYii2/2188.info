@@ -229,7 +229,7 @@
                                             </div>
                                         </a>
                                     @else
-                                        <a href="{{route('seller.products.home')}}" class="none_decoration">
+                                        <a href="{{route('seller.products.home')}}" class="none_decoration" hidden="">
                                             <div class="drop-item">
                                                 {{ __('home.manager page') }}
                                             </div>
