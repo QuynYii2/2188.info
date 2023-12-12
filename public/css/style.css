@@ -1913,6 +1913,106 @@ td.priceTransport {
   width: 100%;
 }
 
+.modal-dialog {
+  max-width: 1000px;
+  width: 100%;
+  height: 100%;
+  max-height: 560px;
+  background: var(--White, #FFF);
+}
+.modal-dialog .modalContact {
+  border-bottom: none;
+}
+.modal-dialog .modalContact #modalContactLabel {
+  font-size: 20px;
+  font-weight: 600;
+}
+.modal-dialog .modalContact .product-main {
+  padding: 16px;
+}
+.modal-dialog .modalContact .render-product .product-item {
+  background: var(--White, #FFF);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.modal-dialog .modalContact .render-product .product-item .product-show {
+  padding: 16px;
+}
+.modal-dialog .modalContact .render-product .product-item .img-product {
+  max-width: 75px;
+  object-fit: cover;
+  border-radius: 1px;
+}
+.modal-dialog .modalContact .render-product .product-item .product-info {
+  margin-left: 8px;
+}
+.modal-dialog .modalContact .render-product .product-item .product-info .product-name {
+  font-size: 16px;
+  font-weight: 500;
+}
+.modal-dialog .modalContact .render-product .product-item .product-info .product-price .real-price {
+  color: #DD0B00;
+  font-size: 20px;
+  font-weight: 600;
+}
+.modal-dialog .modalContact .render-product .product-item .product-info .product-price del {
+  color: var(--Grey-Dark, #929292);
+  font-size: 16px;
+  font-weight: 500;
+}
+.modal-dialog .modalContact .render-product .product-item .quantity {
+  border-radius: 45px;
+  border: 1px solid var(--Grey-Dark, #929292);
+  padding: 8px;
+}
+.modal-dialog .modalContact .render-product .product-item .quantity .decrease {
+  cursor: pointer;
+}
+.modal-dialog .modalContact .render-product .product-item .quantity .input_number {
+  font-size: 16px;
+  font-weight: 600;
+  max-width: 60px;
+  width: 100%;
+  border: none;
+}
+.modal-dialog .modalContact .render-product .product-item .quantity .increase {
+  cursor: pointer;
+}
+.modal-dialog .modalContact .render-product .sup {
+  width: 100%;
+  max-width: 125px;
+}
+.modal-dialog .modalContact .content-item {
+  margin-top: 16px;
+  height: 100%;
+  max-height: 240px;
+}
+.modal-dialog .modalContact .content-item label {
+  font-size: 18px;
+  font-weight: 400;
+}
+.modal-dialog .modalContact .content-item textarea {
+  border-radius: 8px;
+  height: 200%;
+  max-height: 200px;
+  border: 0.5px solid var(--Grey-Light, #D6D6D6);
+  background: var(--White, #FFF);
+}
+.modal-dialog .modalContact .email-item {
+  margin-top: 16px;
+}
+.modal-dialog .modalContact .email-item label {
+  font-size: 18px;
+  font-weight: 400;
+}
+.modal-dialog .modalContact .btnSend {
+  background: var(--secon-1, #F47621);
+  padding: 12px 16px;
+  width: 240px;
+  color: var(--White, #FFF);
+  font-size: 16px;
+  font-weight: 600;
+}
+
 /*END MODAL ORDER*/
 .detail .product-name {
   color: gray;
@@ -1934,6 +2034,11 @@ td.priceTransport {
   border-radius: 10px;
   object-fit: cover;
   border: 1px solid var(--Grey-Medium, #BFBFBF);
+}
+.detail .product .product-item {
+  max-height: 75vh;
+  overflow: auto;
+  height: 75vh;
 }
 .detail .product .product-title {
   font-size: 24px;
@@ -1979,8 +2084,7 @@ td.priceTransport {
   max-height: 72%;
 }
 .detail .product .show-order-area {
-  position: absolute;
-  bottom: 0;
+  max-height: 30vh;
 }
 .detail .product .show-order-area .btnOrder {
   padding: 12px 16px;

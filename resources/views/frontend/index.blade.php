@@ -646,8 +646,7 @@
     <script>
         var urla = '{{route('user.wish.lists')}}';
         var token = '{{ csrf_token() }}';
-
-
     </script>
+    <script src="{{ asset('js/frontend/index.js') }}"></script>
 @endsection
 
