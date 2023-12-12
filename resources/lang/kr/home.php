@@ -656,6 +656,7 @@ return [
     'Voucher giảm' => '할인코드',
     'Áp dụng cho' => '적용 상품',
     'Ngày kết thúc' => '종료일',
+    'Mã voucher đã được sao chép: ' => '할인코드가 복사되었습니다: ',
     'Copy' => '복사',
     'mã voucher đã được sao chép' => '할인코드가 복사되었습니다',
     'Avatar' => '프로필 사진',

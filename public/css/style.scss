@@ -1391,15 +1391,39 @@ td.priceTransport {
 
   .category {
     font-size: 20px;
+    color: #000;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
   }
 
-  .nav-pills .nav-link.active,
-  .nav-pills .show > .nav-link {
-    color: $color-main !important;
-    background-color: white;
-    border-bottom: 2px solid $color-main;
-    border-radius: 0 !important;
+
+
+  .search {
+    .voucher {
+      color: #000;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+    }
+    .input-group {
+      input {
+        border-radius: 8px;
+        border: 1px solid var(--Grey-Light, #D6D6D6);
+        background: var(--White, #FFF);
+      }
+    }
+
   }
+
+  //.nav-pills .nav-link.active,
+  //.nav-pills .show > .nav-link {
+  //  color: $color-main !important;
+  //  background-color: white;
+  //  border-bottom: 2px solid $color-main;
+  //  border-radius: 0 !important;
+  //}
 
   .nav-pills {
     text-align: center;
