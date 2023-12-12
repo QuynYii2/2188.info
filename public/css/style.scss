@@ -503,9 +503,11 @@ a {
     font-weight: 600;
     line-height: normal;
   }
+
   .nav-tabs {
     border-bottom: none;
   }
+
   .link-tabs {
     display: flex;
     padding: 13px 16px 14px 16px;
@@ -2107,12 +2109,17 @@ td.priceTransport {
     z-index: 3;
     max-width: 700px;
     width: 60%;
-    background: white;
+    background: #fff;
     position: fixed;
     top: -15px;
     height: 105vh;
     right: -100%;
     transition: all 0.5s ease-in-out;
+
+    .main-order-detail {
+      max-height: 70vh;
+      overflow-y: auto;
+    }
 
     .order-title {
       margin-bottom: 50px;
@@ -2156,6 +2163,32 @@ td.priceTransport {
       }
     }
 
+    .ordered {
+      margin-bottom: 50px;
+
+      .title {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+
+      .cart-item {
+        border-bottom: 1px solid #A9A9A9;
+        margin-top: 16px;
+        padding-bottom: 20px;
+
+        .normal-text {
+          font-size: 16px;
+          font-weight: 500;
+        }
+
+        .bold-text {
+          font-size: 18px;
+          font-weight: 600;
+        }
+      }
+    }
+
     .render-order {
       margin-bottom: 50px;
 
@@ -2177,8 +2210,23 @@ td.priceTransport {
 
         .quantity {
           input {
-            max-width: 120px;
+            max-width: 50%;
+            border: none;
           }
+
+          &:focus {
+            border: none;
+          }
+        }
+
+        .quantityVariable {
+          border-radius: 45px;
+          width: 20%;
+          border: 1px solid var(--Grey-Dark, #929292);
+          padding: 0 8px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
         }
 
         .bold-text {
@@ -2194,6 +2242,9 @@ td.priceTransport {
       padding: 16px 16px 50px 16px;
       left: 0;
       right: 0;
+      z-index: 5;
+      max-height: 30vh;
+      background-color: #fff;
       width: 100%;
       box-shadow: 0px -4px 10px 0px rgba(0, 0, 0, 0.25);
 
