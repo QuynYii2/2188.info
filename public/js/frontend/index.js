@@ -1,6 +1,6 @@
-    $(document).ready(function ($) {
-    $(".card-bottom--right").click(function () {
-        var idProduct = $(this).attr('id-product');
+$(document).ready(function ($) {
+    $(".icon-heart").click(function () {
+        var idProduct = $(this).data('id');
         $.ajax({
             url: urla,
             method: 'POST',

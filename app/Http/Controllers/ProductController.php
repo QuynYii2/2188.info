@@ -151,7 +151,24 @@ class ProductController extends Controller
             $listAtt[$id] = $att;
             $listProperties[$id] = explode(',', $item->value);
         }
-        $otherProduct = Product::where('id', '!=', $product->id)->limit(4)->get();
+        $otherProduct = Product::where('id', '!=', $product->id)
+            ->limit(16)
+            ->get();
+
+        $related_products = Product::where('category_id', $product->category_id)
+            ->where('id', '!=', $product->id)
+            ->limit(16)
+            ->get();
+
+        $id_products = 0;
+        if (Auth::check()) {
+            $id_products = ProductViewed::where('user_id', Auth::user()->id)
+                ->first();
+        }
+
+        $view_products = Product::whereIn('id', [$id_products])
+            ->limit(16)
+            ->get();
 
         $listProducts = Product::where('user_id', $product->user_id)
             ->where('id', '!=', $product->id)
@@ -195,6 +212,8 @@ class ProductController extends Controller
             'listAtt' => $listAtt,
             'listProducts' => $listProducts,
             'listProperties' => $listProperties,
+            'related_products' => $related_products,
+            'view_products' => $view_products,
         ];
     }
 
