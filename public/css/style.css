@@ -1187,13 +1187,6 @@ td.priceTransport {
   border: 1px solid var(--Grey-Light, #D6D6D6);
   background: var(--White, #FFF);
 }
-.list-voucher .nav-pills .nav-link.active,
-.list-voucher .nav-pills .show > .nav-link {
-  color: #fd6506 !important;
-  background-color: white;
-  border-bottom: 2px solid #fd6506;
-  border-radius: 0 !important;
-}
 .list-voucher .nav-pills {
   text-align: center;
   border-bottom: 1px solid #f5f5f5;
