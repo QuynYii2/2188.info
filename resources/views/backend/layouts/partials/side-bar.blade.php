@@ -51,13 +51,12 @@
     }
 
     .text-danger {
-        color: var(--secon-1, #F47621) !important;
+        color: #F47621 !important;
         font-size: 18px;
         font-style: normal;
         font-weight: 500;
     }
 </style>
-
 <div class='wrapper text-nowrap'>
     <ul class='items'>
         <li class="border-list_profile">

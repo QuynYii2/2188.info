@@ -1170,13 +1170,22 @@ td.priceTransport {
 }
 .list-voucher .category {
   font-size: 20px;
+  color: #000;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
-.list-voucher .nav-pills .nav-link.active,
-.list-voucher .nav-pills .show > .nav-link {
-  color: #fd6506 !important;
-  background-color: white;
-  border-bottom: 2px solid #fd6506;
-  border-radius: 0 !important;
+.list-voucher .search .voucher {
+  color: #000;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.list-voucher .search .input-group input {
+  border-radius: 8px;
+  border: 1px solid var(--Grey-Light, #D6D6D6);
+  background: var(--White, #FFF);
 }
 .list-voucher .nav-pills {
   text-align: center;
