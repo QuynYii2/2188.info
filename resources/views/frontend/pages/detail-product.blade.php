@@ -25,99 +25,271 @@
     <div id="detail-product" class="body">
         <div class="modal-order" id="showOrder">
             <div class="order-detail bg-white">
-                <div class="order-title d-flex justify-content-between align-items-center">
-                    <div class="title">
-                        Choose variant and quantity
-                    </div>
-                    <div class="close" onclick="closeVariableModalOrder();">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M18 6L6 18M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round"
-                                  stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                </div>
-                <div class="list-variable" id="list-variable">
-                    <div class="title">
-                        Show variant
-                    </div>
-                    @php
-                        $price_sales = \App\Models\ProductSale::where('product_id', '=', $productItem->id)->get();
-                    @endphp
-                    @foreach($price_sales as $price_sale)
-                        <div class="variable-item d-flex justify-content-between align-items-center">
-                            <div class="about-quantity normal-text">
-                                {{$price_sale->quantity}}
-                            </div>
-                            <div class="price bold-text">
-                                {{ number_format(convertCurrency('USD', $currency,$price_sale->sales), 0, ',', '.') }} {{$currency}}
-                                /{{ __('home.Product') }}
-                            </div>
-                            <div class="days normal-text">
-                                {{$price_sale->days}} {{ __('home.ngày kể từ ngày đặt hàng') }}
-                            </div>
-                            <div class="ship bold-text">
-                                {{ number_format(convertCurrency('USD', $currency,$price_sale->ship), 0, ',', '.') }} {{$currency}}
-                                (Shipping Fee)
-                            </div>
+                <div class="main-order-detail">
+                    <div class="order-title d-flex justify-content-between align-items-center">
+                        <div class="title">
+                            Choose variant and quantity
                         </div>
-                    @endforeach
-                </div>
-                <div class="render-order w-100">
-                    <div class="title">
-                        Show order
+                        <div class="close" onclick="closeVariableModalOrder();">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M18 6L6 18M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round"
+                                      stroke-linejoin="round"/>
+                            </svg>
+                        </div>
                     </div>
-                    @php
-                        $productVariables = \App\Models\Variation::where('product_id', $productItem->id)->where('status', \App\Enums\VariationStatus::ACTIVE)->get();
-                    @endphp
-                    @if($productVariables->isNotEmpty())
-                        @foreach($productVariables as $productVariable)
-                            <div class="order-item d-flex justify-content-between align-items-center">
-                                <div class="variable-name">
-                                    @php
-                                        $variation = $productVariable->variation;
-                                        $variationArray = explode(',', $variation);
-                                    @endphp
-                                    @foreach($variationArray as $item)
-                                        @php
-                                            $attribute_property = explode('-', $item);
-                                            $attribute = \App\Models\Attribute::find($attribute_property[0]);
-                                            $property = \App\Models\Properties::find($attribute_property[1]);
-                                        @endphp
-                                        <span>{{ $attribute->name }}: {{ $property->name }}</span>,
-                                    @endforeach
+                    <div class="list-variable" id="list-variable">
+                        <div class="title">
+                            Show variant
+                        </div>
+                        @php
+                            $price_sales = \App\Models\ProductSale::where('product_id', '=', $productItem->id)->get();
+                        @endphp
+                        @foreach($price_sales as $price_sale)
+                            <div class="variable-item d-flex justify-content-between align-items-center">
+                                <div class="about-quantity normal-text">
+                                    {{$price_sale->quantity}}
                                 </div>
-
                                 <div class="price bold-text">
+                                    {{ number_format(convertCurrency('USD', $currency,$price_sale->sales), 0, ',', '.') }} {{$currency}}
+                                    /{{ __('home.Product') }}
+                                </div>
+                                <div class="days normal-text">
+                                    {{$price_sale->days}} {{ __('home.ngày kể từ ngày đặt hàng') }}
+                                </div>
+                                <div class="ship bold-text">
+                                    {{ number_format(convertCurrency('USD', $currency,$price_sale->ship), 0, ',', '.') }} {{$currency}}
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="ordered">
+                        <div class="title">
+                            Cart Item
+                        </div>
+                        @php
+                            if (Auth::check()){
+                                $carts = \App\Models\Cart::where('user_id', Auth::user()->id)->where('status', \App\Enums\CartStatus::WAIT_ORDER)->get();
+                            }
+                        @endphp
+                        @if(isset($carts))
+                            @foreach($carts as $cart)
+                                <div class="cart-item d-flex justify-content-between align-items-center">
+                                    <div class="product-name bold-text">
+                                        @if(locationHelper() == 'kr')
+                                            {{$cart->product->name_ko}}
+                                        @elseif(locationHelper() == 'cn')
+                                            {{$cart->product->name_zh}}
+                                        @elseif(locationHelper() == 'jp')
+                                            {{$cart->product->name_ja}}
+                                        @elseif(locationHelper() == 'vi')
+                                            {{$cart->product->name_vi}}
+                                        @else
+                                            {{$cart->product->name_en}}
+                                        @endif
+                                        <div class="small text-secondary">
+                                            @if($cart->values && $cart->values != '')
+                                                @php
+                                                    $arrayValues = explode(',', $cart->values);
+                                                @endphp
+                                                @foreach($arrayValues as $arrayValue)
+                                                    @php
+                                                        $attribute_property = explode('-', $arrayValue);
+
+                                                        $attribute = \App\Models\Attribute::where('status', \App\Enums\AttributeStatus::ACTIVE)
+                                                            ->where('id', $attribute_property[0])->first();
+                                                        $property = \App\Models\Properties::where('status', \App\Enums\PropertiStatus::ACTIVE)
+                                                            ->where('id', $attribute_property[1])->first();
+                                                    @endphp
+                                                    <span>
+                                    @if($attribute)
+                                                            @if(locationHelper() == 'kr')
+                                                                {{$attribute->name_ko}}
+                                                            @elseif(locationHelper() == 'cn')
+                                                                {{$attribute->name_zh}}
+                                                            @elseif(locationHelper() == 'jp')
+                                                                {{$attribute->name_ja}}
+                                                            @elseif(locationHelper() == 'vi')
+                                                                {{$attribute->name_vi}}
+                                                            @else
+                                                                {{$attribute->name_en}}
+                                                            @endif
+                                                            :
+                                                            @if($property)
+                                                                @if(locationHelper() == 'kr')
+                                                                    {{$property->name_ko}}
+                                                                @elseif(locationHelper() == 'cn')
+                                                                    {{$property->name_zh}}
+                                                                @elseif(locationHelper() == 'jp')
+                                                                    {{$property->name_ja}}
+                                                                @elseif(locationHelper() == 'vi')
+                                                                    {{$property->name_vi}}
+                                                                @else
+                                                                    {{$property->name_en}}
+                                                                @endif
+                                                            @endif
+                                                            ,
+                                                        @endif
+                            </span>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="product-quantity">
+                                        <input class="input-number-cart" type="number" id="quantity{{ $cart->id }}"
+                                               name="quantity"
+                                               style="border-radius: 30px; border-color: #ccc; width: 55px; "
+                                               value="{{ $cart->quantity }}"
+                                               data-id="{{ $cart->id }}"
+                                               min="{{$cart->product->min}}"/>
+                                    </div>
+                                    <div class="price bold-text">
+                                        <span id="priceCart{{ $cart->id }}">{{ number_format(convertCurrency('USD', $currency,$cart->price), 0, ',', '.') }}</span>
+                                        <span class="currency">{{$currency}}</span>
+                                    </div>
+                                    <div class="price bold-text" id="totalCart{{ $cart->id }}">
+                                        {{ number_format(convertCurrency('USD', $currency,$cart->price*$cart->quantity), 0, ',', '.') }} {{$currency}}
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endif
+                    </div>
+                    <div class="render-order w-100">
+                        <div class="title">
+                            Show order
+                        </div>
+                        @php
+                            $productVariables = \App\Models\Variation::where('product_id', $productItem->id)->where('status', \App\Enums\VariationStatus::ACTIVE)->get();
+                        @endphp
+                        @if($productVariables->isNotEmpty())
+                            @foreach($productVariables as $productVariable)
+                                <div class="order-item d-flex justify-content-between align-items-center">
+                                    <div class="variable-name">
+                                        @php
+                                            $variation = $productVariable->variation;
+                                            $variationArray = explode(',', $variation);
+                                        @endphp
+                                        @foreach($variationArray as $item)
+                                            @php
+                                                $attribute_property = explode('-', $item);
+                                                $attribute = \App\Models\Attribute::find($attribute_property[0]);
+                                                $property = \App\Models\Properties::find($attribute_property[1]);
+                                            @endphp
+                                            <span>
+                                            @if($attribute)
+                                                    @if(locationHelper() == 'kr')
+                                                        {{ ($attribute->name_ko) }}
+                                                    @elseif(locationHelper() == 'cn')
+                                                        {{ ($attribute->name_zh) }}
+                                                    @elseif(locationHelper() == 'jp')
+                                                        {{ ($attribute->name_ja) }}
+                                                    @elseif(locationHelper() == 'vi')
+                                                        {{ ($attribute->name_vi) }}
+                                                    @else
+                                                        {{ ($attribute->name_en) }}
+                                                    @endif
+                                                    :
+                                                    @if($property)
+                                                        @if(locationHelper() == 'kr')
+                                                            {{ ($property->name_ko) }}
+                                                        @elseif(locationHelper() == 'cn')
+                                                            {{ ($property->name_zh) }}
+                                                        @elseif(locationHelper() == 'jp')
+                                                            {{ ($property->name_ja) }}
+                                                        @elseif(locationHelper() == 'vi')
+                                                            {{ ($property->name_vi) }}
+                                                        @else
+                                                            {{ ($property->name_en) }}
+                                                        @endif
+                                                    @endif
+                                                @endif
+                                            ,
+                                        @endforeach
+                                    </div>
+
+                                    <div class="price bold-text">
                                     <span>
                                         <span id="textPrice_{{ $productVariable->id }}">
                                              {{ number_format(convertCurrency('USD', $currency,$productVariable->price), 0, ',', '.') }}
                                         </span>
                                     </span>
-                                    <span class="currency">
+                                        <span class="currency">
                                         {{$currency}}
                                      </span>
-                                </div>
+                                    </div>
 
-                                <div class="d-none">
-                                    <label for="productPrice_{{ $productVariable->id }}"></label>
-                                    <input value="{{$productVariable->price}}"
-                                           id="productPrice_{{ $productVariable->id }}">
-                                    <label for="inputQuantityVariable_{{ $productVariable->id }}"></label>
-                                </div>
+                                    <div class="d-none">
+                                        <label for="productPrice_{{ $productVariable->id }}"></label>
+                                        <input value="{{$productVariable->price}}"
+                                               id="productPrice_{{ $productVariable->id }}">
+                                        <label for="inputQuantityVariable_{{ $productVariable->id }}"></label>
+                                    </div>
 
-                                <div class="quantity quantityVariable">
-                                    <span class="decrease">
+                                    <div class="quantity quantityVariable">
+                                    <span class="decrease" data-id="{{ $productVariable->id }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                              viewBox="0 0 16 16" fill="none">
                                           <path d="M4 8H12" stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
                                                 stroke-linejoin="round"/>
                                         </svg>
                                     </span>
+                                        <input type="number" value="0" min="0" class="inputQuantityVariable"
+                                               id="inputQuantityVariable_{{ $productVariable->id }}"
+                                               data-id="{{ $productVariable->id }}" data-product="{{$productVariable}}"
+                                               data-variable="{{$productVariable->variation}}">
+                                        <span class="increase" data-id="{{ $productVariable->id }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             viewBox="0 0 16 16" fill="none">
+                                          <path d="M4 8H12" stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round"/>
+                                          <path d="M8 12V4" stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round"/>
+                                        </svg>
+                                    </span>
+                                    </div>
+
+                                    <div class="price-ship bold-text" id="priceShip_{{ $productVariable->id }}">
+                                        0 <span class="currency">{{$currency}}</span>
+                                    </div>
+                                    <div class="total-price bold-text" id="totalValue_{{ $productVariable->id }}">
+                                        0 <span class="currency">{{$currency}}</span>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="order-item d-flex justify-content-between align-items-center">
+                                <div class="variable-name">
+                                    None
+                                </div>
+
+                                <div class="price bold-text">
+                                <span>
+                                    <span id="textPrice_0">
+                                        {{ number_format(convertCurrency('USD', $currency,$productItem->price), 0, ',', '.') }}
+                                    </span>
+                                </span>
+                                    <span class="currency">{{$currency}}</span>
+                                </div>
+
+                                <div class="d-none">
+                                    <label for="productPrice_0"></label>
+                                    <input value="{{$productItem->price}}"
+                                           id="productPrice_0">
+                                    <label for="inputQuantityVariable_0"></label>
+                                </div>
+
+                                <div class="quantity quantityVariable">
+                                <span class="decrease" data-id="0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             viewBox="0 0 16 16" fill="none">
+                                          <path d="M4 8H12" stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round"/>
+                                        </svg>
+                                </span>
                                     <input type="number" value="0" min="0" class="inputQuantityVariable"
-                                           id="inputQuantityVariable_{{ $productVariable->id }}"
-                                           data-id="{{ $productVariable->id }}" data-product="{{$productVariable}}"
-                                           data-variable="{{$productVariable->variation}}">
-                                    <span class="increase">
+                                           id="inputQuantityVariable_0"
+                                           data-id="0" data-product=""
+                                           data-variable="">
+                                    <span class="increase" data-id="0">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                              viewBox="0 0 16 16" fill="none">
                                           <path d="M4 8H12" stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
@@ -128,19 +300,15 @@
                                     </span>
                                 </div>
 
-                                <div class="price-ship bold-text" id="priceShip_{{ $productVariable->id }}">
+                                <div class="price-ship bold-text" id="priceShip_0">
                                     0 <span class="currency">{{$currency}}</span>
                                 </div>
-                                <div class="total-price bold-text" id="totalValue_{{ $productVariable->id }}">
+                                <div class="total-price bold-text" id="totalValue_0">
                                     0 <span class="currency">{{$currency}}</span>
                                 </div>
                             </div>
-                        @endforeach
-                    @else
-                        <span class="currency">
-                            {{$currency}}
-                        </span>
-                    @endif
+                        @endif
+                    </div>
                 </div>
                 <div class="confirm-order">
                     <div class="price-product d-flex justify-content-between align-items-center">
@@ -831,10 +999,6 @@
                 $('.reviewed').removeClass('d-none');
             })
         })
-
-        function showForm() {
-
-        }
     </script>
     <script>
         $(window).on('load', function () {
@@ -1246,6 +1410,26 @@
 
             checkInput();
 
+            $('.decrease').on('click', function () {
+                let dataID = $(this).data('id');
+                let quantity = $('#inputQuantityVariable_' + dataID);
+                let value = quantity.val();
+                if (value > 0) {
+                    --value;
+                    quantity.val(value);
+                    loadQuantity(dataID);
+                }
+            })
+
+            $('.increase').on('click', function () {
+                let dataID = $(this).data('id');
+                let quantity = $('#inputQuantityVariable_' + dataID);
+                let value = quantity.val();
+                ++value;
+                quantity.val(value);
+                loadQuantity(dataID);
+            })
+
             /* Check data previous of input, set data-val of input*/
             inputQuantity.on('focusin', function () {
                 $(this).data('val', parseInt($(this).val()));
@@ -1254,6 +1438,11 @@
             /* Handle logic code when change data of input quantity in product*/
             inputQuantity.on('change', function () {
                 let variableID = $(this).data('id');
+                loadQuantity(variableID);
+            })
+
+            function loadQuantity(variableID) {
+                let inputElement = $('#inputQuantityVariable_' + variableID);
                 let priceShipElement = $('#priceShip_' + variableID);
                 // get price
                 let idPrice = 'productPrice_' + variableID;
@@ -1262,11 +1451,11 @@
                 checkInput();
 
                 // get data-val of input change
-                let prevValue = parseInt($(this).data('val'));
+                let prevValue = parseInt(inputElement.data('val'));
                 // get current value of input change
-                let itemValue = parseInt($(this).val());
+                let itemValue = parseInt(inputElement.val());
 
-                let product = $(this).data('product');
+                let product = inputElement.data('product');
 
                 let priceOld = product['price'];
 
@@ -1277,18 +1466,18 @@
                     // Set min of input
                     if (itemValue < productMin) {
                         itemValue = productMin;
-                        $(this).val(productMin);
+                        inputElement.val(productMin);
                     }
                 } else if (itemValue < prevValue) {
                     // Set value of input = 0
                     if (itemValue < productMin) {
                         itemValue = 0;
-                        $(this).val(0);
+                        inputElement.val(0);
                     }
                 }
 
                 // Re-set data-val of input
-                $(this).data('val', itemValue);
+                inputElement.data('val', itemValue);
 
                 let currencies = document.getElementsByClassName('currency');
                 let currency = currencies[0].innerText;
@@ -1298,17 +1487,16 @@
                     try {
                         let productSale = await getProductSale(itemValue);
                         if (productSale) {
-                            console.log(productSale);
                             let priceSale = productSale['sales'];
-                            let result = await convertCurrency(priceSale);
+                            let result = await convertNewCurrency(priceSale);
                             $('#' + textPrice).text(result);
                             $('#' + idPrice).val(priceSale);
-                            let priceShip = await convertCurrency(productSale['ship']);
+                            let priceShip = await convertNewCurrency(productSale['ship']);
                             let priceShipText = priceShip + ' ' + currency;
                             priceShipElement.text(priceShipText)
                             await changeDataTotal(productSale['ship']);
                         } else {
-                            let result = await convertCurrency(priceOld);
+                            let result = await convertNewCurrency(priceOld);
                             $('#' + textPrice).text(result);
                             $('#' + idPrice).val(priceOld);
                             priceShipElement.text(0 + ' ' + currency);
@@ -1329,10 +1517,10 @@
                     await mainConvertTotal(total);
                 }
 
-                // using function convertCurrency(total);
+                // using function convertNewCurrency(total);
                 async function mainConvertTotal(total) {
                     try {
-                        let result = await convertCurrency(total);
+                        let result = await convertNewCurrency(total);
                         let totalConvert = result + ' ' + currency;
                         $('#totalValue_' + variableID).text(totalConvert);
                     } catch (error) {
@@ -1343,8 +1531,8 @@
                 changeDataTotal(0);
 
                 // order
-                let variable = $(this).data('variable');
-                let quantity = $(this).val();
+                let variable = inputElement.data('variable');
+                let quantity = inputElement.val();
                 let item = quantity + '&' + variable;
 
                 let index = productItemInfo.findIndex(element => {
@@ -1375,23 +1563,6 @@
                 }
 
                 $('#productInfo').val(value);
-
-            })
-
-            /* Convert currency*/
-            async function convertCurrency(total) {
-                let url = `{{ route('convert.currency', ['total' => ':total']) }}`;
-                url = url.replace(':total', total);
-
-                try {
-                    let response = await $.ajax({
-                        url: url,
-                        method: 'GET',
-                    });
-                    return response;
-                } catch (error) {
-                    throw error;
-                }
             }
 
             /* Get product sales*/
@@ -1439,6 +1610,22 @@
             $('#valueShip').text(ship);
             $('#valueTotal').text(total);
         }
+
+        /* Convert currency*/
+        async function convertNewCurrency(total) {
+            let url = `{{ route('convert.currency', ['total' => ':total']) }}`;
+            url = url.replace(':total', total);
+
+            try {
+                let response = await $.ajax({
+                    url: url,
+                    method: 'GET',
+                });
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        }
     </script>
     <script>
         function showVariableModalOrder() {
@@ -1450,6 +1637,59 @@
             document.querySelector('.order-detail').classList.remove('active-modal')
             document.querySelector('.closeModalOrder').classList.remove('show-modal')
         }
+    </script>
+    <script>
+        let priceCart = '#priceCart';
+        let totalCart = '#totalCart';
+        let currency = $('.currency').first().text();
+        $(document).ready(function () {
+            $('.input-number-cart').on('change', function () {
+                let cartID = $(this).data('id');
+                let url = `{{ route('cart.api.update', ['id' => ':id']) }}`;
+                url = url.replace(':id', cartID);
+                let quantity = $(this).val();
+
+                const requestData = {
+                    _token: `{{ csrf_token() }}`,
+                    quantity: quantity,
+                };
+                $.ajax({
+                    url: url,
+                    method: 'PUT',
+                    data: requestData,
+                    body: JSON.stringify(requestData),
+                })
+                    .done(function (response) {
+                        let cartItem = response['cart'];
+                        let total = parseFloat(cartItem['price']) * parseFloat(cartItem['quantity'])
+                        convertPriceCart(cartItem['price'], cartID);
+                        convertTotalCart(total, cartID);
+                    })
+                    .fail(function (_, textStatus) {
+
+                    });
+
+                /* Using function convertNewCurrency(total)*/
+                async function convertTotalCart(total, cartID) {
+                    try {
+                        let result = await convertNewCurrency(total);
+                        let totalConvert = result + ' ' + currency;
+                        $(totalCart + cartID).text(totalConvert);
+                    } catch (error) {
+                        console.error(error);
+                    }
+                }
+
+                async function convertPriceCart(price, cartID) {
+                    try {
+                        let result = await convertNewCurrency(price);
+                        $(priceCart + cartID).text(result);
+                    } catch (error) {
+                        console.error(error);
+                    }
+                }
+            })
+        })
     </script>
 @endsection
 

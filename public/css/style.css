@@ -1746,12 +1746,16 @@ td.priceTransport {
   z-index: 3;
   max-width: 700px;
   width: 60%;
-  background: white;
+  background: #fff;
   position: fixed;
   top: -15px;
   height: 105vh;
   right: -100%;
   transition: all 0.5s ease-in-out;
+}
+.modal-order .order-detail .main-order-detail {
+  max-height: 70vh;
+  overflow-y: auto;
 }
 .modal-order .order-detail .order-title {
   margin-bottom: 50px;
@@ -1784,6 +1788,27 @@ td.priceTransport {
   font-size: 18px;
   font-weight: 600;
 }
+.modal-order .order-detail .ordered {
+  margin-bottom: 50px;
+}
+.modal-order .order-detail .ordered .title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.modal-order .order-detail .ordered .cart-item {
+  border-bottom: 1px solid #A9A9A9;
+  margin-top: 16px;
+  padding-bottom: 20px;
+}
+.modal-order .order-detail .ordered .cart-item .normal-text {
+  font-size: 16px;
+  font-weight: 500;
+}
+.modal-order .order-detail .ordered .cart-item .bold-text {
+  font-size: 18px;
+  font-weight: 600;
+}
 .modal-order .order-detail .render-order {
   margin-bottom: 50px;
 }
@@ -1802,7 +1827,20 @@ td.priceTransport {
   font-weight: 600;
 }
 .modal-order .order-detail .render-order .order-item .quantity input {
-  max-width: 120px;
+  max-width: 50%;
+  border: none;
+}
+.modal-order .order-detail .render-order .order-item .quantity:focus {
+  border: none;
+}
+.modal-order .order-detail .render-order .order-item .quantityVariable {
+  border-radius: 45px;
+  width: 20%;
+  border: 1px solid var(--Grey-Dark, #929292);
+  padding: 0 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .modal-order .order-detail .render-order .order-item .bold-text {
   font-size: 18px;
@@ -1814,6 +1852,9 @@ td.priceTransport {
   padding: 16px 16px 50px 16px;
   left: 0;
   right: 0;
+  z-index: 5;
+  max-height: 30vh;
+  background-color: #fff;
   width: 100%;
   box-shadow: 0px -4px 10px 0px rgba(0, 0, 0, 0.25);
 }
