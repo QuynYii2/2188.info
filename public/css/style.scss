@@ -503,9 +503,11 @@ a {
     font-weight: 600;
     line-height: normal;
   }
+
   .nav-tabs {
     border-bottom: none;
   }
+
   .link-tabs {
     display: flex;
     padding: 13px 16px 14px 16px;
@@ -1389,15 +1391,39 @@ td.priceTransport {
 
   .category {
     font-size: 20px;
+    color: #000;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
   }
 
-  .nav-pills .nav-link.active,
-  .nav-pills .show > .nav-link {
-    color: $color-main !important;
-    background-color: white;
-    border-bottom: 2px solid $color-main;
-    border-radius: 0 !important;
+
+
+  .search {
+    .voucher {
+      color: #000;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+    }
+    .input-group {
+      input {
+        border-radius: 8px;
+        border: 1px solid var(--Grey-Light, #D6D6D6);
+        background: var(--White, #FFF);
+      }
+    }
+
   }
+
+  //.nav-pills .nav-link.active,
+  //.nav-pills .show > .nav-link {
+  //  color: $color-main !important;
+  //  background-color: white;
+  //  border-bottom: 2px solid $color-main;
+  //  border-radius: 0 !important;
+  //}
 
   .nav-pills {
     text-align: center;
@@ -1602,6 +1628,139 @@ td.priceTransport {
   }
 }
 
+/* START MODAL PRODUCT ITEM*/
+.modalProductItem {
+  border-bottom: none;
+
+  .product-images {
+    padding: 16px;
+
+    .product-image-main {
+      max-width: 321px;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 1px solid var(--Grey-Medium, #BFBFBF);
+    }
+
+    .images-gallery {
+      height: auto;
+      margin-top: 8px;
+      width: 100%;
+      display: flex;
+      overflow-x: scroll;
+
+      li {
+        margin: 4px;
+      }
+
+      img {
+        cursor: pointer;
+        object-fit: cover;
+        width: 56px;
+        border-radius: 6px;
+        border: 1px solid var(--Grey-Light, #D6D6D6);
+      }
+    }
+  }
+
+  .product-info {
+    padding: 16px;
+
+    .product-name {
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .product-price {
+      display: flex;
+      align-items: center;
+
+      .real-price {
+        color: #E60000;
+        margin-right: 8px;
+        font-size: 24px;
+        font-weight: 600;
+      }
+
+      .del-price {
+        color: var(--Grey-Dark, #929292);
+        font-size: 20px;
+        font-weight: 400;
+      }
+    }
+
+    .share {
+      .title {
+        font-size: 24px;
+        font-weight: 600;
+      }
+
+      .list-social {
+        display: flex;
+        align-items: center;
+
+        .social-product-twitter {
+          background-color: #000;
+          padding: 10px 8px;
+          border-radius: 50%;
+          margin-bottom: 3px;
+        }
+      }
+    }
+
+    .show-order {
+      .input-quantity {
+        padding: 12px 8px;
+        width: 112px;
+        border: 1px solid var(--Grey-Dark, #929292);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .decrease-input{
+          cursor: pointer;
+        }
+
+        .increase-input{
+          cursor: pointer;
+        }
+
+        .inputQuantity {
+          border: none;
+          width: 60px;
+        }
+      }
+
+      .heart {
+        i {
+          font-size: 32px;
+        }
+      }
+
+      .order{
+        button{
+          cursor: pointer;
+          width: 347px;
+          padding: 12px 16px;
+          border: 1px solid var(--Grey-Dark, #929292);
+          color: var(--Grey-Dark, #929292);
+          font-size: 16px;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
+
+/* END MODAL PRODUCT ITEM*/
+
+/* START MODAL PRODUCT CART*/
+.modalProductCart {
+  border-bottom: none;
+}
+
+/* END MODAL PRODUCT CART*/
 
 .list-flag {
   .item-flag {
@@ -2107,12 +2266,17 @@ td.priceTransport {
     z-index: 3;
     max-width: 700px;
     width: 60%;
-    background: white;
+    background: #fff;
     position: fixed;
     top: -15px;
     height: 105vh;
     right: -100%;
     transition: all 0.5s ease-in-out;
+
+    .main-order-detail {
+      max-height: 70vh;
+      overflow-y: auto;
+    }
 
     .order-title {
       margin-bottom: 50px;
@@ -2156,6 +2320,32 @@ td.priceTransport {
       }
     }
 
+    .ordered {
+      margin-bottom: 50px;
+
+      .title {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+
+      .cart-item {
+        border-bottom: 1px solid #A9A9A9;
+        margin-top: 16px;
+        padding-bottom: 20px;
+
+        .normal-text {
+          font-size: 16px;
+          font-weight: 500;
+        }
+
+        .bold-text {
+          font-size: 18px;
+          font-weight: 600;
+        }
+      }
+    }
+
     .render-order {
       margin-bottom: 50px;
 
@@ -2177,8 +2367,23 @@ td.priceTransport {
 
         .quantity {
           input {
-            max-width: 120px;
+            max-width: 50%;
+            border: none;
           }
+
+          &:focus {
+            border: none;
+          }
+        }
+
+        .quantityVariable {
+          border-radius: 45px;
+          width: 20%;
+          border: 1px solid var(--Grey-Dark, #929292);
+          padding: 0 8px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
         }
 
         .bold-text {
@@ -2194,6 +2399,9 @@ td.priceTransport {
       padding: 16px 16px 50px 16px;
       left: 0;
       right: 0;
+      z-index: 5;
+      max-height: 30vh;
+      background-color: #fff;
       width: 100%;
       box-shadow: 0px -4px 10px 0px rgba(0, 0, 0, 0.25);
 
@@ -2268,6 +2476,132 @@ td.priceTransport {
   width: 100%;
 }
 
+.modal-dialog {
+  max-width: 1000px;
+  width: 100%;
+  height: 100%;
+  max-height: 560px;
+  background: var(--White, #FFF);
+
+  .modalContact {
+    border-bottom: none;
+
+    #modalContactLabel {
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .product-main {
+      padding: 16px;
+    }
+
+    .render-product {
+      .product-item {
+        background: var(--White, #FFF);
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+        .product-show {
+          padding: 16px;
+        }
+
+        .img-product {
+          max-width: 75px;
+          object-fit: cover;
+          border-radius: 1px;
+        }
+
+        .product-info {
+          margin-left: 8px;
+
+          .product-name {
+            font-size: 16px;
+            font-weight: 500;
+          }
+
+          .product-price {
+            .real-price {
+              color: #DD0B00;
+              font-size: 20px;
+              font-weight: 600;
+            }
+
+            del {
+              color: var(--Grey-Dark, #929292);
+              font-size: 16px;
+              font-weight: 500;
+            }
+          }
+        }
+
+        .quantity {
+          border-radius: 45px;
+          border: 1px solid var(--Grey-Dark, #929292);
+
+          padding: 8px;
+
+          .decrease {
+            cursor: pointer;
+          }
+
+          .input_number {
+            font-size: 16px;
+            font-weight: 600;
+            max-width: 60px;
+            width: 100%;
+            border: none;
+          }
+
+          .increase {
+            cursor: pointer;
+          }
+        }
+      }
+
+      .sup {
+        width: 100%;
+        max-width: 125px;
+      }
+    }
+
+    .content-item {
+      margin-top: 16px;
+      height: 100%;
+      max-height: 240px;
+
+      label {
+        font-size: 18px;
+        font-weight: 400;
+      }
+
+      textarea {
+        border-radius: 8px;
+        height: 200%;
+        max-height: 200px;
+        border: 0.5px solid var(--Grey-Light, #D6D6D6);
+        background: var(--White, #FFF);
+      }
+    }
+
+    .email-item {
+      margin-top: 16px;
+
+      label {
+        font-size: 18px;
+        font-weight: 400;
+      }
+    }
+
+    .btnSend {
+      background: var(--secon-1, #F47621);
+      padding: 12px 16px;
+      width: 240px;
+      color: var(--White, #FFF);
+      font-size: 16px;
+      font-weight: 600;
+    }
+  }
+}
+
 /*END MODAL ORDER*/
 
 .detail {
@@ -2300,6 +2634,12 @@ td.priceTransport {
           }
         }
       }
+    }
+
+    .product-item {
+      max-height: 75vh;
+      overflow: auto;
+      height: 75vh;
     }
 
     .product-title {
@@ -2356,8 +2696,7 @@ td.priceTransport {
     }
 
     .show-order-area {
-      position: absolute;
-      bottom: 0;
+      max-height: 30vh;
 
       .btnOrder {
         padding: 12px 16px;

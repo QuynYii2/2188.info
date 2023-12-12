@@ -215,6 +215,34 @@ new Swiper(".HotDeals", {
     },
 });
 
+new Swiper(".DetailProducts", {
+    cssMode: true,
+    navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+    },
+    breakpoints: {
+        300: {
+            slidesPerView: 2,
+            spaceBetween: 10,
+        },
+        600: {
+            slidesPerView: 3,
+            spaceBetween: 10,
+        },
+        800: {
+            slidesPerView: 4,
+            spaceBetween: 10,
+        },
+    },
+    mousewheel: true,
+    keyboard: true,
+    autoplay: {
+        delay: 2000,
+        disableOnInteraction: false,
+    },
+});
+
 new Swiper(".advertisementBanner",{
     pagination: {
         el: ".swiper-pagination",

@@ -65,6 +65,9 @@ return [
     'link social network' => 'Liên kết mạng xã hội',
     'save changes' => 'Lưu thay đổi',
     'Update profile' => 'Cập nhật thông tin',
+    'Voucher giảm' => 'Voucher giảm',
+    'Ngày kết thúc' => 'Ngày kết thúc',
+    'Mã voucher đã được sao chép: ' => 'Mã voucher đã được sao chép: ',
     'address' => 'Địa chỉ',
 
     //update, add email, liên kết, nam, nữ, khác
