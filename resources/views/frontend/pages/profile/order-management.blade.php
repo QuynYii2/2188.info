@@ -25,27 +25,27 @@
             <nav>
                 <div class="nav nav-tabs nav-fill d-flex justify-content-between align-items-center"
                      id="nav-tab" role="tablist">
-                    <a class="nav-item link-tabs nav-link active" data-toggle="tab" data-target="#nav-1"
+                    <a class="nav-item link-tabs-order nav-link active" data-toggle="tab" data-target="#nav-1"
                        role="tab" aria-controls="nav-1" aria-selected="true">
                         {{ __('home.all orders') }}
                     </a>
-                    <a class="nav-item link-tabs nav-link" data-toggle="tab" data-target="#nav-2" role="tab"
+                    <a class="nav-item link-tabs-order nav-link" data-toggle="tab" data-target="#nav-2" role="tab"
                        aria-controls="nav-2" aria-selected="false">
                         {{ __('home.waiting for payment') }}
                     </a>
-                    <a class="nav-item link-tabs nav-link" data-toggle="tab" data-target="#nav-3"
+                    <a class="nav-item link-tabs-order nav-link" data-toggle="tab" data-target="#nav-3"
                        role="tab" aria-controls="nav-3" aria-selected="false">
                         {{ __('home.processing') }}
                     </a>
-                    <a class="nav-item link-tabs nav-link" data-toggle="tab" data-target="#nav-4" role="tab"
+                    <a class="nav-item link-tabs-order nav-link" data-toggle="tab" data-target="#nav-4" role="tab"
                        aria-controls="nav-4" aria-selected="false">
                         {{ __('home.shipping') }}
                     </a>
-                    <a class="nav-item link-tabs nav-link" data-toggle="tab" data-target="#nav-5" role="tab"
+                    <a class="nav-item link-tabs-order nav-link" data-toggle="tab" data-target="#nav-5" role="tab"
                        aria-controls="nav-4" aria-selected="false">
                         {{ __('home.delivered') }}
                     </a>
-                    <a class="nav-item link-tabs nav-link" data-toggle="tab" data-target="#nav-6" role="tab"
+                    <a class="nav-item link-tabs-order nav-link" data-toggle="tab" data-target="#nav-6" role="tab"
                        aria-controls="nav-4" aria-selected="false">
                         {{ __('home.canceled') }}
                     </a>

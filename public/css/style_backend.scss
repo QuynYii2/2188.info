@@ -1877,7 +1877,7 @@ body {
 
   /* end style profile */
   &--right {
-    background-color: #f6f6f6;
+    //background-color: #f6f6f6;
     min-height: 100vh;
 
     .todo_list {
@@ -2511,7 +2511,7 @@ body {
 /* profile account */
 
 .btn-voucher {
-  border-radius: 8px!important;
+  border-radius: 8px !important;
   background: var(--Light, #EAEAEA);
   color: var(--Grey-Dark, #929292);
   font-size: 16px;
@@ -2525,6 +2525,7 @@ body {
   justify-content: center;
   align-items: center;
 }
+
 .form-control-voucher {
   display: block;
   width: 100%;
@@ -2542,12 +2543,14 @@ body {
   //color: #000;
   line-height: normal;
 }
+
 .list-voucher {
   ul, li {
     list-style: none;
     padding: 0;
     margin: 0;
   }
+
   .nav-tabs__voucher {
     color: var(--Grey-Dark, #929292);
     text-align: center;
@@ -2555,7 +2558,8 @@ body {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    a{
+
+    a {
       color: var(--Grey-Dark, #929292);
       text-align: center;
       font-size: 16px;
@@ -2564,58 +2568,88 @@ body {
       line-height: normal;
 
     }
-    .nav-link{
+
+    .nav-link {
     }
+
     .active {
-      color: var(--secon-1, #F47621)!important;
+      color: var(--secon-1, #F47621) !important;
       text-align: center;
       font-size: 16px;
       font-style: normal;
       font-weight: 600;
       line-height: normal;
-      border-bottom: 4px solid #fd6506 ;
-      background-color: #f6f6f6 ;
+      border-bottom: 4px solid #fd6506;
+      background-color: #f6f6f6;
     }
 
   }
-    .item {
-      border-radius: 5px;
-      background: #ffffff;
-      border: 1px solid #929292;
-      .img-voucher {
-        padding: 8px;
-        img {
-          margin: 30px 30px 30px 0;
-          width: auto;
-          height: 100px;
-          object-fit: cover;
-        }
-      }
-    }
-    .content {
-      padding: 0 20px;
-      width: 80%;
-      .voucher-details {
-        margin: 10px 0;
 
-        .voucher-percent {
-        }
+  .item {
+    border-radius: 5px;
+    background: #ffffff;
+    border: 1px solid #929292;
 
-        button{
-          border-radius: 8px;
-          border: 1px solid #F47621;
-          background-color: #ffffff;
-          display: flex;
-          width: 63px;
-          padding: 2px 16px 3px 16px;
-          justify-content: center;
-          align-items: center;
-          gap: 10px;
-        }
+    .img-voucher {
+      padding: 8px;
+
+      img {
+        margin: 30px 30px 30px 0;
+        width: auto;
+        height: 100px;
+        object-fit: cover;
       }
     }
   }
 
+  .content {
+    padding: 0 20px;
+    width: 80%;
+
+    .voucher-details {
+      margin: 10px 0;
+
+      .voucher-percent {
+      }
+
+      button {
+        border-radius: 8px;
+        border: 1px solid #F47621;
+        background-color: #ffffff;
+        display: flex;
+        width: 63px;
+        padding: 2px 16px 3px 16px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+      }
+    }
+  }
+}
+
+#address-book {
+  .border-address-book {
+    background: var(--White-Light, #F3F3F3);
+    border: none;
+  }
+  .header-address-book {
+    .title-address-book {
+      color: #000;
+      text-align: center;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+    }
+  }
+  .name-address-book {
+    color: #000;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+}
 
 /* end profile account */
 
