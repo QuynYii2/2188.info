@@ -17,13 +17,17 @@ class WishListController extends Controller
     public function wishListIndex(Request $request)
     {
         (new HomeController())->getLocale($request);
-        $wishListItems = DB::table('wish_lists')->where('user_id', '=', Auth::user()->id)->get();
+        $wishListItems = DB::table('wish_lists')
+            ->where('user_id', '=', Auth::user()->id)
+            ->where('deleted_at', '=', null)
+            ->get();
         $productIds = [];
+        $currency = (new HomeController())->getLocation($request);
         foreach ($wishListItems as $productId) {
             array_push($productIds, $productId->product_id);
         }
         $productLists = Product::where('id', $productIds)->get();
-        return view('frontend/pages/profile/wish-lists', compact('productLists','wishListItems'));
+        return view('frontend/pages/profile/wish-lists', compact('productLists','wishListItems','currency'));
     }
 
 
@@ -77,9 +81,10 @@ class WishListController extends Controller
         //
     }
 
-    public function wishListSoftDelete(Request $id)
+    public function wishListSoftDelete(Request $request, $id)
     {
-        $wishList = WishList::find($_POST['id']);
+        $userId = Auth::user()->id;
+        $wishList = WishList::where('product_id',$id)->where('user_id',$userId)->first();
         if ($wishList) {
             $wishList->delete();
             return response()->json(['message' => 'sản pẩm đã được xóa'], 200);
