@@ -37,14 +37,11 @@ use App\Models\Voucher;
 use Carbon\Carbon;
 use Exception;
 use FuzzyWuzzy\Fuzz;
-use FuzzyWuzzy\Process;
-use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use PragmaRX\Countries\Package\Countries;
 
@@ -173,7 +170,10 @@ class HomeController extends Controller
         ])->update(['status' => PromotionStatus::ACTIVE]);
 
         $banner = Banner::where('status', BannerStatus::ACTIVE)->orderBy('created_at', 'desc')->first();
-        $listCart = Cart::where('user_id', Auth::user()->id)->where('status', CartStatus::WAIT_ORDER)->get();
+        $listCart = null;
+        if (Auth::check()) {
+            $listCart = Cart::where('user_id', Auth::user()->id)->where('status', CartStatus::WAIT_ORDER)->get();
+        }
 
         return view('frontend/index', [
             'productByLocal' => $productByLocal,
@@ -201,20 +201,6 @@ class HomeController extends Controller
         ]);
     }
 
-    public function shop()
-    {
-        return view('frontend/pages/product-list');
-    }
-
-    public function register(Request $request)
-    {
-        $this->getLocale($request);
-        $permissions = DB::table('permissions')->where([['name', '!=', 'view_all_products'], ['name', '!=', 'view_profile']])->get();
-        $categories = Category::get()->toTree();
-        $members = Member::where('price', 0)->get();
-        return view('frontend/pages/register', compact('permissions', 'categories', 'members'));
-    }
-
     public function getLocale(Request $request)
     {
 //        if ($request->session()->has('locale')) {
@@ -229,6 +215,20 @@ class HomeController extends Controller
 //            }
 //        }
 //        app()->setLocale('kr');
+    }
+
+    public function shop()
+    {
+        return view('frontend/pages/product-list');
+    }
+
+    public function register(Request $request)
+    {
+        $this->getLocale($request);
+        $permissions = DB::table('permissions')->where([['name', '!=', 'view_all_products'], ['name', '!=', 'view_profile']])->get();
+        $categories = Category::get()->toTree();
+        $members = Member::where('price', 0)->get();
+        return view('frontend/pages/register', compact('permissions', 'categories', 'members'));
     }
 
     public function getLangDisplay()
@@ -344,51 +344,61 @@ class HomeController extends Controller
         $this->createStatisticShop($value, $id);
     }
 
+    private function createStatisticShop($value, $id)
+    {
+        $statisticShop = StatisticShop::where([
+            ['user_id', $id],
+            ['datetime', '<', Carbon::now()->addHours(7)->copy()->endOfDay()],
+            ['datetime', '>', Carbon::now()->addHours(7)->copy()->startOfDay()]
+        ])->first();
+
+        if ($value == 'access') {
+            if ($statisticShop) {
+                $statisticShop->access = $statisticShop->access + 1;
+                $statisticShop->save();
+            } else {
+                $statisticShop = [
+                    'access' => 1,
+                    'user_id' => $id,
+                    'datetime' => Carbon::now()->addHours(7),
+                ];
+
+                StatisticShop::create($statisticShop);
+            }
+        } elseif ($value == 'views') {
+            if ($statisticShop) {
+                $statisticShop->views = $statisticShop->views + 1;
+                $statisticShop->save();
+            } else {
+                $statisticShop = [
+                    'views' => 1,
+                    'user_id' => $id,
+                    'datetime' => Carbon::now()->addHours(7),
+                ];
+
+                StatisticShop::create($statisticShop);
+            }
+        } else {
+            if ($statisticShop) {
+                $statisticShop->orders = $statisticShop->orders + 1;
+                $statisticShop->save();
+            } else {
+                $statisticShop = [
+                    'orders' => 1,
+                    'user_id' => $id,
+                    'datetime' => Carbon::now()->addHours(7),
+                ];
+
+                StatisticShop::create($statisticShop);
+            }
+        }
+    }
+
     public function setLocale()
     {
         $this->createMultilNewUser();
     }
 
-    public function changeLanguage(Request $request)
-    {
-        $locale = $request->input('locale');
-        if (!$locale) {
-            $locale = 'kr';
-        }
-        Session::put('locale', $locale);
-        return redirect()->back();
-    }
-
-    public function getLocation(Request $request)
-    {
-        $geoIp = new GeoIP();
-        $locale = $geoIp->getCode($request->ip());
-        $countries = new Countries();
-//        $country = $countries->all()->pluck('name.common')->toArray();
-//        $currencies = $countries->all()->pluck('currencies')->toArray();
-//        $all = $countries->where('name.common', $locale)->first()->hydrate('currencies')->currencies;
-//        foreach ($all as $items) {
-//            $currency = $items->iso->code;
-//        }
-        $currency = 'KRW';
-        return $currency;
-    }
-
-    public function replaceString($search, $replace, $string)
-    {
-        $res = str_replace(array($search), $replace, $string);
-        return $res;
-    }
-
-    //Api convert currency
-    public function convertCurrency(Request $request, $total)
-    {
-        $currency = $this->getLocation($request);
-        $totalConvert = number_format(convertCurrency('USD', $currency, $total), 0, ',', '.');
-        return $totalConvert;
-    }
-
-    //Start import user form nn21
     public function createMultilNewUser()
     {
         try {
@@ -468,6 +478,21 @@ class HomeController extends Controller
         }
     }
 
+    private function callApi()
+    {
+        try {
+            $url = Contains::URL_INSERT_USER;
+            $url_local = Contains::URL_INSERT_USER_LOCAL;
+            $response = Http::get($url);
+            $data = $response->body();
+            return $data;
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Lỗi khi gọi API'], 500);
+        }
+    }
+
+    //Api convert currency
+
     private function getLanguageCode($language)
     {
         switch ($language) {
@@ -481,6 +506,8 @@ class HomeController extends Controller
                 return 'vi';
         }
     }
+
+    //Start import user form nn21
 
     private function getCategoryIds($categoryCompany, $categoryDefault)
     {
@@ -507,72 +534,21 @@ class HomeController extends Controller
         return $arrayNameCategory;
     }
 
+    private function replaceStringCheck($str)
+    {
+        $res = $this->replaceString('!', '', $str);
+        return $res;
+    }
+
+    public function replaceString($search, $replace, $string)
+    {
+        $res = str_replace(array($search), $replace, $string);
+        return $res;
+    }
+
     //End import user form nn21
 
     // Private function
-    private function createStatisticShop($value, $id)
-    {
-        $statisticShop = StatisticShop::where([
-            ['user_id', $id],
-            ['datetime', '<', Carbon::now()->addHours(7)->copy()->endOfDay()],
-            ['datetime', '>', Carbon::now()->addHours(7)->copy()->startOfDay()]
-        ])->first();
-
-        if ($value == 'access') {
-            if ($statisticShop) {
-                $statisticShop->access = $statisticShop->access + 1;
-                $statisticShop->save();
-            } else {
-                $statisticShop = [
-                    'access' => 1,
-                    'user_id' => $id,
-                    'datetime' => Carbon::now()->addHours(7),
-                ];
-
-                StatisticShop::create($statisticShop);
-            }
-        } elseif ($value == 'views') {
-            if ($statisticShop) {
-                $statisticShop->views = $statisticShop->views + 1;
-                $statisticShop->save();
-            } else {
-                $statisticShop = [
-                    'views' => 1,
-                    'user_id' => $id,
-                    'datetime' => Carbon::now()->addHours(7),
-                ];
-
-                StatisticShop::create($statisticShop);
-            }
-        } else {
-            if ($statisticShop) {
-                $statisticShop->orders = $statisticShop->orders + 1;
-                $statisticShop->save();
-            } else {
-                $statisticShop = [
-                    'orders' => 1,
-                    'user_id' => $id,
-                    'datetime' => Carbon::now()->addHours(7),
-                ];
-
-                StatisticShop::create($statisticShop);
-            }
-        }
-    }
-
-    // Call API form nn21
-    private function callApi()
-    {
-        try {
-            $url = Contains::URL_INSERT_USER;
-            $url_local = Contains::URL_INSERT_USER_LOCAL;
-            $response = Http::get($url);
-            $data = $response->body();
-            return $data;
-        } catch (\Exception $e) {
-            return response()->json(['message' => 'Lỗi khi gọi API'], 500);
-        }
-    }
 
     private function createUser($name, $email, $tel, $address, $language, $passwordHash)
     {
@@ -614,6 +590,8 @@ class HomeController extends Controller
         }
         return $oldUser;
     }
+
+    // Call API form nn21
 
     private function createOrUpdateMember($newUser, $companyName, $companyTEL, $companyFAX, $companyCode,
                                           $category_id, $member, $companyAddress, $email, $companyNo)
@@ -730,16 +708,42 @@ class HomeController extends Controller
 
     }
 
+    public function changeLanguage(Request $request)
+    {
+        $locale = $request->input('locale');
+        if (!$locale) {
+            $locale = 'kr';
+        }
+        Session::put('locale', $locale);
+        return redirect()->back();
+    }
+
+    public function convertCurrency(Request $request, $total)
+    {
+        $currency = $this->getLocation($request);
+        $totalConvert = number_format(convertCurrency('USD', $currency, $total), 0, ',', '.');
+        return $totalConvert;
+    }
+
+    public function getLocation(Request $request)
+    {
+        $geoIp = new GeoIP();
+        $locale = $geoIp->getCode($request->ip());
+        $countries = new Countries();
+//        $country = $countries->all()->pluck('name.common')->toArray();
+//        $currencies = $countries->all()->pluck('currencies')->toArray();
+//        $all = $countries->where('name.common', $locale)->first()->hydrate('currencies')->currencies;
+//        foreach ($all as $items) {
+//            $currency = $items->iso->code;
+//        }
+        $currency = 'KRW';
+        return $currency;
+    }
+
     private function checkEmail($email)
     {
         $find1 = strpos($email, '@');
         $find2 = strpos($email, '.');
         return ($find1 !== false && $find2 !== false && $find2 > $find1);
-    }
-
-    private function replaceStringCheck($str)
-    {
-        $res = $this->replaceString('!', '', $str);
-        return $res;
     }
 }

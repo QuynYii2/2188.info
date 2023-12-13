@@ -1022,7 +1022,7 @@
 
         <!-- Modal -->
         <div class="modal fade" id="modalContact" tabindex="-1" aria-labelledby="modalContactLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modalShowContact">
                 <div class="modal-content modalContact">
                     <div class="modal-header">
                         <h5 class="modal-title text-left" id="modalContactLabel">Send require</h5>
