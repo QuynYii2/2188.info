@@ -143,11 +143,11 @@ a {
   font-size: 12px;
   font-weight: 500;
 }
-.section-First-posted .btn-my-posted button {
+.section-First-posted .btn-my-posted a {
   border: 3px solid #F42121;
   padding: 8px 16px;
 }
-.section-First-posted .btn-my-posted button span {
+.section-First-posted .btn-my-posted a span {
   text-align: center;
   vertical-align: middle;
   font-size: 14px;
@@ -1458,12 +1458,20 @@ td.priceTransport {
 .modalCart .modalProductCart {
   border-bottom: none;
 }
+.modalCart .modalProductCart .modal-title {
+  font-size: 24px;
+  font-weight: 800;
+}
 .modalCart .product-modal {
   width: 100%;
   height: auto;
+  max-height: 180px;
   padding: 10px 16px;
+  border: 1px solid var(--Light, #EAEAEA);
+  border-radius: 8px;
+  background: var(--White, #FFF);
 }
-.modalCart .product-modal .product-info .product-image .image-main {
+.modalCart .product-modal .product-info .product-image-main .image-main {
   border-radius: 8px;
   max-width: 100px;
   height: 100px;
@@ -1486,6 +1494,37 @@ td.priceTransport {
   font-size: 14px;
   font-weight: 500;
 }
+.modalCart .product-modal .quantity {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.modalCart .product-modal .quantity input {
+  border: none;
+  max-width: 60px;
+  width: 100%;
+}
+.modalCart .btnCancel {
+  padding: 12px 50px;
+  border-radius: 8px;
+  color: var(--Grey-Balck, #424242);
+  font-size: 16px;
+  font-weight: 600;
+  background: var(--Grey-Light, #D6D6D6);
+  width: 160px;
+}
+.modalCart .btnCheckout {
+  border-radius: 8px;
+  background: var(--secon-1, #F47621);
+  padding: 12px 50px;
+  max-width: 160px;
+  width: 100%;
+  text-align: center;
+  color: var(--White, #FFF);
+  font-size: 16px;
+  font-weight: 600;
+}
+
 /* END MODAL PRODUCT CART*/
 .list-flag .item-flag {
   display: flex;

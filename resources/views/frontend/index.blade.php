@@ -41,7 +41,8 @@
                     </div>
                     <ul class="m-auto all-category">
                         @foreach($categoriesParent as $category)
-                            <li class="category-item" data-toggle="modal" data-target="#modalCategory_{{ $category->id }}">
+                            <li class="category-item" data-toggle="modal"
+                                data-target="#modalCategory_{{ $category->id }}">
                                 <a href="{{ route('category.show', $category->id) }}" class="category-item-name">
                                     {{($category->{'name' . $langDisplay->getLangDisplay()})}}
                                 </a>
@@ -55,7 +56,8 @@
                             <div class="category-hover">
 
                             </div>
-                            <div class="modal fade" id="modalCategory_{{ $category->id }}" tabindex="-1" aria-labelledby="modalCategoryLabel" aria-hidden="true">
+                            <div class="modal fade" id="modalCategory_{{ $category->id }}" tabindex="-1"
+                                 aria-labelledby="modalCategoryLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-category">
                                     <div class="modal-content ">
                                         <div class="modal-body">
@@ -63,7 +65,8 @@
                                                 @foreach($categoryChilds as $categoryChild)
                                                     <div class="col-md-6 show-category-child">
                                                         <div class="category-child">
-                                                            <a href="{{ route('category.show', $categoryChild->id) }}" class="category-item-name">
+                                                            <a href="{{ route('category.show', $categoryChild->id) }}"
+                                                               class="category-item-name">
                                                                 {{($categoryChild->{'name' . $langDisplay->getLangDisplay()})}}
                                                             </a>
                                                         </div>
@@ -76,7 +79,8 @@
                                                         <ul class="list-group-flush">
                                                             @foreach($categoryChild2s as $categoryChild2)
                                                                 <li class="category-item">
-                                                                    <a href="{{ route('category.show', $categoryChild2->id) }}" class="category-item-name">
+                                                                    <a href="{{ route('category.show', $categoryChild2->id) }}"
+                                                                       class="category-item-name">
                                                                         {{($categoryChild2->{'name' . $langDisplay->getLangDisplay()})}}
                                                                     </a>
                                                                 </li>
@@ -164,7 +168,7 @@
                         No desirable products?
                     </p>
                     <div class="btn-my-posted d-flex align-items-center justify-content-between">
-                        <button class="btnPosted w-100 bg-white">
+                        <a class="btnPosted w-100 bg-white">
                             <span>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="33" height="32"
                                      viewBox="0 0 33 32"
@@ -229,7 +233,7 @@
                             <span>
                                 Posted my RFQ
                             </span>
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -250,12 +254,12 @@
         </div>
 
         <div class="section margin-layout-index margin-top-layout container-fluid mt-3">
-           <div class="d-flex justify-content-between align-items-center">
-               <h3 class="content-products">{{ __('home.New Products') }}</h3>
-               <div class="see-all">
-                   <a href="#">See All</a>
-               </div>
-           </div>
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="content-products">{{ __('home.New Products') }}</h3>
+                <div class="see-all">
+                    <a href="#">See All</a>
+                </div>
+            </div>
             <div class="swiper NewProducts">
                 <div class="swiper-wrapper">
                     @foreach($newProducts as $product)
@@ -269,12 +273,12 @@
             </div>
         </div>
         <div class="section margin-layout-index margin-top-layout container-fluid mt-3">
-           <div class="d-flex justify-content-between align-items-center">
-               <h3 class="content-products">{{ __('home.Featured Products') }}</h3>
-               <div class="see-all">
-                   <a href="#">See All</a>
-               </div>
-           </div>
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="content-products">{{ __('home.Featured Products') }}</h3>
+                <div class="see-all">
+                    <a href="#">See All</a>
+                </div>
+            </div>
             <div class="swiper FeaturedProducts">
                 <div class="swiper-wrapper">
                     @foreach($productFeatures as $product)
@@ -292,7 +296,7 @@
                 <h3 class="content-products">
                     <span>
                         <img class="img-gif" src="{{ asset('images/gif/hot-deal.gif') }}"
-                                                        alt="">
+                             alt="">
                     </span> {{ __('home.Hot Deals') }}</h3>
                 <div class="see-all">
                     <a href="#">See All</a>
@@ -656,7 +660,7 @@
                 let quantity = $('#inputQuantity' + dataID);
                 let value = quantity.val();
                 if (value > 0) {
-                    value = parseFloat - 1;
+                    value = parseFloat(value) - 1;
                     if (value === min) {
                         value = 0;
                     }
@@ -671,7 +675,52 @@
                 value = parseFloat(value) + 1;
                 quantity.val(value);
             })
+
+            $('.cart-decrease').on('click', function () {
+                let dataID = $(this).data('id');
+                let min = $(this).data('min');
+                let quantity = $(this).siblings();
+                let value = quantity.val();
+                if (value > min) {
+                    value = parseFloat(value) - 1;
+                    quantity.val(value);
+                    updateCart(dataID, value);
+                }
+            })
+
+            $('.cart-increase').on('click', function () {
+                let dataID = $(this).data('id');
+                let quantity = $(this).prev();
+                let value = quantity.val();
+                value = parseFloat(value) + 1;
+                quantity.val(value);
+                updateCart(dataID, value);
+            })
         })
+
+        async function updateCart(id, quantity) {
+            let url = `{{ route('cart.api.update', ['id'=>':id']) }}`;
+            url = url.replace(':id', id);
+            const data = {
+                quantity: quantity,
+            };
+
+            await fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(data),
+            }).then(response => {
+                if (response.status == 200) {
+                    alert('Change quantity success!');
+                }
+
+            }).catch(error => {
+                console.log(error);
+                alert('Change quantity error!');
+            });
+        }
     </script>
 @endsection
 
