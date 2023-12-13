@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\AttributeProductStatus;
+use App\Enums\CartStatus;
 use App\Enums\EvaluateProductStatus;
 use App\Enums\ProductInterestedStatus;
 use App\Enums\ProductStatus;
@@ -11,6 +12,7 @@ use App\Enums\VariationStatus;
 use App\Enums\VoucherStatus;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Models\Attribute;
+use App\Models\Cart;
 use App\Models\EvaluateProduct;
 use App\Models\Product;
 use App\Models\ProductInterested;
@@ -107,9 +109,15 @@ class ProductController extends Controller
         if ($value == 404) {
             return back();
         }
-
+        $listCart = null;
+        if (Auth::check()){
+            $listCart = Cart::where('user_id', Auth::user()->id)->where('status', CartStatus::WAIT_ORDER)->get();
+        }
         $currency = (new HomeController())->getLocation($request);
-        return view('frontend/pages/detail-product', $value)->with('currency', $currency);
+        return view('frontend/pages/detail-product', $value)->with([
+            'currency' => $currency,
+            'listCart' => $listCart
+        ]);
     }
 
     private function findProduct($key, $text)
