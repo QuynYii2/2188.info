@@ -69,6 +69,7 @@ return [
     'Ngày kết thúc' => 'Ngày kết thúc',
     'Mã voucher đã được sao chép: ' => 'Mã voucher đã được sao chép: ',
     'address' => 'Địa chỉ',
+    'Specific address' => 'Địa chỉ cụ thể',
 
     //update, add email, liên kết, nam, nữ, khác
     'update' => 'Cập nhật',
@@ -1011,6 +1012,7 @@ return [
     'Find password/id Login' => 'Quên mật khẩu/ ID?',
     'giay_phep_kinh_doanh' => 'Giấy phép kinh doanh',
     'Thêm mới địa chỉ' => 'Thêm mới địa chỉ',
+    'Add new address' => 'Thêm mới địa chỉ',
     'Họ và tên' => 'Họ và tên',
     'Công ty' => 'Công ty',
     'Số điện thoại' => 'Số điện thoại',
