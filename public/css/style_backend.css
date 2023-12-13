@@ -2382,6 +2382,48 @@ body {
   line-height: normal;
 }
 
+.product-item__wishList {
+  border: 1px solid var(--Light, #EAEAEA);
+  background: #FFF;
+}
+.product-item__wishList .sparkle {
+  border: 1px solid #fff;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  padding: 16px 16px 32px 16px;
+}
+
+.u-hover--sparkle {
+  box-sizing: border-box;
+  position: relative;
+  padding: 0.75em;
+}
+.u-hover--sparkle::before, .u-hover--sparkle::after {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  transform-origin: center;
+}
+.u-hover--sparkle::before {
+  border-top: 1px solid #F47621;
+  border-bottom: 1px solid #F47621;
+  transform: scale3d(0, 1, 1);
+}
+.u-hover--sparkle::after {
+  border-left: 1px solid #F47621;
+  border-right: 1px solid #F47621;
+  transform: scale3d(1, 0, 1);
+}
+.u-hover--sparkle:hover::before, .u-hover--sparkle:hover::after {
+  transform: scale3d(1, 1, 1);
+  transition: transform 900ms;
+}
+
 /* end profile account */
 
 /*# sourceMappingURL=style_backend.css.map */
