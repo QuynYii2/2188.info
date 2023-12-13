@@ -3,52 +3,50 @@
 <link rel="stylesheet" href="{{asset('css/style.css')}}">
 <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
 @section('content')
-    <h2 class="mt-5">{{ __('home.Wishlist') }}</h2>
+    <h2 class="mt-5 d-flex justify-content-center align-items-center">{{ __('home.Wishlist') }}</h2>
     <div class="row">
         @foreach($wishListItems as $wishLis)
-            {{--                @foreach($productLists as $product)--}}
             @php
                 $product = \App\Models\Product::find($wishLis->product_id)
             @endphp
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        @php
-                            $thumbnail = checkThumbnail($product->thumbnail);
-                        @endphp
-                        <div class="item-img">
-                            <img src="{{ $thumbnail }}"
-                                 alt="">
-                        </div>
-                        Tên sản phẩm: {{ ($product->name) }}<br>
-                        Giá gốc: {{ ($product->price) }}<br>
-                        @if($product->old_price)
-                            Giá khuyễn mãi: {{ ($product->old_price) }}
-                        @endif
 
-                        <div>
-                            @if(Auth::check())
-                                <a href="{{route('detail_product.show', $product->id)}}">
-                                    <button>{{ __('home.Choose Options') }}</button>
-                                </a>
-                            @else
-                                <a class="check_url">{{ __('home.Choose Options') }}</a>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="deleteButton--wish-list" data-value="{{$wishLis->id}}">
-                        <button>
-                            {{ __('home.delete') }}
-                        </button>
-                    </div>
+            <div class="col-md-3">
+                <div class="product-item__wishList">
+                    @include('frontend.pages.profile.tab-product-wish-list.tab-wish-list-detail')
                 </div>
             </div>
         @endforeach
     </div>
 
     <script>
-        var url = "{{route('wish.list.delete', ['id'=>':id'])}}";
+
         var token = '{{ csrf_token() }}';
+
+        $(document).ready(function ($) {
+            $(".icon-heart").click(function () {
+                var idProduct = $(this).data('id');
+                var url = "{{route('wish.list.delete', ['id'=>':id'])}}";
+                url = url.replace(':id', idProduct);
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    dataType: 'json',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        idProduct: idProduct,
+                        _token: token,
+                    },
+                    success: function (response) {
+                        alert(response.message);
+                    },
+                    error: function (exception) {
+                        alert('Something wrong!');
+                    }
+                });
+            });
+        });
     </script>
 
 @endsection
