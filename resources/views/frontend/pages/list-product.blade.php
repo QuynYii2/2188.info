@@ -234,7 +234,7 @@
 <!-- Modal -->
 <div class="modal fade" id="modalProductCart__{{$product->id}}" tabindex="-1"
      aria-labelledby="modalProductCartLabel_{{$product->id}}" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modalCart">
         <div class="modal-content modalProductCart">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalProductCartLabel_{{$product->id}}">Cart</h5>
@@ -243,7 +243,54 @@
                 </button>
             </div>
             <div class="modal-body mainModalCart">
-
+                {{--                @isset($listCart)--}}
+                {{--                    @foreach($listCart as $cart)--}}
+                {{--                --}}
+                {{--                    @endforeach--}}
+                {{--                @endisset--}}
+                <div class="product-modal d-flex ">
+                    <div class="product-info d-flex">
+                        <div class="product-image">
+                            @php
+                                $thumbnail = checkThumbnail($product->thumbnail);
+                            @endphp
+                            <img src="{{ $thumbnail }}" alt="" class="image-main">
+                        </div>
+                        <div class="product-name">
+                            <div class="name">
+                                {{ $product->name }}
+                            </div>
+                            <div class="price">
+                                <span class="real-price">
+                                    {{ $product->price }}
+                                </span>
+                                <span>
+                                    <del>{{ $product->old_price }}</del>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="quantity">
+                        <span class="decrease modal-decrease">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                 viewBox="0 0 16 16" fill="none">
+                              <path d="M4 8H12" stroke="#292D32" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                        <input class="input_number" id="modal_input_number" type="number"
+                               value="0" min="0">
+                        <span class="increase modal-increase">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                 viewBox="0 0 16 16" fill="none">
+                              <path d="M4 8H12" stroke="#292D32" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round"/>
+                              <path d="M8 12V4" stroke="#292D32" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('home.Cancel') }}</button>

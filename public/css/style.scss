@@ -1399,7 +1399,6 @@ td.priceTransport {
   }
 
 
-
   .search {
     .voucher {
       color: #000;
@@ -1408,6 +1407,7 @@ td.priceTransport {
       font-weight: 600;
       line-height: normal;
     }
+
     .input-group {
       input {
         border-radius: 8px;
@@ -1719,11 +1719,11 @@ td.priceTransport {
         justify-content: space-between;
         align-items: center;
 
-        .decrease-input{
+        .decrease-input {
           cursor: pointer;
         }
 
-        .increase-input{
+        .increase-input {
           cursor: pointer;
         }
 
@@ -1739,8 +1739,8 @@ td.priceTransport {
         }
       }
 
-      .order{
-        button{
+      .order {
+        button {
           cursor: pointer;
           width: 347px;
           padding: 12px 16px;
@@ -1757,8 +1757,57 @@ td.priceTransport {
 /* END MODAL PRODUCT ITEM*/
 
 /* START MODAL PRODUCT CART*/
-.modalProductCart {
-  border-bottom: none;
+.modalCart {
+  max-width: 770px;
+  width: 100%;
+
+  .modalProductCart {
+    border-bottom: none;
+  }
+
+  .product-modal {
+    width: 100%;
+    height: auto;
+    padding: 10px 16px;
+
+    .product-info {
+      .product-image {
+        .image-main {
+          border-radius: 8px;
+          max-width: 100px;
+          height: 100px;
+          object-fit: cover;
+        }
+      }
+
+      .product-name {
+        margin-left: 16px;
+
+        .name {
+          font-size: 18px;
+          font-weight: 600;
+        }
+
+        .price {
+          .real-price{
+            color: #DD0B00;
+            font-size: 18px;
+            font-weight: 600;
+          }
+
+          del{
+            color: var(--Grey-Dark, #929292);
+            font-size: 14px;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+
+    .quantity {
+
+    }
+  }
 }
 
 /* END MODAL PRODUCT CART*/
@@ -2477,7 +2526,7 @@ td.priceTransport {
   width: 100%;
 }
 
-.modal-dialog {
+.modalShowContact {
   max-width: 1000px;
   width: 100%;
   height: 100%;
