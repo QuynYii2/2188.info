@@ -430,6 +430,10 @@ a {
   line-height: normal;
   border: none;
 }
+#address-book .link-tabs-order:hover {
+  border-radius: 55px;
+}
+
 #productsLanguage .card-products {
   max-width: 100%;
 }
