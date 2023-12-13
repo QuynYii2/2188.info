@@ -124,10 +124,10 @@
                     </div>
                     <div class="product-price">
                         <span class="real-price">
-                            {{ $product->price }}
+                             {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}
                         </span>
                         <div class="del-price">
-                            <del>{{ $product->old_price }}</del>
+                            <del> {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</del>
                         </div>
                     </div>
                     <div class="share">
@@ -243,58 +243,57 @@
                 </button>
             </div>
             <div class="modal-body mainModalCart">
-                {{--                @isset($listCart)--}}
-                {{--                    @foreach($listCart as $cart)--}}
-                {{--                --}}
-                {{--                    @endforeach--}}
-                {{--                @endisset--}}
-                <div class="product-modal d-flex ">
-                    <div class="product-info d-flex">
-                        <div class="product-image">
-                            @php
-                                $thumbnail = checkThumbnail($product->thumbnail);
-                            @endphp
-                            <img src="{{ $thumbnail }}" alt="" class="image-main">
-                        </div>
-                        <div class="product-name">
-                            <div class="name">
-                                {{ $product->name }}
-                            </div>
-                            <div class="price">
+                @isset($listCart)
+                    @foreach($listCart as $cart)
+                        <div class="product-modal d-flex justify-content-between align-items-center">
+                            <div class="product-info d-flex">
+                                <div class="product-image-main">
+                                    @php
+                                        $thumbnail = checkThumbnail($cart->product->thumbnail);
+                                    @endphp
+                                    <img src="{{ $thumbnail }}" alt="" class="image-main">
+                                </div>
+                                <div class="product-name">
+                                    <div class="name">
+                                        {{ $cart->product->name }}
+                                    </div>
+                                    <div class="price">
                                 <span class="real-price">
-                                    {{ $product->price }}
+                                     {{ number_format(convertCurrency('USD', $currency,$cart->price), 0, ',', '.') }} {{$currency}}
                                 </span>
-                                <span>
-                                    <del>{{ $product->old_price }}</del>
+                                        <span>
+                                    <del> {{ number_format(convertCurrency('USD', $currency,$cart->product->price), 0, ',', '.') }} {{$currency}}</del>
+                                </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="quantity">
+                                <span class="decrease cart-decrease" data-id="{{ $cart->id }}" data-min="{{ $cart->product->min }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                         viewBox="0 0 16 16" fill="none">
+                                      <path d="M4 8H12" stroke="#292D32" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                                <input class="input_number" id="cart_input_number{{ $cart->id }}" type="number"
+                                       value="{{ $cart->quantity }}" min="{{ $cart->product->min }}">
+                                <span class="increase cart-increase" data-id="{{ $cart->id }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                         viewBox="0 0 16 16" fill="none">
+                                      <path d="M4 8H12" stroke="#292D32" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round"/>
+                                      <path d="M8 12V4" stroke="#292D32" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
                                 </span>
                             </div>
                         </div>
-                    </div>
-                    <div class="quantity">
-                        <span class="decrease modal-decrease">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                 viewBox="0 0 16 16" fill="none">
-                              <path d="M4 8H12" stroke="#292D32" stroke-width="1.5"
-                                    stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </span>
-                        <input class="input_number" id="modal_input_number" type="number"
-                               value="0" min="0">
-                        <span class="increase modal-increase">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                 viewBox="0 0 16 16" fill="none">
-                              <path d="M4 8H12" stroke="#292D32" stroke-width="1.5"
-                                    stroke-linecap="round" stroke-linejoin="round"/>
-                              <path d="M8 12V4" stroke="#292D32" stroke-width="1.5"
-                                    stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </span>
-                    </div>
-                </div>
+                    @endforeach
+                @endisset
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('home.Cancel') }}</button>
-                <a href="{{ route('checkout.show') }}" class="btn btn-primary">{{ __('home.Check out') }}</a>
+                <button type="button" class="btn btnCancel" data-dismiss="modal">{{ __('home.Cancel') }}</button>
+                <a href="{{ route('checkout.show') }}" class="btn btnCheckout">{{ __('home.Check out') }}</a>
             </div>
         </div>
     </div>
