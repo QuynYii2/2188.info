@@ -243,9 +243,7 @@
                 </button>
             </div>
             <div class="modal-body mainModalCart">
-                @foreach($listCart as $cart)
 
-                @endforeach
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('home.Cancel') }}</button>
