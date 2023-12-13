@@ -19,6 +19,7 @@ use App\Http\Controllers\Member\RegisterMemberController;
 use App\Http\Controllers\Member\TrustMemberController;
 use App\Http\Controllers\PaypalPaymentController;
 use App\Http\Controllers\PermissionRankController;
+use App\Http\Controllers\PostRFQController;
 use App\Http\Controllers\ProductInterestController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SampleController;
@@ -221,14 +222,16 @@ Route::post('/get-category-one-parent',
 Route::post('/get-category-two-parent',
     [RegisterMemberController::class, 'getCategoryTwoParent'])->name('get.category.two.parent');
 
+/* Auth validate route*/
 Route::middleware(['auth'])->group(function () {
     //Chat message
     Route::get('/chat-message', [SampleController::class, 'chat'])->name('chat.message.show');
     Route::get('/chat-message-sent', [SampleController::class, 'getListMessageSent'])->name('chat.message.sent');
     Route::get('/chat-message-received',
         [SampleController::class, 'getListMessageReceived'])->name('chat.message.received');
-    //Setup marketing
-    //
+    // Post RFQ
+    Route::get('/post-rfq', [PostRFQController::class, 'processCreate'])->name('processCreate.post.rfq');
+    Route::post('/post-rfq', [PostRFQController::class, 'create'])->name('create.post.rfq');
     //Detail marketing
     Route::get('/detail-marketing/{id}', [DetailMarketingController::class, 'index'])->name('detail-marketing.show');
     Route::delete('/detail-marketing/{id}/{product}', [DetailMarketingController::class, 'delete'])->name('detail-marketing.delete');

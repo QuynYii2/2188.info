@@ -146,6 +146,10 @@ a {
 .section-First-posted .btn-my-posted a {
   border: 3px solid #F42121;
   padding: 8px 16px;
+  text-decoration: none;
+}
+.section-First-posted .btn-my-posted a:hover {
+  text-decoration: none;
 }
 .section-First-posted .btn-my-posted a span {
   text-align: center;
@@ -5774,6 +5778,98 @@ nav ul {
   -webkit-box-orient: vertical;
   overflow: hidden;
   margin-bottom: 10px;
+}
+
+/* Post RFQ*/
+.main-post-rfq .breadcrumb {
+  background-color: #F3F3F3 !important;
+  color: var(--Black, #000);
+  font-size: 18px;
+  font-weight: 500;
+}
+.main-post-rfq .protected {
+  color: #F00;
+  font-size: 12px;
+  font-weight: 400;
+}
+.main-post-rfq .photo {
+  color: #000;
+  font-size: 16px;
+  font-weight: 800;
+}
+.main-post-rfq .text-desc {
+  color: var(--Grey-Dark, #929292);
+  font-size: 12px;
+  font-weight: 600;
+}
+.main-post-rfq .main-create .basic-product {
+  padding: 16px;
+}
+.main-post-rfq .main-create .basic-product .title {
+  color: #000;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 40px;
+}
+.main-post-rfq .main-create .basic-product .main-text {
+  color: #000;
+  font-size: 12px;
+  font-weight: 400;
+}
+.main-post-rfq .main-create .basic-product .category-select {
+  font-size: 12px;
+  font-weight: 500;
+}
+.main-post-rfq .main-create .basic-product #thumbnailsLabel {
+  padding: 80px;
+  border-radius: 8px;
+  max-width: 220px;
+  width: 100%;
+  border: 1px dashed var(--Grey-Dark, #929292);
+  cursor: pointer;
+}
+.main-post-rfq .main-create .basic-product .unit {
+  color: var(--Black, #000);
+  font-size: 16px;
+  font-weight: 600;
+  margin-left: 8px;
+}
+.main-post-rfq .main-create .basic-product .lead-time span {
+  color: #000;
+  font-size: 12px;
+  font-weight: 400;
+}
+.main-post-rfq .main-create .basic-product .lead-time .span-one {
+  margin-right: 30px;
+}
+.main-post-rfq .main-create .basic-product .lead-time .span-two {
+  margin-right: 8px;
+}
+.main-post-rfq .main-create .basic-product .lead-time .span-end {
+  margin-left: 4px;
+}
+.main-post-rfq .main-create .basic-product .lead-time input {
+  max-width: 100px;
+  border: 1px solid var(--Grey-Light, #D6D6D6);
+  padding: 6px 0px;
+  width: 100%;
+}
+.main-post-rfq .main-create .basic-product .button-submit button {
+  max-width: 300px;
+  padding: 12px 16px;
+  background: var(--secon-1, #F47621);
+  width: 100%;
+  color: var(--White, #FFF);
+  font-size: 16px;
+  font-weight: 600;
+}
+.main-post-rfq .main-create .completeness {
+  padding: 16px;
+}
+.main-post-rfq .main-create .completeness .title {
+  color: #000;
+  font-size: 24px;
+  font-weight: 600;
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -135,40 +135,26 @@
                         You may like it
                     </p>
                     <div class="list-item-posted">
-                        <div class="border list-item d-flex align-items-center p-2 m-2">
-                            <img src=" {{ asset('images/Rectangle 14.png') }}" alt="" class="posted-image">
-                            <div class="posted-content ml-3">
-                                <div class="posted-title">Interior</div>
-                                <div class="posted-value">514.000+ products</div>
+                        @foreach($posts as $post)
+                            <div class="border list-item d-flex align-items-center p-2 m-2">
+                                @php
+                                    $thumbnails = $post->thumbnails;
+                                    $thumbnailArray = explode(',', $thumbnails);
+                                    $image = $thumbnailArray[0];
+                                @endphp
+                                <img src="{{ asset('storage/' . $image) }}" alt="" class="posted-image">
+                                <div class="posted-content ml-3">
+                                    <div class="posted-title">{{ $post->product_name }}</div>
+                                    <div class="posted-value">{{ $post->purchase_quantity }} products</div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="border list-item d-flex align-items-center p-2 m-2">
-                            <img src=" {{ asset('images/Rectangle 14.png') }}" alt="" class="posted-image">
-                            <div class="posted-content ml-3">
-                                <div class="posted-title">Interior</div>
-                                <div class="posted-value">514.000+ products</div>
-                            </div>
-                        </div>
-                        <div class="border list-item d-flex align-items-center p-2 m-2">
-                            <img src=" {{ asset('images/Rectangle 14.png') }}" alt="" class="posted-image">
-                            <div class="posted-content ml-3">
-                                <div class="posted-title">Interior</div>
-                                <div class="posted-value">514.000+ products</div>
-                            </div>
-                        </div>
-                        <div class="border list-item d-flex align-items-center p-2 m-2">
-                            <img src=" {{ asset('images/Rectangle 14.png') }}" alt="" class="posted-image">
-                            <div class="posted-content ml-3">
-                                <div class="posted-title">Interior</div>
-                                <div class="posted-value">514.000+ products</div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                     <p class="list-item-posted-bottom pl-2">
                         No desirable products?
                     </p>
                     <div class="btn-my-posted d-flex align-items-center justify-content-between">
-                        <a class="btnPosted w-100 bg-white">
+                        <a href="{{ route('processCreate.post.rfq') }}" class="btnPosted w-100 bg-white">
                             <span>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="33" height="32"
                                      viewBox="0 0 33 32"

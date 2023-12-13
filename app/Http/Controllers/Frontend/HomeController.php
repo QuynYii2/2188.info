@@ -10,6 +10,7 @@ use App\Enums\MemberRegisterInfoStatus;
 use App\Enums\MemberRegisterPersonSourceStatus;
 use App\Enums\MemberRegisterType;
 use App\Enums\NotificationStatus;
+use App\Enums\PostRFQStatus;
 use App\Enums\ProductStatus;
 use App\Enums\PromotionStatus;
 use App\Enums\RegisterMember;
@@ -26,7 +27,7 @@ use App\Models\Member;
 use App\Models\MemberRegisterInfo;
 use App\Models\MemberRegisterPersonSource;
 use App\Models\Notification;
-use App\Models\Permission;
+use App\Models\PostRFQ;
 use App\Models\Product;
 use App\Models\Promotion;
 use App\Models\StatisticAccess;
@@ -102,35 +103,11 @@ class HomeController extends Controller
         $newProducts = Product::where('status', ProductStatus::ACTIVE)->orderBy('created_at', 'desc')->limit(10)->get();
         $newProducts = $newProducts->unique('slug');
 
-        $permissionHot = Permission::where('name', 'Nâng cấp sản phẩm hot')->first();
-        $permissionSellerHots = DB::table('permission_user')->where('permission_id', $permissionHot->id)->get();
-        $productHots = [];
-//        foreach ($permissionSellerHots as $permissionSellerHot) {
-//            $products = Product::where([
-//                ['status', ProductStatus::ACTIVE],
-//                ['user_id', $permissionSellerHot->user_id]
-//            ])->orderBy('hot', 'desc')->get();
-//            $products = $products->unique('slug');
-//            $productHots[] = $products;
-//        }
-
         $products = Product::where([
             ['status', ProductStatus::ACTIVE]
         ])->orderBy('hot', 'desc')->limit(10)->get();
         $products = $products->unique('slug');
         $productHots = $products;
-//        dd($productHots);
-        $permissionFeature = Permission::where('name', 'Nâng cấp sản phẩm nổi bật')->first();
-        $permissionSellerFeatures = DB::table('permission_user')->where('permission_id', $permissionFeature->id)->get();
-//        $productFeatures = [];
-//        foreach ($permissionSellerFeatures as $permissionSellerFeature) {
-//            $products = Product::where([
-//                ['status', ProductStatus::ACTIVE],
-//                ['user_id', $permissionSellerFeature->user_id]
-//            ])->orderBy('feature', 'desc')->get();
-//            $products = $products->unique('slug');
-//            $productFeatures[] = $products;
-//        }
 
         $products = Product::where([
             ['status', ProductStatus::ACTIVE]
@@ -170,6 +147,7 @@ class HomeController extends Controller
         ])->update(['status' => PromotionStatus::ACTIVE]);
 
         $banner = Banner::where('status', BannerStatus::ACTIVE)->orderBy('created_at', 'desc')->first();
+        $posts = PostRFQ::where('status', PostRFQStatus::APPROVED)->orderBy('id', 'desc')->limit(4)->get();
         $listCart = null;
         if (Auth::check()) {
             $listCart = Cart::where('user_id', Auth::user()->id)->where('status', CartStatus::WAIT_ORDER)->get();
@@ -193,6 +171,7 @@ class HomeController extends Controller
             'configsTop4' => $configsTop4,
             'configsTop5' => $configsTop5,
             'banner' => $banner,
+            'posts' => $posts,
             'listCart' => $listCart,
             'newProducts' => $newProducts,
             'currentProducts' => $currentProducts,
