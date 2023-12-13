@@ -179,7 +179,7 @@ a {
   }
 
   .btn-my-posted {
-    button {
+    a {
       border: 3px solid #F42121;
       padding: 8px 16px;
 
@@ -1762,15 +1762,24 @@ td.priceTransport {
 
   .modalProductCart {
     border-bottom: none;
+
+    .modal-title {
+      font-size: 24px;
+      font-weight: 800;
+    }
   }
 
   .product-modal {
     width: 100%;
     height: auto;
+    max-height: 180px;
     padding: 10px 16px;
+    border: 1px solid var(--Light, #EAEAEA);
+    border-radius: 8px;
+    background: var(--White, #FFF);
 
     .product-info {
-      .product-image {
+      .product-image-main {
         .image-main {
           border-radius: 8px;
           max-width: 100px;
@@ -1788,13 +1797,13 @@ td.priceTransport {
         }
 
         .price {
-          .real-price{
+          .real-price {
             color: #DD0B00;
             font-size: 18px;
             font-weight: 600;
           }
 
-          del{
+          del {
             color: var(--Grey-Dark, #929292);
             font-size: 14px;
             font-weight: 500;
@@ -1804,8 +1813,38 @@ td.priceTransport {
     }
 
     .quantity {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
 
+      input {
+        border: none;
+        max-width: 60px;
+        width: 100%;
+      }
     }
+  }
+
+  .btnCancel {
+    padding: 12px 50px;
+    border-radius: 8px;
+    color: var(--Grey-Balck, #424242);
+    font-size: 16px;
+    font-weight: 600;
+    background: var(--Grey-Light, #D6D6D6);
+    width: 160px;
+  }
+
+  .btnCheckout {
+    border-radius: 8px;
+    background: var(--secon-1, #F47621);
+    padding: 12px 50px;
+    max-width: 160px;
+    width: 100%;
+    text-align: center;
+    color: var(--White, #FFF);
+    font-size: 16px;
+    font-weight: 600;
   }
 }
 
