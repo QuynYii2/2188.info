@@ -5805,6 +5805,39 @@ nav ul {
 .main-post-rfq .main-create .basic-product {
   padding: 16px;
 }
+.main-post-rfq .main-create .basic-product #code_1 {
+  display: none;
+  border: 1px #dadada solid;
+}
+.main-post-rfq .main-create .basic-product #code_1 label {
+  display: block;
+}
+.main-post-rfq .main-create .basic-product #code_1 label:hover {
+  background-color: #cccccc;
+}
+.main-post-rfq .main-create .basic-product #code_2 {
+  display: none;
+  border: 1px #dadada solid;
+}
+.main-post-rfq .main-create .basic-product #code_2 label {
+  display: block;
+}
+.main-post-rfq .main-create .basic-product #code_2 label:hover {
+  background-color: #cccccc;
+}
+.main-post-rfq .main-create .basic-product #code_3 {
+  display: none;
+  border: 1px #dadada solid;
+}
+.main-post-rfq .main-create .basic-product #code_3 label {
+  display: block;
+}
+.main-post-rfq .main-create .basic-product #code_3 label:hover {
+  background-color: #cccccc;
+}
+.main-post-rfq .main-create .basic-product .selectBox {
+  overflow: hidden;
+}
 .main-post-rfq .main-create .basic-product .title {
   color: #000;
   font-size: 24px;
@@ -5870,6 +5903,63 @@ nav ul {
   color: #000;
   font-size: 24px;
   font-weight: 600;
+  margin-bottom: 16px;
+}
+.main-post-rfq .main-create .completeness .image-circle {
+  position: relative;
+}
+.main-post-rfq .main-create .completeness .image-circle .percent svg {
+  position: relative;
+  width: 210px;
+  height: 210px;
+  transform: rotate(-90deg);
+}
+.main-post-rfq .main-create .completeness .image-circle .percent svg circle {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: #f0f0f0;
+  stroke-width: 10;
+  stroke-linecap: round;
+}
+.main-post-rfq .main-create .completeness .image-circle .percent svg circle:last-of-type {
+  stroke-dasharray: 625;
+  stroke-dashoffset: 0;
+  stroke: #F7B733;
+}
+.main-post-rfq .main-create .completeness .image-circle .title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.main-post-rfq .main-create .completeness .short-desc {
+  margin-top: 36px;
+  color: var(--Grey-Dark, #929292);
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+}
+.main-post-rfq .main-create .completeness .long-desc {
+  margin: 36px 0;
+  color: var(--Grey-Dark, #929292);
+  font-size: 14px;
+  text-align: center;
+  font-weight: 500;
+}
+.main-post-rfq .main-create .completeness .list-fn {
+  margin-top: 36px;
+}
+.main-post-rfq .main-create .completeness .list-fn .fn-item {
+  display: flex;
+  margin-bottom: 12px;
+  align-items: center;
+}
+.main-post-rfq .main-create .completeness .list-fn .fn-item span {
+  color: var(--Grey-Dark, #929292);
+  text-align: center;
+  font-size: 12px;
+  font-weight: 500;
 }
 
 /*# sourceMappingURL=style.css.map */
