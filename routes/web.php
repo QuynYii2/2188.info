@@ -15,6 +15,7 @@ use App\Http\Controllers\Frontend\NotificationController;
 use App\Http\Controllers\Frontend\OrderController;
 use App\Http\Controllers\Frontend\ProductController;
 use App\Http\Controllers\Frontend\UserMailSendSellerLogController;
+use App\Http\Controllers\Frontend\UserPostRFQController;
 use App\Http\Controllers\MailSendSellerLogController;
 use App\Http\Controllers\Member\MemberController;
 use App\Http\Controllers\Member\RegisterMemberController;
@@ -231,9 +232,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/chat-message-sent', [SampleController::class, 'getListMessageSent'])->name('chat.message.sent');
     Route::get('/chat-message-received',
         [SampleController::class, 'getListMessageReceived'])->name('chat.message.received');
-    // Post RFQ
-    Route::get('/post-rfq', [PostRFQController::class, 'processCreate'])->name('processCreate.post.rfq');
-    Route::post('/post-rfq', [PostRFQController::class, 'create'])->name('create.post.rfq');
+    /* Post RFQ */
+    Route::prefix('post-rfq')->group(function () {
+        Route::get('/list', [UserPostRFQController::class, 'index'])->name('user.post.rfq.show');
+        Route::get('/detail/{id}', [UserPostRFQController::class, 'detail'])->name('user.post.rfq.detail');
+        Route::post('/update/{id}', [UserPostRFQController::class, 'update'])->name('user.post.rfq.update');
+        Route::get('/create', [PostRFQController::class, 'processCreate'])->name('processCreate.post.rfq');
+        Route::post('/create', [PostRFQController::class, 'create'])->name('create.post.rfq');
+        Route::delete('/delete/{id}', [UserPostRFQController::class, 'delete'])->name('user.post.rfq.delete');
+    });
     /* Post mail seller */
     Route::get('/list-mail-seller', [UserMailSendSellerLogController::class, 'index'])->name('user.list.mail.seller');
     Route::delete('/delete-mail-seller/{id}', [UserMailSendSellerLogController::class, 'delete'])->name('user.send.mail.delete');

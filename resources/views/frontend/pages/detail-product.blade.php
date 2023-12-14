@@ -288,7 +288,7 @@
                                 </span>
                                     <input type="number" value="0" min="0" class="inputQuantityVariable"
                                            id="inputQuantityVariable_0"
-                                           data-id="0" data-product=""
+                                           data-id="0" data-product="{{ $productItem }}"
                                            data-variable="">
                                     <span class="increase" data-id="0">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
