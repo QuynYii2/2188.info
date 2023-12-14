@@ -1356,6 +1356,11 @@ td.priceTransport {
 }
 
 /* START MODAL PRODUCT ITEM*/
+.productItem {
+  width: 100%;
+  max-width: 1000px;
+}
+
 .modalProductItem {
   border-bottom: none;
 }
