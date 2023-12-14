@@ -79,7 +79,7 @@
 <!-- Modal -->
 <div class="modal fade" id="modalProductItem_{{$product->id}}" tabindex="-1"
      aria-labelledby="modalProductItemLabel_{{$product->id}}" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog productItem">
         <div class="modal-content modalProductItem">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">

@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminAddressController;
+use App\Http\Controllers\Admin\AdminPostRFQController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\ConfigProjectController;
-use App\Http\Controllers\Seller\AddressController;
 use App\Http\Controllers\Seller\CategoryController;
 use App\Http\Controllers\Seller\ProductController;
 use App\Http\Controllers\Seller\TopSellerConfigController;
@@ -78,3 +78,10 @@ Route::get('/address/get-by-id/{id}', [AdminAddressController::class, 'getById']
 Route::delete('/address/delete/{id}', [AdminAddressController::class, 'delete'])->name('admin.address.delete');
 Route::post('/address/change-status/{id}', [AdminAddressController::class, 'changeStatus'])->name('admin.address.change.status');
 Route::get('/address/change-show/{id}', [AdminAddressController::class, 'changeShow'])->name('admin.address.change.show');
+/* Admin route postRFQ*/
+Route::prefix('post-rfq')->group(function () {
+    Route::get('/list', [AdminPostRFQController::class, 'index'])->name('admin.post.rfq.show');
+    Route::get('/detail/{id}', [AdminPostRFQController::class, 'detail'])->name('admin.post.rfq.detail');
+    Route::put('/update/{id}', [AdminPostRFQController::class, 'update'])->name('admin.post.rfq.update');
+    Route::delete('/delete/{id}', [AdminPostRFQController::class, 'delete'])->name('admin.post.rfq.delete');
+});

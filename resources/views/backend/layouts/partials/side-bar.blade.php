@@ -347,6 +347,16 @@
                         </li>
                     </ul>
                 </li>
+                <li>
+                    <a class="sidebar item sidebarUrl" href="#"><i
+                                class="fa-regular fa-clipboard"></i>{{ __('home.Post RFQ') }}
+                    </a>
+                    <ul class='sub-items pl-3'>
+                        <li><a class="sidebarUrl"
+                               href="{{route('admin.post.rfq.show')}}">{{ __('home.Post RFQ management') }}</a>
+                        </li>
+                    </ul>
+                </li>
             @endif
             <li>
                 <a class="sidebar item" href='#'><i
