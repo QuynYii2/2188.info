@@ -1,21 +1,26 @@
 <?php
 
-namespace App\Http\Controllers\Frontend;
+namespace App\Http\Controllers\Seller;
 
 use App\Enums\MailSendSellerLogStatus;
 use App\Http\Controllers\Controller;
 use App\Models\MailSendSellerLog;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
-class UserMailSendSellerLogController extends Controller
+class SellerMailSendSellerLogController extends Controller
 {
     public function index()
     {
-        $mailogs = MailSendSellerLog::where('user_id', Auth::user()->id)
-            ->where('status', MailSendSellerLogStatus::ACTIVE)
-            ->orderBy('id', 'desc')
+        $mailogs = DB::table('mail_send_seller_logs')
+            ->join('products', 'products.id', '=', 'mail_send_seller_logs.product_id')
+            ->where('products.user_id', Auth::user()->id)
+            ->where('mail_send_seller_logs.status', MailSendSellerLogStatus::ACTIVE)
+            ->select('mail_send_seller_logs.*', 'products.name')
+            ->orderBy('mail_send_seller_logs.id', 'desc')
             ->get();
-        return view('frontend.pages.mail-seller.list', compact('mailogs'));
+
+        return view('backend.mail-seller.list', compact('mailogs'));
     }
 
     public function delete($id)
@@ -28,7 +33,7 @@ class UserMailSendSellerLogController extends Controller
             $mailog->status = MailSendSellerLogStatus::DELETED;
             $mailog->save();
             alert()->success('Success', 'Delete successfully.');
-            return redirect(route('user.list.mail.seller'));
+            return redirect(route('seller.list.mail.seller'));
         } catch (\Exception $exception) {
             alert()->error('Error', 'Error, please try again!');
             return back();
