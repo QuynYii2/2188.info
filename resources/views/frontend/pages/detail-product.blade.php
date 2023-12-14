@@ -1024,39 +1024,42 @@
         <div class="modal fade" id="modalContact" tabindex="-1" aria-labelledby="modalContactLabel" aria-hidden="true">
             <div class="modal-dialog modalShowContact">
                 <div class="modal-content modalContact">
-                    <div class="modal-header">
-                        <h5 class="modal-title text-left" id="modalContactLabel">Send require</h5>
-                        <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                 fill="none">
-                                <path d="M15 9L9 15M9 9L15 15M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
-                                      stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="product-main modal-body">
-                        <div class="row render-product">
-                            <div class="col-xl-10 col-md-8 col-xs-6">
-                                <div class="product-item">
-                                    <div class="product-show d-flex justify-content-between align-items-center">
-                                        <div class="product d-flex align-items-center">
-                                            @php
-                                                $thumbnail = checkThumbnail($productItem->thumbnail);
-                                            @endphp
-                                            <img src="{{ $thumbnail }}" alt="" class="img-product">
-                                            <div class="product-info">
-                                                <div class="product-name">
-                                                    {{ $productItem->name }}
-                                                </div>
-                                                <div class="product-price">
-                                                    <span class="real-price"> {{ number_format(convertCurrency('USD', $currency,$productItem->price), 0, ',', '.') }} {{$currency}}</span>
-                                                    <span>
+                    <form action="{{ route('user.send.mail.seller') }}" method="post">
+                        @csrf
+                        <div class="modal-header">
+                            <h5 class="modal-title text-left" id="modalContactLabel">Send require</h5>
+                            <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                     fill="none">
+                                    <path d="M15 9L9 15M9 9L15 15M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
+                                          stroke="black" stroke-width="2" stroke-linecap="round"
+                                          stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="product-main modal-body">
+                            <div class="row render-product">
+                                <div class="col-xl-10 col-md-8 col-xs-6">
+                                    <div class="product-item">
+                                        <div class="product-show d-flex justify-content-between align-items-center">
+                                            <div class="product d-flex align-items-center">
+                                                @php
+                                                    $thumbnail = checkThumbnail($productItem->thumbnail);
+                                                @endphp
+                                                <img src="{{ $thumbnail }}" alt="" class="img-product">
+                                                <div class="product-info">
+                                                    <div class="product-name">
+                                                        {{ $productItem->name }}
+                                                    </div>
+                                                    <div class="product-price">
+                                                        <span class="real-price"> {{ number_format(convertCurrency('USD', $currency,$productItem->price), 0, ',', '.') }} {{$currency}}</span>
+                                                        <span>
                                                         <del> {{ number_format(convertCurrency('USD', $currency,$productItem->old_price), 0, ',', '.') }} {{$currency}}</del>
                                                     </span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="quantity">
+                                            <div class="quantity">
                                             <span class="decrease modal-decrease">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                      viewBox="0 0 16 16" fill="none">
@@ -1064,10 +1067,11 @@
                                                         stroke-linecap="round" stroke-linejoin="round"/>
                                                 </svg>
                                             </span>
-                                            <input class="input_number" id="modal_input_number" type="number"
-                                                   value="{{ isset($productItem->min) ? $productItem->min : 1  }}"
-                                                   min="{{ isset($productItem->min) ? $productItem->min : 1  }}">
-                                            <span class="increase modal-increase">
+                                                <input class="input_number" id="modal_input_number" type="number"
+                                                       name="product_quantity"
+                                                       value="{{ isset($productItem->min) ? $productItem->min : 1  }}"
+                                                       min="{{ isset($productItem->min) ? $productItem->min : 1  }}">
+                                                <span class="increase modal-increase">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                      viewBox="0 0 16 16" fill="none">
                                                   <path d="M4 8H12" stroke="#292D32" stroke-width="1.5"
@@ -1076,34 +1080,39 @@
                                                         stroke-linecap="round" stroke-linejoin="round"/>
                                                 </svg>
                                             </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-xl-2 col-md-4 col-xs-6">
-                                <div class="sup">
-                                    <select class="form-control" id="form-select">
-                                        <option>FOB</option>
-                                        <option>EXW</option>
-                                        <option>FCA</option>
-                                    </select>
+                                <div class="col-xl-2 col-md-4 col-xs-6">
+                                    <div class="sup">
+                                        <select class="form-control" id="form-select" name="product_fn">
+                                            <option>FOB</option>
+                                            <option>EXW</option>
+                                            <option>FCA</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="content-item">
+                                <label for="content">Content</label>
+                                <textarea class="form-control" id="content" rows="5" name="content"
+                                          placeholder="Your review"></textarea>
+                            </div>
+                            <div class="email-item">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
+                            </div>
                         </div>
-                        <div class="content-item">
-                            <label for="content">Content</label>
-                            <textarea class="form-control" id="content" rows="5" placeholder="Your review"></textarea>
+                        <div class="d-none">
+                            <input type="text" name="product_id" value="{{ $productItem->id }}">
                         </div>
-                        <div class="email-item">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                        <div class="modal-footer d-flex justify-content-end align-items-end">
+                            <div class="button">
+                                <button type="submit" class="btn btnSend">Send</button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-end align-items-end">
-                        <div class="button">
-                            <button class="btn btnSend">Send</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html >
 <head>
     <meta charset="UTF-8"/>
 </head>
@@ -20,7 +20,7 @@
     <tr>
         <td style="text-align: center;">
             <table
-                style="border: transparent; border-radius: 15px; background: #fff; display: inline-block; border-spacing: 0px; margin: 0 50px;">
+                    style="border: transparent; border-radius: 15px; background: #fff; display: inline-block; border-spacing: 0px; margin: 0 50px;">
                 <tr>
                     <td>
                         <img alt=""
@@ -38,9 +38,8 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <div
-                                        style="font-weight:bold;font-size:20px;line-height:25px;text-align:center;color:#2e3454;">
-                                        Notification mail!
+                                    <div style="font-weight:bold;font-size:20px;line-height:25px;text-align:center;color:#2e3454;">
+                                        Contact mail!
                                     </div>
                                 </td>
                             </tr>
@@ -48,9 +47,28 @@
                                 <td>
                                     <div class="content">
                                         <p style="color: #2e3454;">
-                                            Welcome {{$mail}}!
+                                            Welcome Seller!
                                             <br><br>
-                                            A new user has responded to Shopping Mall!
+                                            There is a new customer sent to you
+                                        </p>
+                                    </div>
+                                    <div class="item">
+                                        <p style="">
+                                            We are interested in this product
+                                            <span class="float-left">
+                                                <br><br>
+                                           <span class="text-bold">ProductName: {{$product->name}}</span>
+                                            <br>
+                                            <span class="text-bold">Price: {{$product->price}}</span>
+                                           </span>
+                                        </p>
+                                        <p>
+                                            <span>Our description</span>
+                                            <br><br>
+                                            {{ $mailog->content }}
+                                        </p>
+                                        <p>
+                                            We look forward to receiving your response via email: <span>{{ $mailog->email }}</span>
                                         </p>
                                     </div>
                                 </td>

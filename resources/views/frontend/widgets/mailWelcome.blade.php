@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html >
 <head>
     <meta charset="UTF-8"/>
 </head>
