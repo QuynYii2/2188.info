@@ -572,7 +572,7 @@
                         <div class="profile-user">
                             <img src="https://www.w3schools.com/howto/img_avatar.png" alt="" class="img-profile">
                             <div class="profile-name">
-                                Quỳnh Hương
+                                <a href="{{ route('shop.information.show', $productItem->user->id) }}">{{ $productItem->user->name }}</a>
                             </div>
                         </div>
                         <div class="list-action ">
