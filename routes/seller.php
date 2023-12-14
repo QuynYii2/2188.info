@@ -13,6 +13,7 @@ use App\Http\Controllers\Seller\ProductController;
 use App\Http\Controllers\Seller\PropertiesController;
 use App\Http\Controllers\Seller\RankUserSellerController;
 use App\Http\Controllers\Seller\SellerEvaluateProductController;
+use App\Http\Controllers\Seller\SellerMailSendSellerLogController;
 use App\Http\Controllers\Seller\SettingShopController;
 use App\Http\Controllers\Seller\StaffController;
 use App\Http\Controllers\Seller\StorageController;
@@ -172,3 +173,6 @@ Route::post('/create-product-attribute', [ProductController::class, 'saveAttribu
 //Route::get('/categories/register_process', [\App\Http\Controllers\RegisterCategoryController::class, 'registerProcess'])->name('categories.register.process');
 Route::get('/categories/register_process', [\App\Http\Controllers\RegisterCategoryController::class, 'index'])->name('categories.register.process');
 Route::get('products/categories/register/{id}', [\App\Http\Controllers\RegisterCategoryController::class, 'registerCategory'])->name('categories.register');
+/* Seller mail log */
+Route::get('/list-mail-seller', [SellerMailSendSellerLogController::class, 'index'])->name('seller.list.mail.seller');
+Route::delete('/delete-mail-seller/{id}', [SellerMailSendSellerLogController::class, 'delete'])->name('seller.send.mail.delete');

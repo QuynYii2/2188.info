@@ -82,6 +82,9 @@
                 </li>
                 <li><a class="sidebarUrl" href="{{route('wish.list.index')}}"> {{ __('home.Wish Lists') }}</a>
                 </li>
+                <li>
+                    <a class="sidebarUrl" href="{{route('user.list.mail.seller')}}"> {{ __('home.Mail Send Seller') }}</a>
+                </li>
             </ul>
         </li>
         <li class="border-list_profile">
@@ -209,6 +212,13 @@
                         {{--                    </li>--}}
                         {{--                    <li><a class="sidebarUrl" href="#">Cài Đặt Thanh Toán</a>--}}
                         {{--                    </li>--}}
+                    </ul>
+                </li>
+                <li>
+                    <a class="sidebar item" href='#'><i class="fa-solid fa-book"></i>{{ __('home.Mail Send') }} </a>
+                    <ul class='sub-items pl-3'>
+                        <li><a class="sidebarUrl" href="{{route('seller.list.mail.seller')}}">{{ __('home.Mail Send') }}</a>
+                        </li>
                     </ul>
                 </li>
                 @if(!$check_ctv_shop)

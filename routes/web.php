@@ -14,6 +14,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\NotificationController;
 use App\Http\Controllers\Frontend\OrderController;
 use App\Http\Controllers\Frontend\ProductController;
+use App\Http\Controllers\Frontend\UserMailSendSellerLogController;
 use App\Http\Controllers\MailSendSellerLogController;
 use App\Http\Controllers\Member\MemberController;
 use App\Http\Controllers\Member\RegisterMemberController;
@@ -233,7 +234,9 @@ Route::middleware(['auth'])->group(function () {
     // Post RFQ
     Route::get('/post-rfq', [PostRFQController::class, 'processCreate'])->name('processCreate.post.rfq');
     Route::post('/post-rfq', [PostRFQController::class, 'create'])->name('create.post.rfq');
-    /* Post mail seller*/
+    /* Post mail seller */
+    Route::get('/list-mail-seller', [UserMailSendSellerLogController::class, 'index'])->name('user.list.mail.seller');
+    Route::delete('/delete-mail-seller/{id}', [UserMailSendSellerLogController::class, 'delete'])->name('user.send.mail.delete');
     Route::post('/send-mail-seller', [MailSendSellerLogController::class, 'create'])->name('user.send.mail.seller');
     //Detail marketing
     Route::get('/detail-marketing/{id}', [DetailMarketingController::class, 'index'])->name('detail-marketing.show');
