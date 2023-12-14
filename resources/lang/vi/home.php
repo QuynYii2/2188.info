@@ -70,6 +70,7 @@ return [
     'Mã voucher đã được sao chép: ' => 'Mã voucher đã được sao chép: ',
     'address' => 'Địa chỉ',
     'Specific address' => 'Địa chỉ cụ thể',
+    'Employee registed staff' => 'Đăng ký nhân viên',
 
     //update, add email, liên kết, nam, nữ, khác
     'update' => 'Cập nhật',

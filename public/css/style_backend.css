@@ -2149,6 +2149,145 @@ body {
 }
 
 /* profile account */
+.title-staff-member {
+  color: #000;
+  text-align: center;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.btn-add_staff {
+  color: #FFF !important;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  background: var(--secon-1, #F47621);
+  display: flex;
+  width: 171px;
+  padding: 8px 16px;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.multiselect .selectBox select {
+  color: var(--Grey-Dark, #929292);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  max-width: 100%;
+  padding: 5px 45px 5px 15px;
+}
+
+.form_memberInfo .btn-register, .form_info-member-person .btn-register {
+  padding: 12px 16px;
+  background: var(--secon-1, #F47621);
+}
+.form_memberInfo .form-group button, .form_info-member-person .form-group button {
+  display: flex;
+  padding: 12px 16px;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 4px;
+  background: var(--Grey-Dark, #929292);
+  color: var(--White, #FFF);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.form_memberInfo .day_register, .form_info-member-person .day_register {
+  color: #000;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}
+.form_memberInfo .label_form, .form_info-member-person .label_form {
+  color: #000;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.form_memberInfo .label_item-member, .form_info-member-person .label_item-member {
+  color: var(--Black, #000);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.form_memberInfo input[type=text], .form_memberInfo input[type=number], .form_memberInfo input[type=email], .form_memberInfo input[type=password], .form_memberInfo input[type=tel], .form_memberInfo select, .form_info-member-person input[type=text], .form_info-member-person input[type=number], .form_info-member-person input[type=email], .form_info-member-person input[type=password], .form_info-member-person input[type=tel], .form_info-member-person select {
+  border-radius: 8px;
+  border: 1px solid var(--Grey-medium, #BFBFBF);
+  background: var(--White-Light, #F3F3F3);
+  display: flex;
+  height: 48px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  align-self: stretch;
+  color: var(--Grey-Dark, #929292);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.form_memberInfo .form-check input[type=checkbox], .form_info-member-person .form-check input[type=checkbox] {
+  margin: 8px;
+  -webkit-appearance: none;
+  appearance: none;
+  vertical-align: middle;
+  background: transparent;
+  font-size: 1.8em;
+  border-radius: 0.125em;
+  display: inline-block;
+  border: 0.1em solid #F47621;
+  width: 0.75em;
+  aspect-ratio: 1;
+  position: relative;
+}
+.form_memberInfo .form-check input[type=checkbox]:before,
+.form_memberInfo .form-check input[type=checkbox]:after, .form_info-member-person .form-check input[type=checkbox]:before,
+.form_info-member-person .form-check input[type=checkbox]:after {
+  content: "";
+  position: absolute;
+  background: #F47621;
+  width: 0.3em;
+  height: 0.1em;
+  top: 50%;
+  left: 10%;
+  transform-origin: left center;
+}
+.form_memberInfo .form-check input[type=checkbox]:before, .form_info-member-person .form-check input[type=checkbox]:before {
+  transform: rotate(45deg) translate(-0.05em, -0.05em) scaleX(0);
+  transition: transform 200ms ease-in 200ms;
+}
+.form_memberInfo .form-check input[type=checkbox]:after, .form_info-member-person .form-check input[type=checkbox]:after {
+  width: 0.5em;
+  transform: rotate(-45deg) translateY(0.2em) scaleX(0);
+  transform-origin: left center;
+  transition: transform 200ms ease-in;
+}
+.form_memberInfo .form-check input[type=checkbox]:checked:before, .form_info-member-person .form-check input[type=checkbox]:checked:before {
+  transform: rotate(45deg) translate(-0.05em, -0.05em) scaleX(1);
+  transition: transform 200ms ease-in;
+}
+.form_memberInfo .form-check input[type=checkbox]:checked:after, .form_info-member-person .form-check input[type=checkbox]:checked:after {
+  width: 0.5em;
+  transform: rotate(-45deg) translateY(0.2em) scaleX(1);
+  transition: transform 200ms ease-out 200ms;
+}
+.form_memberInfo .form-check input[type=checkbox]:focus, .form_info-member-person .form-check input[type=checkbox]:focus {
+  outline: 0.05em dotted rgba(0, 0, 0, 0.25);
+}
+
 .btn-voucher {
   border-radius: 8px !important;
   background: var(--Light, #EAEAEA);

@@ -992,6 +992,7 @@ return [
     'Name Default' => '자국어',
     'Employee registed manager' => '관리자 등록현황',
     'Employee registed staff' => '업무자 등록',
+    'More staff' => '직원 추가',
     'Employee registration' => '직원등록현황',
     'Registrator Information' => '등록인정보',
     'Representative Information' => '대표자정보',

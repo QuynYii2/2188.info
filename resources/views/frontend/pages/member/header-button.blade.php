@@ -8,6 +8,6 @@
        class="btn btn-success mr-3">{{ __('home.Registrator Information') }}</a>
     <a href="{{route('profile.member.represent')}}"
        class="btn btn-success mr-3">{{ __('home.Representative Information') }}</a>
-    <a href="{{route('profile.member.ship', $memberId)}}" class="btn btn-success">{{ __('home.Staffs Information') }}</a>
+    <a href="{{route('staff.member.info', $memberId)}}" class="btn btn-success">{{ __('home.Staffs Information') }}</a>
 
 </div>

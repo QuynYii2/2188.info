@@ -12,7 +12,7 @@
         <div class="item-img p-2">
             @if(\Illuminate\Support\Facades\Auth::check())
                 <a href="{{route('detail_product.show', $product->id)}}">
-                    <img src="{{ $thumbnail }}" alt="" class="image-product"></a>
+                    <img style="height: 300px;" src="{{ $thumbnail }}" alt="" class="image-product"></a>
             @else
                 <a href="#"><img src="{{ $thumbnail }}" alt="" class="image-product"></a>
             @endif

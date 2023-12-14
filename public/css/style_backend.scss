@@ -2509,6 +2509,160 @@ body {
 }
 
 /* profile account */
+.title-staff-member {
+  color: #000;
+  text-align: center;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.btn-add_staff {
+  color:  #FFF !important;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  background: var(--secon-1, #F47621);
+  display: flex;
+  width: 171px;
+  padding: 8px 16px;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+}
+.multiselect {
+  .selectBox{
+    select{
+      color: var(--Grey-Dark, #929292);
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+      max-width: 100%;
+      padding: 5px 45px 5px 15px;
+    }
+
+  }
+}
+.form_memberInfo, .form_info-member-person {
+
+  .btn-register {
+    padding: 12px 16px;
+    background: var(--secon-1, #F47621);
+  }
+  .form-group {
+    button{
+      display: flex;
+      padding: 12px 16px;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 10px;
+      border-radius: 4px;
+      background: var(--Grey-Dark, #929292);
+      color: var(--White, #FFF);
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+    }
+  }
+  .day_register {
+    color: #000;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+  }
+  .label_form {
+    color: #000;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+  .label_item-member {
+    color: var(--Black, #000);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+  input[type="text"],input[type="number"],input[type="email"],input[type="password"],input[type="tel"],select {
+    border-radius: 8px;
+    border: 1px solid var(--Grey-medium, #BFBFBF);
+    background: var(--White-Light, #F3F3F3);
+    display: flex;
+    height: 48px;
+    //padding: 10px 16px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
+    color: var(--Grey-Dark, #929292);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+
+  .form-check input[type=checkbox] {
+    margin: 8px;
+    -webkit-appearance: none;
+    appearance: none;
+    vertical-align: middle;
+    background: transparent;
+    font-size: 1.8em;
+    border-radius: 0.125em;
+    display: inline-block;
+    border: 0.1em solid #F47621;
+    width: 0.75em;
+    aspect-ratio: 1;
+    position: relative;
+  }
+
+  .form-check input[type=checkbox]:before,
+  .form-check input[type=checkbox]:after {
+    content: "";
+    position: absolute;
+    background: #F47621;
+    width: calc(0.1em * 3);
+    height: 0.1em;
+    top: 50%;
+    left: 10%;
+    transform-origin: left center;
+  }
+
+  .form-check input[type=checkbox]:before {
+    transform: rotate(45deg) translate(calc(0.1em / -2), calc(0.1em / -2)) scaleX(0);
+    transition: transform 200ms ease-in 200ms;
+  }
+
+  .form-check input[type=checkbox]:after {
+    width: calc(0.1em * 5);
+    transform: rotate(-45deg) translateY(calc(0.1em * 2)) scaleX(0);
+    transform-origin: left center;
+    transition: transform 200ms ease-in;
+  }
+
+  .form-check input[type=checkbox]:checked:before {
+    transform: rotate(45deg) translate(calc(0.1em / -2), calc(0.1em / -2)) scaleX(1);
+    transition: transform 200ms ease-in;
+  }
+
+  .form-check input[type=checkbox]:checked:after {
+    width: calc(0.1em * 5);
+    transform: rotate(-45deg) translateY(calc(0.1em * 2)) scaleX(1);
+    transition: transform 200ms ease-out 200ms;
+  }
+
+  .form-check input[type=checkbox]:focus {
+    outline: calc(0.1em / 2) dotted rgba(0, 0, 0, 0.25);
+  }
+}
+
+
 
 .btn-voucher {
   border-radius: 8px !important;
@@ -2836,7 +2990,9 @@ body {
 }
 
 
+.form_info-member-person {
 
+}
 /* end profile account */
 
 
