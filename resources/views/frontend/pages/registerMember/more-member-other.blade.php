@@ -18,13 +18,13 @@
     }
 
 @endphp
-<div class="container">
+<div class="">
         @if(isset($isAdminUpdate))
-            <form action="{{route('admin.edit.users.company', $isAdminUpdate->id)}}" method="post" id="formRegisterMember">
+            <form class="form_memberInfo" action="{{route('admin.edit.users.company', $isAdminUpdate->id)}}" method="post" id="formRegisterMember">
                 @csrf
                 @method('PUT')
         @else
-            <form action="{{route('register.member.info')}}" method="post" id="formRegisterMember">
+            <form class="form_memberInfo" action="{{route('register.member.info')}}" method="post" id="formRegisterMember">
                 @csrf
         @endif
             @isset($isAdminUpdate)
@@ -33,14 +33,15 @@
             <input type="text" class="d-none" name="member_id" value="{{ $member->id }}">
             <input type="text" class="d-none" name="member" value="{{ ($member->name) }}">
             <div class="d-none" id="text-category">{{ __('home.Select the applicable category') }}</div>
-        <div class="day_register title-input">Day register:</div>
+        <div class="day_register title-input">{{ __('home.Day register') }}: <span id="formattedDate"></span></div>
         <div class="form-group">
             <label for="number_clearance" class="label_form">{{ __('home.Number clearance')}} <span class="text-danger">*</span></label>
             <input type="number" class="form-control" id="number_clearance" name="number_clearance"
                    value="{{ $create ? $create['number_clearance'] : old('number_clearance', $exitsMember ? $exitsMember->number_clearance: '') }}"
                    placeholder="{{ __('home.Customs clearance number (enter numbers only)')}}" required>
         </div>
-        <label for="name_en" class="label_form">{{ __('home.Company Name') }} <span class="text-danger">*</span></label>
+        <label for="email" class="label_form">{{ __('home.company information') }} <span
+                    class="text-danger">*</span></label>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <input type="text" class="form-control" id="name_en" name="name_en"
@@ -52,10 +53,6 @@
                        value="{{ $create ? $create['name_kr'] : old('name_kr', $exitsMember ? $exitsMember->name_kr :'') }}"
                        placeholder="{{ __('home.Name Korea')}}">
             </div>
-        </div>
-        <label for="email" class="label_form">{{ __('home.company information') }} <span
-                    class="text-danger">*</span></label>
-        <div class="form-row">
             <div class="form-group col-md-6">
                 <input type="text" class="form-control" id="homepage"
                        value="{{ $create ? $create['homepage'] : old('homepage', $exitsMember ? $exitsMember->homepage : '') }}"
@@ -83,7 +80,7 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="label_item">
+            <div class="label_item-member">
                 {{ __('home.Business license')}}
                 <span class="text-danger">*</span>
             </div>
@@ -104,7 +101,7 @@
             @endif
         </div>
         <div class="label_form">{{ __('home.Address Business') }} <span class="text-danger">*</span></div>
-        <label for="detail-address" class="label_item">{{ __('home.Address English') }}</label>
+        <label for="detail-address" class="label_item-member">{{ __('home.Address English') }}</label>
         <div class="form-row">
             <div class="form-group col-md-4 address-above" data-toggle="modal" data-target="#modal-address">
                 <input type="text" readonly class="form-control" id="countries-select"
@@ -128,7 +125,7 @@
             </div>
             <input type="hidden" id="address_code" name="address_code">
         </div>
-        <label for="detail-address-1" class="label_item">{{ __('home.Address Korea') }}</label>
+        <label for="detail-address-1" class="label_item-member">{{ __('home.Address Korea') }}</label>
         <div class="form-group">
             <div class="form-row">
                 <div class="form-group col-md-4 address-below" data-toggle="modal" data-target="#modal-address">
@@ -156,7 +153,7 @@
         <div class="label_form">{{ __('home.Business industry') }} <span class="text-danger">*</span></div>
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label for="type_business" class="label_item">{{ __('home.Business') }}</label>
+                <label for="type_business" class="label_item-member">{{ __('home.Business') }}</label>
                 <select id="type_business" name="type_business" class="form-control">
                     <option @if($exitsMember)
                                 @if($exitsMember->type_business == 'distributive')
@@ -171,7 +168,7 @@
                 </select>
             </div>
             <div class="form-group col-md-6">
-                <label for="code_business" class="label_item">{{ __('home.Business industry') }}</label>
+                <label for="code_business" class="label_item-member">{{ __('home.Business industry') }}</label>
                 <select id="code_business" name="code_business" class="form-control">
                     <option @if($exitsMember)
                                 @if($exitsMember->code_business == 'wholesale')
@@ -221,7 +218,7 @@
         <div class="form-group">
             <div class="form-row">
                 <div class="form-group col-md-4">
-                    <label for="code_1" class="label_item">{{ __('home.1st classification') }} <span
+                    <label for="code_1" class="label_item-member">{{ __('home.1st classification') }} <span
                                 class="text-danger">*</span></label>
                     <div class="multiselect" style="position: relative">
                         <div class="selectBox" id="code_1_item" onclick="showCheckboxes()">
@@ -295,7 +292,7 @@
                     </div>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="code_2" class="label_item">
+                    <label for="code_2" class="label_item-member">
                         {{ __('home.2nd classification') }}<span class="text-danger">*</span>
                     </label>
                     <div class="multiselect" style="position: relative">
@@ -323,7 +320,7 @@
                 </div>
 
                 <div class="form-group col-md-4">
-                    <label for="code_3" class="label_item">
+                    <label for="code_3" class="label_item-member">
                         {{ __('home.3rd classification') }} <span class="text-danger">*</span>
                     </label>
                     <div class="multiselect" style="position: relative">
@@ -381,6 +378,16 @@
     </form>
 </div>
 <script>
+    // hàm cập nhật ngày tháng năm
+    function updateFormattedDate() {
+        var currentDate = new Date();
+        var day = currentDate.getDate();
+        var month = currentDate.getMonth() + 1;
+        var year = currentDate.getFullYear();
+        var formattedDate = day + '/' + month + '/' + year;
+        document.getElementById('formattedDate').textContent = formattedDate;
+    }
+    updateFormattedDate();
     $(document).ready(function () {
         $('#buttonRegister').on('click', function () {
             // $('#formRegisterMember').trigger('submit');

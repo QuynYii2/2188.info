@@ -5,32 +5,32 @@
     }
 
 @endphp
-<div class="container">
+<div class="">
     @if(isset($isAdminUpdate))
-        <form action="{{route('admin.edit.users.company', $isAdminUpdate->id)}}" method="post"
+        <form class="form_memberInfo" action="{{route('admin.edit.users.company', $isAdminUpdate->id)}}" method="post"
               enctype="multipart/form-data">
             @csrf
             @method('PUT')
-            @else
-                <form action="{{route('register.member.buyer')}}" method="post"
+    @else
+        <form class="form_memberInfo" action="{{route('register.member.buyer')}}" method="post"
                       enctype="multipart/form-data">
-                    @csrf
-                    @endif
-                    <input type="text" class="d-none" name="member_id" value="{{ $member->id }}">
-                    <input type="text" class="d-none" name="member" value="{{ ($member->name) }}">
-                    <div class="d-none" id="text-category">{{ __('home.Select the applicable category') }}</div>
-                    <div class="day_register title-input">Day register:</div>
-                    <div class="form-group">
-                        <label for="number_clearance" class="label_item">{{ __('home.Number clearance')}} <span
+            @csrf
+    @endif
+          <input type="text" class="d-none" name="member_id" value="{{ $member->id }}">
+          <input type="text" class="d-none" name="member" value="{{ ($member->name) }}">
+          <div class="d-none" id="text-category">{{ __('home.Select the applicable category') }}</div>
+            <div class="day_register title-input">{{ __('home.Day register') }}: <span id="formattedDate"></span></div>
+          <div class="form-group">
+                        <label for="number_clearance" class="label_item-member clearance-member">{{ __('home.Number clearance')}} <span
                                     class="text-danger">*</span></label>
                         <input type="number" class="form-control" id="number_clearance"
                                placeholder="{{ __('home.Number clearance')}}"
                                value="{{ $create ? $create['number_clearance'] : old('number_clearance', $exitsMember ? $exitsMember->number_clearance : '') }}"
                                name="number_clearance">
                     </div>
-                    <label for="name_en" class="label_item">{{ __('home.Full Name') }}
+          <label for="name_en" class="label_item-member">{{ __('home.Full Name') }}
                         <span class="text-danger">*</span></label>
-                    <div class="form-group">
+          <div class="form-group">
                         <input type="text" class="form-control mb-2" id="name_en" name="name_en"
                                value="{{ $create ? $create['name_en'] : old('name_en', $exitsMember ? $exitsMember->name_en : '') }}"
                                placeholder="{{ __('home.English only') }}" required>
@@ -38,30 +38,33 @@
                                value="{{ $create ? $create['name'] : old('name', $exitsMember ? $exitsMember->name : '') }}"
                                placeholder="{{ __('home.Local language') }}" required>
                     </div>
-                    <label for="code" class="label_item">{{ __('home.ID') }} <span
+          <label for="code" class="label_item-member">{{ __('home.ID') }} <span
                                 class="text-danger">*</span></label>
-                    <div class="form-group">
+          <div class="form-group">
                         <input type="text" class="form-control" id="code" name="code"
                                value="{{ $create ? $create['code'] : old('code', $exitsMember ? $exitsMember->code : '') }}"
                                required>
                     </div>
-                    @if(!$exitsMember)
+          @if(!$exitsMember)
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="password" class="label_item">{{ __('home.Password') }} <span class="text-danger">*</span></label>
-                                <input type="password" class="form-control" id="password" name="password" placeholder="*********" required>
+                                <label for="password" class="label_item-member">{{ __('home.Password') }} <span
+                                            class="text-danger">*</span></label>
+                                <input type="password" class="form-control" id="password" name="password"
+                                       placeholder="*********" required>
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="passwordConfirm" class="label_item">{{ __('home.Password') }} <span class="text-danger">*</span></label>
+                                <label for="passwordConfirm" class="label_item-member">{{ __('home.Password') }} <span
+                                            class="text-danger">*</span></label>
                                 <input type="password" class="form-control" id="passwordConfirm"
-                                       name="passwordConfirm"  placeholder="*********"
+                                       name="passwordConfirm" placeholder="*********"
                                        required>
                             </div>
                         </div>
                     @endif
-                    <div class="form-row">
+          <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="phoneNumber" class="label_item">{{ __('home.phone number') }} <span
+                            <label for="phoneNumber" class="label_item-member">{{ __('home.phone number') }} <span
                                         class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
                                    value="{{ $create ? $create['phone'] : old('phone', $exitsMember ? $exitsMember->phone : '') }}"
@@ -70,14 +73,14 @@
                         <div class="form-group col-md-6 justify-content-between align-items-center d-flex">
                             <div class="form-check mt-4">
                                 <input class="form-check-input" type="checkbox" id="gridCheck1" required>
-                                <label class="form-check-label label_item" for="gridCheck1">
+                                <label class="form-check-label label_item-member" for="gridCheck1">
                                     {{ __('home.Allow receiving notifications via SMS message') }}
                                 </label>
                             </div>
                         </div>
 
                         <div class="form-group col-md-6">
-                            <label for="email" class="label_item">{{ __('home.email') }} <span
+                            <label for="email" class="label_item-member">{{ __('home.email') }} <span
                                         class="text-danger">*</span></label>
                             <input type="email" class="form-control" id="email" name="email"
                                    value="{{ $create ? $create['email'] : old('email', $exitsMember ? $exitsMember->email : '') }}"
@@ -86,28 +89,28 @@
                         <div class="form-group col-md-6 justify-content-between align-items-center d-flex">
                             <div class="form-check mt-4">
                                 <input class="form-check-input" type="checkbox" id="gridCheck2" required>
-                                <label class="form-check-label label_item" for="gridCheck2">
+                                <label class="form-check-label label_item-member" for="gridCheck2">
                                     {{ __('home.Allow receiving notifications via Email') }}
                                 </label>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="sns_account" class="label_item">{{ __('home.SNS Account') }}
+          <div class="form-group">
+                        <label for="sns_account" class="label_item-member">{{ __('home.SNS Account') }}
                             <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="sns_account" name="sns_account"
                                value="{{ $create ? $create['sns_account'] : old('sns_account', $exitsMember ? $exitsMember->sns_account : '') }}"
                                placeholder="{{ __('home.ID Kakao Talk') }}" required>
                     </div>
-                    <div class="form-row">
+          <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="type_business" class="label_item">{{ __('home.Career') }}
+                            <label for="type_business" class="label_item-member">{{ __('home.Career') }}
                                 <span class="text-danger">*</span></label>
                             <div class="multiselect" style="position: relative">
                                 <div class="selectBox" style="position: relative" id="code_2_item"
                                      onclick="showCheckboxes2()">
                                     <select id="type_business">
-                                        <option class="label_item">{{ __('home.Select the applicable category') }}</option>
+                                        <option class="label_item-member">{{ __('home.Select the applicable category') }}</option>
                                     </select>
                                     <div class="overSelect"></div>
                                 </div>
@@ -182,13 +185,13 @@
                             </div>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="category" class="label_item">{{ __('home.Business') }}
+                            <label for="category" class="label_item-member">{{ __('home.Business') }}
                                 <span class="text-danger">*</span></label>
                             <div class="multiselect" style="position: relative">
                                 <div class="selectBox" style="position: relative" id="code_1_item"
                                      onclick="showCheckboxes()">
                                     <select id="category">
-                                        <option class="label_item">{{ __('home.Select the applicable category') }}</option>
+                                        <option class="label_item-member">{{ __('home.Select the applicable category') }}</option>
                                     </select>
                                     <div class="overSelect"></div>
                                 </div>
@@ -382,9 +385,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="label_form">{{ __('home.Address Business') }} <span class="text-danger">*</span></div>
-                    <label for="detail-address" class="label_item">{{ __('home.Address English') }}</label>
-                    <div class="form-row">
+          <div class="label_form">{{ __('home.Address Business') }} <span class="text-danger">*</span></div>
+          <label for="detail-address" class="label_item-member">{{ __('home.Address English') }}</label>
+          <div class="form-row">
                         <div class="form-group col-md-4 address-above" data-toggle="modal" data-target="#modal-address">
                             <input type="text" readonly class="form-control" id="countries-select"
                                    placeholder="{{ __('home.Select country') }}"
@@ -407,8 +410,8 @@
                         </div>
                         <input type="hidden" id="address_code" name="address_code">
                     </div>
-                    <label for="detail-address-1" class="label_item">{{ __('home.Address Korea') }}</label>
-                    <div class="form-group">
+          <label for="detail-address-1" class="label_item-member">{{ __('home.Address Korea') }}</label>
+          <div class="form-group">
                         <div class="form-row">
                             <div class="form-group col-md-4 address-below" data-toggle="modal"
                                  data-target="#modal-address">
@@ -435,7 +438,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+          <div class="form-group">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="gridCheck" required>
                             <label class="form-check-label text-checkout" for="gridCheck">
@@ -446,14 +449,14 @@
                         </div>
                     </div>
 
-                    <input id="localeInput" name="locale" class="d-none">
-                    <button type="submit" id="btnSubmitFormRegister"
+          <input id="localeInput" name="locale" class="d-none">
+          <button type="submit" id="btnSubmitFormRegister"
                             class="d-none btn btn-primary">{{ __('home.sign up') }}</button>
-                    <div class="text-center">
+          <div class="text-center">
                         <button type="button" id="buttonRegister"
                                 class="w-50 btn bg-member-primary solid mr-3 btn-register">{{ __('home.next') }}</button>
                     </div>
-                </form>
+          </form>
 </div>
 <script>
     $(document).ready(function () {
@@ -476,4 +479,14 @@
             return isChecked;
         }
     })
+    // hàm cập nhật ngày tháng năm
+    function updateFormattedDate() {
+        var currentDate = new Date();
+        var day = currentDate.getDate();
+        var month = currentDate.getMonth() + 1;
+        var year = currentDate.getFullYear();
+        var formattedDate = day + '/' + month + '/' + year;
+        document.getElementById('formattedDate').textContent = formattedDate;
+    }
+    updateFormattedDate();
 </script>

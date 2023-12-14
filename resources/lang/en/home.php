@@ -1043,6 +1043,7 @@ return [
     'list_user' => 'List user',
     'create_member' => 'Create member',
     'Employee registed staff' => 'Employee registed staff',
+    'More staff' => 'More staff',
     '2188 Main' => '2188 Main',
     'Mã giảm giá có sẵn' => 'Discount code available',
     'Order Summary' => 'Order Summary',

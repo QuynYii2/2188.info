@@ -80,8 +80,16 @@ class RegisterMemberSuccessController extends Controller
 
     public function staffInfo(Request $request, $memberId)
     {
+
         (new HomeController())->getLocale($request);
-        $staffUsers = StaffUsers::where('parent_user_id', Auth::user()->id)->get();
+        $memberRepresent = MemberRegisterPersonSource::find($memberId);
+        if (!$memberRepresent) {
+            return back();
+        }
+        $memberSource = MemberRegisterPersonSource::find($memberRepresent->person);
+        $findMember = $memberRepresent->email;
+        $userRepresent = User::where('email', $findMember)->first();
+        $staffUsers = StaffUsers::where('parent_user_id', $userRepresent->id)->get();
         $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
         $company = null;
         $memberList = null;
@@ -93,10 +101,10 @@ class RegisterMemberSuccessController extends Controller
             ])->get();
         }
         session()->forget('region');
-        if ($company && $company->member == RegisterMember::TRUST) {
-            return back();
-        }
-        return view('frontend.pages.member.tab-staff-member', compact('staffUsers', 'company', 'memberList'));
+//        if ($company && $company->member == RegisterMember::TRUST) {
+//            return back();
+//        }
+        return view('frontend.pages.member.tab-staff-member', compact('staffUsers', 'company', 'memberList', 'memberSource', 'memberRepresent', 'memberId','userRepresent','memberPerson'));
     }
 
     public function memberParent(Request $request, $id)

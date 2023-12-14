@@ -21,14 +21,14 @@
 @if($memberPerson)
     <input type="text" class="d-none" id="inputCheckExitMember" value="{{$memberPerson->code}}">
 @endif
-<div class="container">
-    <form class="p-3" action="{{route('register.member.represent')}}" method="post">
+<div class="">
+    <form class="p-3 form_info-member-person" action="{{route('register.member.represent')}}" method="post">
         @csrf
         <input type="text" class="form-control" name="person" value="{{ ($person) }}" hidden="">
         <div class="day_register title-input">Day register:</div>
         <div class="label_form">{{ __('home.full name') }} <span class="text-danger">*</span></div>
         <div class="form-group">
-            <input type="text" class="form-control" id="name_en" name="name_en"
+            <input type="text" class="form-control mb-2" id="name_en" name="name_en"
                    placeholder="{{ __('home.Name English') }}"
                    value="{{$create ? $create['name_en'] : old('name_en', $memberPerson ? $memberPerson->name_en : '')}}"
                    required>
@@ -110,7 +110,7 @@
         </div>
         <div class="text-center">
             <button type="button" id="buttonRegister"
-                    class="w-50 btn bg-member-primary mr-3 btn-register">{{ __('home.sign up') }}</button>
+                    class="w-50 btn bg-member-primary mr-3 btn-register btn-danger">{{ __('home.sign up') }}</button>
         </div>
         <input id="localeInput" name="locale" class="d-none">
         <input type="text" class="d-none" id="valueID">

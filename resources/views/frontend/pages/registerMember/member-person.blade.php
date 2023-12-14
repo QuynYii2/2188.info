@@ -21,8 +21,8 @@
 @if($memberPersonSource)
     <input type="text" class="d-none" id="inputCheckExitMember" value="{{$memberPersonSource->code}}">
 @endif
-<div class="container">
-    <form class="p-3" action="{{route('register.member.source')}}" method="post" id="formRegisterMember">
+<div class="">
+    <form class="p-3 form_info-member-person" action="{{route('register.member.source')}}" method="post" id="formRegisterMember">
         @csrf
         <div class="day_register title-input">Day register:</div>
         <div class="label_form">{{ __('home.Position') }}  <span class="text-danger">*</span></div>
@@ -136,7 +136,7 @@
         <input id="localeInput" name="locale" class="d-none">
         <input type="text" class="d-none" id="valueID">
         <button class="d-none" id="btnSubmitFormRegister" type="submit">Done</button>
-     </form>
+    </form>
  </div>
  <script>
      function getDate() {
