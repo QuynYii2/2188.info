@@ -1,10 +1,7 @@
 @extends('frontend.layouts.master')
 
 @section('title', ' Posted my RFQ')
-<style>
 
-
-</style>
 @section('content')
     <div class="container">
         <div class="main-post-rfq">
@@ -100,7 +97,7 @@
                         <div class="title-input main-text">Purchase Quantity <span class="protected">*</span></div>
                         <div class="form-row">
                             <div class="form-group col-md-4">
-                                <input type="text" class="form-control" id="purchase_quantity" name="purchase_quantity"
+                                <input type="number" min="0" class="form-control" id="purchase_quantity" name="purchase_quantity"
                                        oninput="checkInput('purchase_quantity', 'icon_purchase_quantity')" required>
                             </div>
                             <div class="form-group col-md-3">
@@ -129,7 +126,7 @@
                         <div class="title-input main-text">Target unit price <span class="protected">*</span></div>
                         <div class="form-row">
                             <div class="form-group col-md-4">
-                                <input type="text" class="form-control" id="target_price" name="target_price">
+                                <input type="number" min="0" class="form-control" id="target_price" name="target_price">
                             </div>
                             <div class="form-group col-md-3">
                                 <select id="unit_price" class="form-control" name="unit_price">
@@ -212,7 +209,7 @@
                                 <span class="text-nowrap span-two">
                                     Ship in
                                 </span>
-                                <input type="text" class="form-control" id="ship_in" name="ship_in" required>
+                                <input type="number" min="0" class="form-control" id="ship_in" name="ship_in" required>
                                 <span class="text-nowrap span-end">
                                     day(s) after supplier receives the initial payment.
                                 </span>

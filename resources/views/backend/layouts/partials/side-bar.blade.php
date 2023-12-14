@@ -83,6 +83,9 @@
                 <li><a class="sidebarUrl" href="{{route('wish.list.index')}}"> {{ __('home.Wish Lists') }}</a>
                 </li>
                 <li>
+                    <a class="sidebarUrl" href="{{route('user.post.rfq.show')}}"> {{ __('home.Post RFQ') }}</a>
+                </li>
+                <li>
                     <a class="sidebarUrl" href="{{route('user.list.mail.seller')}}"> {{ __('home.Mail Send Seller') }}</a>
                 </li>
             </ul>
