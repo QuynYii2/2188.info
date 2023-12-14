@@ -52,7 +52,7 @@ class PostRFQController extends Controller
                     $arrayThumbnailsPath[] = $thumbnailsPath;
                 }
             }
-            if ($arrayThumbnailsPath){
+            if ($arrayThumbnailsPath) {
                 $new_post->thumbnails = implode(',', $arrayThumbnailsPath);
             }
 
@@ -94,13 +94,13 @@ class PostRFQController extends Controller
 
             $success = $new_post->save();
             if ($success) {
-//                alert()->sucess('Success', 'Create success!');
+                alert()->sucess('Success', 'Create success!');
                 return redirect(route('homepage'));
             }
-//            alert()->error('Error', 'Create error!');
+            alert()->error('Error', 'Create error!');
             return back();
         } catch (\Exception $exception) {
-//            alert()->error('Error', 'Please try again!');
+            alert()->error('Error', 'Please try again!');
             return back();
         }
     }
