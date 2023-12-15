@@ -2,7 +2,7 @@
 <link href="{{asset('css/voucher.css')}}" rel="stylesheet">
 <div class="container-fluid">
     @if(!isset($isAdminUpdate))
-        @include('frontend.pages.member.header-button')
+{{--        @include('frontend.pages.member.header-button')--}}
         <h3 class="text-center mt-5">{{ __('home.Congratulations, you have registered as a member') }} {{$company->member}}</h3>
     @endif
     <div class="start-page mb-3">
