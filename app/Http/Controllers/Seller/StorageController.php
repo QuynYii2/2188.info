@@ -4,39 +4,16 @@ namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\HomeController;
-use App\Models\Product;
 use App\Models\StorageProduct;
-use App\Models\User;
-use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class StorageController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         (new HomeController())->getLocale($request);
-        $storages = StorageProduct::where('create_by', Auth::user()->id)->orderByDesc('id')->get();
-        return view('backend.storage-manage.index', compact('storages'));
-    }
-
-    public function allStorage(Request $request)
-    {
-        (new HomeController())->getLocale($request);
-        $id = Auth::user()->id;
-        $roles = DB::table('role_user')->where('user_id', $id)->orderBy('role_id')->get('role_id');
-        foreach ($roles as $role) {
-            if ($role->role_id == 1) {
-                $storages = StorageProduct::all();
-                return view('backend.storage-manage.index', compact('storages'));
-            }
-        }
         $storages = StorageProduct::where('create_by', Auth::user()->id)->orderByDesc('id')->get();
         return view('backend.storage-manage.index', compact('storages'));
     }
@@ -90,24 +67,45 @@ class StorageController extends Controller
 
     }
 
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create( Request $request)
+    public function create(Request $request)
     {
         (new HomeController())->getLocale($request);
         return view('backend.storage-manage.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
+    public function edit(Request $request, $id)
+    {
+        (new HomeController())->getLocale($request);
+        $storage = StorageProduct::findOrFail($id);
+        return view('backend.storage-manage.edit', compact('storage'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        (new HomeController())->getLocale($request);
+        $storage = StorageProduct::findOrFail($id);
+
+        if ($request->hasFile('gallery')) {
+            $gallery = $request->file('gallery');
+            $galleryPaths = [];
+            foreach ($gallery as $image) {
+                $galleryPath = $image->store('gallery', 'public');
+                $galleryPaths[] = $galleryPath;
+            }
+            $galleryString = implode(',', $galleryPaths);
+            $storage->gallery = $galleryString;
+        }
+
+        $storage->name = $request->input('name');
+        $storage->price = $request->input('price');
+        $storage->quantity = $request->input('quantity');
+        $storage->origin = $request->input('origin');
+        $storage->updated_By = Auth::user()->id;
+        $storage->save();
+
+        return $this->allStorage($request);
+    }
+
     public function store(Request $request)
     {
         (new HomeController())->getLocale($request);
@@ -141,12 +139,11 @@ class StorageController extends Controller
         $storage->save();
         alert()->success('Success', 'Thêm mới thành công');
 
-        return $this->allStorage();
+        return $this->allStorage($request);
     }
 
-    public function isStorageExist(Request $request,$storageCheck)
+    public function isStorageExist($storageCheck)
     {
-        (new HomeController())->getLocale($request);
         $name = $storageCheck->name;
         $price = $storageCheck->price;
         $quantity = $storageCheck->quantity;
@@ -168,71 +165,18 @@ class StorageController extends Controller
         return true;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Request $request,$id)
+    public function allStorage(Request $request)
     {
         (new HomeController())->getLocale($request);
-        $storage = StorageProduct::findOrFail($id);
-        return view('backend.storage-manage.edit', compact('storage'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        (new HomeController())->getLocale($request);
-        $storage = StorageProduct::findOrFail($id);
-
-        if ($request->hasFile('gallery')) {
-            $gallery = $request->file('gallery');
-            $galleryPaths = [];
-            foreach ($gallery as $image) {
-                $galleryPath = $image->store('gallery', 'public');
-                $galleryPaths[] = $galleryPath;
+        $id = Auth::user()->id;
+        $roles = DB::table('role_user')->where('user_id', $id)->orderBy('role_id')->get('role_id');
+        foreach ($roles as $role) {
+            if ($role->role_id == 1) {
+                $storages = StorageProduct::all();
+                return view('backend.storage-manage.index', compact('storages'));
             }
-            $galleryString = implode(',', $galleryPaths);
-            $storage->gallery = $galleryString;
         }
-
-        $storage->name = $request->input('name');
-        $storage->price = $request->input('price');
-        $storage->quantity = $request->input('quantity');
-        $storage->origin = $request->input('origin');
-        $storage->updated_By = Auth::user()->id;
-        $storage->save();
-
-        return $this->allStorage();
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $storages = StorageProduct::where('create_by', Auth::user()->id)->orderByDesc('id')->get();
+        return view('backend.storage-manage.index', compact('storages'));
     }
 }

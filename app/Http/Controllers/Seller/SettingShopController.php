@@ -15,11 +15,6 @@ use Mockery\Exception;
 
 class SettingShopController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         (new HomeController())->getLocale($request);
@@ -45,7 +40,6 @@ class SettingShopController extends Controller
 
     public function updateProfileShop(Request $request)
     {
-        (new HomeController())->getLocale($request);
         try {
             $user = Auth::user();
             $shopinformation = ShopInfo::where('user_id', '=', Auth::user()->id)->orderBy('created_at', 'DESC')->first();
@@ -115,20 +109,18 @@ class SettingShopController extends Controller
 
     public function savePaymentMethod(Request $request)
     {
-        (new HomeController())->getLocale($request);
         $user = Auth::user();
         $user->payment_method = implode(',', $request->input('payment_method'));
         $user->save();
-        return $this->index();
+        return $this->index($request);
     }
 
     public function saveTransportMethod(Request $request)
     {
-        (new HomeController())->getLocale($request);
         $user = Auth::user();
         $user->transport_method = implode(',', $request->input('transport_method'));
         $user->save();
-        return $this->index();
+        return $this->index($request);
     }
 
     /**
