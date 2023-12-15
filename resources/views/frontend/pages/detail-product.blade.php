@@ -1120,7 +1120,7 @@
         </div>
 
         <div class="d-none">
-            <form action="{{route('member.add.cart', $product)}}" method="post" id="formOrderMember">
+            <form action="{{route('member.add.cart', $productItem)}}" method="post" id="formOrderMember">
                 @csrf
                 <input type="text" name="productInfo" id="productInfo">
                 <button id="btnOrder" type="submit" class="btn btn-success float-right">Submit</button>
