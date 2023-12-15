@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\AttributeProductStatus;
 use App\Enums\CartStatus;
+use App\Enums\CategoryStatus;
 use App\Enums\EvaluateProductStatus;
 use App\Enums\ProductInterestedStatus;
 use App\Enums\ProductStatus;
@@ -13,12 +14,15 @@ use App\Enums\VoucherStatus;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Models\Attribute;
 use App\Models\Cart;
+use App\Models\Category;
 use App\Models\EvaluateProduct;
+use App\Models\MemberRegisterInfo;
 use App\Models\Product;
 use App\Models\ProductInterested;
 use App\Models\ProductSale;
 use App\Models\ProductViewed;
 use App\Models\Promotion;
+use App\Models\User;
 use App\Models\Variation;
 use App\Models\Voucher;
 use Illuminate\Http\Request;
@@ -110,13 +114,116 @@ class ProductController extends Controller
             return back();
         }
         $listCart = null;
-        if (Auth::check()){
+        if (Auth::check()) {
             $listCart = Cart::where('user_id', Auth::user()->id)->where('status', CartStatus::WAIT_ORDER)->get();
         }
         $currency = (new HomeController())->getLocation($request);
+
+        $thisProduct = Product::find($id);
+        $user_id = $thisProduct->user_id;
+
+        $listReview = DB::table('evaluate_products')
+            ->join('products', 'products.id', '=', 'evaluate_products.product_id')
+            ->where('evaluate_products.status', EvaluateProductStatus::APPROVED)
+            ->where('products.user_id', $user_id)
+            ->select('evaluate_products.*')
+            ->get();
+
+        $totalReview = $listReview->count();
+        $totalStar = 0;
+        $calcStar = 0;
+        foreach ($listReview as $item) {
+            $totalStar = $totalStar + (int)$item->star_number;
+        }
+        if ($totalReview > 0) {
+            $calcStar = $totalStar / $totalReview;
+        }
+
+        $fiveStar = EvaluateProduct::where('product_id', $id)->where('star_number', 5)->get();
+        $fourStar = EvaluateProduct::where('product_id', $id)->where('star_number', 4)->get();
+        $threeStar = EvaluateProduct::where('product_id', $id)->where('star_number', 3)->get();
+        $twoStar = EvaluateProduct::where('product_id', $id)->where('star_number', 2)->get();
+
+        $countFiveStar = $fiveStar->count();
+        $countFourStar = $fourStar->count();
+        $countThreeStar = $threeStar->count();
+        $countTwoStar = $twoStar->count();
+
+        $percentFiveStar = 0;
+        $percentFourStar = 0;
+        $percentThreeStar = 0;
+        $percentTwoStar = 0;
+        $percentOneStar = 0;
+        if ($totalReview > 0) {
+            $percentFiveStar = ($countFiveStar / $totalReview) * 100;
+            $percentFourStar = ($countFourStar / $totalReview) * 100;
+            $percentThreeStar = ($countThreeStar / $totalReview) * 100;
+            $percentTwoStar = ($countTwoStar / $totalReview) * 100;
+            $percentOneStar = 100 - $percentFiveStar - $percentFourStar - $percentThreeStar - $percentTwoStar;
+        }
+
+        $arrayStar = [$percentOneStar, $percentTwoStar, $percentThreeStar, $percentFourStar, $percentFiveStar];
+
+        $products = Product::where('user_id', $user_id)->where('status', ProductStatus::ACTIVE)->get();
+
+        $user = User::find($user_id);
+        $company = MemberRegisterInfo::where('email', $user->email)->first();
+
+        $arrayCode1 = [];
+        $arrayCode2 = [];
+        $arrayCode3 = [];
+        if ($company) {
+            $code1 = $company->code_1;
+            if ($code1) {
+                $arrayCode1 = explode(',', $code1);
+            }
+            $code2 = $company->code_2;
+            if ($code2) {
+                $arrayCode2 = explode(',', $code2);
+            }
+            $code3 = $company->code_3;
+            if ($code3) {
+                $arrayCode3 = explode(',', $code3);
+            }
+        }
+
+        $categories1 = Category::whereIn('id', $arrayCode1)->where('status', CategoryStatus::ACTIVE)->get();
+        $categories2 = Category::whereIn('id', $arrayCode2)->where('status', CategoryStatus::ACTIVE)->get();
+        $categories3 = Category::whereIn('id', $arrayCode3)->where('status', CategoryStatus::ACTIVE)->get();
+
+        $nameCategory = null;
+        foreach ($categories1 as $item) {
+            if ($nameCategory) {
+                $nameCategory = $nameCategory . ',' . $item->name;
+            } else {
+                $nameCategory = $item->name;
+            }
+        }
+
+        foreach ($categories2 as $item) {
+            if ($nameCategory) {
+                $nameCategory = $nameCategory . ',' . $item->name;
+            } else {
+                $nameCategory = $item->name;
+            }
+        }
+
+        foreach ($categories3 as $item) {
+            if ($nameCategory) {
+                $nameCategory = $nameCategory . ',' . $item->name;
+            } else {
+                $nameCategory = $item->name;
+            }
+        }
+
         return view('frontend/pages/detail-product', $value)->with([
             'currency' => $currency,
-            'listCart' => $listCart
+            'listCart' => $listCart,
+            'calcStar' => $calcStar,
+            'products' => $products,
+            'company' => $company,
+            'arrayStar' => $arrayStar,
+            'nameCategory' => $nameCategory,
         ]);
     }
 
