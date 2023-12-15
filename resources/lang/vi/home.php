@@ -48,6 +48,12 @@ return [
     'product multilviews' => 'Lượt xem cao nhất',
     'category interest' => 'Danh mục quan tâm',
     'ID Kakao Talk' => 'ID Kakao Talk',
+    'List Post' => 'Danh sách bài đăng',
+    'Purchase Quantity' => 'Số lượng mua',
+    'Target Price' => 'Giá mục tiêu',
+    'Max Budget' => 'Ngân sách tối đa',
+    'Post RFQ' => 'Đăng bài RFQ',
+    'Mail Send Seller' => 'Gửi mail cho người bán',
 
     //thông tin cá nhân, họ và tên, nickname, ngày sinh, giới tính, quốc tịch, số điện thoại và email, số điện thoại, địa chỉ email, bảo mật, đổi mật khẩu, thiết lập mã pin, liên kết mạng xã hội, lưu thay đổi, địa chỉ
     'personal information' => 'Thông tin cá nhân',

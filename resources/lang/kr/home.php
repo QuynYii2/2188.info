@@ -970,9 +970,15 @@ return [
     'Nhập mã OTP' => 'OTP 코드를 입력하세요',
     'Nhập tên khuyến mãi' => '프로모션 이름을 입력하세요',
     'giảm giá' => '할인',
+    'List Post' => '게시물 목록',
+    'Purchase Quantity' => '구매 수량',
+    'Target Price' => '목표 가격',
+    'Max Budget' => '최대 예산',
+    'Post RFQ' => 'RFQ 게시',
+    'Post RFQ Success' => 'RFQ 게시 성공',
 
 
-    'Please enter express delivery or receiving address' => ' 상품을 발송하거나 수취할수 있는 주소를 등록하세요',
+        'Please enter express delivery or receiving address' => ' 상품을 발송하거나 수취할수 있는 주소를 등록하세요',
     'Allow receiving notifications via SMS message' => '를 수신합니다',
     'Allow receiving notifications via Email' => '을 수신합니다',
 

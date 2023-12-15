@@ -515,8 +515,6 @@
         getInput();
 
         @endif
-
-
         async function renderCategory2(value) {
             let url = '{{ route('get.category.one.parent') }}';
             console.log( $('#inputArrayCategory').val())
