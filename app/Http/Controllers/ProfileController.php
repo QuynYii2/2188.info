@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Enums\CategoryStatus;
+use App\Enums\MemberPartnerStatus;
 use App\Enums\MemberRegisterInfoStatus;
 use App\Enums\MemberRegisterType;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Models\Category;
 use App\Models\EvaluateProduct;
 use App\Models\Member;
+use App\Models\MemberPartner;
 use App\Models\MemberRegisterInfo;
 use App\Models\MemberRegisterPersonSource;
 use App\Models\Product;
@@ -29,7 +31,10 @@ class ProfileController extends Controller
     public function memberInfo(Request $request)
     {
         (new HomeController())->getLocale($request);
+        $getMemberId = \App\Models\MemberRegisterPersonSource::where('email' , Auth::user()->email)->value('member_id');
+        $memberId = \App\Models\MemberRegisterPersonSource::where('member_id',$getMemberId)->value('id');
         $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+        $memberPersonSource = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
         $company = MemberRegisterInfo::find($memberPerson->member_id);
         $member = Member::find($company->member_id);
         $exitsMember = $company;
@@ -67,8 +72,40 @@ class ProfileController extends Controller
 
         $categories_two_parent = collect($categories_two_parent_array);
 
-        return view('frontend/pages/profile/member', compact('company', 'member', 'exitsMember',
-            'categories_no_parent', 'categories_one_parent', 'categories_two_parent', 'categories'));
+        $exitMemberPerson = null;
+        if (Auth::check()) {
+            $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+        }
+
+        if ($exitMemberPerson && $exitMemberPerson->type == MemberRegisterType::SOURCE) {
+            $person = $exitMemberPerson;
+        } elseif ($exitMemberPerson && $exitMemberPerson->type == MemberRegisterType::REPRESENT) {
+            $person = MemberRegisterPersonSource::find($exitMemberPerson->person);
+        }
+        $memberPerson = $exitMemberPerson;
+
+        $person = $person->id;
+        $memberRepresent = MemberRegisterPersonSource::find($memberId);
+        if (!$memberRepresent) {
+            return back();
+        }
+        $memberSource = MemberRegisterPersonSource::find($memberRepresent->person);
+        $findMember = $memberRepresent->email;
+        $userRepresent = User::where('email', $findMember)->first();
+        $staffUsers = StaffUsers::where('parent_user_id', $userRepresent->id)->get();
+        $company = null;
+        $memberList = null;
+        if ($memberPerson) {
+            $company = MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
+            $memberList = MemberPartner::where([
+                ['company_id_source', $company->id],
+                ['status', MemberPartnerStatus::ACTIVE]
+            ])->get();
+        }
+        return view('frontend.pages.member.member-profile.member-account', compact('company', 'member', 'exitsMember',
+            'categories_no_parent', 'categories_one_parent', 'categories_two_parent',
+            'categories', 'memberPerson','memberPersonSource','person','memberRepresent',
+            'memberSource', 'staffUsers','userRepresent','memberList'));
     }
 
     public function memberPerson(Request $request)

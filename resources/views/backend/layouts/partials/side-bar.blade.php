@@ -68,7 +68,7 @@
             <ul class='sub-items pl-3'>
                 <li><a class="sidebarUrl" href="{{route('profile.show')}}">{{ __('home.account information') }}</a>
                 </li>
-                @if(!$isAdmin)
+                @if(!$isAdmin && $member->member != 'BUYER')
                     <li class="sidebarUrlLi"><a class="sidebarUrl"
                                                 href="{{route('member.info')}}">{{ __('home.Member') }}</a>
                     </li>

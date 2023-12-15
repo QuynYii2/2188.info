@@ -3,8 +3,8 @@
 @section('content')
     <link rel="stylesheet" href="{{asset('css/register_member.css')}}">
     <h3 class="text-center">Detail Post</h3>
-    <div class="container mb-5">
-        <form action="{{ route('user.post.rfq.update', $post->id) }}" class="form-create" method="post"
+    <div class="mb-5">
+        <form action="{{ route('user.post.rfq.update', $post->id) }}" class="form-detail_postRFQ" method="post"
               enctype="multipart/form-data">
             @csrf
             <h5 class="title">Basic product information</h5>
@@ -28,11 +28,11 @@
             @endphp
             <div class="row">
                 <div class="form-group col-md-4">
-                    <label for="code_1" class="main-text category-select">1st classification</label>
+                    <label for="code-1sl" class="main-text category-select">1st classification</label>
                     <div class="multiselect" style="position: relative">
                         <div class="selectBox" id="code_1_item" onclick="showCheckboxes()">
-                            <select>
-                                <option id="inputCheckboxCategory">{{ __('home.Select the applicable category') }}</option>
+                            <select id="code-1sl" class="w-100">
+{{--                                <option id="inputCheckboxCategory">{{ __('home.Select the applicable category') }}</option>--}}
                             </select>
                             <div class="overSelect"></div>
                         </div>
@@ -56,7 +56,7 @@
                                         @else
                                             <div class="item-text">{{$category->name_en}}</div>
                                         @endif
-                                                </span>
+                                    </span>
                                 </label>
                             @endforeach
                         </div>
@@ -74,11 +74,11 @@
                     }
                 @endphp
                 <div class="form-group col-md-4">
-                    <label for="code_2" class="main-text category-select">2nd classification</label>
+                    <label for="code-2sl" class="main-text category-select">2nd classification</label>
                     <div class="multiselect" style="position: relative">
                         <div class="selectBox" id="code_2_item" onclick="showCheckboxes2()">
-                            <select>
-                                <option id="inputCheckboxCategory1">{{ __('home.Select the applicable category') }}</option>
+                            <select id="code-2sl" class="w-100">
+{{--                                <option id="inputCheckboxCategory1">{{ __('home.Select the applicable category') }}</option>--}}
                             </select>
                             <div class="overSelect"></div>
                         </div>
@@ -99,10 +99,10 @@
                     }
                 @endphp
                 <div class="form-group col-md-4">
-                    <label for="code_3" class="main-text category-select">3rd classification</label>
+                    <label for="code-3sl" class="main-text category-select">3rd classification</label>
                     <div class="multiselect" style="position: relative">
                         <div class="selectBox" id="code_3_item" onclick="showCheckboxes1()">
-                            <select>
+                            <select id="code-3sl" class="w-100">
                                 <option id="inputCheckboxCategory2">{{ __('home.Select the applicable category') }}</option>
                             </select>
                             <div class="overSelect"></div>
@@ -121,7 +121,7 @@
                            id="purchase_quantity" name="purchase_quantity"
                            required>
                 </div>
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-4">
                     <select id="unit_quantity" class="form-control" name="unit_quantity">
                         <option {{ $post->unit_quantity == '20 Container' ? 'selected' : ''}} value="20 Container">20'
                             Container
@@ -139,7 +139,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-4">
                     <label for="business_terms" class="main-text">Business terms <span
                                 class="protected">*</span></label>
                     <select id="business_terms" class="form-control" name="business_terms">
@@ -156,7 +156,7 @@
                     <input type="number" min="0" class="form-control" id="target_price"
                            value="{{ $post->target_price }}" name="target_price">
                 </div>
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-4">
                     <select id="unit_price" class="form-control" name="unit_price">
                         <option {{ $post->unit_price == 'USD' ? 'selected' : ''}} value="USD">USD</option>
                         <option {{ $post->unit_price == 'KWR' ? 'selected' : ''}} value="KWR">KWR</option>
@@ -166,27 +166,29 @@
                 </div>
             </div>
             <div class="row">
-                <div class="form-group col-md-5">
-                    <label for="max_budget" class="main-text">Max Budget <span
-                                class="protected">*</span></label>
-                    <div class="d-flex align-items-center">
-                        <select id="max_budget" class="form-control" name="max_budget">
-                            <option {{ $post->max_budget == '0-1000' ? 'selected' : ''}} value="0-1000">0 - 1000
-                            </option>
-                            <option {{ $post->max_budget == '1000-5000' ? 'selected' : ''}} value="1000-5000">1000 -
-                                5000
-                            </option>
-                            <option {{ $post->max_budget == '5000-10000' ? 'selected' : ''}} value="5000-10000">5000 -
-                                10000
-                            </option>
-                            <option {{ $post->max_budget == '10000-10000000' ? 'selected' : ''}} value="10000-10000000">
-                                10000 and bigger
-                            </option>
-                        </select>
-                        <span class="unit">USD</span>
+
+                <div class="col-md-12"><label for="max_budget" class="main-text">Max Budget <span
+                                class="protected">*</span></label></div>
+                    <div class="form-group d-flex col-md-12">
+                        <div class="d-flex align-items-center col-md-4 pl-0">
+                            <select id="max_budget" class="form-control" name="max_budget">
+                                <option {{ $post->max_budget == '0-1000' ? 'selected' : ''}} value="0-1000">0 - 1000
+                                </option>
+                                <option {{ $post->max_budget == '1000-5000' ? 'selected' : ''}} value="1000-5000">1000 -
+                                    5000
+                                </option>
+                                <option {{ $post->max_budget == '5000-10000' ? 'selected' : ''}} value="5000-10000">5000
+                                    -
+                                    10000
+                                </option>
+                                <option {{ $post->max_budget == '10000-10000000' ? 'selected' : ''}} value="10000-10000000">
+                                    10000 and bigger
+                                </option>
+                            </select>
+                        </div>
+                        <div><span class="unit col-md-4">USD</span></div>
                     </div>
                 </div>
-            </div>
             <div class="form-group">
                 <label for="description" class="main-text">Detail <span class="protected">*</span></label>
                 <textarea class="form-control" id="description" name="description"
@@ -253,17 +255,19 @@
 
             <div class="row">
                 <div class="form-group col-md-12 lead-time d-flex align-items-center w-100">
-                                <span class="text-nowrap span-one">
+                    <div>
+                       <span class="text-nowrap span-one">
                                     Lead Time:
-                                </span>
-                    <span class="text-nowrap span-two">
+                    </span>
+                        <span class="text-nowrap span-two">
                                     Ship in
-                                </span>
-                    <input type="number" min="0" value="{{ $post->ship_in }}" class="form-control" id="ship_in"
-                           name="ship_in" required>
-                    <span class="text-nowrap span-end">
+                        </span>
+                    </div>
+                    <div><input type="number" min="0" value="{{ $post->ship_in }}" class="form-control" id="ship_in"
+                                name="ship_in" required></div>
+                    <div><span class="text-nowrap span-end">
                                     day(s) after supplier receives the initial payment.
-                                </span>
+                                </span></div>
                 </div>
             </div>
 

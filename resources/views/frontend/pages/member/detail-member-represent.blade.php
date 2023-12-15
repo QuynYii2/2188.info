@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    @include('frontend.pages.member.header-button')
+{{--    @include('frontend.pages.member.header-button')--}}
 
     <h3 class="text-center mt-5">{{ __('home.Update information represent member') }}</h3>
     <div class="start-page mb-3">

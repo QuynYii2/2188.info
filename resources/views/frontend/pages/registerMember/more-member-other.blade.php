@@ -12,9 +12,9 @@
     }
 </style>
 @php
-    $create = null;
-    if(session('create')){
-          $create =  session('create');
+    $createCompany = null;
+    if(session('createCompany')){
+          $createCompany =  session('createCompany');
     }
 
 @endphp
@@ -37,7 +37,7 @@
         <div class="form-group">
             <label for="number_clearance" class="label_form">{{ __('home.Number clearance')}} <span class="text-danger">*</span></label>
             <input type="number" class="form-control" id="number_clearance" name="number_clearance"
-                   value="{{ $create ? $create['number_clearance'] : old('number_clearance', $exitsMember ? $exitsMember->number_clearance: '') }}"
+                   value="{{ $createCompany ? $createCompany['number_clearance'] : old('number_clearance', $exitsMember ? $exitsMember->number_clearance: '') }}"
                    placeholder="{{ __('home.Customs clearance number (enter numbers only)')}}" required>
         </div>
         <label for="email" class="label_form">{{ __('home.company information') }} <span
@@ -45,37 +45,37 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <input type="text" class="form-control" id="name_en" name="name_en"
-                       value="{{ $create ? $create['name_en'] : old('name_en', $exitsMember ? $exitsMember->name_en : '') }}"
+                       value="{{ $createCompany ? $createCompany['name_en'] : old('name_en', $exitsMember ? $exitsMember->name_en : '') }}"
                        placeholder="{{ __('home.English only') }}" required>
             </div>
             <div class="form-group col-md-6">
                 <input type="text" class="form-control" id="name_kr" name="name_kr"
-                       value="{{ $create ? $create['name_kr'] : old('name_kr', $exitsMember ? $exitsMember->name_kr :'') }}"
+                       value="{{ $createCompany ? $createCompany['name_kr'] : old('name_kr', $exitsMember ? $exitsMember->name_kr :'') }}"
                        placeholder="{{ __('home.Name Korea')}}">
             </div>
             <div class="form-group col-md-6">
                 <input type="text" class="form-control" id="homepage"
-                       value="{{ $create ? $create['homepage'] : old('homepage', $exitsMember ? $exitsMember->homepage : '') }}"
+                       value="{{ $createCompany ? $createCompany['homepage'] : old('homepage', $exitsMember ? $exitsMember->homepage : '') }}"
                        name="homepage" placeholder="{{ __('home.Home') }}" required>
             </div>
             <div class="form-group col-md-6">
                 <input type="number" class="form-control" id="number_business"
-                       value="{{ $create ? $create['number_business'] : old('number_business', $exitsMember ? $exitsMember->number_business :'') }}"
+                       value="{{ $createCompany ? $createCompany['number_business'] : old('number_business', $exitsMember ? $exitsMember->number_business :'') }}"
                        name="number_business" placeholder="{{ __('home.Business registration number') }}" required>
             </div>
             <div class="form-group col-md-6">
                 <input type="number" class="form-control" id="phone"
-                       value="{{ $create ? $create['phone'] : old('phone', $exitsMember ? $exitsMember->phone : '') }}"
+                       value="{{ $createCompany ? $createCompany['phone'] : old('phone', $exitsMember ? $exitsMember->phone : '') }}"
                        name="phone" placeholder="{{ __('home.Phone Number') }}" required>
             </div>
             <div class="form-group col-md-6">
                 <input type="number" class="form-control" id="fax"
-                       value="{{ $create ? $create['fax'] : old('fax', $exitsMember ? $exitsMember->fax :'') }}"
+                       value="{{ $createCompany ? $createCompany['fax'] : old('fax', $exitsMember ? $exitsMember->fax :'') }}"
                        name="fax" placeholder="{{ __('home.Fax') }}">
             </div>
             <div class="form-group col-md-12">
                 <input type="email" class="form-control" id="email"
-                       value="{{ $create ? $create['email'] : old('email', $exitsMember ? $exitsMember->email: '') }}"
+                       value="{{ $createCompany ? $createCompany['email'] : old('email', $exitsMember ? $exitsMember->email: '') }}"
                        name="email" placeholder="{{ __('home.email') }}">
             </div>
         </div>
@@ -121,7 +121,7 @@
             <div class="form-group col-md-12">
                 <input type="text" name="detail-address" id="detail-address"
                        class="form-control" placeholder="{{ __('home.Address detail') }}"
-                       value="{{ $create ? $create['address_en'] : old('address_en', $exitsMember ? $exitsMember->address_en : '') }}">
+                       value="{{ $createCompany ? $createCompany['address_en'] : old('address_en', $exitsMember ? $exitsMember->address_en : '') }}">
             </div>
             <input type="hidden" id="address_code" name="address_code">
         </div>
@@ -146,7 +146,7 @@
                 <div class="form-group col-md-12">
                     <input type="text" name="detail-address-1" id="detail-address-1"
                            class="form-control" placeholder="{{ __('home.Address detail') }}"
-                           value="{{ $create ? $create['address_kr'] : old('address_kr', $exitsMember ? $exitsMember->address_kr : '') }}">
+                           value="{{ $createCompany ? $createCompany['address_kr'] : old('address_kr', $exitsMember ? $exitsMember->address_kr : '') }}">
                 </div>
             </div>
         </div>
@@ -515,11 +515,9 @@
         getInput();
 
         @endif
-
-
         async function renderCategory2(value) {
             let url = '{{ route('get.category.one.parent') }}';
-
+            console.log( $('#inputArrayCategory').val())
             $.ajax({
                 url: url,
                 method: 'POST',

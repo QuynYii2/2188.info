@@ -518,7 +518,7 @@ class RegisterMemberController extends Controller
                 if ($success) {
                     alert()->success('Success', 'Success, Update success!');
                     if ($updateInfo) {
-                        return back()->with('create', $create);
+                        return back()->with('createCompany', $create);
                     }
                     return redirect(route('show.register.member.person.source', [
                         'member_id' => $exitsMember->id,
@@ -526,13 +526,13 @@ class RegisterMemberController extends Controller
                     ]));
                 }
                 alert()->error('Error', 'Error, Create error!');
-                return back()->with('create', $create);
+                return back()->with('createCompany', $create);
 
             } else {
                 $memberOld = MemberRegisterPersonSource::where('email', $email)->first();
                 if ($memberOld) {
                     alert()->error('Error', 'Error, Email in member used!');
-                    return back()->with('create', $create);
+                    return back()->with('createCompany', $create);
                 }
 
                 $success = MemberRegisterInfo::create($create);
@@ -549,10 +549,10 @@ class RegisterMemberController extends Controller
                 ]));
             }
             alert()->error('Error', 'Error, Create error!');
-            return back()->with('create', $create);
+            return back()->with('createCompany', $create);
         } catch (\Exception $exception) {
             alert()->error('Error', 'Error, Please try again!');
-            return back()->with('create', $create);
+            return back()->with('createCompany', $create);
         }
     }
 
@@ -799,6 +799,7 @@ class RegisterMemberController extends Controller
     /*Đăng kí thông tin người đại diện*/
     public function registerMemberPersonRepresent(Request $request)
     {
+        dd($request->all());
         $create = null;
         try {
             $fullName = $request->input('name');
@@ -1187,6 +1188,7 @@ class RegisterMemberController extends Controller
             }
         }
         $arrayCategory = $request->input('arrayCategory');
+        $arrayCategory = explode(',', $arrayCategory);
         $categories_one_parent = collect($categories_one_parent_array);
         return view('frontend.pages.registerMember.category.categories_one_parent', compact('categories_one_parent',
             'arrayCategory'));
@@ -1208,6 +1210,7 @@ class RegisterMemberController extends Controller
 
         $categories_two_parent = collect($categories_two_parent_array);
         $arrayCategory = $request->input('arrayCategory');
+        $arrayCategory = explode(',', $arrayCategory);
         return view('frontend.pages.registerMember.category.categories_two_parent',
             compact('categories_two_parent', 'arrayCategory'));
     }
