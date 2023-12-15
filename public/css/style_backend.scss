@@ -1686,7 +1686,6 @@ body {
           border-radius: 8px;
           border: 1px solid var(--White-Light, #F3F3F3);
           background: var(--White, #FFF);
-          box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
           padding-bottom: 10px;
         }
 
@@ -1722,169 +1721,49 @@ body {
   }
 
 
-  /* style profile */
 
-  #profile-info {
-    .rounded {
-      label {
+  &--right {
+    //background-color: #f6f6f6;
+    background: var(--White-Light, #F3F3F3);
+    min-height: 100vh;
+
+    .todo_list {
+      border-radius: 20px;
+      background: var(--White, #FFF);
+      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+      display: flex;
+      padding: 24px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+      margin-top: 40px;
+      background-color: #fff;
+      .title {
         color: #000;
-        font-size: 12px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
-      }
-
-      .star-red {
-        color: #e10600;
-      }
-
-      input, select, textarea {
-        border: 1px solid var(--Grey-light, #D6D6D6);
-        border-radius: 0;
-        color: var(--Grey, #A9A9A9);
-        font-size: 16px;
-        font-weight: 400;
-      }
-
-      input[type="radio"] {
-        accent-color: #F42621;
-        width: 16px;
-        height: 16px;
-      }
-
-      .form-check-label {
-        color: #000;
-        font-size: 18px;
+        font-size: 24px;
         font-style: normal;
         font-weight: 600;
         line-height: normal;
       }
-
-      .text-align__end {
-        text-align: end;
+      th, td, tr {
+        border: none;
       }
-
-      .experience {
-        span {
-          color: #000;
-          font-size: 16px;
+      .table {
+        th{
+          color: var(--Grey-Dark, #929292);
+          font-size: 12px;
           font-style: normal;
           font-weight: 400;
           line-height: normal;
         }
-      }
-
-      .list-group-flush {
-        .list-group-item {
-          span {
-            color: #000;
-            font-size: 20px;
-            font-style: normal;
-            font-weight: 500;
-            line-height: normal;
-          }
+        td {
+          color: #000;
+          font-size: 12px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: normal;
         }
       }
-
-      .ud-profile-btn {
-        display: flex;
-        width: 300px;
-        padding: 12px 16px;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        background: var(--secon-1, #F47621);
-        color: var(--White, #FFF);
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: normal;
-      }
-
-      .avatar-upload {
-        .avatar-edit {
-          .bg-img_input {
-            border-radius: 119px;
-            background: #F47621;
-          }
-        }
-      }
-    }
-
-  }
-
-  .modal-content {
-    form {
-      padding: 16px;
-    }
-
-    .modal-header {
-      color: #000;
-      font-size: 20px;
-      font-style: normal;
-      font-weight: 600;
-      line-height: normal;
-
-      span {
-        border: 1px #000 solid;
-        border-radius: 35px;
-        padding: 2px 8px;
-        width: 34px;
-        height: 34px;
-        display: flex;
-      }
-    }
-
-    .modal-body {
-      color: #000;
-      font-size: 12px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: normal;
-      padding: 8px 0;
-    }
-
-    .modal-footer {
-      border-top: 0;
-
-      .btn-primary {
-        background: var(--secon-1, #F47621);
-        display: flex;
-        width: 140px;
-        padding: 12px 16px;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .btn-secondary {
-        display: flex;
-        width: 140px;
-        padding: 12px 16px;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        background: var(--Grey-Medium, #BFBFBF);
-        color: var(--White, #FFF);
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: normal;
-      }
-    }
-  }
-
-
-  /* end style profile */
-  &--right {
-    //background-color: #f6f6f6;
-    min-height: 100vh;
-
-    .todo_list {
-      margin-top: 40px;
-      padding: 30px;
-      background-color: #fff;
-      box-shadow: 0 1px 4px 0 rgba(74, 74, 78, .12);
 
       .title {
         font-weight: 700;
@@ -3012,6 +2891,234 @@ body {
 .form_info-member-person {
 
 }
+
+
+.product-home-seller {
+  .form-group {
+    /* Ẩn checkbox mặc định */
+    input[type="checkbox"] {
+      display: none;
+    }
+
+    /* Thiết lập kích thước của khung trạng thái on/off */
+    input[type="checkbox"] + label {
+      display: inline-block;
+      width: 30px;
+      height: 15px;
+      background-color: #ccc;
+      border-radius: 15px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    /* Thiết lập màu sắc của trạng thái on */
+    input[type="checkbox"]:checked + label {
+      background-color: #4CAF50;
+    }
+
+    /* Thiết lập nút trượt (slider) */
+    input[type="checkbox"] + label::after {
+      content: '';
+      width: 15px;
+      height: 15px;
+      background-color: #fff;
+      border-radius: 50%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    /* Di chuyển nút trượt sang phải khi checkbox được chọn */
+    input[type="checkbox"]:checked + label::after {
+      transform: translateX(15px);
+    }
+
+  }
+
+
+  .title-sales {
+    color: #000;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    .title-small-sales {
+      color: #000;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+
+    }
+  }
+  .border-product_home {
+    margin-bottom: 22px;
+    border-radius: 10px;
+    border: 1px solid  #D6D6D6;
+    background: #FFF;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    .smail {
+      margin-top: 12px;
+      color: #929292;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+    }
+  }
+}
+
+#profile-info {
+  .rounded {
+    label {
+      color: #000;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+
+    .star-red {
+      color: #e10600;
+    }
+
+    input, select, textarea {
+      border: 1px solid var(--Grey-light, #D6D6D6);
+      border-radius: 0;
+      color: var(--Grey, #A9A9A9);
+      font-size: 16px;
+      font-weight: 400;
+    }
+
+    input[type="radio"] {
+      accent-color: #F42621;
+      width: 16px;
+      height: 16px;
+    }
+
+    .form-check-label {
+      color: #000;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+    }
+
+    .text-align__end {
+      text-align: end;
+    }
+
+    .experience {
+      span {
+        color: #000;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
+    }
+
+    .list-group-flush {
+      .list-group-item {
+        span {
+          color: #000;
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: normal;
+        }
+      }
+    }
+
+    .ud-profile-btn {
+      display: flex;
+      width: 300px;
+      padding: 12px 16px;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      background: var(--secon-1, #F47621);
+      color: var(--White, #FFF);
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+    }
+
+    .avatar-upload {
+      .avatar-edit {
+        .bg-img_input {
+          border-radius: 119px;
+          background: #F47621;
+        }
+      }
+    }
+  }
+
+}
+
+.modal-content {
+  form {
+    padding: 16px;
+  }
+
+  .modal-header {
+    color: #000;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+
+    span {
+      border: 1px #000 solid;
+      border-radius: 35px;
+      padding: 2px 8px;
+      width: 34px;
+      height: 34px;
+      display: flex;
+    }
+  }
+
+  .modal-body {
+    color: #000;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    padding: 8px 0;
+  }
+
+  .modal-footer {
+    border-top: 0;
+
+    .btn-primary {
+      background: var(--secon-1, #F47621);
+      display: flex;
+      width: 140px;
+      padding: 12px 16px;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-secondary {
+      display: flex;
+      width: 140px;
+      padding: 12px 16px;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      background: var(--Grey-Medium, #BFBFBF);
+      color: var(--White, #FFF);
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+    }
+  }
+}
+
 /* end profile account */
 
 
