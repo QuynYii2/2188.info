@@ -593,7 +593,11 @@
                                 <img src="https://vn4u.vn/wp-content/uploads/2023/09/logo-co-tinh-nhat-quan-2.png"
                                      alt="" class="logo-shop">
                                 <div class="shop-name">
-                                    Công ty IL Global
+                                    @if($company)
+                                        {{ $company->name }}
+                                    @else
+                                        New company
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -639,12 +643,11 @@
                                 <span>Suppliers are audited</span>
                             </div>
                             <div class="rating-shop">
-                                <i class="fa-solid fa-star" style="color: #fac325"></i>
-                                <i class="fa-solid fa-star" style="color: #fac325"></i>
-                                <i class="fa-solid fa-star" style="color: #fac325"></i>
-                                <i class="fa-solid fa-star" style="color: #ccc"></i>
-                                <i class="fa-solid fa-star" style="color: #ccc"></i>
-                                <span class="total-rating"> (4,5)</span>
+                                @for($i=1; $i < 6; $i++)
+                                    <i class="fa-solid fa-star"
+                                       style="color: {{ $i <= $calcStar ? '#fac325' : '#ccc' }}"></i>
+                                @endfor
+                                <span class="total-rating"> ({{ $calcStar }})</span>
                             </div>
                         </div>
                         <div class="description-shop m-2">
@@ -693,24 +696,23 @@
                             <img src="https://www.w3schools.com/howto/img_avatar.png" alt="" class="avt">
                             <div class="show-info">
                                 <div class="name">
-                                    Quỳnh Hương
+                                    {{ $productItem->user->name }}
                                 </div>
                                 <div class="rating-shop">
-                                    <i class="fa-solid fa-star" style="color: #fac325"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325"></i>
-                                    <i class="fa-solid fa-star" style="color: #ccc"></i>
-                                    <i class="fa-solid fa-star" style="color: #ccc"></i>
-                                    <span class="total-rating"> (4,5)</span>
+                                    @for($i=1; $i < 6; $i++)
+                                        <i class="fa-solid fa-star"
+                                           style="color: {{ $i <= $calcStar ? '#fac325' : '#ccc' }}"></i>
+                                    @endfor
+                                    <span class="total-rating"> ({{ $calcStar }})</span>
                                 </div>
                             </div>
                         </div>
                         <div class="product-category w-25">
                             <div class="product">
-                                <span>Products: 120</span>
+                                <span>Products: {{ $products->count() }}</span>
                             </div>
                             <div class="category">
-                                <span class="title-category">Category: </span> <span class="value-category">Mobile Phone, Sports</span>
+                                <span class="title-category">Category: </span> <span class="value-category">{{ $nameCategory }}</span>
                             </div>
                         </div>
                     </div>
@@ -792,14 +794,13 @@
                                 Nhận xét đánh giá trung bình
                             </div>
                             <div class="point">
-                                4.9
+                                {{ number_format($calcStar,1) }}
                             </div>
                             <div class="rating">
-                                <i class="fa-solid fa-star" style="color: #fac325"></i>
-                                <i class="fa-solid fa-star" style="color: #fac325"></i>
-                                <i class="fa-solid fa-star" style="color: #fac325"></i>
-                                <i class="fa-solid fa-star" style="color: #ccc"></i>
-                                <i class="fa-solid fa-star" style="color: #ccc"></i>
+                                @for($i=1; $i < 6; $i++)
+                                    <i class="fa-solid fa-star"
+                                       style="color: {{ $i <= $calcStar ? '#fac325' : '#ccc' }}"></i>
+                                @endfor
                             </div>
                         </div>
                         <div class="review-detail">
@@ -809,28 +810,28 @@
                             <div class="show-review  float-right">
                                 <div class="range">
                                     <label for="vol">5 sao</label>
-                                    <input type="range" id="vol" name="vol" min="0" max="100" disabled value="90">
-                                    <span>89.8</span>
+                                    <input type="range" id="vol" name="vol" min="0" max="100" disabled value="{{ $arrayStar[4] }}">
+                                    <span>{{ $arrayStar[4] }}</span>
                                 </div>
                                 <div class="range">
                                     <label for="vol">4 sao</label>
-                                    <input type="range" id="vol" name="vol" min="0" max="100" disabled value="60">
-                                    <span>60.0</span>
+                                    <input type="range" id="vol" name="vol" min="0" max="100" disabled value="{{ $arrayStar[3] }}">
+                                    <span>{{ $arrayStar[3] }}</span>
                                 </div>
                                 <div class="range">
                                     <label for="vol">3 sao</label>
-                                    <input type="range" id="vol" name="vol" min="0" max="100" disabled value="10">
-                                    <span>10.0</span>
+                                    <input type="range" id="vol" name="vol" min="0" max="100" disabled value="{{ $arrayStar[2] }}">
+                                    <span>{{ $arrayStar[2] }}</span>
                                 </div>
                                 <div class="range">
                                     <label for="vol">2 sao</label>
-                                    <input type="range" id="vol" name="vol" min="0" max="100" disabled value="1">
-                                    <span>0.1</span>
+                                    <input type="range" id="vol" name="vol" min="0" max="100" disabled value="{{ $arrayStar[1] }}">
+                                    <span>{{ $arrayStar[1] }}</span>
                                 </div>
                                 <div class="range">
                                     <label for="vol">1 sao</label>
-                                    <input type="range" id="vol" name="vol" min="0" max="100" disabled value="3">
-                                    <span>0.3</span>
+                                    <input type="range" id="vol" name="vol" min="0" max="100" disabled value="{{ $arrayStar[0] }}">
+                                    <span>{{ $arrayStar[0] }}</span>
                                 </div>
                             </div>
                         </div>
@@ -1101,7 +1102,8 @@
                             </div>
                             <div class="email-item">
                                 <label for="email">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
+                                <input type="email" class="form-control" id="email" name="email"
+                                       placeholder="name@example.com">
                             </div>
                         </div>
                         <div class="d-none">

@@ -40,7 +40,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         (new HomeController())->getLocale($request);
-        $categories = Category::where('status', CategoryStatus::ACTIVE)->paginate(10);
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->where('parent_id', null)->get();
         $isAdmin = (new HomeController())->checkAdmin();
         if ($isAdmin) {
             $products = Product::where('status', '!=', ProductStatus::DELETED)->orderByDesc('id')->paginate(10);
@@ -224,6 +224,454 @@ class ProductController extends Controller
         return view('backend/products/views', compact('products', 'isAdmin', 'listUserId'));
     }
 
+    public function show($id)
+    {
+        //
+    }
+
+    public function edit(Request $request, $id)
+    {
+        (new HomeController())->getLocale($request);
+        $product = Product::findOrFail($id);
+        $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', \Illuminate\Support\Facades\Auth::user()->id]])->get();
+        $att_of_product = DB::table('product_attribute')->where('product_id', $product->id)->get();
+        $productDetails = Variation::where([['product_id', $id], ['status', VariationStatus::ACTIVE]])->get();
+        $price_sales = ProductSale::where('product_id', $id)->get();
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
+        $registerCate = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+        $registerCategories = MemberRegisterInfo::where('id', $registerCate->member_id)->first();
+        $categoriesRegister = explode(',', $registerCategories->category_id);
+
+        session()->forget('att_of_product');
+        session()->push('att_of_product', $att_of_product);
+
+        return view('backend.products.edit', compact(
+            'categories',
+            'att_of_product',
+            'attributes',
+            'price_sales',
+            'product',
+            'productDetails',
+            'categoriesRegister'));
+
+    }
+
+    public function destroy(Product $product)
+    {
+        try {
+            $product->status = ProductStatus::DELETED;
+            $success = $product->save();
+            if ($success) {
+                alert()->success('Success', 'Product đã được xóa thành công!');
+                return redirect()->route('seller.products.index');
+            }
+            alert()->error('Error', 'Không thể xoá sản phẩm!');
+            return back();
+        } catch (\Exception $exception) {
+            alert()->error('Error', 'Error please try again!');
+            return back();
+        }
+    }
+
+    public function setHotProduct($id)
+    {
+        $user = User::find(Auth::id());
+        $hasPermission = $user->permissions()->wherePivot('permission_id', 9)->where('status', PermissionUserStatus::ACTIVE)->get();
+        if ($hasPermission->isNotEmpty() || checkAdmin()) {
+            try {
+                $product = Product::find($id);
+                if ($product->hot == 1) {
+                    $product->hot = 0;
+                } else {
+                    $product->hot = 1;
+                }
+                $product->save();
+                return $product;
+            } catch (\Exception $exception) {
+                return $exception;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public function setFeatureProduct($id)
+    {
+        $user = User::find(Auth::id());
+        $hasPermission = $user->permissions()->wherePivot('permission_id', 10)->where('status', PermissionUserStatus::ACTIVE)->get();
+        if ($hasPermission->isNotEmpty() || checkAdmin()) {
+            try {
+                $product = Product::find($id);
+                if ($product->feature == 1) {
+                    $product->feature = 0;
+                } else {
+                    $product->feature = 1;
+                }
+                $product->save();
+                return $product;
+            } catch (\Exception $exception) {
+                return $exception;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public function saveAttribute(Request $request)
+    {
+        try {
+            $newArray = $this->getAttributeProperty($request);
+
+            $testArray = null;
+            if ($newArray) {
+                foreach ($newArray as $myItem) {
+                    $key = explode("-", $myItem);
+                    $demoArray = null;
+                    for ($j = 1; $j < count($key); $j++) {
+                        $demoArray[] = $key[0] . '-' . $key[$j];
+                    }
+                    $testArray[] = $demoArray;
+                }
+            }
+            $testArray = $this->getArray($testArray);
+            session()->forget(['testArray', 'sourceArray']);
+            session()->push('sourceArray', $newArray);
+            session()->push('testArray', $testArray);
+            if (!$testArray || !$newArray) {
+                return view('backend.products.attribute-property.table-none-attribute');
+            }
+            return view('backend.products.attribute-property.table-attribute');
+        } catch (Exception $exception) {
+            return response($exception, 400);
+        }
+    }
+
+    private function getAttributeProperty(Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        $proAtt = $request->input('attribute_property');
+
+        if ($proAtt === null) {
+            return null;
+        }
+
+        $newArray = [];
+
+        $elements = explode(',', $proAtt);
+
+        foreach ($elements as $element) {
+            $parts = explode('-', $element);
+            $prefix = $parts[0];
+            $value = $parts[1];
+
+            if (!isset($newArray[$prefix])) {
+                $newArray[$prefix] = $prefix . '-' . $value;
+            } else {
+
+                $newArray[$prefix] .= '-' . $value;
+            }
+        }
+
+        $newArray = array_values($newArray);
+
+        return $newArray;
+    }
+
+    private function getArray($array)
+    {
+        if ($array) {
+            if (count($array) == 1) {
+                return $array;
+            }
+            $newArray = $array[0];
+            for ($i = 1; $i < count($array); $i++) {
+                $newArray = $this->mergeArray($newArray, $array[$i]);
+            }
+            return $newArray;
+        } else {
+            return null;
+        }
+    }
+
+    private function mergeArray($array1, $array2)
+    {
+        $arrayList = [];
+        for ($j = 0; $j < count($array1); $j++) {
+            for ($z = 0; $z < count($array2); $z++) {
+                $arrayList[] = $array1[$j] . "," . $array2[$z];
+            }
+        }
+        return $arrayList;
+    }
+
+    public function removeVariation($id)
+    {
+        try {
+            $variable = Variation::where('id', $id)->first();
+            if ($variable) {
+                $carts = Cart::where('product_id', $variable->product_id)->where('values', $variable->variation)->get();
+                foreach ($carts as $cart) {
+                    $cart->status = CartStatus::DELETED;
+                    $cart->save();
+                }
+                $variable->status = VariationStatus::DELETED;
+
+                $moreVariable = Variation::where('product_id', $variable->product_id)
+                    ->where('id', '!=', $id)
+                    ->where('status', VariationStatus::ACTIVE)
+                    ->first();
+
+                if ($moreVariable) {
+                    $item = $variable->variation;
+                    $arrayItems = explode(',', $item);
+                    foreach ($arrayItems as $value) {
+                        $arrayValue = explode('-', $value);
+                        $product_attribute = DB::table('product_attribute')
+                            ->where('product_id', $variable->product_id)
+                            ->where('attribute_id', $arrayValue[0])
+                            ->first();
+
+                        if ($product_attribute) {
+                            if (count($arrayItems) == 1) {
+                                DB::table('product_attribute')
+                                    ->where('product_id', $variable->product_id)
+                                    ->where('attribute_id', $arrayValue[0])
+                                    ->delete();
+                            } else {
+                                $property = $product_attribute->value;
+                                $arrayProperty = explode(',', $property);
+                                if (count($arrayProperty) > 1) {
+                                    $key = array_search($arrayValue[1], $arrayProperty);
+                                    if ($key !== false) {
+                                        unset($arrayProperty[$key]);
+                                    }
+                                }
+                                DB::table('product_attribute')
+                                    ->where('product_id', $variable->product_id)
+                                    ->where('attribute_id', $arrayValue[0])
+                                    ->update(['value' => implode(',', $arrayProperty)]);
+                            }
+                        }
+                    }
+                } else {
+                    DB::table('product_attribute')->where('product_id', $variable->product_id)->delete();
+                }
+                $success = $variable->save();
+                if ($success) {
+                    alert()->success('Success', 'Variable đã được xóa thành công!');
+                    return back();
+                }
+            }
+
+            alert()->error('Error', 'Không thể xoá variable!');
+            return back();
+        } catch (\Exception $exception) {
+            alert()->error('Error', 'Error please try again!');
+            return back();
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        (new HomeController())->getLocale($request);
+        try {
+            $product = Product::findOrFail($id);
+
+            $nameValue = $request->input('name');
+            $descriptionValue = $request->input('description');
+            $shortDescriptionValue = $request->input('short_description');
+            $product->category_id = $request->input('category_id');
+
+            $arrThumbnail = $request->input('imgThumbnail');
+            $arrGallery = $request->input('imgGallery');
+
+            if (is_array($arrThumbnail)) {
+                if ($arrThumbnail[0]) {
+                    $product->thumbnail = $this->handleGallery($request->input('imgThumbnail'));
+                }
+            }
+            if (is_array($arrGallery)) {
+                if ($arrGallery[0]) {
+                    $product->gallery = $this->handleGallery($request->input('imgGallery'));
+                }
+            }
+
+            $number = $request->input('count');
+            $isNew = $request->input('attribute_property');
+
+            ProductSale::where('product_id', '=', $product->id)->delete();
+
+            $product->description = $descriptionValue ?? $product->description;
+            $product->short_description = $shortDescriptionValue;
+
+            $product->name = $nameValue;
+            $product->slug = \Str::slug($request->input('name'));
+
+            $product->old_price = $request->input('giaban');
+
+            if ($request->input('giakhuyenmai')) {
+                $product->price = $request->input('giakhuyenmai');
+            } else {
+                $product->price = $request->input('giaban');
+            }
+
+            $product->qty = $request->input('qty');
+
+
+            $product->origin = $request->input('origin');
+            $product->min = $request->input('min');
+
+            $ld = new TranslateController();
+
+            $product->name_vi = $ld->translateText($nameValue, 'vi');
+            $product->name_ja = $ld->translateText($nameValue, 'ja');
+            $product->name_ko = $ld->translateText($nameValue, 'ko');
+            $product->name_en = $ld->translateText($nameValue, 'en');
+            $product->name_zh = $ld->translateText($nameValue, 'zh-CN');
+
+            $product->description_vi = $ld->translateText($descriptionValue, 'vi');
+            $product->description_ja = $ld->translateText($descriptionValue, 'ja');
+            $product->description_ko = $ld->translateText($descriptionValue, 'ko');
+            $product->description_en = $ld->translateText($descriptionValue, 'en');
+            $product->description_zh = $ld->translateText($descriptionValue, 'zh-CN');
+
+            $product->short_description_vi = $ld->translateText($shortDescriptionValue, 'vi');
+            $product->short_description_ja = $ld->translateText($shortDescriptionValue, 'ja');
+            $product->short_description_ko = $ld->translateText($shortDescriptionValue, 'ko');
+            $product->short_description_en = $ld->translateText($shortDescriptionValue, 'en');
+            $product->short_description_zh = $ld->translateText($shortDescriptionValue, 'zh-CN');
+
+
+            $hot = $request->input('hot_product');
+            $feature = $request->input('feature_product');
+
+            if ($hot) {
+                $product->hot = 1;
+            } else {
+                $product->hot = 0;
+            }
+
+            if ($feature) {
+                $product->feature = 1;
+            } else {
+                $product->feature = 0;
+            }
+
+            $starts = $request->input('starts');
+            if ($starts) {
+                $ends = $request->input('ends');
+
+                $sales = $request->input('sales');
+                $days = $request->input('days');
+
+                $ships = $request->input('ships');
+
+                $counts = count($starts);
+                for ($i = 0; $i < $counts; $i++) {
+                    $newProductSale = null;
+                    if (!$starts[$i]) {
+                        $starts[$i] = $product->min;
+                    }
+                    if (!$ends[$i]) {
+                        $quantity = $starts[$i];
+                    } else {
+                        $quantity = $starts[$i] . '-' . $ends[$i];
+                    }
+                    $newProductSale = [
+                        'user_id' => $product->user_id,
+                        'product_id' => $product->id,
+                        'quantity' => $quantity,
+                        'sales' => $sales[$i],
+                        'days' => $days[$i],
+                        'ship' => $ships[$i],
+                    ];
+                    ProductSale::create($newProductSale);
+                }
+            }
+
+            if ($isNew) {
+                $newArray = $this->getAttributeProperty($request);
+
+                if ($request->hasFile('thumbnail')) {
+                    $thumbnail = $request->file('thumbnail');
+                    $thumbnailPath = $thumbnail->store('thumbnails', 'public');
+                    $product->thumbnail = $thumbnailPath;
+                }
+
+                $arrayProduct = [];
+                if ($number) {
+                    for ($i = 1; $i < $number + 1; $i++) {
+                        $newVariationData = [];
+
+                        if ($request->hasFile('thumbnail' . $i)) {
+                            $thumbnail = $request->file('thumbnail' . $i);
+                            $thumbnailPath = $thumbnail->store('thumbnails', 'public');
+                            $newVariationData['thumbnail'] = $thumbnailPath;
+                        }
+
+                        $newVariationData['price'] = $request->input('price' . $i);
+                        $newVariationData['old_price'] = $request->input('old_price' . $i);
+                        $attPro = $request->input('attribute_property' . $i);
+                        $newVariationData['variation'] = $attPro;
+
+                        $newVariationData['product_id'] = $product->id;
+                        $newVariationData['user_id'] = Auth::user()->id;
+                        $newVariationData['status'] = VariationStatus::ACTIVE;
+                        $newVariationData['description'] = $request->input('description' . $i);
+                        $newVariationData['quantity'] = $request->input('quantity' . $i);
+
+                        if (!$request->input('price' . $i) || $request->input('old_price' . $i) < $request->input('price' . $i)) {
+                            $newVariationData['price'] = $request->input('old_price' . $i);
+                        }
+
+                        $oldVariable = Variation::where('product_id', $product->id)
+                            ->where('variation', $attPro)
+                            ->where('status', VariationStatus::ACTIVE)
+                            ->first();
+                        if ($oldVariable) {
+                            $oldVariable->thumbnail = $newVariationData['thumbnail'];
+                            $oldVariable->price = $newVariationData['price'];
+                            $oldVariable->old_price = $newVariationData['old_price'];
+                            $oldVariable->description = $newVariationData['description'];
+                            $oldVariable->quantity = $newVariationData['quantity'];
+                            $oldVariable->save();
+                        } else {
+                            $arrayProduct[] = $newVariationData;
+                        }
+                    }
+                    Variation::insert($arrayProduct);
+                    $this->createAttributeProduct($product, $newArray);
+                }
+                $updateProduct = $product->save();
+            }
+            $updateProduct = $this->updateProduct($product, $request, $number);
+
+            if ($updateProduct) {
+                alert()->success('Success', 'Cập nhật thành công.');
+                return redirect()->route('seller.products.index');
+            } else {
+                alert()->error('Error', 'Cập nhật không thành công.');
+                return back();
+            }
+        } catch (\Exception $exception) {
+            dd($exception);
+            alert()->error('Error', 'Error, please try again');
+            return back();
+        }
+    }
+
+    public function handleGallery($input)
+    {
+        $pattern = '/\/storage\/([^,"]+),?/';
+        $matches = array();
+        $arrResult = array();
+        foreach ($input as $item) {
+            preg_match_all($pattern, $item, $matches);
+            array_push($arrResult, $matches[1]);
+        }
+        return implode(',', $arrResult[0]);
+    }
+
     public function create(Request $request)
     {
         (new HomeController())->getLocale($request);
@@ -385,525 +833,6 @@ class ProductController extends Controller
         }
     }
 
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit(Request $request, $id)
-    {
-        (new HomeController())->getLocale($request);
-        $product = Product::findOrFail($id);
-        $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', \Illuminate\Support\Facades\Auth::user()->id]])->get();
-        $att_of_product = DB::table('product_attribute')->where('product_id', $product->id)->get();
-        $productDetails = Variation::where([['product_id', $id], ['status', VariationStatus::ACTIVE]])->get();
-        $price_sales = ProductSale::where('product_id', $id)->get();
-        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
-        $registerCate = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
-        $registerCategories = MemberRegisterInfo::where('id', $registerCate->member_id)->first();
-        $categoriesRegister = explode(',', $registerCategories->category_id);
-
-        session()->forget('att_of_product');
-        session()->push('att_of_product', $att_of_product);
-
-        return view('backend.products.edit', compact(
-            'categories',
-            'att_of_product',
-            'attributes',
-            'price_sales',
-            'product',
-            'productDetails',
-            'categoriesRegister'));
-
-    }
-
-    public function update(Request $request, $id)
-    {
-        (new HomeController())->getLocale($request);
-        try {
-            $product = Product::findOrFail($id);
-
-            $nameValue = $request->input('name');
-            $descriptionValue = $request->input('description');
-            $shortDescriptionValue = $request->input('short_description');
-            $product->category_id = $request->input('category_id');
-
-            $arrThumbnail = $request->input('imgThumbnail');
-            $arrGallery = $request->input('imgGallery');
-
-            if ($arrThumbnail[0]) {
-                $product->thumbnail = $this->handleGallery($request->input('imgThumbnail'));
-            }
-            if ($arrGallery[0]) {
-                $product->gallery = $this->handleGallery($request->input('imgGallery'));
-            }
-
-            $number = $request->input('count');
-            $isNew = $request->input('attribute_property');
-
-            ProductSale::where('product_id', '=', $product->id)->delete();
-
-            $product->description = $descriptionValue;
-            $product->short_description = $shortDescriptionValue;
-
-            $product->name = $nameValue;
-            $product->slug = \Str::slug($request->input('name'));
-
-            $product->old_price = $request->input('giaban');
-
-            if ($request->input('giakhuyenmai')) {
-                $product->price = $request->input('giakhuyenmai');
-            } else {
-                $product->price = $request->input('giaban');
-            }
-
-            $product->qty = $request->input('qty');
-
-
-            $product->origin = $request->input('origin');
-            $product->min = $request->input('min');
-
-            $ld = new TranslateController();
-
-            $product->name_vi = $ld->translateText($nameValue, 'vi');
-            $product->name_ja = $ld->translateText($nameValue, 'ja');
-            $product->name_ko = $ld->translateText($nameValue, 'ko');
-            $product->name_en = $ld->translateText($nameValue, 'en');
-            $product->name_zh = $ld->translateText($nameValue, 'zh-CN');
-
-            $product->description_vi = $ld->translateText($descriptionValue, 'vi');
-            $product->description_ja = $ld->translateText($descriptionValue, 'ja');
-            $product->description_ko = $ld->translateText($descriptionValue, 'ko');
-            $product->description_en = $ld->translateText($descriptionValue, 'en');
-            $product->description_zh = $ld->translateText($descriptionValue, 'zh-CN');
-
-            $product->short_description_vi = $ld->translateText($shortDescriptionValue, 'vi');
-            $product->short_description_ja = $ld->translateText($shortDescriptionValue, 'ja');
-            $product->short_description_ko = $ld->translateText($shortDescriptionValue, 'ko');
-            $product->short_description_en = $ld->translateText($shortDescriptionValue, 'en');
-            $product->short_description_zh = $ld->translateText($shortDescriptionValue, 'zh-CN');
-
-
-            $hot = $request->input('hot_product');
-            $feature = $request->input('feature_product');
-
-            if ($hot) {
-                $product->hot = 1;
-            } else {
-                $product->hot = 0;
-            }
-
-            if ($feature) {
-                $product->feature = 1;
-            } else {
-                $product->feature = 0;
-            }
-
-            $starts = $request->input('starts');
-            if ($starts) {
-                $ends = $request->input('ends');
-
-                $sales = $request->input('sales');
-                $days = $request->input('days');
-
-                $ships = $request->input('ships');
-
-                $counts = count($starts);
-                for ($i = 0; $i < $counts; $i++) {
-                    $newProductSale = null;
-                    if (!$starts[$i]) {
-                        $starts[$i] = $product->min;
-                    }
-                    if (!$ends[$i]) {
-                        $quantity = $starts[$i];
-                    } else {
-                        $quantity = $starts[$i] . '-' . $ends[$i];
-                    }
-                    $newProductSale = [
-                        'user_id' => $product->user_id,
-                        'product_id' => $product->id,
-                        'quantity' => $quantity,
-                        'sales' => $sales[$i],
-                        'days' => $days[$i],
-                        'ship' => $ships[$i],
-                    ];
-                    ProductSale::create($newProductSale);
-                }
-            }
-
-            if ($isNew) {
-                $newArray = $this->getAttributeProperty($request);
-
-                if ($request->hasFile('thumbnail')) {
-                    $thumbnail = $request->file('thumbnail');
-                    $thumbnailPath = $thumbnail->store('thumbnails', 'public');
-                    $product->thumbnail = $thumbnailPath;
-                }
-
-                $arrayProduct = [];
-                if ($number) {
-                    for ($i = 1; $i < $number + 1; $i++) {
-                        $newVariationData = [];
-
-                        if ($request->hasFile('thumbnail' . $i)) {
-                            $thumbnail = $request->file('thumbnail' . $i);
-                            $thumbnailPath = $thumbnail->store('thumbnails', 'public');
-                            $newVariationData['thumbnail'] = $thumbnailPath;
-                        }
-
-                        $newVariationData['price'] = $request->input('price' . $i);
-                        $newVariationData['old_price'] = $request->input('old_price' . $i);
-                        $attPro = $request->input('attribute_property' . $i);
-                        $newVariationData['variation'] = $attPro;
-
-                        $newVariationData['product_id'] = $product->id;
-                        $newVariationData['user_id'] = Auth::user()->id;
-                        $newVariationData['status'] = VariationStatus::ACTIVE;
-                        $newVariationData['description'] = $request->input('description' . $i);
-                        $newVariationData['quantity'] = $request->input('quantity' . $i);
-
-                        if (!$request->input('price' . $i) || $request->input('old_price' . $i) < $request->input('price' . $i)) {
-                            $newVariationData['price'] = $request->input('old_price' . $i);
-                        }
-
-                        $oldVariable = Variation::where('product_id', $product->id)
-                            ->where('variation', $attPro)
-                            ->where('status', VariationStatus::ACTIVE)
-                            ->first();
-                        if ($oldVariable) {
-                            $oldVariable->thumbnail = $newVariationData['thumbnail'];
-                            $oldVariable->price = $newVariationData['price'];
-                            $oldVariable->old_price = $newVariationData['old_price'];
-                            $oldVariable->description = $newVariationData['description'];
-                            $oldVariable->quantity = $newVariationData['quantity'];
-                            $oldVariable->save();
-                        } else {
-                            $arrayProduct[] = $newVariationData;
-                        }
-                    }
-                    Variation::insert($arrayProduct);
-                    $this->createAttributeProduct($product, $newArray);
-                }
-                $updateProduct = $product->save();
-            }
-            $updateProduct = $this->updateProduct($product, $request, $number);
-
-            if ($updateProduct) {
-                alert()->success('Success', 'Cập nhật thành công.');
-                return redirect()->route('seller.products.index');
-            } else {
-                alert()->error('Error', 'Cập nhật không thành công.');
-                return back();
-            }
-        } catch (\Exception $exception) {
-            alert()->error('Error', 'Error, please try again');
-            return back();
-        }
-    }
-
-    public function handleGallery($input)
-    {
-        $pattern = '/\/storage\/([^,"]+),?/';
-        $matches = array();
-        $arrResult = array();
-        foreach ($input as $item) {
-            preg_match_all($pattern, $item, $matches);
-            array_push($arrResult, $matches[1]);
-        }
-        return implode(',', $arrResult[0]);
-    }
-
-    public function destroy(Product $product)
-    {
-        try {
-            $product->status = ProductStatus::DELETED;
-            $success = $product->save();
-            if ($success) {
-                alert()->success('Success', 'Product đã được xóa thành công!');
-                return redirect()->route('seller.products.index');
-            }
-            alert()->error('Error', 'Không thể xoá sản phẩm!');
-            return back();
-        } catch (\Exception $exception) {
-            alert()->error('Error', 'Error please try again!');
-            return back();
-        }
-    }
-
-    public function setHotProduct($id)
-    {
-        $user = User::find(Auth::id());
-        $hasPermission = $user->permissions()->wherePivot('permission_id', 9)->where('status', PermissionUserStatus::ACTIVE)->get();
-        if ($hasPermission->isNotEmpty() || checkAdmin()) {
-            try {
-                $product = Product::find($id);
-                if ($product->hot == 1) {
-                    $product->hot = 0;
-                } else {
-                    $product->hot = 1;
-                }
-                $product->save();
-                return $product;
-            } catch (\Exception $exception) {
-                return $exception;
-            }
-        } else {
-            return false;
-        }
-    }
-
-    public function setFeatureProduct($id)
-    {
-        $user = User::find(Auth::id());
-        $hasPermission = $user->permissions()->wherePivot('permission_id', 10)->where('status', PermissionUserStatus::ACTIVE)->get();
-        if ($hasPermission->isNotEmpty() || checkAdmin()) {
-            try {
-                $product = Product::find($id);
-                if ($product->feature == 1) {
-                    $product->feature = 0;
-                } else {
-                    $product->feature = 1;
-                }
-                $product->save();
-                return $product;
-            } catch (\Exception $exception) {
-                return $exception;
-            }
-        } else {
-            return false;
-        }
-    }
-
-    public function saveAttribute(Request $request)
-    {
-        try {
-            $newArray = $this->getAttributeProperty($request);
-
-            $testArray = null;
-            if ($newArray) {
-                foreach ($newArray as $myItem) {
-                    $key = explode("-", $myItem);
-                    $demoArray = null;
-                    for ($j = 1; $j < count($key); $j++) {
-                        $demoArray[] = $key[0] . '-' . $key[$j];
-                    }
-                    $testArray[] = $demoArray;
-                }
-            }
-            $testArray = $this->getArray($testArray);
-            session()->forget(['testArray', 'sourceArray']);
-            session()->push('sourceArray', $newArray);
-            session()->push('testArray', $testArray);
-            if (!$testArray || !$newArray) {
-                return view('backend.products.attribute-property.table-none-attribute');
-            }
-            return view('backend.products.attribute-property.table-attribute');
-        } catch (Exception $exception) {
-            return response($exception, 400);
-        }
-    }
-
-    private function updateProduct($product, $request, $number)
-    {
-        if ($request->hasFile('thumbnail')) {
-            $thumbnail = $request->file('thumbnail');
-            $thumbnailPath = $thumbnail->store('thumbnails', 'public');
-            $product->thumbnail = $thumbnailPath;
-        }
-
-        $arrayIDs = $this->getCategory($request);
-        if (!$arrayIDs || count($arrayIDs) == 0) {
-            $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
-            $category = $categories[0];
-            $arrayIDs[] = $category->id;
-        }
-        $listIDs = implode(',', $arrayIDs);
-        $product->category_id = $arrayIDs[0];
-
-        $product->list_category = $listIDs;
-
-        if ($number) {
-            if ($number > 1) {
-                for ($i = 1; $i < $number + 1; $i++) {
-                    $id = $request->input('id' . $i);
-
-                    $newVariationData = Variation::find($id);
-
-                    $newVariationData->quantity = $request->input('quantity' . $id);
-
-                    if ($request->hasFile('thumbnail' . $id)) {
-                        $thumbnail = $request->file('thumbnail' . $id);
-                        $thumbnailPath = $thumbnail->store('thumbnails', 'public');
-                        $newVariationData->thumbnail = $thumbnailPath;
-                    }
-
-                    $newVariationData->price = $request->input('price' . $id);
-                    $newVariationData->old_price = $request->input('old_price' . $id);
-
-                    if (!$request->input('price' . $id) || $request->input('old_price' . $id) < $request->input('price' . $id)) {
-                        $newVariationData->price = $request->input('old_price' . $id);
-                    }
-
-                    $newVariationData->description = $request->input('description' . $id);
-
-                    $newVariationData->save();
-                }
-            } else {
-                $newVariationData = Variation::where([['product_id', $product->id], ['status', VariationStatus::ACTIVE]])->first();
-
-                if (!$newVariationData) {
-                    $newVariationData = new Variation();
-                    $newVariationData->product_id = $product->id;
-                    $newVariationData->user_id = Auth::user()->id;
-                    $newVariationData->variation = 0;
-                    $newVariationData->quantity = 100;
-                }
-
-                $newVariationData->quantity = $request->input('quantity' . $newVariationData->id);
-
-                if ($request->hasFile('thumbnail' . $newVariationData->id)) {
-                    $thumbnail = $request->file('thumbnail' . $newVariationData->id);
-                    $thumbnailPath = $thumbnail->store('thumbnails', 'public');
-                    $newVariationData->thumbnail = $thumbnailPath;
-                }
-
-                $newVariationData->price = $request->input('price' . $newVariationData->id);
-                $newVariationData->old_price = $request->input('old_price' . $newVariationData->id);
-
-                if (!$request->input('price' . $newVariationData->id) || $request->input('old_price' . $newVariationData->id) < $request->input('price' . $newVariationData->id)) {
-                    $newVariationData->price = $request->input('old_price' . $newVariationData->id);
-                }
-
-                $newVariationData->description = $request->input('description' . $newVariationData->id);
-
-                $newVariationData->save();
-            }
-        }
-
-        $success = $product->save();
-
-        return $success;
-    }
-
-    public function removeVariation($id)
-    {
-        try {
-            $variable = Variation::where('id', $id)->first();
-            if ($variable) {
-                $carts = Cart::where('product_id', $variable->product_id)->where('values', $variable->variation)->get();
-                foreach ($carts as $cart) {
-                    $cart->status = CartStatus::DELETED;
-                    $cart->save();
-                }
-                $variable->status = VariationStatus::DELETED;
-
-                $moreVariable = Variation::where('product_id', $variable->product_id)
-                    ->where('id', '!=', $id)
-                    ->where('status', VariationStatus::ACTIVE)
-                    ->first();
-
-                if ($moreVariable) {
-                    $item = $variable->variation;
-                    $arrayItems = explode(',', $item);
-                    foreach ($arrayItems as $value) {
-                        $arrayValue = explode('-', $value);
-                        $product_attribute = DB::table('product_attribute')
-                            ->where('product_id', $variable->product_id)
-                            ->where('attribute_id', $arrayValue[0])
-                            ->first();
-
-                        if ($product_attribute) {
-                            if (count($arrayItems) == 1) {
-                                DB::table('product_attribute')
-                                    ->where('product_id', $variable->product_id)
-                                    ->where('attribute_id', $arrayValue[0])
-                                    ->delete();
-                            } else {
-                                $property = $product_attribute->value;
-                                $arrayProperty = explode(',', $property);
-                                if (count($arrayProperty) > 1) {
-                                    $key = array_search($arrayValue[1], $arrayProperty);
-                                    if ($key !== false) {
-                                        unset($arrayProperty[$key]);
-                                    }
-                                }
-                                DB::table('product_attribute')
-                                    ->where('product_id', $variable->product_id)
-                                    ->where('attribute_id', $arrayValue[0])
-                                    ->update(['value' => implode(',', $arrayProperty)]);
-                            }
-                        }
-                    }
-                } else {
-                    DB::table('product_attribute')->where('product_id', $variable->product_id)->delete();
-                }
-                $success = $variable->save();
-                if ($success) {
-                    alert()->success('Success', 'Variable đã được xóa thành công!');
-                    return back();
-                }
-            }
-
-            alert()->error('Error', 'Không thể xoá variable!');
-            return back();
-        } catch (\Exception $exception) {
-            alert()->error('Error', 'Error please try again!');
-            return back();
-        }
-    }
-
-    private function getAttributeProperty(Request $request)
-    {
-        (new HomeController())->getLocale($request);
-        $proAtt = $request->input('attribute_property');
-
-        if ($proAtt === null) {
-            return null;
-        }
-
-        $newArray = [];
-
-        $elements = explode(',', $proAtt);
-
-        foreach ($elements as $element) {
-            $parts = explode('-', $element);
-            $prefix = $parts[0];
-            $value = $parts[1];
-
-            if (!isset($newArray[$prefix])) {
-                $newArray[$prefix] = $prefix . '-' . $value;
-            } else {
-
-                $newArray[$prefix] .= '-' . $value;
-            }
-        }
-
-        $newArray = array_values($newArray);
-
-        return $newArray;
-    }
-
-    private function createAttributeProduct($product, $newArray)
-    {
-        if ($newArray != null) {
-            for ($i = 0; $i < count($newArray); $i++) {
-                $myArray = array();
-                $arraySplit = explode('-', $newArray[$i]);
-                for ($j = 1; $j < count($arraySplit); $j++) {
-                    $myArray[] = $arraySplit[$j];
-                }
-
-                $attribute_property = [
-                    'product_id' => $product->id,
-                    'attribute_id' => $arraySplit[0],
-                    'value' => implode(",", $myArray),
-                    'status' => AttributeProductStatus::ACTIVE
-                ];
-                DB::table('product_attribute')->insert($attribute_property);
-            }
-        }
-    }
-
     private function createProduct($product, $request, $number)
     {
         $arrayIDs = $this->getCategory($request);
@@ -1026,33 +955,6 @@ class ProductController extends Controller
         return $success;
     }
 
-    private function mergeArray($array1, $array2)
-    {
-        $arrayList = [];
-        for ($j = 0; $j < count($array1); $j++) {
-            for ($z = 0; $z < count($array2); $z++) {
-                $arrayList[] = $array1[$j] . "," . $array2[$z];
-            }
-        }
-        return $arrayList;
-    }
-
-    private function getArray($array)
-    {
-        if ($array) {
-            if (count($array) == 1) {
-                return $array;
-            }
-            $newArray = $array[0];
-            for ($i = 1; $i < count($array); $i++) {
-                $newArray = $this->mergeArray($newArray, $array[$i]);
-            }
-            return $newArray;
-        } else {
-            return null;
-        }
-    }
-
     private function getCategory(Request $request)
     {
         $listIDs = null;
@@ -1080,5 +982,108 @@ class ProductController extends Controller
             }
         }
         return $listIDs;
+    }
+
+    private function createAttributeProduct($product, $newArray)
+    {
+        if ($newArray != null) {
+            for ($i = 0; $i < count($newArray); $i++) {
+                $myArray = array();
+                $arraySplit = explode('-', $newArray[$i]);
+                for ($j = 1; $j < count($arraySplit); $j++) {
+                    $myArray[] = $arraySplit[$j];
+                }
+
+                $attribute_property = [
+                    'product_id' => $product->id,
+                    'attribute_id' => $arraySplit[0],
+                    'value' => implode(",", $myArray),
+                    'status' => AttributeProductStatus::ACTIVE
+                ];
+                DB::table('product_attribute')->insert($attribute_property);
+            }
+        }
+    }
+
+    private function updateProduct($product, $request, $number)
+    {
+        if ($request->hasFile('thumbnail')) {
+            $thumbnail = $request->file('thumbnail');
+            $thumbnailPath = $thumbnail->store('thumbnails', 'public');
+            $product->thumbnail = $thumbnailPath;
+        }
+
+        $arrayIDs = $this->getCategory($request);
+        if (!$arrayIDs || count($arrayIDs) == 0) {
+            $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
+            $category = $categories[0];
+            $arrayIDs[] = $category->id;
+        }
+        $listIDs = implode(',', $arrayIDs);
+        $product->category_id = $arrayIDs[0];
+
+        $product->list_category = $listIDs;
+
+        if ($number) {
+            if ($number > 1) {
+                for ($i = 1; $i < $number + 1; $i++) {
+                    $id = $request->input('id' . $i);
+
+                    $newVariationData = Variation::find($id);
+
+                    $newVariationData->quantity = $request->input('quantity' . $id);
+
+                    if ($request->hasFile('thumbnail' . $id)) {
+                        $thumbnail = $request->file('thumbnail' . $id);
+                        $thumbnailPath = $thumbnail->store('thumbnails', 'public');
+                        $newVariationData->thumbnail = $thumbnailPath;
+                    }
+
+                    $newVariationData->price = $request->input('price' . $id);
+                    $newVariationData->old_price = $request->input('old_price' . $id);
+
+                    if (!$request->input('price' . $id) || $request->input('old_price' . $id) < $request->input('price' . $id)) {
+                        $newVariationData->price = $request->input('old_price' . $id);
+                    }
+
+                    $newVariationData->description = $request->input('description' . $id);
+
+                    $newVariationData->save();
+                }
+            } else {
+                $newVariationData = Variation::where([['product_id', $product->id], ['status', VariationStatus::ACTIVE]])->first();
+
+                if (!$newVariationData) {
+                    $newVariationData = new Variation();
+                    $newVariationData->product_id = $product->id;
+                    $newVariationData->user_id = Auth::user()->id;
+                    $newVariationData->variation = 0;
+                    $newVariationData->quantity = 100;
+                }
+
+                $newVariationData->quantity = $request->input('quantity' . $newVariationData->id);
+
+                if ($request->hasFile('thumbnail' . $newVariationData->id)) {
+                    $thumbnail = $request->file('thumbnail' . $newVariationData->id);
+                    $thumbnailPath = $thumbnail->store('thumbnails', 'public');
+                    $newVariationData->thumbnail = $thumbnailPath;
+                }
+
+                $newVariationData->price = $request->input('price' . $newVariationData->id);
+                $newVariationData->old_price = $request->input('old_price' . $newVariationData->id);
+
+                if (!$request->input('price' . $newVariationData->id) || $request->input('old_price' . $newVariationData->id) < $request->input('price' . $newVariationData->id)) {
+                    $newVariationData->price = $request->input('old_price' . $newVariationData->id);
+                }
+
+                $newVariationData->description = $request->input('description' . $newVariationData->id);
+
+                $newVariationData->save();
+            }
+        }
+
+        $success = $product->save();
+
+        return $success;
     }
 }

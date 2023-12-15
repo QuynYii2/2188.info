@@ -235,94 +235,110 @@
                                                                     <select class="form-control" id="category"
                                                                             name="category_id">
                                                                         <option value="">-- Select Category --</option>
-{{--                                                                        @foreach ($categories as $category)--}}
-                                                                        {{--                                                                            <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>--}}
-                                                                        {{--                                                                                @if(locationHelper() == 'kr')--}}
-                                                                        {{--                                                                                    <div class="text">{{ $category->name_ko }}</div>--}}
-                                                                        {{--                                                                                @elseif(locationHelper() == 'cn')--}}
-                                                                        {{--                                                                                    <div class="text">{{$category->name_zh}}</div>--}}
-                                                                        {{--                                                                                @elseif(locationHelper() == 'jp')--}}
-                                                                        {{--                                                                                    <div class="text">{{$category->name_ja}}</div>--}}
-                                                                        {{--                                                                                @elseif(locationHelper() == 'vi')--}}
-                                                                        {{--                                                                                    <div class="text">{{$category->name_vi}}</div>--}}
-                                                                        {{--                                                                                @else--}}
-                                                                        {{--                                                                                    <div class="text">{{$category->name_en}}</div>--}}
-                                                                        {{--                                                                                @endif--}}
-                                                                        {{--                                                                            </option>--}}
-                                                                        {{--                                                                        @endforeach--}}
+                                                                        @foreach ($categories as $category)
+                                                                            <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>
+                                                                                @if(locationHelper() == 'kr')
+                                                                                    <div class="text">{{ $category->name_ko }}</div>
+                                                                                @elseif(locationHelper() == 'cn')
+                                                                                    <div class="text">{{$category->name_zh}}</div>
+                                                                                @elseif(locationHelper() == 'jp')
+                                                                                    <div class="text">{{$category->name_ja}}</div>
+                                                                                @elseif(locationHelper() == 'vi')
+                                                                                    <div class="text">{{$category->name_vi}}</div>
+                                                                                @else
+                                                                                    <div class="text">{{$category->name_en}}</div>
+                                                                                @endif
+                                                                            </option>
+                                                                        @endforeach
                                                                     </select>
                                                                 </div>
-                        <div class="form-group">
-                            <div class="name">{{ __('home.Xuất xứ') }}</div>
-                            <input type="text" class="form-control" name="origin" id="origin" placeholder="Nhập xuất xứ"
-                                   value="{{$product->origin}}">
-                        </div>
-                        <div class="form-group">
-                            <div class="name">{{ __('home.Sản phẩm tối thiểu') }}</div>
-                            <input type="number" value="{{$product->min}}" class="form-control" name="min" id="min"
-                                   placeholder="Nhập số lượng tối thiểu" min="1">
-                        </div>
-                        <div class="form-group">
-                            <div class="d-flex">
-                                <div class="name">{{ __('home.Mua nhiều giảm giá') }}</div>
-                            </div>
-                            <div>
-                                <div class="">
-                                    <div class="add-fields" data-af_base="#base-package-fields"
-                                         data-af_target=".packages">
-                                        <div class="packages">
+                                                                <div class="form-group">
+                                                                    <div class="name">{{ __('home.Xuất xứ') }}</div>
+                                                                    <input type="text" class="form-control"
+                                                                           name="origin" id="origin"
+                                                                           placeholder="Nhập xuất xứ"
+                                                                           value="{{$product->origin}}">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="name">{{ __('home.Sản phẩm tối thiểu') }}</div>
+                                                                    <input type="number" value="{{$product->min}}"
+                                                                           class="form-control" name="min" id="min"
+                                                                           placeholder="Nhập số lượng tối thiểu"
+                                                                           min="1">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="d-flex">
+                                                                        <div class="name">{{ __('home.Mua nhiều giảm giá') }}</div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <div class="">
+                                                                            <div class="add-fields"
+                                                                                 data-af_base="#base-package-fields"
+                                                                                 data-af_target=".packages">
+                                                                                <div class="packages">
 
-                                        </div>
-                                        <button type="button" class="btn add-form-field"><i
-                                                    class="fa-solid fa-plus"></i> {{ __('home.Thêm khoảng giá') }}</button>
-                                    </div>
-                                    <div id="base-package-fields" hidden>
-                                        @php
-                                            $price_sales = ProductSale::where('product_id', '=', $product->id)->get();
-                                        @endphp
+                                                                                </div>
+                                                                                <button type="button"
+                                                                                        class="btn add-form-field"><i
+                                                                                            class="fa-solid fa-plus"></i> {{ __('home.Thêm khoảng giá') }}</button>
+                                                                            </div>
+                                                                            @php
+                                                                                $price_sales = ProductSale::where('product_id', '=', $product->id)->get();
+                                                                            @endphp
+                                                                            <div id="base-package-fields" hidden>
                                         @if(!$price_sales->isEmpty())
-                                            @foreach($price_sales as $price_sale)
-                                                <div class="form-group form-group-price">
+                                                                                    @foreach($price_sales as $price_sale)
+                                                                                        <div class="form-group form-group-price">
                                                     <div class="d-flex align-items-center">
-                                                        <div class="">
-                                                            <input value="{{$price_sale->quantity}}" type="number"
-                                                                   class="form-control form-price" name="quantity[]"
-                                                                   placeholder="Từ (sản phẩm)">
-                                                        </div>
-                                                        <div class="">
-                                                            <input value="{{$price_sale->sales}}" type="number"
-                                                                   class="form-control form-price" name="sales[]"
-                                                                   placeholder="Giảm %">
-                                                        </div>
-                                                        <div class="">
-                                                            <button type="button" class="btn remove-form-field"><i
-                                                                        class="fa-regular fa-trash-can"></i></button>
+                                                        @php
+                                                            $quantity = $price_sale->quantity;
+                                                            $arrayQuantity = explode('-', $quantity);
+                                                        @endphp
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="">
+                                                                <input type="number" value="{{$arrayQuantity[0]}}"
+                                                                       class="form-control form-price"
+                                                                       name="starts[]" required
+                                                                       placeholder={{ __('home.Từ (sản phẩm)') }}>
+                                                            </div>
+                                                            <div class="">
+                                                                <input value="{{$arrayQuantity[1]}}" type="number"
+                                                                       class="form-control form-price"
+                                                                       name="ends[]" required
+                                                                       placeholder={{ __('home.Đến (sản phẩm)') }}>
+                                                            </div>
+                                                            <div class="">
+                                                                <input value="{{$price_sale->sales}}" type="number"
+                                                                       class="form-control form-price" name="sales[]"
+                                                                       required
+                                                                       placeholder={{ __('home.Giảm %') }}>
+                                                            </div>
+                                                            <div class="">
+                                                                <input value="{{$price_sale->days}}" type="number"
+                                                                       class="form-control form-price" name="days[]"
+                                                                       required
+                                                                       placeholder={{ __('home.Ngày giao hàng dự kiến') }}>
+                                                            </div>
+                                                            <div class="">
+                                                                <input value="{{$price_sale->ship}}" type="number"
+                                                                       class="form-control form-price" name="ships[]"
+                                                                       required
+                                                                       placeholder={{ __('home.Ngày giao hàng dự kiến') }}>
+                                                            </div>
+                                                            <div class="">
+                                                                <button type="button" class="btn remove-form-field"><i
+                                                                            class="fa-regular fa-trash-can"></i>
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            @endforeach
-                                        @else
-                                            <div class="form-group form-group-price">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="">
-                                                        <input type="number" class="form-control form-price"
-                                                               name="quantity[]" placeholder="Từ (sản phẩm)">
-                                                    </div>
-                                                    <div class="">
-                                                        <input type="number" class="form-control form-price"
-                                                               name="sales[]" placeholder="Giảm %">
-                                                    </div>
-                                                    <div class="">
-                                                        <button type="button" class="btn remove-form-field"><i
-                                                                    class="fa-regular fa-trash-can"></i></button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endif
+                                                                                    @endforeach
+                                                                                @endif
                                     </div>
-                                </div>
-                            </div>
-                        </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                               <div class="form-group">
                                                                     @if(!$productDetails->isEmpty())
                                                                       @if(count($productDetails)>1)
@@ -398,9 +414,12 @@
                                                                                        name="thumbnail{{$productDetail->id}}"
                                                                                        accept="image/*">
                                                                                 @if ($productDetail->thumbnail)
+                                                                                          @php
+                                                                                              $thumbnail = checkThumbnail($productDetail->thumbnail);
+                                                                                          @endphp
                                                                                           <img class="mt-2"
                                                                                                style="height: 100px"
-                                                                                               src="{{ asset('storage/' . $productDetail->thumbnail) }}"
+                                                                                               src="{{ $thumbnail }}"
                                                                                                alt="Thumbnail">
                                                                                           </a>
                                                                                       @endif
@@ -441,9 +460,12 @@
                                                                                        name="thumbnail{{$loop->index+1}}"
                                                                                        accept="image/*">
                                                                                 @if ($productDetail->thumbnail)
+                                                                                  @php
+                                                                                      $thumbnail = checkThumbnail($productDetail->thumbnail);
+                                                                                  @endphp
                                                                                   <img class="mt-2"
                                                                                        style="height: 100px"
-                                                                                       src="{{ asset('storage/' . $productDetail->thumbnail) }}"
+                                                                                       src="{{ $thumbnail }}"
                                                                                        alt="Thumbnail">
                                                                                   </a>
                                                                               @endif
