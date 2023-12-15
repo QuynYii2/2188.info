@@ -34,6 +34,18 @@ $(".items > li > a").click(function (e) {
     $this.parent().children("ul").stop(true, true).slideToggle("normal");
 });
 
+// $(".items > li ").click(function (e) {
+//     e.preventDefault();
+//     var $this = $(this);
+//     if ($this.hasClass("boxShadow")) {
+//         $this.removeClass("boxShadow");
+//     } else {
+//         $(".items a.boxShadow").removeClass("boxShadow");
+//         $this.addClass("boxShadow");
+//     }
+//     $this.parent().children("ul").stop(true, true).slideToggle("normal");
+// });
+
 $(".sub-items a").click(function () {
     $(".sub-items a").removeClass("current");
     $(this).addClass("current");

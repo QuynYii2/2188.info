@@ -56,6 +56,9 @@
         font-style: normal;
         font-weight: 500;
     }
+    .boxShadow{
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    }
 </style>
 <div class='wrapper text-nowrap'>
     <div>
@@ -108,7 +111,7 @@
         </li>
         @if($isMember)
             @if($isAdmin || $isLogistic)
-                <li>
+                <li class="border-list_profile">
                     <a class="sidebar item" href='#'><i class="fa-solid fa-truck"></i> {{ __('home.vận chuyển') }}</a>
                     <ul class='sub-items pl-3'>
                         <li><a class="sidebarUrl" href="#">{{ __('home.quản lý vận chuyển') }}</a>
@@ -119,7 +122,7 @@
                         </li>
                     </ul>
                 </li>
-                <li>
+                <li class="border-list_profile">
                     <a class="sidebar item" href='#'><i
                                 class="fa-solid fa-list-check"></i> {{ __('home.quản lý đơn hàng') }}
                     </a>
@@ -132,7 +135,7 @@
                         </li>
                     </ul>
                 </li>
-                <li>
+                <li class="border-list_profile">
                     <a class="sidebar item" href='#'><i
                                 class="fa-solid fa-bars-progress"></i> {{ __('home.quản lý sản phẩm') }}
                     </a>
@@ -155,7 +158,7 @@
                         @endif
                     </ul>
                 </li>
-                <li>
+                <li class="border-list_profile">
                     <a class="sidebar item" class="sidebarUrl" href="#"><i
                                 class="fa-regular fa-clipboard"></i> {{ __('home.Quản lí thuộc tính') }}
                     </a>
@@ -168,7 +171,7 @@
                         </li>
                     </ul>
                 </li>
-                <li>
+                <li class="border-list_profile">
                     <a class="sidebar item" href='#'><i class="fa-solid fa-tag"></i>{{ __('home.Kênh Marketing') }} </a>
                     <ul class='sub-items pl-3'>
                         @if($isAdmin == true)
@@ -208,7 +211,7 @@
                         {{--                                </li>--}}
                     </ul>
                 </li>
-                <li>
+                <li class="border-list_profile">
                     <a class="sidebar item" href='#'><i class="fa-solid fa-book"></i>{{ __('home.Tài Chính') }} </a>
                     <ul class='sub-items pl-3'>
                         <li><a class="sidebarUrl" href="{{route('revenues.index')}}">{{ __('home.Doanh thu') }}</a>
@@ -221,7 +224,7 @@
                         {{--                    </li>--}}
                     </ul>
                 </li>
-                <li>
+                <li class="border-list_profile">
                     <a class="sidebar item" href='#'><i class="fa-solid fa-book"></i>{{ __('home.Mail Send') }} </a>
                     <ul class='sub-items pl-3'>
                         <li><a class="sidebarUrl" href="{{route('seller.list.mail.seller')}}">{{ __('home.Mail Send') }}</a>
@@ -229,7 +232,7 @@
                     </ul>
                 </li>
                 @if(!$check_ctv_shop)
-                    <li>
+                    <li class="border-list_profile">
                         <a class="sidebar item" href='#'><i class="fa-solid fa-chart-line"></i> {{ __('home.Dữ Liệu') }}
                         </a>
                         <ul class='sub-items pl-3'>
@@ -250,7 +253,7 @@
                     }
                 @endphp
                 @if(!$check_ctv_shop)
-                    <li>
+                    <li class="border-list_profile">
                         <a class="sidebar item" class="sidebarUrl" href="#!"><span><i class="fa-solid fa-users"></i> {{ __('home.Phân hạng thành viên') }}</span></a>
                         <ul class='sub-items'>
                             <li>
@@ -274,7 +277,7 @@
                         </ul>
                     </li>
                 @endif
-                <li>
+                <li class="border-list_profile">
                     <a class="sidebar item" href='#'><i class="fa-solid fa-shop"></i>{{ __('home.Quản Lý Shop') }} </a>
                     <ul class='sub-items pl-3'>
                         @if(sizeof($roleUsers) != 0)
@@ -303,7 +306,7 @@
                         </li>
                     </ul>
                 </li>
-                <li>
+                <li class="border-list_profile">
                     <a class="sidebar item" class="sidebarUrl" href="#!"><i
                                 class="fa-solid fa-warehouse"></i> {{ __('home.Quản lý kho') }}</a>
                     <ul class='sub-items pl-3'>
@@ -322,7 +325,7 @@
                         @endif
                     </ul>
                 </li>
-                <li>
+                <li class="border-list_profile">
                     <a class="sidebar item" href='#'><i class="fa-solid fa-gear"></i> {{ __('home.Thiết Lập Shop') }}
                     </a>
                     <ul class='sub-items pl-3'>
@@ -341,7 +344,7 @@
                 </li>
             @endif
             @if($isAdmin)
-                <li>
+                <li class="border-list_profile">
                     <a class="sidebar item sidebarUrl" href="#"><i
                                 class="fa-regular fa-clipboard"></i> {{ __('home.manager_member') }}
                     </a>
@@ -354,7 +357,7 @@
                         </li>
                     </ul>
                 </li>
-                <li>
+                <li class="border-list_profile">
                     <a class="sidebar item sidebarUrl" href="#"><i
                                 class="fa-regular fa-clipboard"></i>{{ __('home.Address management') }}
                     </a>
@@ -364,7 +367,7 @@
                         </li>
                     </ul>
                 </li>
-                <li>
+                <li class="border-list_profile">
                     <a class="sidebar item sidebarUrl" href="#"><i
                                 class="fa-regular fa-clipboard"></i>{{ __('home.Post RFQ') }}
                     </a>
@@ -375,7 +378,7 @@
                     </ul>
                 </li>
             @endif
-            <li>
+            <li class="border-list_profile">
                 <a class="sidebar item" href='#'><i
                             class="fa-solid fa-sitemap"></i> {{ __('home.Quản lý thông tin') }}
                 </a>
