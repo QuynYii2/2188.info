@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Enums\AddressOrderStatus;
 use App\Enums\CartStatus;
 use App\Enums\CoinStatus;
 use App\Enums\MemberPartnerStatus;
@@ -14,7 +15,6 @@ use App\Enums\PriceUpLevel;
 use App\Enums\UserInterestEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\PaypalPaymentController;
-use App\Mail\PaymentSuccessfulMail;
 use App\Models\Cart;
 use App\Models\Coin;
 use App\Models\MemberPartner;
@@ -22,6 +22,7 @@ use App\Models\MemberRegisterInfo;
 use App\Models\MemberRegisterPersonSource;
 use App\Models\Notification;
 use App\Models\Order;
+use App\Models\OrderAddress;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\RankSetUpSeller;
@@ -31,14 +32,11 @@ use App\Models\StorageProduct;
 use App\Models\User;
 use App\Models\VoucherItem;
 use Carbon\Carbon;
-use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use mysql_xdevapi\Exception;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
-use function Symfony\Component\String\u;
 
 class CheckoutController extends Controller
 {
@@ -59,32 +57,134 @@ class CheckoutController extends Controller
             $voucherItems = VoucherItem::where('customer_id', Auth::user()->id)->get();
 
             $totalSaleByRank = $this->findDiscount($carts);
-            return view('frontend/pages/checkout', compact('number', 'carts', 'user', 'voucherItems', 'totalSaleByRank', 'currency'));
+
+            $address = OrderAddress::where('user_id', Auth::user()->id)
+                ->where('status', AddressOrderStatus::ACTIVE)
+                ->where(function ($query) {
+                    $query->where('default', 1)
+                        ->orWhereNull('default');
+                })
+                ->first();
+
+            return view('frontend/pages/checkout', compact('address', 'number', 'carts', 'user', 'voucherItems', 'totalSaleByRank', 'currency'));
         } else {
             return view('frontend/pages/login');
         }
     }
 
-    private function calcSoLuongSPTrongKho($carts)
+    private function findDiscount($carts)
     {
-        try {
-            $product_id = $carts->product_id;
-            $quantity = $carts->quantity;
+        $totalSaleByRank = 0;
+        $ranks = null;
+        foreach ($carts as $cart) {
+            $product = Product::find($cart->product_id);
+            $sellerID = $product->user_id;
+            $setup = RankSetUpSeller::where('user_id', $sellerID)->first();
+            if ($setup) {
+                $orderItems = DB::table('order_items')
+                    ->join('orders', 'orders.id', '=', 'order_items.order_id')
+                    ->join('products', 'products.id', '=', 'order_items.product_id')
+                    ->where([
+                        ['orders.user_id', '=', Auth::user()->id],
+                        ['products.user_id', $sellerID]
+                    ])
+                    ->select('order_items.*', 'products.user_id')
+                    ->get();
+                $total = 0;
+                foreach ($orderItems as $orderItem) {
+                    $total = $total + $orderItem->price * $orderItem->quantity;
+                }
+                $arrayRank = explode(',', $setup->setup);
+                for ($i = 0; $i < 4; $i++) {
+                    $detailRank = $arrayRank[$i];
+                    $arrayDetailRank = explode(':', $detailRank);
+                    $value = (int)$arrayDetailRank[1];
+                    if ($total > $value) {
+                        $ranks = $arrayDetailRank[0];
+                    }
+                }
+                $ranks = str_replace(' ', '', $ranks);
+                $arrayShops = [];
+                $rankUsers = RankUserSeller::all();
 
-            $product = Product::where([['id', '=', $product_id]])->first();
-            $storage = StorageProduct::where([['id', '=', $product->storage_id]])->first();
+                foreach ($rankUsers as $rankUser) {
+                    $listRanks = $rankUser->apply;
+                    $array = explode(',', $listRanks);
+                    foreach ($array as $item) {
+                        $rankCurrent = explode('-', $ranks);
+                        foreach ($rankCurrent as $str) {
+                            if ($str == $item) {
+                                $arrayShops[] = $rankUser->user_id . "-" . $rankUser->percent;
+                            }
+                        }
+                    }
+                }
 
-            if ($storage) {
-                $qtyCalc = $storage->quantity - $quantity;
-                $product->qty = $qtyCalc;
-                $storage->quantity = $qtyCalc;
+                $arrayProducts = [];
+                if (!empty($arrayShops)) {
+                    foreach ($arrayShops as $shop) {
+                        $myArray = explode('-', $shop);
 
-                $product->save();
-                $storage->save();
+                        foreach ($carts as $cart) {
+                            $product = Product::find($cart->product_id);
+
+                            if ($product->user_id == $myArray[0]) {
+                                $arrayProducts[] = $cart->price . "-" . $cart->quantity . "-" . $myArray[1] . "-" . $cart->product_id;
+                            }
+                        }
+                    }
+                }
+
+                $arrayTotal = [];
+                $totalSaleByRankNews = 0;
+
+                if (!empty($arrayProducts)) {
+                    foreach ($arrayProducts as $product) {
+                        $saleArray = explode('-', $product);
+                        $totalPrice = $saleArray[0] * $saleArray[1] * $saleArray[2] / 100;
+                        $totalSaleByRankNews += $totalPrice;
+                        $arrayTotal[] = $saleArray[3] . "-" . $totalPrice;
+                    }
+
+                    if ($totalSaleByRankNews > $totalSaleByRank) {
+                        $totalSaleByRank = $totalSaleByRankNews;
+                    }
+                }
             }
-        } catch (\Exception $exception) {
-            return $exception;
         }
+        return $totalSaleByRank;
+    }
+
+    public function checkoutByImme(Request $request)
+    {
+        $status = OrderStatus::WAIT_PAYMENT;
+        $idVoucher = $request->input('voucherID');
+        $name = $request->input('fullname');
+        $email = $request->input('email');
+        $phone = $request->input('phone');
+        $address = $request->input('address');
+        $total = $request->input('total_price');
+        $shippingPrice = $request->input('shipping_price');
+        $salePrice = $request->input('discount_price');
+        $checkOutPrice = $request->input('priceID');
+        $array[] = $total;
+        $array[] = $shippingPrice;
+        $array[] = $salePrice;
+        $array[] = $checkOutPrice;
+        $array = implode(',', $array);
+        $this->checkout($request, $status, OrderMethod::IMMEDIATE, $name, $email, $phone, $address, $idVoucher, $array);
+        if (locationHelper() == 'kr') {
+            alert()->success('성공', '주문 성공했습니다');
+        } elseif (locationHelper() == 'vi') {
+            alert()->success('Thành công', 'Đặt hàng thành công');
+        } elseif (locationHelper() == 'cn') {
+            alert()->success('成功', '订单成功');
+        } elseif (locationHelper() == 'jp') {
+            alert()->success('成功」、「注文は成功しました」');
+        } else {
+            alert()->success('Success', 'Order Success');
+        }
+        return redirect()->route('order.show');
     }
 
     private function checkout(Request $request, $status, $orderMethod, $name, $email, $phone, $address, $idVoucher, $array)
@@ -156,7 +256,7 @@ class CheckoutController extends Controller
             'status' => $status
         ];
 
-       $od = Order::create($order);
+        $od = Order::create($order);
         session(['order' => $od]);
 
         $totalCheck = 0;
@@ -274,50 +374,26 @@ class CheckoutController extends Controller
         VoucherItem::where([['voucher_id', $id], ['customer_id', Auth::user()->id]])->delete();
     }
 
-    private function notifiCreate()
+    private function calcSoLuongSPTrongKho($carts)
     {
-        $noti = [
-            'user_id' => Auth::user()->id,
-            'content' => "Thanh toán đơn hàng thành công!",
-            'description' => 'Thanh toán thành công',
-            'status' => NotificationStatus::UNSEEN,
-        ];
+        try {
+            $product_id = $carts->product_id;
+            $quantity = $carts->quantity;
 
-        Notification::create($noti);
+            $product = Product::where([['id', '=', $product_id]])->first();
+            $storage = StorageProduct::where([['id', '=', $product->storage_id]])->first();
 
-        return $noti;
-    }
+            if ($storage) {
+                $qtyCalc = $storage->quantity - $quantity;
+                $product->qty = $qtyCalc;
+                $storage->quantity = $qtyCalc;
 
-    public function checkoutByImme(Request $request)
-    {
-        $status = OrderStatus::WAIT_PAYMENT;
-        $idVoucher = $request->input('voucherID');
-        $name = $request->input('fullname');
-        $email = $request->input('email');
-        $phone = $request->input('phone');
-        $address = $request->input('address');
-        $total = $request->input('total_price');
-        $shippingPrice = $request->input('shipping_price');
-        $salePrice = $request->input('discount_price');
-        $checkOutPrice = $request->input('priceID');
-        $array[] = $total;
-        $array[] = $shippingPrice;
-        $array[] = $salePrice;
-        $array[] = $checkOutPrice;
-        $array = implode(',', $array);
-        $this->checkout($request, $status, OrderMethod::IMMEDIATE, $name, $email, $phone, $address, $idVoucher, $array);
-        if (locationHelper() == 'kr') {
-            alert()->success('성공', '주문 성공했습니다');
-        } elseif (locationHelper() == 'vi') {
-            alert()->success('Thành công', 'Đặt hàng thành công');
-        } elseif (locationHelper() == 'cn') {
-            alert()->success('成功','订单成功');
-        } elseif (locationHelper() == 'jp') {
-            alert()->success('成功」、「注文は成功しました」');
-        } else {
-            alert()->success('Success', 'Order Success');
+                $product->save();
+                $storage->save();
+            }
+        } catch (\Exception $exception) {
+            return $exception;
         }
-        return redirect()->route('order.show');
     }
 
     public function checkoutByCoin(Request $request)
@@ -355,23 +431,26 @@ class CheckoutController extends Controller
         return redirect()->route('checkout.show')->with('error', 'Checkout fail');
     }
 
-    public function sendMail($email)
+    private function notifiCreate()
     {
-        $order = session('order');
-        $data = ['message'=>'$request->input()'];
-        Mail::send('frontend/widgets/mailCode', $data, function ($message) use ($email) {
-            $message->to([$email], 'Verify mail!')->subject
-            ('Verify mail');
-            $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
-        });
+        $noti = [
+            'user_id' => Auth::user()->id,
+            'content' => "Thanh toán đơn hàng thành công!",
+            'description' => 'Thanh toán thành công',
+            'status' => NotificationStatus::UNSEEN,
+        ];
+
+        Notification::create($noti);
+
+        return $noti;
     }
 
     public function returnCheckout(Request $request)
     {
         (new HomeController())->getLocale($request);
-        $url = session('url_prev','/');
+        $url = session('url_prev', '/');
 
-        if($request->vnp_ResponseCode == "00") {
+        if ($request->vnp_ResponseCode == "00") {
             $vnpAmount = $request->input('vnp_Amount');
             $vnpBankCode = $request->input('vnp_BankCode');
             $vnpBankTranNo = $request->input('vnp_BankTranNo');
@@ -386,7 +465,7 @@ class CheckoutController extends Controller
             $orderItems = \App\Models\OrderItem::where('order_id', $order->id)->get();
 
             DB::table('payments_vnpay')->insert([
-                'money' => $vnpAmount/100,
+                'money' => $vnpAmount / 100,
                 'code_bank' => $vnpBankCode,
                 'code_vnpay' => $vnpBankTranNo,
                 'time' => $time,
@@ -397,8 +476,7 @@ class CheckoutController extends Controller
                 'orders_method' => OrderMethod::ElectronicWallet,
                 'status' => OrderStatus::PROCESSING
             ]);
-            if (Auth::check())
-            {
+            if (Auth::check()) {
                 DB::table('carts')->where([['user_id', Auth::user()->id],
                     ['status', CartStatus::WAIT_ORDER]
                 ])->update([
@@ -408,21 +486,33 @@ class CheckoutController extends Controller
                     'status' => OrderStatus::PROCESSING
                 ]);
                 $email = session('emailTo');
-                $adminID = DB::table('role_user')->where('role_id','=',1)->first('user_id');
-                $admin = DB::table('users')->where('id','=', $adminID->user_id)->first('email');
+                $adminID = DB::table('role_user')->where('role_id', '=', 1)->first('user_id');
+                $admin = DB::table('users')->where('id', '=', $adminID->user_id)->first('email');
                 $this->sendMail($email);
                 $this->sendMail($admin->email);
-                return view('frontend.pages.PaymentMethods.vnpay_return',compact([
-                    'email','orderItems'
+                return view('frontend.pages.PaymentMethods.vnpay_return', compact([
+                    'email', 'orderItems'
                 ]));
             }
 
             alert()->error('errors', 'errors');
-            return redirect($url)->with('errors' ,'Lỗi trong quá trình thanh toán phí dịch vụ');
+            return redirect($url)->with('errors', 'Lỗi trong quá trình thanh toán phí dịch vụ');
         }
         session()->forget('url_prev');
-        return redirect($url)->with('errors' ,'Lỗi trong quá trình thanh toán phí dịch vụ');
+        return redirect($url)->with('errors', 'Lỗi trong quá trình thanh toán phí dịch vụ');
     }
+
+    public function sendMail($email)
+    {
+        $order = session('order');
+        $data = ['message' => '$request->input()'];
+        Mail::send('frontend/widgets/mailCode', $data, function ($message) use ($email) {
+            $message->to([$email], 'Verify mail!')->subject
+            ('Verify mail');
+            $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
+        });
+    }
+
     public function checkoutByVNPay(Request $request)
     {
         $emailTo = $request->input('email');
@@ -443,7 +533,7 @@ class CheckoutController extends Controller
         $apiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
         $vnpAmount = $request->input('total_price');
         $startTime = date("YmdHis");
-        $expire = date('YmdHis',strtotime('+15 minutes',strtotime($startTime)));
+        $expire = date('YmdHis', strtotime('+15 minutes', strtotime($startTime)));
         $shippingPrice = $request->input('shipping_price');
         $salePrice = $request->input('discount_price');
         $array[] = $vnpAmount;
@@ -466,12 +556,12 @@ class CheckoutController extends Controller
             "vnp_ReturnUrl" => $vnp_Returnurl,
             "vnp_TxnRef" => $vnp_TxnRef,
         );
-        $order = $this->checkout($request, $status=OrderStatus::WAIT_PAYMENT,
+        $order = $this->checkout($request, $status = OrderStatus::WAIT_PAYMENT,
             OrderMethod::ElectronicWallet,
-            $name=$request->input('fullname'),
-            $email=$emailTo,
-            $phone=$request->input('phone'),
-            $address=$request->input('address'),
+            $name = $request->input('fullname'),
+            $email = $emailTo,
+            $phone = $request->input('phone'),
+            $address = $request->input('address'),
             $idVoucher = $request->input('voucherID'),
             $array);
 
@@ -494,13 +584,14 @@ class CheckoutController extends Controller
 
         $vnp_Url = $vnp_Url . "?" . $query;
         if (isset($vnp_HashSecret)) {
-            $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret);//
+            $vnpSecureHash = hash_hmac('sha512', $hashdata, $vnp_HashSecret);//
             $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
         }
         alert()->error('errors', 'Payment errors!');
         return redirect($vnp_Url);
 
     }
+
     public function checkoutByPaypal(Request $request)
     {
         $idVoucher = $request->input('voucherID');
@@ -569,88 +660,5 @@ class CheckoutController extends Controller
                 ->route('checkout.show')
                 ->with('error', $response['message'] ?? 'Something went wrong.');
         }
-    }
-
-    private function findDiscount($carts)
-    {
-        $totalSaleByRank = 0;
-        $ranks = null;
-        foreach ($carts as $cart) {
-            $product = Product::find($cart->product_id);
-            $sellerID = $product->user_id;
-            $setup = RankSetUpSeller::where('user_id', $sellerID)->first();
-            if ($setup) {
-                $orderItems = DB::table('order_items')
-                    ->join('orders', 'orders.id', '=', 'order_items.order_id')
-                    ->join('products', 'products.id', '=', 'order_items.product_id')
-                    ->where([
-                        ['orders.user_id', '=', Auth::user()->id],
-                        ['products.user_id', $sellerID]
-                    ])
-                    ->select('order_items.*', 'products.user_id')
-                    ->get();
-                $total = 0;
-                foreach ($orderItems as $orderItem) {
-                    $total = $total + $orderItem->price * $orderItem->quantity;
-                }
-                $arrayRank = explode(',', $setup->setup);
-                for ($i = 0; $i < 4; $i++) {
-                    $detailRank = $arrayRank[$i];
-                    $arrayDetailRank = explode(':', $detailRank);
-                    $value = (int)$arrayDetailRank[1];
-                    if ($total > $value) {
-                        $ranks = $arrayDetailRank[0];
-                    }
-                }
-                $ranks = str_replace(' ', '', $ranks);
-                $arrayShops = [];
-                $rankUsers = RankUserSeller::all();
-
-                foreach ($rankUsers as $rankUser) {
-                    $listRanks = $rankUser->apply;
-                    $array = explode(',', $listRanks);
-                    foreach ($array as $item) {
-                        $rankCurrent = explode('-', $ranks);
-                        foreach ($rankCurrent as $str) {
-                            if ($str == $item) {
-                                $arrayShops[] = $rankUser->user_id . "-" . $rankUser->percent;
-                            }
-                        }
-                    }
-                }
-
-                $arrayProducts = [];
-                if (!empty($arrayShops)) {
-                    foreach ($arrayShops as $shop) {
-                        $myArray = explode('-', $shop);
-
-                        foreach ($carts as $cart) {
-                            $product = Product::find($cart->product_id);
-
-                            if ($product->user_id == $myArray[0]) {
-                                $arrayProducts[] = $cart->price . "-" . $cart->quantity . "-" . $myArray[1] . "-" . $cart->product_id;
-                            }
-                        }
-                    }
-                }
-
-                $arrayTotal = [];
-                $totalSaleByRankNews = 0;
-
-                if (!empty($arrayProducts)) {
-                    foreach ($arrayProducts as $product) {
-                        $saleArray = explode('-', $product);
-                        $totalPrice = $saleArray[0] * $saleArray[1] * $saleArray[2] / 100;
-                        $totalSaleByRankNews += $totalPrice;
-                        $arrayTotal[] = $saleArray[3] . "-" . $totalPrice;
-                    }
-
-                    if ($totalSaleByRankNews > $totalSaleByRank) {
-                        $totalSaleByRank = $totalSaleByRankNews;
-                    }
-                }
-            }
-        }
-        return $totalSaleByRank;
     }
 }

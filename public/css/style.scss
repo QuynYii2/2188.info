@@ -2158,106 +2158,234 @@ td.priceTransport {
   }
 }
 
-.checkout-bg {
-  background: #f5f5f5;
+.checkout-page {
+  .breadcrumbs_filter {
+    color: var(--Black, #000);
+    font-size: 18px;
+    font-weight: 500;
 
-  .checkout {
-    padding-top: 40px;
+    a {
+      text-decoration: none;
 
-    .orderSummary {
-      padding: 10px;
-      background-color: white;
-      box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
-
-      .summary {
-        font-weight: 800;
-        font-size: 18px;
+      &:hover {
+        text-decoration: none;
       }
+    }
+  }
 
-      &-header {
-        padding: 15px;
-        border-bottom: 1px solid #e3dddd;
+  .address-package {
+    a {
+      text-decoration: none;
 
+      &:hover {
+        text-decoration: none;
       }
+    }
 
-      &-body {
-        padding: 15px 0;
-        border-bottom: 1px solid #e3dddd;
+    .address-area {
+      padding: 8px;
 
-        .img {
-          padding: 10px;
-
-          img {
-            width: 100%;
-          }
+      .title {
+        span {
+          color: #000;
+          font-size: 18px;
+          font-weight: 600;
+          margin-left: 8px;
         }
+      }
 
+      .address-detail {
         .name {
-          font-size: 16px;
+          padding: 12px 0;
         }
 
-        .price {
-          font-size: 16px;
-          font-weight: 900;
+        .address {
+          padding: 12px 0;
         }
-      }
 
-      &-footer {
-        padding: 25px 0;
+        .title {
+          color: var(--Grey-Dark, #929292);
+          font-size: 16px;
+          font-weight: 400;
+        }
 
-        .grandtotal {
-          text-transform: capitalize;
-          margin: 5px 0;
-
-          .total {
-            font-size: 15px;
-          }
-
-          .price {
-            font-size: 18px;
-            font-weight: bold;
-            color: black;
-          }
+        .value {
+          color: #000;
+          font-size: 16px;
+          font-weight: 600;
         }
       }
     }
 
-    .checkout-item {
-      padding: 20px;
-      background-color: white;
+    .select-package {
+      margin-top: 24px;
 
-      label {
-        text-transform: capitalize;
-        margin-bottom: 10px;
+      .title {
+        color: #000;
+        font-size: 18px;
+        font-weight: 600;
+      }
 
-        i {
-          margin-right: 10px;
+      .list-method {
+        .method-detail {
+          border-radius: 8px;
+          border: 1px solid var(--Grey-Light, #D6D6D6);
+          background: var(--White, #FFF);
+          padding: 12px 16px;
+          margin: 16px 0;
+
+          label {
+            cursor: pointer;
+          }
+
+          input {
+            cursor: pointer;
+          }
+        }
+
+        span {
+          color: #000;
+          font-size: 16px;
+          font-weight: 600;
         }
       }
+    }
+  }
 
-      .input-m0 {
-        margin: 10px 0;
-        width: 10px;
-      }
+  .products-package {
+    border-radius: 8px;
+    background: var(--White, #FFF);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 
-      input {
-        width: 80%;
-        padding: 7px;
-        border-radius: 30px;
-        border: 1px solid gray;
-      }
+    .list-product {
+      padding: 16px 0;
+      margin-bottom: 32px;
+      max-height: 70vh;
+      overflow-y: auto;
 
-      button {
+      .product-item {
         width: 100%;
-        padding: 12px;
-        border-radius: 40px;
-        background-color: #ff8c01;
-        color: white;
-        font-weight: 800;
+        padding: 16px;
 
-        &:hover {
-          background-color: #d67e17;
+        .product-info {
+          .product-image {
+            max-width: 120px;
+            max-height: 120px;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            margin-right: 16px;
+          }
+
+          .name {
+            display: -webkit-box;
+            line-height: 1.3;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #000;
+            font-size: 20px;
+            font-weight: 600;
+          }
+
+          .price {
+            .real-price {
+              color: #DD0B00;
+              text-align: center;
+              font-size: 20px;
+              font-weight: 600;
+            }
+
+            del {
+              color: var(--Grey-Dark, #929292);
+              text-align: center;
+              font-size: 16px;
+              font-weight: 500;
+            }
+          }
         }
+
+        .quantity {
+          color: #000;
+          text-align: center;
+          font-size: 20px;
+          font-weight: 600;
+        }
+      }
+    }
+
+    .checkout {
+      padding: 16px;
+      max-height: 30vh;
+      background-color: #fff;
+      width: 100%;
+
+      .price-product {
+        .title {
+          color: #000;
+          font-size: 20px;
+          font-weight: 400;
+        }
+
+        .value {
+          color: var(--Black, #000);
+          font-size: 20px;
+          font-weight: 400;
+        }
+      }
+
+      .price-ship {
+        .title {
+          color: #000;
+          font-size: 20px;
+          font-weight: 400;
+        }
+
+        .value {
+          color: var(--Black, #000);
+          font-size: 20px;
+          font-weight: 400;
+        }
+      }
+
+
+      .price-discount{
+        .title {
+          color: #000;
+          font-size: 20px;
+          font-weight: 400;
+        }
+
+        .value {
+          color: var(--Black, #000);
+          font-size: 20px;
+          font-weight: 400;
+        }
+      }
+
+      .price-total {
+        .title {
+          color: #000;
+          font-size: 24px;
+          font-weight: 600;
+        }
+
+        .value {
+          color: var(--secon-1, #F47621);
+          font-size: 24px;
+          font-weight: 600;
+        }
+      }
+
+      .btnConfirm {
+        margin-top: 10%;
+        background: var(--secon-1, #F47621);
+        width: 100%;
+        padding: 12px 16px;
+        color: var(--White, #FFF);
+        font-size: 16px;
+        font-weight: 600;
       }
     }
   }
