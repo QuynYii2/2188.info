@@ -1479,6 +1479,13 @@ body {
   font-weight: 600;
   line-height: normal;
 }
+.header-card--right .todo_list .title-small {
+  color: #000;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
 .header-card--right .todo_list th, .header-card--right .todo_list td, .header-card--right .todo_list tr {
   border: none;
 }
@@ -1497,8 +1504,6 @@ body {
   line-height: normal;
 }
 .header-card--right .todo_list .title {
-  font-weight: 700;
-  font-size: 20px;
   margin-bottom: 10px;
 }
 .header-card--right .todo_list .title-small {
@@ -1520,17 +1525,32 @@ body {
   text-align: center;
   cursor: pointer;
   border-right: 1px solid rgb(229, 229, 229);
+  color: #000;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
 .header-card--right .todo_list--bottom .list_item .number {
   font-size: 16px;
-  color: rgb(38, 115, 221);
   font-weight: bold;
 }
 .header-card--right .todo_list--bottom .list_item p {
   font-size: 14px;
 }
 .header-card--right .todo_list--bottom .list_item:hover {
-  background-color: rgba(0, 0, 0, 0.04);
+  color: #F47621;
+}
+.header-card--right .todo_list--bottom .list_item--top .border_svgItem {
+  border-radius: 132px;
+  background: var(--White-Light, #F3F3F3);
+  display: flex;
+  padding: 32px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 33%;
 }
 .header-card--right .todo_list--bottom .list_item--top p {
   font-size: 16px;
@@ -2551,6 +2571,34 @@ body {
   border: 1px solid #D6D6D6;
   background: #FFF;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+.product-home-seller .border-product_home .text-warning--1 {
+  color: #FEB95A;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.product-home-seller .border-product_home .text-warning--2 {
+  color: #00BFA6;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.product-home-seller .border-product_home .text-warning--3 {
+  color: #000AFF;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.product-home-seller .border-product_home .text-warning--4 {
+  color: #20AEF3;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
 .product-home-seller .border-product_home .smail {
   margin-top: 12px;
