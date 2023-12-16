@@ -1745,6 +1745,13 @@ body {
         font-weight: 600;
         line-height: normal;
       }
+      .title-small {
+        color: #000;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
       th, td, tr {
         border: none;
       }
@@ -1766,8 +1773,8 @@ body {
       }
 
       .title {
-        font-weight: 700;
-        font-size: 20px;
+        //font-weight: 700;
+        //font-size: 20px;
         margin-bottom: 10px;
       }
 
@@ -1793,10 +1800,14 @@ body {
           text-align: center;
           cursor: pointer;
           border-right: 1px solid rgb(229, 229, 229);
+          color: #000;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: normal;
 
           .number {
             font-size: 16px;
-            color: rgb(38, 115, 221);
             font-weight: bold;
           }
 
@@ -1805,10 +1816,21 @@ body {
           }
 
           &:hover {
-            background-color: rgba(0, 0, 0, 0.04);
+            //background-color: rgba(0, 0, 0, 0.04);
+            color: #F47621;
           }
 
           &--top {
+            .border_svgItem {
+              border-radius: 132px;
+              background: var(--White-Light, #F3F3F3);display: flex;
+              padding: 32px;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              gap: 10px;
+              width: 33%;
+            }
             p {
               font-size: 16px;
               margin-top: 20px;
@@ -2958,6 +2980,36 @@ body {
     border: 1px solid  #D6D6D6;
     background: #FFF;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    .text-warning{
+      &--1{
+        color: #FEB95A;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+      }
+        &--2{
+          color: #00BFA6;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: normal;
+        }
+      &--3{
+        color: #000AFF;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+      }
+      &--4{
+        color: #20AEF3;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+      }
+    }
     .smail {
       margin-top: 12px;
       color: #929292;
