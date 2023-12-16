@@ -2350,7 +2350,7 @@ td.priceTransport {
       }
 
 
-      .price-discount{
+      .price-discount {
         .title {
           color: #000;
           font-size: 20px;
@@ -2386,6 +2386,149 @@ td.priceTransport {
         color: var(--White, #FFF);
         font-size: 16px;
         font-weight: 600;
+      }
+    }
+  }
+}
+
+.address-page {
+  .header-page {
+    .breadcrumbs_filter {
+      color: var(--Black, #000);
+      font-size: 18px;
+      font-weight: 500;
+
+      a {
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+
+    .btnAddNewAddress {
+      padding: 11px 16px 10px 16px;
+      background: var(--secon-1, #F47621);
+      width: 100%;
+      max-width: 200px;
+
+      i {
+        font-size: 16px;
+      }
+
+      span {
+        color: var(--White, #FFF);
+        font-size: 18px;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .main-page {
+    /* CSS for list address page*/
+    padding: 0 2rem;
+
+    .address-item {
+      padding: 8px;
+      margin-bottom: 2rem;
+
+      .address-detail {
+        .address-value {
+          padding: 8px;
+
+          .title {
+            color: var(--Grey-Dark, #929292);
+            font-size: 16px;
+            font-weight: 400;
+          }
+
+          .value {
+            color: #000;
+            font-size: 16px;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+
+    .button {
+      margin: 5% 0 2% 0;
+
+      button {
+        padding: 12px 16px;
+        background: var(--secon-1, #F47621);
+        color: var(--White, #FFF);
+        font-size: 16px;
+        font-weight: 600;
+        max-width: 300px;
+        width: 100%;
+      }
+    }
+
+    /* Css create address page */
+    .form-create-address {
+      .s12w4{
+        color: #000;
+        font-size: 12px;
+        font-weight: 400;
+      }
+
+      .s16w6{
+        color: #000;
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      .input-placeholder-s12w4::placeholder {
+        color: var(--Grey-Dark, #929292);
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .option-s16w4 {
+        color: var(--Grey-Dark, #929292);
+        font-size: 16px;
+        font-weight: 500;
+      }
+
+      /* Ẩn checkbox mặc định */
+      #select_address_default {
+        display: none;
+      }
+
+      /* Thiết lập kích thước của khung trạng thái on/off */
+      #select_address_default + label {
+        display: inline-block;
+        width: 30px;
+        height: 15px;
+        background-color: #ccc;
+        border-radius: 15px;
+        position: relative;
+        cursor: pointer;
+      }
+
+      /* Thiết lập màu sắc của trạng thái on */
+      #select_address_default:checked + label {
+        background-color: #4CAF50;
+      }
+
+      /* Thiết lập nút trượt (slider) */
+      #select_address_default + label::after {
+        content: '';
+        width: 15px;
+        height: 15px;
+        background-color: #fff;
+        border-radius: 50%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: transform 0.3s ease-in-out;
+      }
+
+      /* Di chuyển nút trượt sang phải khi checkbox được chọn */
+      #select_address_default:checked + label::after {
+        transform: translateX(15px);
       }
     }
   }

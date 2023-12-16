@@ -88,7 +88,7 @@
                         <span>&times;</span>
                     </button>
                 </div>
-                <form action="{{route('address.create')}}" method="post">
+                <form action="{{route('user.address.create')}}" method="post">
                     @csrf
                     <div class="modal-body">
                         <input type="text" name="id" hidden value="">

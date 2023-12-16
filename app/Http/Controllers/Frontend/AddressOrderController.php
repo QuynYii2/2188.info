@@ -9,64 +9,66 @@ use App\Models\OrderAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AddressController extends Controller
+class AddressOrderController extends Controller
 {
+
+    public function show(Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        $addresses = OrderAddress::where([
+            ['user_id', '=', Auth::user()->id],
+            ['status', '=', AddressOrderStatus::ACTIVE]
+        ])->get();
+        return view('frontend/pages/profile/address-book')->with('addresses', $addresses);
+    }
 
     public function index(Request $request)
     {
         (new HomeController())->getLocale($request);
-        if (Auth::check()) {
-            $addresses = OrderAddress::where([
-                ['user_id', '=', Auth::user()->id],
-                ['status', '=', AddressOrderStatus::ACTIVE]
-            ])->get();
+        $addresses = OrderAddress::where([
+            ['user_id', '=', Auth::user()->id],
+            ['status', '=', AddressOrderStatus::ACTIVE]
+        ])->get();
+        return view('frontend.pages.order-address.list', compact('addresses'));
+    }
 
-            return view('frontend/pages/profile/address-book')->with('addresses', $addresses);
-        } else {
-            return view('frontend/pages/login');
-        }
+    public function processCreate(Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        return view('frontend.pages.order-address.create');
     }
 
 
     public function store(Request $request)
     {
-        if (Auth::check()) {
-            $check = $request->input('default');
-            if ($check == null){
-                $check = AddressOrder::ABSENCE;
-            }
-            $address = [
-                'user_id' => Auth::user()->id,
-                'username' => $request->input('username'),
-                'company' => $request->input('company'),
-                'phone' => $request->input('phone'),
-                'city' => $request->input('city'),
-                'province' => $request->input('province'),
-                'location' => $request->input('location'),
-                'address_detail' => $request->input('address_detail'),
-                'address_option' => $request->input('address_option'),
-                'default' => $check,
-                'status' => AddressOrderStatus::ACTIVE,
-            ];
-            OrderAddress::create($address);
-            alert()->success('Success', 'Tạo mới địa chỉ thành công');
-            return redirect(route('address.show'));
+        $check = $request->input('default');
+        if ($check == null) {
+            $check = AddressOrder::ABSENCE;
         } else {
-            (new HomeController())->getLocale($request);
-            return view('frontend/pages/login');
+            $check = AddressOrder::DEFAULT;
+            OrderAddress::where('user_id', Auth::user()->id)
+                ->where('status', AddressOrderStatus::ACTIVE)
+                ->where('default', AddressOrder::DEFAULT)
+                ->update(['default' => AddressOrder::ABSENCE]);
         }
-    }
 
 
-    public function show($id)
-    {
-        //
-    }
-
-
-    public function edit($id)
-    {
-        //
+        $address = [
+            'user_id' => Auth::user()->id,
+            'username' => $request->input('username'),
+            'company' => $request->input('company'),
+            'phone' => $request->input('phone'),
+            'city' => $request->input('city'),
+            'province' => $request->input('province'),
+            'location' => $request->input('location'),
+            'address_detail' => $request->input('address_detail'),
+            'address_option' => $request->input('address_option'),
+            'default' => $check,
+            'status' => AddressOrderStatus::ACTIVE,
+        ];
+        OrderAddress::create($address);
+        alert()->success('Success', 'Tạo mới địa chỉ thành công');
+        return redirect(route('user.address.show'));
     }
 
     public function update(Request $request, $id)
@@ -94,16 +96,17 @@ class AddressController extends Controller
 
         $address->save();
         alert()->success('Success', 'Cập nhật địa chỉ thành công');
-        return redirect(route('address.show'));
-
+        return redirect(route('user.address.show'));
     }
 
-    public function destroy($id)
+    public function delete($id)
     {
-        $address = OrderAddress::findOrFail($id);
-        $address->delete();
+        //
+    }
 
-        return redirect(route('address.show'));
-
+    public function detail($id)
+    {
+        $address = OrderAddress::find($id);
+        return response()->json($address);
     }
 }
