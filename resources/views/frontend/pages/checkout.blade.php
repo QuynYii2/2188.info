@@ -35,19 +35,23 @@
                             </svg>
                             <span class="text">Address</span>
                         </div>
-                        <a href="#" class="main-address d-flex justify-content-between align-items-center">
+                        <a href="{{ route('user.address.show') }}"
+                           class="main-address d-flex justify-content-between align-items-center">
                             <div class="address-detail">
                                 <div class="name">
                                     <span class="title">Name: </span>
-                                    <span class="value">{{ $address ? $address->username : Auth::user()->name}}</span>
+                                    <span class="value"
+                                          id="valueName">{{ $address ? $address->username : Auth::user()->name}}</span>
                                 </div>
                                 <div class="phone">
                                     <span class="title">Phone: </span>
-                                    <span class="value">{{ $address ? $address->phone : Auth::user()->phone}}</span>
+                                    <span class="value"
+                                          id="valuePhone">{{ $address ? $address->phone : Auth::user()->phone}}</span>
                                 </div>
                                 <div class="address">
                                     <span class="title">Address: </span>
-                                    <span class="value">{{ $address ? $address->address_detail : Auth::user()->address}}</span>
+                                    <span class="value"
+                                          id="valueAddress">{{ $address ? $address->address_detail : Auth::user()->address}}</span>
                                 </div>
                             </div>
                             <div class="nav-select">
@@ -86,7 +90,8 @@
                                     </svg>
                                     <span>COD</span>
                                 </label>
-                                <input type="radio" class="inputTypeCheckout" id="cod" name="method" checked value="cod">
+                                <input type="radio" class="inputTypeCheckout" id="cod" name="method" checked
+                                       value="cod">
                             </div>
                             <div class="method-detail d-flex justify-content-between align-items-center method-cod">
                                 <label for="vn_pay">
@@ -144,7 +149,8 @@
                                     </svg>
                                     <span>Apple pay</span>
                                 </label>
-                                <input type="radio" class="inputTypeCheckout" id="apple_pay" name="method" value="apple_pay">
+                                <input type="radio" class="inputTypeCheckout" id="apple_pay" name="method"
+                                       value="apple_pay">
                             </div>
                             <div class="method-detail d-flex justify-content-between align-items-center method-cod">
                                 <label for="master_card">
@@ -152,7 +158,8 @@
                                          style="width: 24px; height: 24px">
                                     <span>Mastercard</span>
                                 </label>
-                                <input type="radio" class="inputTypeCheckout" id="master_card" name="method" value="master_card">
+                                <input type="radio" class="inputTypeCheckout" id="master_card" name="method"
+                                       value="master_card">
                             </div>
                         </div>
                     </div>
@@ -281,6 +288,38 @@
             </div>
         </form>
     </div>
+    <script>
+        $(document).ready(function () {
+            let address = sessionStorage.getItem('address_id');
+            if (address) {
+                callAddress(address);
+            }
+        })
+
+        async function callAddress(id) {
+            let url = '{{ route('user.address.detail', ['id'=>':id'])  }}';
+            url = url.replace(':id', id);
+            await $.ajax({
+                url: url,
+                method: 'GET',
+            })
+                .done(function (response) {
+                    renderAddress(response);
+                })
+                .fail(function (_, textStatus) {
+                    console.log(textStatus);
+                });
+        }
+
+        function renderAddress(address) {
+            $('#valueName').text(address.username);
+            $('#valuePhone').text(address.phone);
+            $('#valueAddress').text(address.address_detail);
+            $('#fullname').val(address.username);
+            $('#phone').val(address.phone);
+            $('#address').val(address.address_detail);
+        }
+    </script>
     <script>
         let currency = $('#valueCurrency').text();
         let urlConvertCurrency = '{{ route('convert.currency', ['total' => ':total']) }}'

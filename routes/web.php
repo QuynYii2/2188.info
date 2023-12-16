@@ -7,7 +7,7 @@ use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\DetailMarketingController;
 use App\Http\Controllers\EvaluateProductController;
 use App\Http\Controllers\FileController;
-use App\Http\Controllers\Frontend\AddressController;
+use App\Http\Controllers\Frontend\AddressOrderController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\HomeController;
@@ -289,11 +289,16 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/evaluate', [EvaluateProductController::class, 'store'])->name('create.evaluate');
     Route::get('/evaluate/{id}', [EvaluateProductController::class, 'show'])->name('find.evaluate.id');
     Route::post('/evaluate/update', [EvaluateProductController::class, 'update'])->name('update.evaluate.id');
-    // Address Controller
-    Route::get('/address-book', [AddressController::class, 'index'])->name('address.show');
-    Route::post('/address', [AddressController::class, 'store'])->name('address.create');
-    Route::get('/address/delete/{id}', [AddressController::class, 'destroy'])->name('address.delete');
-    Route::post('/address-update/{id}', [AddressController::class, 'update'])->name('address.update');
+    /* Address Controller */
+    Route::prefix('address-book')->group(function () {
+        Route::get('/show', [AddressOrderController::class, 'show'])->name('address.show');
+        Route::get('/list', [AddressOrderController::class, 'index'])->name('user.address.show');
+        Route::get('/detail/{id}', [AddressOrderController::class, 'detail'])->name('user.address.detail');
+        Route::get('/create', [AddressOrderController::class, 'processCreate'])->name('user.address.process.create');
+        Route::post('/create', [AddressOrderController::class, 'store'])->name('user.address.create');
+        Route::post('/update/{id}', [AddressOrderController::class, 'update'])->name('user.address.update');
+        Route::delete('/delete/{id}', [AddressOrderController::class, 'delete'])->name('user.address.delete');
+    });
 //    Route::get('/address', [\App\Http\Controllers\Frontend\AddressController::class, 'index']);
     // Permission
     Route::get('/permission-user', [PermissionRankController::class, 'index'])->name('permission.user.show');
