@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Enums\CartStatus;
+use App\Enums\VariationStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Product;
@@ -21,8 +22,8 @@ class CartController extends Controller
                 ['user_id', '=', Auth::user()->id],
                 ['status', '=', CartStatus::WAIT_ORDER]
             ])->get();
-            $currency = (new \App\Http\Controllers\Frontend\HomeController())->getLocation($request);
-            return back()->with('cartItems', $carts)->with('currency', $currency);
+            $currency = (new HomeController())->getLocation($request);
+            return view('frontend.pages.cart', compact('carts', 'currency'));
         } else {
             return view('frontend/pages/login');
         }
@@ -125,12 +126,8 @@ class CartController extends Controller
                     $sales = $productSale;
                 }
             }
-
             if ($sales) {
                 $cart->price = $sales->sales;
-            } else {
-                $product = Product::find($cart->product_id);
-                $cart->price = $product->price;
             }
 
             $cart->save();
