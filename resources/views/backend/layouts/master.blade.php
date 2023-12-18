@@ -26,6 +26,7 @@
     {{--    <script> CKEDITOR.replace('editor1'); </script>--}}
     <link rel="stylesheet" href="{{ mix('css/custom.css') }}">
     <link rel="stylesheet" href="{{asset('css/style_backend.css')}}">
+    <link rel="stylesheet" href="{{asset('css/admin.css')}}">
     <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 
 

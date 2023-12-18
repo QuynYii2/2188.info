@@ -489,6 +489,15 @@ $('.add-fields').each(function (index, el) {
 });
 
 $(document).ready(function () {
+    $("#imgThumbnail").change(function () {
+        filename = this.files[0].name;
+        $('#imgThumbnailLabel').text(filename);
+    });
+    $("#imgGallery").change(function () {
+        filename = this.files[0].name;
+        $('#imgGalleryLabel').text(filename);
+    });
+
     $(".unregister").click(function () {
         var categoryID = $(this).data("id");
         var modalId_cate = 'exampleModal-' + categoryID;
@@ -570,7 +579,6 @@ $(document).ready(function () {
             }
         });
     })
-
 
 
 })

@@ -1,6 +1,7 @@
 @php
+    use App\Enums\PermissionUserStatus;
+    use Illuminate\Support\Facades\Auth;
     use Illuminate\Support\Facades\DB;
-    use App\Enums\PropertiStatus;
 @endphp
 
 @extends('backend.layouts.master')
@@ -9,9 +10,6 @@
     Create Product
 @endsection
 @php
-    use Illuminate\Support\Facades\Auth;
-    use App\Enums\PermissionUserStatus;
-
     if (auth()->check() != null){
         $permissionUsers = DB::table('permissions')
         ->join('permission_user', 'permission_user.permission_id', '=', 'permissions.id')
@@ -21,7 +19,6 @@
     } else {
         $permissionUsers[]= null;
     }
-
 @endphp
 <style>
     .btn-success {
@@ -90,85 +87,117 @@
     }
 </style>
 @section('content')
-
-    <div id="wpcontent">
-        <div id="wpbody" role="main">
-            <div class="card-header d-flex justify-content-between align-items-center" style="padding: 15px;">
-                <h5 class="card-title">{{ __('home.Thêm mới sản phẩm') }}</h5>
-                @if (session('success_update_product'))
-                    <div class="alert alert-success">
-                        {{ session('success_update_product') }}
-                    </div>
-                @endif
-            </div>
-            <div class="container-fluid">
-                <form action="{{ route('seller.products.store') }}" method="post" enctype="multipart/form-data"
-                      class="form-horizontal row" role="form">
-                    @csrf
-                    @if (session('success_update_product'))
-                        <div class="alert alert-success">
-                            {{ session('error_create_product') }}
-                        </div>
-                    @endif
-
-                    <div class=".col-12 col-md-7 border-right mt-2 rm-pd-on-mobile">
+    <div class="container-fluid create-product-page bg-white">
+        <h5 class="title-page s24w6">Add new Product</h5>
+        <div class="main-page">
+            <form action="{{ route('seller.products.store') }}" method="post" class="form-create-product pb-3" enctype="multipart/form-data">
+                @csrf
+                <div class="row">
+                    <div class="col-md-6 col-12">
                         <div class="form-group">
-                            <div class="name">{{ __('home.Tên sản phẩm') }}</div>
+                            <label for="name" class="s12w5">{{ __('home.Tên sản phẩm') }} <span
+                                        class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="name" id="name"
                                    placeholder={{ __('home.Nhập tên sản phẩm')}} required>
                         </div>
                         <div class="form-group">
-                            <div class="name">{{ __('home.Mã sản phẩm') }}</div>
+                            <label for="product_code" class="s12w5">{{ __('home.Mã sản phẩm') }} <span
+                                        class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="product_code" id="product_code"
                                    placeholder={{ __('home.Nhập mã sản phẩm') }} required>
                         </div>
                         <div class="form-group">
-                            <label for="short_description">{{ __('home.Mô tả ngắn') }}</label>
+                            <label for="short_description" class="s12w5">{{ __('home.Mô tả ngắn') }} <span
+                                        class="text-danger">*</span></label>
                             <textarea id="short_description" class="form-control description" name="short_description"
                                       rows="5">
                             </textarea>
                         </div>
                         <div class="form-group">
-                            <label for="description">{{ __('home.Mô tả chi tiết') }}</label>
+                            <label for="description" class="s12w5">{{ __('home.Mô tả chi tiết') }} <span
+                                        class="text-danger">*</span></label>
                             <textarea id="description" class="form-control description" name="description" rows="5">
                             </textarea>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <div class="label_item-member s12w5">
+                                    Photo
+                                    <span class="text-danger">*</span>
+                                </div>
+                                <label id="imgThumbnailLabel" for="imgThumbnail"
+                                       class="upload-item-input d-flex justify-content-between align-items-center labelUploadImage">
+                                    <div class="upload-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="61"
+                                             viewBox="0 0 60 61" fill="none">
+                                            <path d="M30 13V48M12.5 30.5H47.5" stroke="#929292" stroke-width="6"
+                                                  stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                </label>
+                                <input type="file" class="form-control" id="imgThumbnail" accept="image/*"
+                                       style="visibility:hidden;"
+                                       name="imgThumbnail" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="label_item-member s12w5">
+                                    Gallery
+                                    <span class="text-danger">*</span>
+                                </div>
+                                <label id="imgGalleryLabel" for="imgGallery"
+                                       class="upload-item-input d-flex justify-content-between align-items-center labelUploadImage">
+                                    <div class="upload-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="61"
+                                             viewBox="0 0 60 61" fill="none">
+                                            <path d="M30 13V48M12.5 30.5H47.5" stroke="#929292" stroke-width="6"
+                                                  stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                </label>
+                                <input type="file" class="form-control" id="imgGallery" accept="image/*" multiple="multiple"
+                                       style="visibility:hidden;"
+                                       name="imgGallery[]" required>
+                            </div>
                         </div>
                         <div class="form-group mb-3">
                             @include('backend.products.demo')
                         </div>
                     </div>
-                    <div class="col-12 col-md-5 mt-2 rm-pd-on-mobile">
+                    <div class="col-md-6 col-12">
                         <div class="form-group">
-                            <div class="name">{{ __('home.Giá bán') }}</div>
-                            <input type="number" class="form-control" name="giaban" id="name"
+                            <label for="giaban" class="s12w5">{{ __('home.Giá bán') }} <span
+                                        class="text-danger">*</span></label>
+                            <input type="number" class="form-control" name="giaban" id="giaban"
                                    placeholder={{ __('home.Nhập giá bán') }}
                                    required min="1">
                         </div>
                         <div class="form-group">
-                            <div class="name">{{ __('home.Nhập giá khuyến mãi(nếu có)') }}</div>
-                            <input type="number" class="form-control" name="giakhuyenmai" id="name"
+                            <label for="giakhuyenmai" class="s12w5">{{ __('home.Nhập giá khuyến mãi(nếu có)') }}</label>
+                            <input type="number" class="form-control" name="giakhuyenmai" id="giakhuyenmai"
                                    placeholder={{ __('home.Nhập số lượng') }} min="1">
                         </div>
                         <div class="form-group">
-                            <div class="name">{{ __('home.Nhập số lượng') }}</div>
+                            <label for="qty" class="s12w5">{{ __('home.Nhập số lượng') }}</label>
                             <input type="number" class="form-control" name="qty" id="qty"
                                    placeholder={{ __('home.Nhập giá khuyến mãi') }} min="1">
                         </div>
                         <div class="form-group">
-                            <div class="name">{{ __('home.Xuất xứ') }}</div>
+                            <label for="origin" class="s12w5">{{ __('home.Xuất xứ') }}</label>
                             <input type="text" class="form-control" name="origin" id="origin"
                                    placeholder="{{ __('home.Nhập xuất xứ') }}">
                         </div>
                         <div class="form-group">
-                            <div class="name">{{ __('home.Sản phẩm tối thiểu') }}</div>
+                            <label for="min" class="s12w5">{{ __('home.Sản phẩm tối thiểu') }} <span
+                                        class="text-danger">*</span></label>
                             <input type="number" class="form-control" name="min" id="min"
                                    placeholder={{ __('home.Nhập số lượng tối thiểu') }} min="1">
                         </div>
                         <div class="form-group">
                             <div class="d-flex">
-                                <div class="name">{{ __('home.Mua nhiều giảm giá') }}</div>
+                                <div class="s12w5 mb-3">{{ __('home.Mua nhiều giảm giá') }} <span
+                                            class="text-danger">*</span></div>
                             </div>
-                            <div>
+                            <div class="form-show">
                                 <div class="">
                                     <div class="add-fields" data-af_base="#base-package-fields"
                                          data-af_target=".packages">
@@ -216,11 +245,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="name">{{ __('home.Tất cả danh mục') }}</div>
-                            @php
-                                $categories = DB::table('categories')->where('parent_id', null)->get();
-                            @endphp
-                            <div id="checkboxes" style=" display: block">
+                            <div class="name s12w5">{{ __('home.Tất cả danh mục') }} <span class="text-danger">*</span>
+                            </div>
+                            <div id="checkboxes" style="display: block">
                                 @foreach($categories as $category)
                                     @if (!in_array($category->id, $categoriesRegister))
                                         <div class="unregister" data-toggle="modal" data-id="{{$category->id}}"
@@ -235,15 +262,15 @@
                                                         @endphp/>
                                                 <span class="labelCheckboxCategory">
                                                     @if(locationHelper() == 'kr')
-                                                        <div class="text">{{ $category->name_ko }}</div>
+                                                        <div class="text s12w5">{{ $category->name_ko }}</div>
                                                     @elseif(locationHelper() == 'cn')
-                                                        <div class="text">{{$category->name_zh}}</div>
+                                                        <div class="text s12w5">{{$category->name_zh}}</div>
                                                     @elseif(locationHelper() == 'jp')
-                                                        <div class="text">{{$category->name_ja}}</div>
+                                                        <div class="text s12w5">{{$category->name_ja}}</div>
                                                     @elseif(locationHelper() == 'vi')
-                                                        <div class="text">{{$category->name_vi}}</div>
+                                                        <div class="text s12w5">{{$category->name_vi}}</div>
                                                     @else
-                                                        <div class="text">{{$category->name_en}}</div>
+                                                        <div class="text s12w5">{{$category->name_en}}</div>
                                                     @endif
                                                 </span>
                                             </label>
@@ -262,7 +289,7 @@
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        This type of category of yours has not been registered.<br>
+                                                        This type of category of yours has not been registered. <br>
                                                         Would you like to add this category?
                                                     </div>
                                                     <div class="modal-footer">
@@ -287,15 +314,15 @@
                                                    class="inputCheckboxCategory mr-2 p-3"/>
                                             <span class="labelCheckboxCategory">
                                                 @if(locationHelper() == 'kr')
-                                                    <div class="text">{{$category->name_ko }}</div>
+                                                    <div class="text s12w5">{{$category->name_ko }}</div>
                                                 @elseif(locationHelper() == 'cn')
-                                                    <div class="text">{{$category->name_zh}}</div>
+                                                    <div class="text s12w5">{{$category->name_zh}}</div>
                                                 @elseif(locationHelper() == 'jp')
-                                                    <div class="text">{{$category->name_ja}}</div>
+                                                    <div class="text s12w5">{{$category->name_ja}}</div>
                                                 @elseif(locationHelper() == 'vi')
-                                                    <div class="text">{{$category->name_vi}}</div>
+                                                    <div class="text s12w5">{{$category->name_vi}}</div>
                                                 @else
-                                                    <div class="text">{{$category->name_en}}</div>
+                                                    <div class="text s12w5">{{$category->name_en}}</div>
                                                 @endif
                                            </span>
                                         </label>
@@ -319,15 +346,15 @@
                                                         />
                                                         <span class="labelCheckboxCategory">
                                                             @if(locationHelper() == 'kr')
-                                                                <div class="text">{{$child->name_ko }}</div>
+                                                                <div class="text s12w5">{{$child->name_ko }}</div>
                                                             @elseif(locationHelper() == 'cn')
-                                                                <div class="text">{{$child->name_zh}}</div>
+                                                                <div class="text s12w5">{{$child->name_zh}}</div>
                                                             @elseif(locationHelper() == 'jp')
-                                                                <div class="text">{{$child->name_ja}}</div>
+                                                                <div class="text s12w5">{{$child->name_ja}}</div>
                                                             @elseif(locationHelper() == 'vi')
-                                                                <div class="text">{{$child->name_vi}}</div>
+                                                                <div class="text s12w5">{{$child->name_vi}}</div>
                                                             @else
-                                                                <div class="text">{{$child->name_en}}</div>
+                                                                <div class="text s12w5">{{$child->name_en}}</div>
                                                             @endif
                                                         </span>
                                                     </label>
@@ -373,15 +400,15 @@
                                                            class="inputCheckboxCategory mr-2 p-3"/>
                                                     <span class="labelCheckboxCategory">
                                                             @if(locationHelper() == 'kr')
-                                                            <div class="text">{{ $child->name_ko }}</div>
+                                                            <div class="text s12w5">{{ $child->name_ko }}</div>
                                                         @elseif(locationHelper() == 'cn')
-                                                            <div class="text">{{$child->name_zh}}</div>
+                                                            <div class="text s12w5">{{$child->name_zh}}</div>
                                                         @elseif(locationHelper() == 'jp')
-                                                            <div class="text">{{$child->name_ja}}</div>
+                                                            <div class="text s12w5">{{$child->name_ja}}</div>
                                                         @elseif(locationHelper() == 'vi')
-                                                            <div class="text">{{$child->name_vi}}</div>
+                                                            <div class="text s12w5">{{$child->name_vi}}</div>
                                                         @else
-                                                            <div class="text">{{$child->name_en}}</div>
+                                                            <div class="text s12w5">{{$child->name_en}}</div>
                                                         @endif
 
                                                         </span>
@@ -405,15 +432,15 @@
                                                                     @endphp/>
                                                             <span class="labelCheckboxCategory">
                                                                 @if(locationHelper() == 'kr')
-                                                                    <div class="text">{{ $child2->name_ko }}</div>
+                                                                    <div class="text s12w5">{{ $child2->name_ko }}</div>
                                                                 @elseif(locationHelper() == 'cn')
-                                                                    <div class="text">{{$child2->name_zh}}</div>
+                                                                    <div class="text s12w5">{{$child2->name_zh}}</div>
                                                                 @elseif(locationHelper() == 'jp')
-                                                                    <div class="text">{{$child2->name_ja}}</div>
+                                                                    <div class="text s12w5">{{$child2->name_ja}}</div>
                                                                 @elseif(locationHelper() == 'vi')
-                                                                    <div class="text">{{$child2->name_vi}}</div>
+                                                                    <div class="text s12w5">{{$child2->name_vi}}</div>
                                                                 @else
-                                                                    <div class="text">{{$child2->name_en}}</div>
+                                                                    <div class="text s12w5">{{$child2->name_en}}</div>
                                                                 @endif
                                                        </span>
                                                         </label>
@@ -461,15 +488,15 @@
                                                         />
                                                         <span class="labelCheckboxCategory">
                                                             @if(locationHelper() == 'kr')
-                                                                <div class="text">{{ $child2->name_ko }}</div>
+                                                                <div class="text s12w5">{{ $child2->name_ko }}</div>
                                                             @elseif(locationHelper() == 'cn')
-                                                                <div class="text">{{$child2->name_zh}}</div>
+                                                                <div class="text s12w5">{{$child2->name_zh}}</div>
                                                             @elseif(locationHelper() == 'jp')
-                                                                <div class="text">{{$child2->name_ja}}</div>
+                                                                <div class="text s12w5">{{$child2->name_ja}}</div>
                                                             @elseif(locationHelper() == 'vi')
-                                                                <div class="text">{{$child2->name_vi}}</div>
+                                                                <div class="text s12w5">{{$child2->name_vi}}</div>
                                                             @else
-                                                                <div class="text">{{$child2->name_en}}</div>
+                                                                <div class="text s12w5">{{$child2->name_en}}</div>
                                                             @endif
                                                     </span>
                                                     </label>
@@ -480,26 +507,16 @@
                                 @endforeach
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="form-group col-12 col-sm-12 ">
-                                @include('backend.products.modal-media')
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-group col-12 col-sm-12" id="list-img-thumbnail"></div>
-                            <div class="form-group col-12 col-sm-12" id="list-img-gallery"></div>
-                        </div>
                     </div>
-                    <input id="input-form-create-attribute" name="attribute_property" type="text" hidden>
-                    <input type="text" hidden id="imgGallery" value="" name="imgGallery[]">
-                    <input type="text" hidden id="imgThumbnail" value="" name="imgThumbnail[]">
-                    <div class="form-group col-12 col-md-7 col-sm-8 ">
-                        <div class="row justify-content-center">
-                            <button type="submit" class="btn btn-success">{{ __('home.Gửi') }}</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <div class="row mb-5" id="renderInputAttribute">
+
+                </div>
+                <input id="input-form-create-attribute" name="attribute_property" type="text" hidden>
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btnSave">{{ __('home.Completed') }}</button>
+                </div>
+            </form>
         </div>
     </div>
     <script>
