@@ -1,11 +1,12 @@
 @extends('backend.layouts.master')
 @section('title', 'List Order')
 @section('content')
-    <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="card-title">{{ __('home.Đơn hàng') }}</h5>
-        </div>
-        <form action="{{ route('seller.search.order.list') }}" id="searchInput" class="row my-2 pl-3">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="card-title order-managers">{{ __('home.Đơn hàng') }}</div>
+    </div>
+    <div class="search-order" >
+        <form action="{{ route('seller.search.order.list') }}" id="searchInput" class="d-flex my-2 w-100">
             @csrf
             <div class="col-sm-2">
                 <input placeholder={{ __('home.full name') }} type="text" class="form-control" id="fullName" name="fullName" value="{{ isset($phoneNumber) ? $phoneNumber : '' }}"
@@ -27,23 +28,21 @@
                 <input placeholder={{ __('home.đến ngày') }} type="date" class="form-control" id="to_date" name="to_date" value="{{ isset($to_date) ? $to_date : '' }}"
                        data-date-split-input="true">
             </div>
-            <div class="col-sm-2">
-                <button type="submit" class="btn btn-success position-absolute" style="bottom: 0">{{ __('home.search') }}</button>
-            </div>
-        </form>
-        <form action="{{ route('order.manage.export.excel') }}" class="pl-3" method="post" id="formExportAll">
-            @csrf
-            <input type="text" id="excel-value" name="excel-value" value="{{ $orders }}" hidden>
-            <button type="submit" class="btn btn-success">Export Excel</button>
-        </form>
+            <div class="col-sm-2 d-flex">
+                <button type="submit" class="btn btn-success" style="bottom: 0">{{ __('home.search') }}</button>
+                <div class="btn-clear"><a href="#" class="">Clear all</a></div>
 
-        <form action="{{ route('order.manage.export.excel.detail') }}" method="post" id="formExportDetail"
-              class="d-none">
-            @csrf
-            <input type="text" id="excel-id" name="excel-id" value="0" hidden>
-            <button type="submit" class="btn btn-success">Export Excel</button>
+            </div>
+
         </form>
+    </div>
+    <div class="mt-4 card border-0">
         <div class="card-body">
+            <form action="{{ route('order.manage.export.excel') }}" class="export-excel" method="post" id="formExportAll">
+                @csrf
+                <input type="text" id="excel-value" name="excel-value" value="{{ $orders }}" hidden>
+                <button type="submit" class="btn btn-success">Export Excel</button>
+            </form>
             <table class="table table-bordered sortable" id="tableOrders">
                 <thead>
                 <tr>
@@ -104,8 +103,9 @@
                                 {{ $ld->translateText($order->status, locationPermissionHelper()) }}
                             </td>
                             <td>
-                                <a href="{{route('seller.order.detail', $order->id)}}"
-                                   class="btn btn-warning">Detail</a>
+                                <a class="btn btn-warning btn-order"
+                                   data-toggle="modal" data-target="#modal-detail-order" data-order-id="{{ $order->id }}">Detail</a>
+
                             </td>
                         </tr>
                     @endforeach
@@ -114,9 +114,64 @@
             </table>
         </div>
     </div>
+
+    <div class="modal fade" id="modal-detail-order" tabindex="-1" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog modal-dialog-centered cus-mr-modal" style="max-width: 970px;">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+{{--                    <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Phone Number') }}</h5>--}}
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span>&times;</span>
+                    </button>
+                </div>
+{{--                <form action="{{ route('user.changePhoneNumber') }}" method="post">--}}
+{{--                    @csrf--}}
+                    <div  class="modal-body" id="modal-body-content">
+{{--                        <div class="form-group">--}}
+{{--                            <label for="inputPassword"--}}
+{{--                                   class="col-sm-4 col-form-label">{{ __('home.Phone Number') }}</label>--}}
+{{--                            <div>--}}
+{{--                                <input type="number" class="form-control" value="{{ Auth::user()->phone }}"--}}
+{{--                                       id="edit-phone-input" required name="edit-phone" inputmode="numeric"/>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+                    </div>
+{{--                    <div class="modal-footer">--}}
+{{--                        <button type="button" class="btn btn-secondary"--}}
+{{--                                data-dismiss="modal">{{ __('home.Cancel') }}</button>--}}
+{{--                        <button type="submit" class="btn btn-primary">{{ __('home.Lưu') }}</button>--}}
+{{--                    </div>--}}
+{{--                </form>--}}
+            </div>
+        </div>
+    </div>
     <script>
         localStorage.setItem('searchInput', document.getElementById('fullName').value);
         document.getElementById('fullName').value = localStorage.getItem('searchInput');
     </script>
     <script src="{{ asset('js/backend/list.js') }}"></script>
+    <script>
+        $('#modal-detail-order').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Nút đã kích hoạt modal
+            var orderId = button.data('order-id'); // Lấy giá trị từ data-order-id
+            var url = '{{ route('seller.order.detail', ':id') }}';
+            url = url.replace(':id', orderId);
+            // Gửi AJAX request để lấy thông tin chi tiết về đơn hàng dựa trên orderId
+            $.ajax({
+                url: url,
+                method: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (data) {
+                    $('.modal-title').text('Order Details');
+                    $('#modal-body-content').html(data);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+    </script>
+
 @endsection
