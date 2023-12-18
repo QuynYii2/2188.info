@@ -1,11 +1,9 @@
 <div class="container mb-5">
-    <div class="row mb-5">
-        <div class="col-md-4" id="formRenderAttribute">
+    <div id="formRenderAttribute">
 
-        </div>
-        <div class="col-md-8" id="formRenderProperty">
+    </div>
+    <div id="formRenderProperty">
 
-        </div>
     </div>
 
     <div class="row d-none mt-5" id="formAddAttribute">
@@ -14,7 +12,7 @@
                 <label for="attribute_name">{{ __('home.Tên thuộc tính') }}</label>
                 <input type="text" class="form-control" name="attribute_name" id="attribute_name">
             </div>
-            <a class="btn btn-success" id="btnSubmitAttribute">{{ __('home.Tạo mới') }}</a>
+            <a class="btn btnSave" id="btnSubmitAttribute">{{ __('home.Create now') }}</a>
             <a class="btn btn-secondary" id="btnCloseAttribute">{{ __('home.Close') }}</a>
         </div>
     </div>
@@ -23,12 +21,8 @@
 
     </div>
 
-    <div class="row mb-5" id="renderInputAttribute">
-
-    </div>
-
-    <div class="col mt-5">
-        <a id="btnSaveAttribute" class="btn btn-success mt-5">{{ __('home.Save attribute') }}</a>
+    <div class="">
+        <a id="btnSaveAttribute" class="btn btnSave mt-5">{{ __('home.Save attribute') }}</a>
     </div>
 </div>
 
