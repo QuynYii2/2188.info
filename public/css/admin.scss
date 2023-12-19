@@ -212,9 +212,74 @@ button {
   }
 }
 
+/* List member user page*/
+.list-user-page {
+  margin: 3rem 1rem;
+
+  .search-user {
+    padding: 32px 16px;
+
+    .list-input {
+      select,
+      input {
+        border-radius: 4px;
+        border: 1px solid var(--Grey-Light, #D6D6D6);
+        background: var(--White-Light, #F3F3F3);
+        margin-right: 30px;
+      }
+    }
+
+    .list-button {
+      .btnSearchProduct {
+        background: var(--secon-1, #F47621);
+        width: 150px;
+        padding: 12px 16px;
+        margin: 0 24px;
+
+        &:hover {
+          color: #fff;
+        }
+      }
+
+      .brnClear {
+        &:hover {
+          color: #fa1a1a;
+        }
+      }
+    }
+  }
+
+  .list-user {
+    padding: 16px;
+
+    .btnCreate {
+      background: var(--secon-1, #F47621);
+      padding: 8px 16px;
+      width: 200px;
+      color: var(--White, #FFF);
+      font-size: 16px;
+      font-weight: 600;
+
+      &:hover {
+        color: var(--secon-1, #F47621);
+        background: var(--White, #FFF);
+        border: 1px solid #F47621;
+      }
+    }
+
+
+  }
+}
+
 /* Your properties css*/
 .s24w6 {
   font-size: 24px;
+  font-weight: 600;
+}
+
+.c929292s16w6 {
+  color: var(--Grey-Dark, #929292);
+  font-size: 16px;
   font-weight: 600;
 }
 

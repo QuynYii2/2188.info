@@ -350,10 +350,8 @@
                     </a>
                     <ul class='sub-items pl-3'>
 
-                        <li><a class="sidebarUrl" href="{{route('admin.list.users')}}">{{ __('home.list_user') }}</a>
-                        </li>
-                        <li><a class="sidebarUrl"
-                               href="{{route('admin.processCreate.users')}}">{{ __('home.create_member') }}</a>
+                        <li>
+                            <a class="sidebarUrl" href="{{route('admin.list.users')}}">{{ __('home.list_user') }}</a>
                         </li>
                     </ul>
                 </li>

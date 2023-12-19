@@ -161,7 +161,6 @@
                                     </div>
                                 </div>
                             </div>
-                            </p>
                         </td>
                         <td class="s12w5">{{ $product->status }}</td>
                         <td class="s12w5">
