@@ -1,0 +1,195 @@
+/* Custom css */
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* List product page */
+.list-product-page {
+  margin: 3rem 1rem;
+}
+.list-product-page .search-product {
+  padding: 32px 16px;
+}
+.list-product-page .search-product .list-input input {
+  border-radius: 4px;
+  border: 1px solid var(--Grey-Light, #D6D6D6);
+  background: var(--White-Light, #F3F3F3);
+  margin-right: 30px;
+}
+.list-product-page .search-product .list-button .btnSearchProduct {
+  background: var(--secon-1, #F47621);
+  width: 150px;
+  padding: 12px 16px;
+  margin: 0 24px;
+}
+.list-product-page .search-product .list-button .btnSearchProduct:hover {
+  color: #fff;
+}
+.list-product-page .search-product .list-button .brnClear:hover {
+  color: #fa1a1a;
+}
+.list-product-page .table-products {
+  margin-top: 18px;
+}
+.list-product-page .table-products .image_product {
+  max-width: 90px;
+  width: 100%;
+  object-fit: cover;
+}
+.list-product-page .table-products .product-name a:hover {
+  color: #F47621;
+}
+.list-product-page .table-products .action-edit {
+  color: #929292;
+}
+.list-product-page .table-products .action-delete {
+  color: #E90000;
+}
+
+/* Create product page */
+.create-product-page textarea,
+.create-product-page input {
+  border-radius: 8px;
+  border: 1px solid var(--Grey-medium, #BFBFBF);
+  background: var(--White-Light, #F3F3F3);
+}
+.create-product-page .remove-form-field {
+  color: #F00;
+}
+.create-product-page .add-form-field {
+  border: 1px solid var(--secon-1, #F47621);
+  padding: 12px 8px;
+  color: var(--secon-1, #F47621);
+  font-size: 16px;
+  font-weight: 600;
+}
+.create-product-page .add-form-field:hover {
+  background-color: #F47621;
+  color: #FFF;
+}
+.create-product-page .labelUploadImage {
+  border-radius: 8px;
+  border: 1px dashed var(--Grey-Dark, #929292);
+  padding: 40%;
+  max-height: 127px;
+  height: 100%;
+  width: 100%;
+}
+.create-product-page .btnCreateAttribute {
+  border: 1px solid var(--secon-1, #F47621);
+  color: var(--secon-1, #F47621) !important;
+  font-size: 16px;
+  font-weight: 600;
+}
+.create-product-page .btnCreateAttribute:hover {
+  background-color: #F47621;
+  color: #FFF !important;
+}
+.create-product-page .btnCreateProperty {
+  border: 1px solid var(--secon-1, #F47621);
+  color: var(--secon-1, #F47621) !important;
+  font-size: 16px;
+  font-weight: 600;
+}
+.create-product-page .btnCreateProperty:hover {
+  background-color: #F47621;
+  color: #FFF !important;
+}
+.create-product-page .btnSave {
+  background: var(--secon-1, #F47621);
+  width: 200px;
+  padding: 12px 16px;
+  color: var(--White, #FFF) !important;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Update product page */
+.update-product-page textarea,
+.update-product-page input {
+  border-radius: 8px;
+  border: 1px solid var(--Grey-medium, #BFBFBF);
+  background: var(--White-Light, #F3F3F3);
+}
+.update-product-page .remove-form-field {
+  color: #F00;
+}
+.update-product-page .add-form-field {
+  border: 1px solid var(--secon-1, #F47621);
+  padding: 12px 8px;
+  color: var(--secon-1, #F47621);
+  font-size: 16px;
+  font-weight: 600;
+}
+.update-product-page .add-form-field:hover {
+  background-color: #F47621;
+  color: #FFF;
+}
+.update-product-page .labelUploadImage {
+  border-radius: 8px;
+  border: 1px dashed var(--Grey-Dark, #929292);
+  padding: 40%;
+  max-height: 127px;
+  height: 100%;
+  width: 100%;
+}
+.update-product-page .btnCreateAttribute {
+  border: 1px solid var(--secon-1, #F47621);
+  color: var(--secon-1, #F47621) !important;
+  font-size: 16px;
+  font-weight: 600;
+}
+.update-product-page .btnCreateAttribute:hover {
+  background-color: #F47621;
+  color: #FFF !important;
+}
+.update-product-page .btnCreateProperty {
+  border: 1px solid var(--secon-1, #F47621);
+  color: var(--secon-1, #F47621) !important;
+  font-size: 16px;
+  font-weight: 600;
+}
+.update-product-page .btnCreateProperty:hover {
+  background-color: #F47621;
+  color: #FFF !important;
+}
+.update-product-page .btnSave {
+  background: var(--secon-1, #F47621);
+  width: 200px;
+  padding: 12px 16px;
+  color: var(--White, #FFF) !important;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Your properties css*/
+.s24w6 {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.cFFFs16w6 {
+  color: var(--White, #FFF);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.cF00s14w6 {
+  color: #F00;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.s12w5 {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/*# sourceMappingURL=admin.css.map */

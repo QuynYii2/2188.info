@@ -1,25 +1,29 @@
-<div class="form-group mb-3">
-    <label for="selectAttribute">{{ __('home.Thông số sản phẩm') }}</label>
-    <select class="form-control" name="attribute_id" id="selectAttribute">
-        <option value="#"> --- {{ __('home.Chọn thuộc tính cha') }} ---</option>
-        @foreach($attributes as $attribute)
-            <option value="{{ $attribute->id }}" data-attribute="{{$attribute}}">
-                @if(locationHelper() == 'kr')
-                    {{ ($attribute->name_ko) }}
-                @elseif(locationHelper() == 'cn')
-                    {{ ($attribute->name_zh) }}
-                @elseif(locationHelper() == 'jp')
-                    {{ ($attribute->name_ja) }}
-                @elseif(locationHelper() == 'vi')
-                    {{ ($attribute->name_vi) }}
-                @else
-                    {{ ($attribute->name_en) }}
-                @endif
-            </option>
-        @endforeach
-    </select>
+<div class="row mb-3">
+    <div class="form-group col-md-6">
+        <label for="selectAttribute" class="s12w5">{{ __('home.Thông số sản phẩm') }}</label>
+        <select class="form-control s12w5" name="attribute_id" id="selectAttribute">
+            <option value="#"> --- {{ __('home.Chọn thuộc tính cha') }} ---</option>
+            @foreach($attributes as $attribute)
+                <option value="{{ $attribute->id }}" data-attribute="{{$attribute}}">
+                    @if(locationHelper() == 'kr')
+                        {{ ($attribute->name_ko) }}
+                    @elseif(locationHelper() == 'cn')
+                        {{ ($attribute->name_zh) }}
+                    @elseif(locationHelper() == 'jp')
+                        {{ ($attribute->name_ja) }}
+                    @elseif(locationHelper() == 'vi')
+                        {{ ($attribute->name_vi) }}
+                    @else
+                        {{ ($attribute->name_en) }}
+                    @endif
+                </option>
+            @endforeach
+        </select>
+    </div>
+   <div class="col-md-6 d-flex align-items-center mt-2">
+       <a class="btn btnCreateAttribute" id="btnCreateAttribute"> <i class="fa-solid fa-plus"></i> {{ __('home.Create new attribute') }} </a>
+   </div>
 </div>
-<a class="btn btn-warning" id="btnCreateAttribute"> {{ __('home.Create new attribute') }} </a>
 <script>
     $(document).ready(function () {
         let myArray = [];

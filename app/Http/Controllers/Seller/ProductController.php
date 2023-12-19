@@ -52,13 +52,14 @@ class ProductController extends Controller
                 $products = Product::where([['user_id', Auth::user()->id], ['status', '!=', ProductStatus::DELETED]])->orderByDesc('id')->paginate(10);
             }
         }
-        return view('backend/products/index', ['products' => $products, 'categories' => $categories]);
+        $currency = (new HomeController())->getLocation($request);
+        return view('backend/products/index', ['products' => $products, 'categories' => $categories, 'currency' => $currency]);
     }
 
     public function search(Request $request)
     {
         (new HomeController())->getLocale($request);
-
+        $currency = (new HomeController())->getLocation($request);
         $query = Product::query();
 
         $fullName = $request->input('fullName');
@@ -95,7 +96,7 @@ class ProductController extends Controller
 
         $products = $query->paginate(10);
 
-        return view('backend.products.index', compact('products', 'fullName', 'phoneNumber', 'email', 'from_date', 'to_date'));
+        return view('backend.products.index', compact('currency', 'products', 'fullName', 'phoneNumber', 'email', 'from_date', 'to_date'));
     }
 
 
@@ -482,18 +483,17 @@ class ProductController extends Controller
             $shortDescriptionValue = $request->input('short_description');
             $product->category_id = $request->input('category_id');
 
-            $arrThumbnail = $request->input('imgThumbnail');
-            $arrGallery = $request->input('imgGallery');
-
-            if (is_array($arrThumbnail)) {
-                if ($arrThumbnail[0]) {
-                    $product->thumbnail = $this->handleGallery($request->input('imgThumbnail'));
-                }
+            if ($request->hasFile('imgThumbnail')) {
+                $thumbnail = $request->file('imgThumbnail');
+                $thumbnailPath = $thumbnail->store('product', 'public');
+                $product->thumbnail = $thumbnailPath;
             }
-            if (is_array($arrGallery)) {
-                if ($arrGallery[0]) {
-                    $product->gallery = $this->handleGallery($request->input('imgGallery'));
-                }
+
+            if ($request->hasFile('imgGallery')) {
+                $galleryPaths = array_map(function ($image) {
+                    return $image->store('gallery', 'public');
+                }, $request->file('imgGallery'));
+                $product->gallery = implode(',', $galleryPaths);
             }
 
             $number = $request->input('count');
@@ -654,55 +654,9 @@ class ProductController extends Controller
                 return back();
             }
         } catch (\Exception $exception) {
-            dd($exception);
             alert()->error('Error', 'Error, please try again');
             return back();
         }
-    }
-
-    public function handleGallery($input)
-    {
-        $pattern = '/\/storage\/([^,"]+),?/';
-        $matches = array();
-        $arrResult = array();
-        foreach ($input as $item) {
-            preg_match_all($pattern, $item, $matches);
-            array_push($arrResult, $matches[1]);
-        }
-        return implode(',', $arrResult[0]);
-    }
-
-    public function create(Request $request)
-    {
-        (new HomeController())->getLocale($request);
-        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
-        $registerCate = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
-        $registerCategories = MemberRegisterInfo::where('id', $registerCate->member_id)->first();
-        $categoriesRegister = [];
-        $arrayCategory = explode(',', $registerCategories->category_id);
-//        foreach ($arrayCategory as $registerCategor) {
-//            array_push($categoriesRegister, $registerCategor);
-//        }
-
-        $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', Auth::user()->id]])->get();
-
-        $id = Auth::user()->id;
-        $roles = DB::table('role_user')->where('user_id', $id)->get('role_id');
-        $storages = StorageProduct::where('create_by', Auth::user()->id)->orderByDesc('id')->get();
-        foreach ($roles as $role) {
-            if ($role->role_id == 1) {
-                $storages = StorageProduct::all();
-                break;
-            }
-        }
-        session()->forget('att_of_product');
-
-        return view('backend/products/create', [
-            'categories' => $categories,
-            'attributes' => $attributes,
-            'storages' => $storages,
-            'categoriesRegister' => $arrayCategory,
-        ]);
     }
 
     public function store(Request $request)
@@ -749,11 +703,19 @@ class ProductController extends Controller
             $product = new Product();
             $qty_in_storage = DB::table('storage_products')->where('id', $request->input('storage-id'))->value('quantity');
 
-            if ($request->hasFile('thumbnail')) {
-                $thumbnail = $request->file('thumbnail');
-                $thumbnailPath = $thumbnail->store('thumbnails', 'public');
+            if ($request->hasFile('imgThumbnail')) {
+                $thumbnail = $request->file('imgThumbnail');
+                $thumbnailPath = $thumbnail->store('product', 'public');
                 $product->thumbnail = $thumbnailPath;
             }
+
+            if ($request->hasFile('imgGallery')) {
+                $galleryPaths = array_map(function ($image) {
+                    return $image->store('gallery', 'public');
+                }, $request->file('imgGallery'));
+                $product->gallery = implode(',', $galleryPaths);
+            }
+
             $product->storage_id = $request->input('storage-id');
             $product->name = $nameValue;
             $product->description = $descriptionValue;
@@ -763,8 +725,6 @@ class ProductController extends Controller
             $product->category_id = $request->input('category_id');
             $product->user_id = Auth::user()->id;
             $product->location = Auth::user()->region;
-            $product->gallery = $this->handleGallery($request->input('imgGallery'));
-            $product->thumbnail = $this->handleGallery($request->input('imgThumbnail'));
             $product->slug = \Str::slug($request->input('name'));
             $product->old_price = $request->input('giaban');
             $product->origin = $request->input('origin');
@@ -828,6 +788,7 @@ class ProductController extends Controller
                 return back();
             }
         } catch (\Exception $exception) {
+            dd($exception);
             alert()->error('Error', 'Error, Please try again!');
             return back();
         }
@@ -984,6 +945,41 @@ class ProductController extends Controller
         return $listIDs;
     }
 
+    public function create(Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        $categories = Category::where('parent_id', null)
+            ->where('status', CategoryStatus::ACTIVE)
+            ->get();
+        $registerCate = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+        $registerCategories = MemberRegisterInfo::where('id', $registerCate->member_id)->first();
+        $categoriesRegister = [];
+        $arrayCategory = explode(',', $registerCategories->category_id);
+//        foreach ($arrayCategory as $registerCategor) {
+//            array_push($categoriesRegister, $registerCategor);
+//        }
+
+        $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', Auth::user()->id]])->get();
+
+        $id = Auth::user()->id;
+        $roles = DB::table('role_user')->where('user_id', $id)->get('role_id');
+        $storages = StorageProduct::where('create_by', Auth::user()->id)->orderByDesc('id')->get();
+        foreach ($roles as $role) {
+            if ($role->role_id == 1) {
+                $storages = StorageProduct::all();
+                break;
+            }
+        }
+        session()->forget('att_of_product');
+
+        return view('backend/products/create', [
+            'categories' => $categories,
+            'attributes' => $attributes,
+            'storages' => $storages,
+            'categoriesRegister' => $arrayCategory,
+        ]);
+    }
+
     private function createAttributeProduct($product, $newArray)
     {
         if ($newArray != null) {
@@ -1085,5 +1081,17 @@ class ProductController extends Controller
         $success = $product->save();
 
         return $success;
+    }
+
+    public function handleGallery($input)
+    {
+        $pattern = '/\/storage\/([^,"]+),?/';
+        $matches = array();
+        $arrResult = array();
+        foreach ($input as $item) {
+            preg_match_all($pattern, $item, $matches);
+            array_push($arrResult, $matches[1]);
+        }
+        return implode(',', $arrResult[0]);
     }
 }

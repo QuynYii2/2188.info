@@ -70,9 +70,9 @@
             </div>
         </div>
     @endif
-    <div class="col-md-3">
-        <a class="btn btn-warning btnCreateProperty"
-           data-id="{{$attribute->id}}">{{ __('home.Create now') }}
+    <div class="col-md-3 d-flex align-items-center">
+        <a class="btn btnCreateProperty"
+           data-id="{{$attribute->id}}"><i class="fa-solid fa-plus"></i> {{ __('home.Create now') }}
         </a>
     </div>
 </div>
@@ -82,6 +82,7 @@
         if (attributeID !== undefined) {
             $('#formAddProperty').removeClass('d-none');
             generateFormProperty();
+            let select = document.getElementById('attribute_id');
             if (select){
                 var options = select.options;
                 for (var i = 0; i < options.length; i++) {

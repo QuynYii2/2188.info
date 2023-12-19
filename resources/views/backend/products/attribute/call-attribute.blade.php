@@ -1,6 +1,6 @@
 <div class="col-md-6">
     <div class="form-group">
-        <label for="property_name">{{ __('home.Tên thuộc tính') }}</label>
+        <label for="property_name">Property Name</label>
         <input type="text" class="form-control" name="property_name" id="property_name">
     </div>
     <div class="form-group">
@@ -24,7 +24,7 @@
         </select>
     </div>
 
-    <a class="btn btn-success" id="btnSubmitProperty">{{ __('home.Tạo mới') }}</a>
+    <a class="btn btnSave" id="btnSubmitProperty">{{ __('home.Create now') }}</a>
 </div>
 
 <script>

@@ -1,329 +1,335 @@
 @extends('frontend.layouts.master')
 @section('title', 'View Cart')
 @section('content')
-    <div class="container-fluid cart">
-        <div class="pagetitle">
-            <nav>
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="{{route('homepage')}}">{{ __('home.Home') }}</a>
-                    </li>
-                    <li class="breadcrumb-item active">{{ __('home.Your Cart') }}</li>
-                </ol>
-            </nav>
+    <div class="container-fluid cart-page">
+        <div class="header-page">
+            <div class="grid second-nav">
+                <div class="column-xs-12 category-header" style="padding: 1rem">
+                    <div class="breadcrumbs_filter">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="{{ route('homepage') }}">Home</a>
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    <a href="{{ route('cart.index') }}">Cart</a>
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
         </div>
-        @if ($cartItems->isEmpty())
-            <p>{{ __('home.Chưa có sản phẩm trong giỏ hàng') }}</p>
-        @else
-            <div class="pagelist">
-                <table id="table-cart" class="table table-bordered">
-                    <thead>
-                    <tr class="header">
-                        <th scope="col">{{ __('home.item') }}</th>
-                        <th scope="col">{{ __('home.PRICE') }}</th>
-                        <th scope="col">{{ __('home.quantity') }}</th>
-                        <th scope="col">{{ __('home.TOTAL') }}</th>
-                        <th scope="col">{{ __('home.Action') }}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($cartItems as $cartItem)
-                        @php
-                            $productDetail = \App\Models\Variation::where([
-                                ['product_id', $cartItem->product->id],
-                                ['variation', $cartItem->values]
-                                ])->first();
-                        @endphp
-                        <tr style="border-bottom: 1px solid #dbdbdb">
-                            <div class="row">
-                                <td class="col-md-6">
-                                    <div class="row mt-3">
-                                        <div class="col-md-2 img-product">
-                                            <img class="img" src="{{ asset('storage/'.$cartItem->product->thumbnail) }}"
-                                                 alt="" width="60px" height="60px">
-                                        </div>
-                                        <div class="col-md-10 float-left">
-                                            <div class="text-secondary">
-                                                @if(locationHelper() == 'kr')
-                                                    {{($cartItem->product->category->name_ko)}}
-                                                @elseif(locationHelper() == 'cn')
-                                                    {{($cartItem->product->category->name_zh)}}
-                                                @elseif(locationHelper() == 'jp')
-                                                    {{($cartItem->product->category->name_ja)}}
-                                                @elseif(locationHelper() == 'vi')
-                                                    {{($cartItem->product->category->name)}}
-                                                @else
-                                                    {{($cartItem->product->category->name)}}
-                                                @endif
-                                            </div>
-                                            <a href="{{route('detail_product.show', $cartItem->product->id)}}">
-                                                @if(locationHelper() == 'kr')
-                                                    {{($cartItem->product->name_ko)}}
-                                                @elseif(locationHelper() == 'cn')
-                                                    {{($cartItem->product->name_zh)}}
-                                                @elseif(locationHelper() == 'jp')
-                                                    {{($cartItem->product->name_ja)}}
-                                                @elseif(locationHelper() == 'vi')
-                                                    {{($cartItem->product->name)}}
-                                                @else
-                                                    {{($cartItem->product->name_en)}}
-                                                @endif
-                                            </a>
-                                            @if($cartItem->values != 0)
+        <div class="main-page row">
+            <div class="col-xl-8 col-md-6 col-sm-12">
+                <div class="cart-header bg-white">
+                    <p class="s24w6">
+                        My shopping cart
+                    </p>
+                    <div class="c92s20w4">
+                        The shopping cart now allows you to place one or more orders from a single supplier
+                    </div>
+                </div>
+                <div class="list-product">
+                    @foreach($carts as $cart)
+                        <div class="product-item d-flex justify-content-between align-items-end bg-white">
+                            <div class="product-info d-flex align-items-center">
+                                @php
+                                    $thumbnail = checkThumbnail($cart->product->thumbnail);
+                                @endphp
+                                <img src="{{ $thumbnail }}" alt="" class="image-product">
+                                <div class="product-value">
+                                    <div class="product-name s20w6">
+                                        @if(locationHelper() == 'kr')
+                                            {{($cart->product->name_ko)}}
+                                        @elseif(locationHelper() == 'cn')
+                                            {{($cart->product->name_zh)}}
+                                        @elseif(locationHelper() == 'jp')
+                                            {{($cart->product->name_ja)}}
+                                        @elseif(locationHelper() == 'vi')
+                                            {{($cart->product->name)}}
+                                        @else
+                                            {{($cart->product->name_en)}}
+                                        @endif
+                                        <p class="small text-secondary">
+                                            @php
+                                                $value = $cart->values;
+                                                $arrayValue = explode(',', $value);
+                                            @endphp
+                                            @foreach($arrayValue as $item)
                                                 @php
-                                                    $list = $cartItem->values;
-                                                    $array = explode(',', $list);
+                                                    $attribute_property = explode('-', $item);
+                                                    $attribute = \App\Models\Attribute::find($attribute_property[0]);
+                                                    $property = \App\Models\Properties::find($attribute_property[1]);
                                                 @endphp
-                                                @foreach($array as $variable)
-                                                    @if($variable)
-                                                        @php
-                                                            $arrayAttPro = explode('-', $variable);
-                                                            if (count($arrayAttPro)>1){
-                                                                $att = \App\Models\Attribute::where('id', $arrayAttPro[0])
-                                                                    ->where('status', \App\Enums\AttributeStatus::ACTIVE)->first();
-                                                                $pro = \App\Models\Properties::where('id', $arrayAttPro[1])
-                                                                    ->where('status', \App\Enums\PropertiStatus::ACTIVE)->first();
-                                                            }
-                                                        @endphp
-                                                        @if(count($arrayAttPro)>1)
-                                                            @if($att)
-                                                                <div class="font-italic">
-                                                                    <span class="text-secondary">
-                                                                    {{($att->name)}}
-                                                                    @if($pro)
-                                                                        </span>: <span>{{($pro->name)}}</span>
-                                                                    @endif
-                                                                </div>
-                                                            @endif
-                                                        @endif
+                                                <span>
+                                                    @if(locationHelper() == 'kr')
+                                                        {{($attribute->name_ko)}}
+                                                    @elseif(locationHelper() == 'cn')
+                                                        {{($attribute->name_zh)}}
+                                                    @elseif(locationHelper() == 'jp')
+                                                        {{($attribute->name_ja)}}
+                                                    @elseif(locationHelper() == 'vi')
+                                                        {{($attribute->name)}}
+                                                    @else
+                                                        {{($attribute->name_en)}}
                                                     @endif
-
-                                                @endforeach
-                                                <a class="text-edit" href="#" data-toggle="modal"
-                                                   data-target="#exampleModal">
-                                                    <i class='fas fa-edit'></i>
-                                                    Change
-                                                </a>
-                                                <div class="modal fade" id="exampleModal" tabindex="-1"
-                                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">
-                                                                    Edit {{($cartItem->product->name)}}</h5>
-                                                                <button type="button" class="close" data-dismiss="modal"
-                                                                        aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <div class="form-field"
-                                                                     data-product-attribute="set-rectangle"
-                                                                     role="radiogroup"
-                                                                     aria-labelledby="rectangle-group-label">
-                                                                    <label class="form-label form-label--alternate form-label--inlineSmall"
-                                                                           id="rectangle-group-label">
-                                                                        Size:
-                                                                        <small>
-                                                                            *
-                                                                        </small>
-                                                                        <span data-option-value=""></span>
-                                                                    </label>
-
-                                                                    <div class="d-flex justify-content-between align-items-center">
-                                                                        <div class="form-option-wrapper">
-                                                                            <input class="form-radio" type="radio"
-                                                                                   id="attribute_rectangle__189_374"
-                                                                                   name="attribute[189]" value="374"
-                                                                                   required=""
-                                                                                   data-state="false">
-                                                                            <label class="form-option unavailable"
-                                                                                   for="attribute_rectangle__189_374"
-                                                                                   data-product-attribute-value="374">
-                                                                                <span class="form-option-variant">32 inch</span>
-                                                                            </label>
-                                                                        </div>
-                                                                        <div class="form-option-wrapper">
-                                                                            <input class="form-radio" type="radio"
-                                                                                   id="attribute_rectangle__189_375"
-                                                                                   name="attribute[189]" value="375"
-                                                                                   required=""
-                                                                                   data-state="false">
-                                                                            <label class="form-option unavailable"
-                                                                                   for="attribute_rectangle__189_375"
-                                                                                   data-product-attribute-value="375">
-                                                                                <span class="form-option-variant">42 inch</span>
-                                                                            </label>
-                                                                        </div>
-                                                                        <div class="form-option-wrapper">
-                                                                            <input class="form-radio" type="radio"
-                                                                                   id="attribute_rectangle__189_376"
-                                                                                   name="attribute[189]" value="376"
-                                                                                   checked=""
-                                                                                   data-default="" required=""
-                                                                                   data-state="true">
-                                                                            <label class="form-option"
-                                                                                   for="attribute_rectangle__189_376"
-                                                                                   data-product-attribute-value="376">
-                                                                                <span class="form-option-variant">55 inch</span>
-                                                                            </label>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="modal-footer justify-content-center align-items-center">
-                                                                <button type="button"
-                                                                        class=" text-center btn btn-primary">
-                                                                    Save
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            @endif
-                                        </div>
+                                                    :
+                                                        @if(locationHelper() == 'kr')
+                                                        {{($property->name_ko)}}
+                                                    @elseif(locationHelper() == 'cn')
+                                                        {{($property->name_zh)}}
+                                                    @elseif(locationHelper() == 'jp')
+                                                        {{($property->name_ja)}}
+                                                    @elseif(locationHelper() == 'vi')
+                                                        {{($property->name)}}
+                                                    @else
+                                                        {{($property->name_en)}}
+                                                    @endif
+                                                </span>
+                                            @endforeach
+                                        </p>
                                     </div>
-                                </td>
-                                <td class="price col-md-2" style="vertical-align: middle;"
-                                    id="price-{{ $cartItem->id }}">{{ number_format(convertCurrency('USD', $currency,$cartItem->price), 0, ',', '.') }} {{$currency}}</td>
-                                <td class="quantity col-md-1" style="vertical-align: middle;">
-                                    <form>
-                                        <input type="text" id="id-cart" value="{{ $cartItem->id }}" hidden/>
-                                        <input type="text" id="id-link" value="{{ asset('/') }}" hidden/>
-                                        <input class="input-number" type="number" id="quantity-{{ $cartItem->id }}"
-                                               name="quantity" style="border-radius: 30px; border-color: #ccc"
-                                               value="{{ $cartItem->quantity }}"
-                                               data-id="{{ $cartItem->id }}" data-value="{{ $cartItem }}"
-                                               min="{{$cartItem->product->min}}"/>
-                                    </form>
-                                </td>
-                                <td class="col-md-2" id="total-quantity-{{ $cartItem->id }}"
-                                    style="vertical-align: middle;">
-                                    {{ number_format(convertCurrency('USD', $currency,$cartItem->price*$cartItem->quantity), 0, ',', '.') }} {{$currency}}
-                                </td>
-                                <td class="col-md-1" style="vertical-align: middle;">
-                                    <form action="{{ route('cart.delete', $cartItem->id) }}"
-                                          method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <input class="submit" type="submit" value="&times;"/>
-                                    </form>
-                                </td>
-
+                                    <div class="product-price">
+                                    <span class="real-price ">
+                                        {{ number_format(convertCurrency('USD', $currency,$cart->price), 0, ',', '.') }} {{$currency}}
+                                    </span>
+                                        <del>
+                                            {{ number_format(convertCurrency('USD', $currency,$cart->product->old_price), 0, ',', '.') }} {{$currency}}
+                                        </del>
+                                    </div>
+                                </div>
                             </div>
-                        </tr>
+                            <div class="action-quantity d-flex align-items-center justify-content-between">
+                                <div class="quantity d-flex align-items-center">
+                                <span class="decrease cart-decrease" data-id="{{ $cart->id }}"
+                                      data-min="{{ $cart->product->min }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                         viewBox="0 0 16 16" fill="none">
+                                      <path d="M4 8H12" stroke="#292D32" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                                    <input class="input_number" id="cart_input_number_{{ $cart->id }}" type="number"
+                                           value="{{ $cart->quantity }}" min="{{ $cart->product->min }}"
+                                           data-id="{{ $cart->id }}"
+                                           data-min="{{ $cart->product->min }}">
+                                    <span class="increase cart-increase" data-id="{{ $cart->id }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                         viewBox="0 0 16 16" fill="none">
+                                      <path d="M4 8H12" stroke="#292D32" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round"/>
+                                      <path d="M8 12V4" stroke="#292D32" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                                </div>
+                                <div class="action">
+                                    <i class="fa-regular fa-trash-can iconDelete" data-id="{{ $cart->id }}"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-none">
+                            <form action="{{ route('cart.delete', $cart->id) }}" id="formDeleteCart_{{ $cart->id }}"
+                                  method="POST">
+                                @csrf
+                                @method('DELETE')
+                            </form>
+                        </div>
                     @endforeach
-                    </tbody>
-                </table>
-            </div>
-            <div class="row cart-content">
-                <div class="col-md-4">
-                    <div class="text-uppercase">{{ __('home.COUPON CODE') }}</div>
-                    <div class="">
-                        <label for="inputPassword2">{{ __('home.Enter your coupon code if you have one.') }}</label>
-                        <form class="d-flex align-items-center justify-content-between">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="inputPassword2"
-                                       placeholder="Enter your coupon code">
-                            </div>
-                            <button type="submit" class="btn mb-2 submit">{{ __('home.Apply') }}</button>
-                        </form>
-                    </div>
-                    <div class="text-uppercase">{{ __('home.GIFT CERTIFICATE') }}</div>
-                    <div class="">
-                        <label for="inputPassword2">{{ __('home.Enter your coupon code if you have one.') }}</label>
-                        <form class="d-flex align-items-center justify-content-between">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="inputPassword2"
-                                       placeholder="Enter your coupon code">
-                            </div>
-                            <button type="submit" class="btn mb-2 submit">{{ __('home.Apply') }}</button>
-                        </form>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="text-uppercase">{{ __('home.SHIPPING') }}</div>
-                    <div class="">
-                        <label for="inputPassword2">{{ __('home.Enter your coupon code if you have one.') }}</label>
-                        <form>
-                            <div class="d-flex justify-content-between align-items-baseline">
-                                <span class="mr-3">{{ __('home.Country') }}</span>
-                                <div class="form-group">
-                                    <select name="" id="">
-                                        <option value="">{{ __('home.VietNam') }}</option>
-                                        <option value="">{{ __('home.TrungQuoc') }}</option>
-                                        <option value="">{{ __('home.Han Quoc') }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-baseline">
-                                <span class="mr-3">{{ __('home.State/Province') }}</span>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="inputPassword2"
-                                           placeholder={{ __('home.State/Province') }}>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-baseline">
-                                <span class="mr-3">{{ __('home.Suburb/City') }}</span>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="inputPassword2"
-                                           placeholder={{ __('home.Suburb/City') }}>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-baseline">
-                                <span class="mr-3">{{ __('home.Zip/Postcode') }}</span>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="inputPassword2"
-                                           placeholder="{{ __('home.Zip/Postcode') }}">
-                                </div>
-                            </div>
-                            <button type="submit"
-                                    class="btn mb-2 submit float-right submit-60">{{ __('home.Estimate Shipping') }}
-                            </button>
-                        </form>
-                    </div>
-
-                </div>
-                <div class="col-md-4">
-                    <div class="text-uppercase">{{ __('home.COUPON CODE') }}</div>
-                    <div class="subtotal d-flex justify-content-between">
-                        <span class="">{{ __('home.Subtotal') }}: </span>
-                        <span class="subtotal-price">0</span>
-                    </div>
-                    <div class="grandtotal d-flex justify-content-between">
-                        <span>Grand total: </span>
-                        <span> <span id="max-total"> {{ $cartItem->price*$cartItem->quantity }}</span></span>
-                    </div>
-                    <a href="{{route('checkout.show')}}">
-                        <button type="submit"
-                                class="btn mb-2 submit float-right submit-100">{{ __('home.Check out') }}</button>
-                    </a>
                 </div>
             </div>
-
-        @endif
+            <div class="col-xl-4 col-md-6 col-sm-12 cart-confirm">
+                <div class="price-product d-flex justify-content-between align-items-center">
+                    <div class="title">
+                        Total product cost
+                    </div>
+                    <div class="value" id="valueProductCart">
+                        0
+                    </div>
+                </div>
+                <div class="price-ship d-flex justify-content-between align-items-center">
+                    <div class="title">
+                        Shipping fee
+                    </div>
+                    <div class="value" id="valueShipCart">
+                        0
+                    </div>
+                </div>
+                <div class="price-discount d-flex justify-content-between align-items-center">
+                    <div class="title">
+                        Discount fee
+                    </div>
+                    <div class="value" id="valueDiscountCart">
+                        0
+                    </div>
+                </div>
+                <div class="price-total d-flex justify-content-between align-items-center">
+                    <div class="title">
+                        Order total
+                    </div>
+                    <div class="value" id="valueTotalCart">
+                        0
+                    </div>
+                </div>
+                <a href="{{ route('checkout.show') }}" class="btn btnConfirm">
+                    {{ __('home.Confirm') }}
+                </a>
+            </div>
+        </div>
     </div>
-    <div class="d-none">
-        @if ($cartItems->isNotEmpty())
-            @php
-                $totalCart = null;
-                foreach ($cartItems as $item){
-                    $totalCart = (int)$totalCart + (int)$item->price * (int)$item->quantity ;
-                }
-            @endphp
-            <p id="totalItemCart">{{$totalCart}}</p>
-        @else
-            <p id="totalItemCart">0</p>
-        @endif
-        <p id="currencyCart">{{$currency}}</p>
-    </div>
-
-
     <script>
-        var linkapi = 'api/cart/update/';
-        var urla = '{{ route('convert.currency', ['total' => ':total']) }}'
-        var urlb = '{{ route('member.all.cart') }}';
-        var currency = '{{$currency}}';
+        let currency = `{{ $currency }}`;
+        let urlConvertCurrency = '{{ route('convert.currency', ['total' => ':total']) }}'
+        let urlAllCart = '{{ route('member.all.cart') }}';
+        let urlProductSale = '{{route('member.product.sales')}}';
+        /* List text show*/
+        let textCartPrice = $('#valueProductCart');
+        let textSalePriceCart = $('#valueDiscountCart');
+        let textShipPriceCart = $('#valueShipCart');
+        let textTotalPriceCart = $('#valueTotalCart');
+
+        $(document).ready(function () {
+            $('.cart-decrease').on('click', function () {
+                let cart = $(this).data('id');
+                let quantity = $('#cart_input_number_' + cart);
+                let value = quantity.val();
+                let min = $(this).data('min');
+                if (value > min) {
+                    --value;
+                    quantity.val(value);
+                    updateCart(value, cart);
+                }
+            })
+
+            $('.cart-increase').on('click', function () {
+                let cart = $(this).data('id');
+                let quantity = $('#cart_input_number_' + cart);
+                let value = quantity.val();
+                ++value;
+                quantity.val(value);
+                updateCart(value, cart);
+            })
+
+            $('.input_number').on('change', function () {
+                let cart = $(this).data('id');
+                let min = $(this).data('min');
+                let value = $(this).val();
+                if (value > min) {
+                    updateCart(value, cart);
+                }
+            })
+
+            totalCart();
+
+            $('.iconDelete').on('click', function () {
+                let cart = $(this).data('id');
+                $('#formDeleteCart_' + cart).trigger('submit');
+            })
+        })
+
+        async function updateCart(quantity, cartID) {
+            let url = `{{ route('cart.api.update', ['id'=>':id']) }}`;
+            url = url.replace(':id', cartID);
+            const data = {
+                quantity: quantity,
+            };
+
+            await fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(data),
+            }).then(response => {
+                if (response.status == 200) {
+                    return response.json();
+                }
+            }).then((response) => {
+                console.log(response)
+                totalCart()
+            }).catch(error => {
+                console.log(error)
+            });
+        }
+
+        async function totalCart() {
+            let results = await getAllCart();
+            let total = 0;
+            let ship = 0;
+            let sales = 0;
+            for (let i = 0; i < results.length; i++) {
+                total = parseFloat(total) + parseFloat(results[i]['price']) * parseFloat(results[i]['quantity']);
+                let productSale = await getProductSale(results[i]['product_id'], results[i]['quantity']);
+                if (productSale) {
+                    ship = parseFloat(ship) + parseFloat(productSale['ship']);
+                }
+            }
+
+            let final_total = total + ship - sales;
+            /* Convert total product */
+            let result = await convertCartCurrency(parseFloat(total));
+            let totalText = result + ' ' + currency;
+            /* Convert ship price */
+            let shipPrice = await convertCartCurrency(parseFloat(ship));
+            let shipPriceText = shipPrice + ' ' + currency;
+            /* Convert sale price */
+            let salePrice = await convertCartCurrency(parseFloat(sales));
+            let salePriceText = salePrice + ' ' + currency;
+            /* Convert total price */
+            let totalPrice = await convertCartCurrency(parseFloat(final_total));
+            let totalPriceText = totalPrice + ' ' + currency;
+            /* Append data */
+            textCartPrice.text(totalText);
+            textShipPriceCart.text(shipPriceText)
+            textSalePriceCart.text(salePriceText)
+            textTotalPriceCart.text(totalPriceText);
+
+            async function convertCartCurrency(total) {
+                let url = urlConvertCurrency;
+                url = url.replace(':total', total);
+
+                try {
+                    let response = await $.ajax({
+                        url: url,
+                        method: 'GET',
+                    });
+                    return response;
+                } catch (error) {
+                    throw error;
+                }
+            }
+
+            async function getAllCart() {
+                try {
+                    let response = await $.ajax({
+                        url: urlAllCart,
+                        method: 'GET',
+                    });
+                    return response;
+                } catch (error) {
+                    throw error;
+                }
+            }
+
+            async function getProductSale(product, quantity) {
+                const requestData = {
+                    productID: product,
+                    quantity: quantity,
+                };
+
+                try {
+                    let productSale = await $.ajax({
+                        url: urlProductSale,
+                        method: 'GET',
+                        data: requestData,
+                        body: JSON.stringify(requestData),
+                    })
+                    return productSale;
+                } catch (error) {
+                    throw error;
+                }
+            }
+        }
     </script>
-    <script src="{{asset('js/frontend/pages/cart.js')}}"></script>
 @endsection
