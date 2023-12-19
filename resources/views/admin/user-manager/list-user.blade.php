@@ -12,18 +12,18 @@
             font-size: 24px;
         }
 
-        .pagination li a{
+        .pagination li a {
             margin: 4px;
             padding: 4px;
             color: #cccccc;
             text-decoration: none;
         }
 
-        .pagination li.active{
+        .pagination li.active {
             color: rgba(255, 165, 0, 0.93);
         }
 
-        .pagination li a:hover{
+        .pagination li a:hover {
             color: rgba(238, 207, 51, 0.82);
         }
 
@@ -35,191 +35,186 @@
             margin-left: 8px;
         }
     </style>
-    <div class="">
-        <section class="section ">
-            <div class="">
-                <form id="form-search">
-                    <div class="row mt-3 mb-3">
-                        <div class="form-group col-md-4">
-                            <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" placeholder="name">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="email">Email</label>
-                            <input type="text" class="form-control" id="email" placeholder="email">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="email">Phone</label>
-                            <input type="text" class="form-control" id="phone" placeholder="phone">
-                        </div>
-                    </div>
-                    <div class="row mt-3 mb-3">
-                        <div class="form-group col-md-4">
-                            <label for="member">Member</label>
-                            <select id="member" class="form-control" name="member">
-                                <option value="" selected></option>
-                                @if($members->isNotEmpty())
-                                    @foreach($members as $member)
-                                        <option value="{{$member->name}}">{{$member->name}}</option>
-                                    @endforeach
-                                @endif
-                            </select>
-                        </div>
-                        <div class="form-group col-md-4 d-none">
-                            <label for="role">Role</label>
-                            <select id="role" class="form-control" name="role">
-                                <option value="" selected></option>
-                                @if($roles->isNotEmpty())
-                                    @foreach($roles as $role)
-                                        <option value="{{ $role->id }}">{{ $role->name }}</option>
-                                    @endforeach
-                                @endif
-                            </select>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="role">Category</label>
-                            <select id="category" class="form-control" name="category">
-                                <option value="" selected></option>
-                                @if($categories->isNotEmpty())
-                                    @foreach($categories as $category)
-                                        @switch(locationHelper())
-                                            @case('kr')
-                                                <option value="{{ $category->id }}">{{ $category->name_kr }}</option>
-                                                @break
-                                            @case('cn')
-                                                <option value="{{ $category->id }}">{{ $category->name_zh }}</option>
-                                                @break
-                                            @case('jp')
-                                                <option value="{{ $category->id }}">{{ $category->name_ja }}</option>
-                                                @break
-                                            @case('vi')
-                                                <option value="{{ $category->id }}">{{ $category->name_vi }}</option>
-                                                @break
-                                            @default
-                                                <option value="{{ $category->id }}">{{ $category->name_en }}</option>
-                                        @endswitch
-                                    @endforeach
-                                @endif
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row float-right mb-3">
-                        <button class="btn btn-primary" type="button" onclick="searchListUser()">search</button>
-                    </div>
-                </form>
-                <br>
-                <table class="table table-bordered" id="tableUser">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">FullName</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Phone</th>
-                        <th scope="col">Role</th>
-                        <th scope="col">Member</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">Region</th>
-                        <th scope="col">Order</th>
-                        <th scope="col">Products</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                    </thead>
-                    <tbody id="tbody-user">
-                    @if(!$users->isEmpty())
-                        @foreach($users as $user)
-                            <tr>
-                                <th scope="row"> {{$loop->index + 1}}</th>
-                                <td class="table-name">{{$user->name}}</td>
-                                <td class="table-email">{{$user->email}}</td>
-                                <td>{{$user->phone}}</td>
-                                <td class="table-role">
-                                    @php
-                                        $user_roles = DB::table('role_user')->where('user_id', $user->id)->get();
-                                    @endphp
-                                    @if($user_roles->isEmpty())
-                                        buyer
-                                    @endif
-                                    @foreach($user_roles as $user_role)
-                                        @php
-                                            $role = Role::find($user_role->role_id)
-                                        @endphp
-                                        {{$role->name}}
-                                        <br>
-                                    @endforeach
-                                </td>
-                                <td class="table-member">{{$user->member}}</td>
-                                @php
-                                    $cates = MemberRegisterInfo::where('user_id', $user->id)->first('category_id');
-                                    $cateName = [];
-                                    if($cates){
-                                    $cates = explode(',', $cates->category_id);
-                                    $listCate = \App\Models\Category::whereIn('id', $cates)->get();
-                                    foreach ($listCate as $cate) {
-                                        switch (locationHelper()) {
-                                            case 'kr':
-                                                array_push($cateName, $cate->name_kr);
-                                                break;
-                                            case 'cn':
-                                                array_push($cateName, $cate->name_zh);
-                                                break;
-                                            case 'jp':
-                                                array_push($cateName, $cate->name_ja);
-                                                break;
-                                            case 'vi':
-                                                array_push($cateName, $cate->name_vi);
-                                                break;
-                                            default:
-                                                array_push($cateName, $cate->name_en);
-                                        }
-                                    }
-                                    }
-                                @endphp
-                                <td>{{ implode(', ', $cateName) }}</td>
-                                <td>{{$user->region}}</td>
-
-                                <td>
-                                    @php
-                                        $orders = Order::where('user_id', $user->id)->get();
-                                    @endphp
-                                    {{count($orders)}}
-                                </td>
-
-                                <td>
-                                    @php
-                                        $products = Product::where('user_id', $user->id)->get();
-                                    @endphp
-                                    {{count($products)}}
-                                </td>
-                                <td>{{$user->status}}</td>
-                                <td>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <a href="{{route('admin.private.update.users', $user->id)}}"
-                                           class="btn btn-primary">Detail</a>
-                                        <form action="{{route('admin.delete.users', $user->id)}}" method="post">
-                                            @method('DELETE')
-                                            @csrf
-                                            <button type="submit" class="btn btn-danger">Delete</button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    @endif
-                    </tbody>
-                </table>
-                {{ $users->links('vendor.pagination.default') }}
+    <div class="container-fluid list-user-page">
+        <div class="title s24w6">
+            List user
+        </div>
+        <form class="form-search mt-3">
+            <div class="search-user bg-white d-flex justify-content-between align-items-center">
+                <div class="list-input d-flex align-items-center">
+                    <input type="text" class="form-control c929292s16w6" id="keyword" placeholder="Name/email/phone">
+                    <select id="member" class="form-control c929292s16w6" name="member">
+                        <option value="" selected>Member</option>
+                        @if($members->isNotEmpty())
+                            @foreach($members as $member)
+                                <option value="{{$member->name}}">{{$member->name}}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                    <select id="category" class="form-control c929292s16w6" name="category">
+                        <option value="" selected>Category</option>
+                        @if($categories->isNotEmpty())
+                            @foreach($categories as $category)
+                                @switch(locationHelper())
+                                    @case('kr')
+                                        <option value="{{ $category->id }}">{{ $category->name_kr }}</option>
+                                        @break
+                                    @case('cn')
+                                        <option value="{{ $category->id }}">{{ $category->name_zh }}</option>
+                                        @break
+                                    @case('jp')
+                                        <option value="{{ $category->id }}">{{ $category->name_ja }}</option>
+                                        @break
+                                    @case('vi')
+                                        <option value="{{ $category->id }}">{{ $category->name_vi }}</option>
+                                        @break
+                                    @default
+                                        <option value="{{ $category->id }}">{{ $category->name_en }}</option>
+                                @endswitch
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
+                <div class="list-button d-flex align-items-center">
+                    <button type="button" onclick="searchListUser();" class="btn btnSearchProduct cFFFs16w6">
+                        Submit
+                    </button>
+                    <button type="reset" class="btn brnClear cF00s14w6">Clear All</button>
+                </div>
             </div>
-        </section>
+        </form>
+        <div class="list-user mt-3 bg-white">
+            <div class="button-create text-right">
+                <a href="{{ route('admin.processCreate.users') }}" class="btn btnCreate">
+                    <i class="fa-solid fa-plus"></i>
+                    Add new member
+                </a>
+            </div>
+            <table class="table mt-3" id="tableUser">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">FullName</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Member</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Region</th>
+                    <th scope="col">Order</th>
+                    <th scope="col">Products</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody id="tbody-user">
+                @if(!$users->isEmpty())
+                    @foreach($users as $user)
+                        <tr>
+                            <th scope="row">
+                                {{ $loop->index + 1 }}
+                            </th>
+                            <td>
+                                {{$user->name}}
+                            </td>
+                            <td>
+                                {{$user->email}}
+                            </td>
+                            <td>
+                                {{$user->phone}}
+                            </td>
+                            <td>
+                                @php
+                                    $user_roles = DB::table('role_user')->where('user_id', $user->id)->get();
+                                @endphp
+                                @if($user_roles->isEmpty())
+                                    buyer
+                                @endif
+                                @foreach($user_roles as $user_role)
+                                    @php
+                                        $role = Role::find($user_role->role_id)
+                                    @endphp
+                                    {{$role->name}}
+                                    <br>
+                                @endforeach
+                            </td>
+                            <td>
+                                {{$user->member}}
+                            </td>
+                            @php
+                                $cates = MemberRegisterInfo::where('user_id', $user->id)->first('category_id');
+                                $cateName = [];
+                                if($cates){
+                                $cates = explode(',', $cates->category_id);
+                                $listCate = \App\Models\Category::whereIn('id', $cates)->get();
+                                foreach ($listCate as $cate) {
+                                    switch (locationHelper()) {
+                                        case 'kr':
+                                            array_push($cateName, $cate->name_kr);
+                                            break;
+                                        case 'cn':
+                                            array_push($cateName, $cate->name_zh);
+                                            break;
+                                        case 'jp':
+                                            array_push($cateName, $cate->name_ja);
+                                            break;
+                                        case 'vi':
+                                            array_push($cateName, $cate->name_vi);
+                                            break;
+                                        default:
+                                            array_push($cateName, $cate->name_en);
+                                    }
+                                }
+                                }
+                            @endphp
+                            <td>
+                                {{ implode(', ', $cateName) }}
+                            </td>
+                            <td>
+                                {{$user->region}}
+                            </td>
+                            <td>
+                                @php
+                                    $orders = Order::where('user_id', $user->id)->get();
+                                @endphp
+                                {{count($orders)}}
+                            </td>
+                            <td>
+                                @php
+                                    $products = Product::where('user_id', $user->id)->get();
+                                @endphp
+                                {{count($products)}}
+                            </td>
+                            <td>
+                                {{$user->status}}
+                            </td>
+                            <td>
+                                <div class="d-flex justify-content-between align-items-center list-icon-action">
+                                    <a href="{{route('admin.private.update.users', $user->id)}}"
+                                       class="iconDetail">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                    <form action="{{route('admin.delete.users', $user->id)}}" method="post">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button type="submit" class="btn iconDelete">
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                @endif
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script>
         function searchListUser() {
-            let name = $('#name').val();
-            let email = $('#email').val();
-            let phone = $('#phone').val();
+            let keyword = $('#keyword').val();
             let member = $('#member').val();
-            let role = $('#role').val();
             let category = $('#category').val();
 
             let url = "{{route('admin.search.users')}}";
@@ -227,11 +222,8 @@
                 url: url,
                 type: 'POST',
                 data: {
-                    name: name,
-                    email: email,
-                    phone: phone,
+                    keyword: keyword,
                     member: member,
-                    role: role,
                     category: category,
                     _token: '{{csrf_token()}}'
                 },
@@ -239,10 +231,6 @@
                     $('#tbody-user').html(data);
                 }
             });
-        }
-
-        function renderJson2Html() {
-
         }
     </script>
 @endsection
