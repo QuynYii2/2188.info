@@ -7769,3 +7769,90 @@ nav ul {
     }
   }
 }
+
+/* Profile Shop*/
+.shop-info-page {
+  padding-top: 2%;
+
+  .shop-header {
+    padding: 16px;
+
+    .shop-key {
+      .image-shop {
+        width: 100%;
+        max-width: 120px;
+        border-radius: 50%;
+        margin-right: 18px;
+        object-fit: cover;
+      }
+    }
+
+    .shop-value {
+      padding-left: 24px;
+      border-left: 1px solid #D6D6D6;
+    }
+
+    .shop-contact {
+      padding-left: 24px;
+      border-left: 1px solid #D6D6D6;
+    }
+  }
+
+  .shop-product {
+    margin-top: 2%;
+
+    .table-list-products {
+      .image-product {
+        width: 100%;
+        max-width: 90px;
+        object-fit: cover;
+      }
+
+      a {
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: none;
+          color: #fd6506;
+        }
+      }
+
+      .action-edit {
+        margin-right: 5%;
+      }
+    }
+  }
+}
+
+/* Public class */
+.s18w6 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.c929292s10w4 {
+  color: var(--Grey-Dark, #929292);
+  font-size: 10px;
+  font-weight: 400;
+}
+
+.s10w6 {
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.s12w6 {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.s12w5 {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.c929292s12w4 {
+  color: var(--Grey-Dark, #929292);
+  font-size: 12px;
+  font-weight: 400;
+}

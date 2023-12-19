@@ -6262,4 +6262,78 @@ nav ul {
   font-weight: 500;
 }
 
+/* Profile Shop*/
+.shop-info-page {
+  padding-top: 2%;
+}
+.shop-info-page .shop-header {
+  padding: 16px;
+}
+.shop-info-page .shop-header .shop-key .image-shop {
+  width: 100%;
+  max-width: 120px;
+  border-radius: 50%;
+  margin-right: 18px;
+  object-fit: cover;
+}
+.shop-info-page .shop-header .shop-value {
+  padding-left: 24px;
+  border-left: 1px solid #D6D6D6;
+}
+.shop-info-page .shop-header .shop-contact {
+  padding-left: 24px;
+  border-left: 1px solid #D6D6D6;
+}
+.shop-info-page .shop-product {
+  margin-top: 2%;
+}
+.shop-info-page .shop-product .table-list-products .image-product {
+  width: 100%;
+  max-width: 90px;
+  object-fit: cover;
+}
+.shop-info-page .shop-product .table-list-products a {
+  text-decoration: none;
+}
+.shop-info-page .shop-product .table-list-products a:hover {
+  text-decoration: none;
+  color: #fd6506;
+}
+.shop-info-page .shop-product .table-list-products .action-edit {
+  margin-right: 5%;
+}
+
+/* Public class */
+.s18w6 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.c929292s10w4 {
+  color: var(--Grey-Dark, #929292);
+  font-size: 10px;
+  font-weight: 400;
+}
+
+.s10w6 {
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.s12w6 {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.s12w5 {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.c929292s12w4 {
+  color: var(--Grey-Dark, #929292);
+  font-size: 12px;
+  font-weight: 400;
+}
+
 /*# sourceMappingURL=style.css.map */
