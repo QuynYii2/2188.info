@@ -2727,6 +2727,196 @@ body {
   line-height: normal;
 }
 
+.order-managers {
+  margin-top: 40px;
+  color: var(--Black, #000);
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.search-order {
+  display: flex;
+  padding: 32px 16px;
+  align-items: center;
+  gap: 24px;
+  background: var(--White, #FFF);
+}
+.search-order input {
+  border-radius: 8px;
+  border: 1px solid var(--Grey-Light, #D6D6D6);
+  background: var(--White-Light, #F3F3F3);
+  display: flex;
+  padding: 12px 16px;
+  align-items: center;
+  gap: 8px;
+  min-height: 50px;
+  color: var(--Grey-Dark, #929292);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.search-order .btn-clear {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  align-items: center;
+  display: flex;
+  padding: 10px;
+}
+.search-order .btn-clear a {
+  color: #FF0000;
+}
+.search-order button {
+  display: flex;
+  width: 151px;
+  padding: 12px 16px;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--secon-1, #F47621);
+  border: 0;
+}
+
+.card .card-body .export-excel button {
+  background: var(--secon-1, #F47621);
+  display: flex;
+  width: 151px;
+  padding: 8px 16px;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  border: 0;
+  margin-bottom: 12px;
+}
+.card .card-body table, .card .card-body td, .card .card-body th, .card .card-body tr {
+  border: 0;
+}
+.card .card-body table input[type=checkbox], .card .card-body td input[type=checkbox], .card .card-body th input[type=checkbox], .card .card-body tr input[type=checkbox] {
+  accent-color: #F47621;
+  display: flex;
+  width: 16px;
+  height: 16px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+.card .card-body table input[type=checkbox]:checked::before, .card .card-body td input[type=checkbox]:checked::before, .card .card-body th input[type=checkbox]:checked::before, .card .card-body tr input[type=checkbox]:checked::before {
+  color: #FFFFFF !important;
+}
+.card .card-body thead {
+  color: var(--Grey-Dark, #929292);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.card .card-body tbody {
+  color: #000;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.card .card-body tbody .btn-order {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 8px;
+  background: var(--Grey-Dark, #929292);
+  border: 0;
+  color: var(--White, #FFF);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.price-order-managers {
+  color: #E60000;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.price-order-managers p {
+  color: var(--Grey-Dark, #929292);
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-decoration-line: line-through;
+}
+
+.quantity-order-managers {
+  color: var(--Grey-Dark, #929292);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  display: flex;
+}
+.quantity-order-managers p {
+  color: #000;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.name-product-order {
+  color: #000;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.name-product-order .product-image-order img {
+  border-radius: 10px;
+  object-fit: cover;
+  border: 1px solid var(--Grey-Medium, #BFBFBF);
+  width: 100%;
+}
+.name-product-order .image-list {
+  padding: 0;
+  overflow: auto;
+  display: flex;
+}
+.name-product-order .image-list li.image-item {
+  display: flex;
+}
+.name-product-order .image-list li.image-item img {
+  border-radius: 10px;
+  object-fit: cover;
+  border: 1px solid var(--Grey-Medium, #BFBFBF);
+  width: 100px;
+  height: 100px;
+}
+
+.order-detail__info {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.order-detail__info span {
+  color: var(--Grey-Dark, #929292);
+}
+.order-detail__info .order-detail-product {
+  color: #000;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.order-detail__info .order-detail-product span {
+  color: #000000;
+}
+
 /* end profile account */
 
 /*# sourceMappingURL=style_backend.css.map */
