@@ -119,29 +119,12 @@
         <div class="modal-dialog modal-dialog-centered cus-mr-modal" style="max-width: 970px;">
             <div class="modal-content">
                 <div class="modal-header border-0">
-{{--                    <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Phone Number') }}</h5>--}}
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span>&times;</span>
+                        <span class="border-0">&times;</span>
                     </button>
                 </div>
-{{--                <form action="{{ route('user.changePhoneNumber') }}" method="post">--}}
-{{--                    @csrf--}}
                     <div  class="modal-body" id="modal-body-content">
-{{--                        <div class="form-group">--}}
-{{--                            <label for="inputPassword"--}}
-{{--                                   class="col-sm-4 col-form-label">{{ __('home.Phone Number') }}</label>--}}
-{{--                            <div>--}}
-{{--                                <input type="number" class="form-control" value="{{ Auth::user()->phone }}"--}}
-{{--                                       id="edit-phone-input" required name="edit-phone" inputmode="numeric"/>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
                     </div>
-{{--                    <div class="modal-footer">--}}
-{{--                        <button type="button" class="btn btn-secondary"--}}
-{{--                                data-dismiss="modal">{{ __('home.Cancel') }}</button>--}}
-{{--                        <button type="submit" class="btn btn-primary">{{ __('home.Lưu') }}</button>--}}
-{{--                    </div>--}}
-{{--                </form>--}}
             </div>
         </div>
     </div>
