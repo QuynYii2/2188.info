@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\CategoryStatus;
 use App\Enums\EvaluateProductStatus;
 use App\Enums\ProductStatus;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Models\Category;
 use App\Models\MemberRegisterInfo;
 use App\Models\MemberRegisterPersonSource;
 use App\Models\Product;
@@ -21,22 +23,14 @@ class ShopInformationController extends Controller
     public function index($id, Request $request)
     {
         (new HomeController())->getLocale($request);
-        $priceProductOfCategory = Product::selectRaw('MAX(price) AS maxPrice, MIN(price) AS minPrice')
-            ->where([['products.status', '=', ProductStatus::ACTIVE], ['user_id', '=', $id]])
-            ->first();
-        if ($priceProductOfCategory->maxPrice === null) {
-            $priceProductOfCategory->maxPrice = 1000;
-        }
-        if ($priceProductOfCategory->minPrice === null) {
-            $priceProductOfCategory->minPrice = 0;
-        }
-        $listProduct = [];
-        $sellerInfo = ShopInfo::where('user_id', '=', $id)->first();
+        $listProduct = Product::where('status', ProductStatus::ACTIVE)
+            ->where('user_id', $id)
+            ->orderBy('id', 'desc')
+            ->get();
         $countProductBySeller = Product::selectRaw('COUNT(*) as countProduct')
             ->where('user_id', '=', $id)
             ->first();
 
-        $shopInformation = ShopInfo::where('user_id', $id)->first();
         $listVouchers = Voucher::where('user_id', '=', $id)->get();
         $user = User::find($id);
         $memberPerson = MemberRegisterPersonSource::where('email', $user->email)->first();
@@ -44,8 +38,13 @@ class ShopInformationController extends Controller
         if ($memberPerson) {
             $company = MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
         }
-        $currency = (new \App\Http\Controllers\Frontend\HomeController())->getLocation($request);
-
+        /* Find category */
+        $category_id = $company->category_id;
+        $arrayCategory = explode(',', $category_id);
+        $categories = Category::whereIn('id', $arrayCategory)->where('status', CategoryStatus::ACTIVE)->get();
+        /* Convert currency*/
+        $currency = (new HomeController())->getLocation($request);
+        /* Calc average rate */
         $evaluates = DB::table('evaluate_products')
             ->join('products', 'products.id', '=', 'evaluate_products.product_id')
             ->where('products.user_id', $id)
@@ -62,13 +61,11 @@ class ShopInformationController extends Controller
         return view('frontend/pages/shop-information/index', compact(
             'listProduct',
             'company',
-            'priceProductOfCategory',
-            'sellerInfo',
             'countProductBySeller',
             'listVouchers',
-            'shopInformation',
             'currency',
-            'id',
+            'categories',
+            'memberPerson',
             'user',
             'averageRatingsFormatted',
             'totalRatings'));
