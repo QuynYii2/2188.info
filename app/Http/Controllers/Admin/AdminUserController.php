@@ -35,7 +35,7 @@ class AdminUserController extends Controller
         if (!$locale) {
             $locale = 'kr';
         }
-        $users = User::where('region', $locale)
+        $users = User::where('region', $locale)->where('status', '!=', UserStatus::DELETED)
             ->orderBy('id', 'desc')->paginate(30);
         $members = Member::where('status', MemberStatus::ACTIVE)->get();
 
@@ -559,33 +559,26 @@ class AdminUserController extends Controller
 
     public function searchUser(Request $request)
     {
-        $name = $request->input('name');
-        $email = $request->input('email');
-        $phone = $request->input('phone');
+        $keyword = $request->input('keyword');
         $member = $request->input('member');
-        $role = $request->input('role');
         $category = $request->input('category');
 
         $users = User::query();
 
-        if ($name) {
-            $users->where('users.name', 'like', '%' . $name . '%');
+        if ($keyword) {
+            $users->where('users.name', 'like', '%' . $keyword . '%');
         }
 
-        if ($email) {
-            $users->where('users.email', 'like', '%' . $email . '%');
+        if ($keyword) {
+            $users->where('users.email', 'like', '%' . $keyword . '%');
         }
 
-        if ($phone) {
-            $users->where('users.phone', 'like', '%' . $phone . '%');
+        if ($keyword) {
+            $users->where('users.phone', 'like', '%' . $keyword . '%');
         }
 
         if ($member) {
             $users->where('users.member', $member);
-        }
-
-        if ($role) {
-            $users->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', $role);
         }
 
         if ($category) {
