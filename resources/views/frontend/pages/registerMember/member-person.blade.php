@@ -161,7 +161,11 @@
             }
         }
 
+        @if(Auth::check())
         checkActive();
+        @else
+        loadNav();
+        @endif
 
         function loadNav() {
             const memberInput = $('#code');

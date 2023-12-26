@@ -3,125 +3,99 @@
     User Manager
 @endsection
 @section('content')
-    <div class="container">
-        <h3 class="text-center mt-3">{{ __('home.detail_account') }}</h3>
-        <a class="btn btn-info" href="{{route('admin.list.users')}}">{{ __('home.back_to') }}</a>
-    </div>
-    <div class="container">
-        <form action="{{route('admin.update.users', $user->id)}}" method="post" enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="name">FullName</label>
-                    <input required type="text" class="form-control" id="name" name="name" placeholder="Full Name"
-                           value="{{$user->name}}">
+    <link rel="stylesheet" href="{{asset('css/register_member.css')}}">
+    <link href="{{asset('css/voucher.css')}}" rel="stylesheet">
+    <div class="container-fluid detail-user-page bg-white">
+        <div class="title">
+            Back
+        </div>
+        <div class="form-update">
+            <form action="" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="number_clearance"
+                           class="label_item-member clearance-member">{{ __('home.Number clearance')}} <span
+                                class="text-danger">*</span></label>
+                    <input type="number" class="form-control" id="number_clearance"
+                           placeholder="{{ __('home.Number clearance')}}"
+                           value=""
+                           name="number_clearance">
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="email">Email</label>
-                    <input required type="email" class="form-control" id="email" name="email" placeholder="Email"
-                           value="{{$user->email}}">
+                <label for="name_en" class="label_item-member">{{ __('home.Full Name') }}
+                    <span class="text-danger">*</span></label>
+                <div class="form-group">
+                    <input type="text" class="form-control mb-2" id="name_en" name="name_en"
+                           value=""
+                           placeholder="{{ __('home.English only') }}" required>
+                    <input type="text" class="form-control mt-2" id="name" name="name"
+                           value=""
+                           placeholder="{{ __('home.Local language') }}" required>
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="phone">PhoneNumber</label>
-                    <input required type="text" class="form-control" id="phone" name="phone" placeholder="06845655"
-                           value="{{$user->phone}}">
+                <label for="code" class="label_item-member">{{ __('home.ID') }} <span
+                            class="text-danger">*</span></label>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="code" name="code"
+                           value=""
+                           required>
                 </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="password">Password</label>
-                    <input required type="password" class="form-control" id="password" name="password" disabled>
-                    <input type="checkbox" id="inputCheckboxPassword">
-                    <label for="inputCheckboxPassword">
-                        {{ __('home.Cập nhập password') }}
-                    </label>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="password" class="label_item-member">{{ __('home.Password') }} <span
+                                    class="text-danger">*</span></label>
+                        <input type="password" class="form-control" id="password" name="password"
+                               placeholder="*********" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="passwordConfirm" class="label_item-member">{{ __('home.Password') }} <span
+                                    class="text-danger">*</span></label>
+                        <input type="password" class="form-control" id="passwordConfirm"
+                               name="passwordConfirm" placeholder="*********"
+                               required>
+                    </div>
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="role">Role</label>
-                    <select id="role" class="form-control" name="role">
-                        @if($isAdmin == true)
-                            <option value="ADMIN">ADMIN</option>
-                            <option value="SELLER">SELLER</option>
-                            <option value="USER">USER</option>
-                        @elseif($isAdmin == false && $isSeller == true)
-                            <option value="SELLER">SELLER</option>
-                            <option value="ADMIN">ADMIN</option>
-                            <option value="USER">USER</option>
-                        @else
-                            <option value="USER">USER</option>
-                            <option value="ADMIN">ADMIN</option>
-                            <option value="SELLER">SELLER</option>
-                        @endif
-                    </select>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="phoneNumber" class="label_item-member">{{ __('home.phone number') }} <span
+                                    class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
+                               value=""
+                               required>
+                    </div>
+                    <div class="form-group col-md-6 justify-content-between align-items-center d-flex">
+                        <div class="form-check mt-4">
+                            <input class="form-check-input" type="checkbox" id="gridCheck1" required>
+                            <label class="form-check-label label_item-member" for="gridCheck1">
+                                {{ __('home.Allow receiving notifications via SMS message') }}
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="email" class="label_item-member">{{ __('home.email') }} <span
+                                    class="text-danger">*</span></label>
+                        <input type="email" class="form-control" id="email" name="email"
+                               value=""
+                               required>
+                    </div>
+                    <div class="form-group col-md-6 justify-content-between align-items-center d-flex">
+                        <div class="form-check mt-4">
+                            <input class="form-check-input" type="checkbox" id="gridCheck2" required>
+                            <label class="form-check-label label_item-member" for="gridCheck2">
+                                {{ __('home.Allow receiving notifications via Email') }}
+                            </label>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="inputState">Status</label>
-                    <select id="inputState" class="form-control" name="status">
-                        @if($user->status == \App\Enums\UserStatus::ACTIVE)
-                            <option value="{{\App\Enums\UserStatus::ACTIVE}}">ACTIVE</option>
-                            <option value="{{\App\Enums\UserStatus::INACTIVE}}">INACTIVE</option>
-                            <option value="{{\App\Enums\UserStatus::BAN}}">BAN</option>
-                        @elseif($user->status == \App\Enums\UserStatus::INACTIVE)
-                            <option value="{{\App\Enums\UserStatus::INACTIVE}}">INACTIVE</option>
-                            <option value="{{\App\Enums\UserStatus::ACTIVE}}">ACTIVE</option>
-                            <option value="{{\App\Enums\UserStatus::ACTIVE}}">BAN</option>
-                        @else
-                            <option value="{{\App\Enums\UserStatus::BAN}}">BAN</option>
-                            <option value="{{\App\Enums\UserStatus::ACTIVE}}">ACTIVE</option>
-                            <option value="{{\App\Enums\UserStatus::ACTIVE}}">INACTIVE</option>
-                        @endif
-                    </select>
+                <div class="form-group">
+                    <label for="sns_account" class="label_item-member">{{ __('home.SNS Account') }}
+                        <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="sns_account" name="sns_account"
+                           value=""
+                           placeholder="{{ __('home.ID Kakao Talk') }}" required>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="address">Address</label>
-                <input required type="text" class="form-control" id="address" name="address" placeholder="1234 Main St"
-                       value="{{$user->address}}">
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="region">Region</label>
-                    <input required type="text" class="form-control" id="region" name="region"
-                           value="{{$user->region}}">
+                <div class="button-save">
+                    <button class="btn btnSave" type="submit">Update</button>
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="inputState">Status</label>
-                    <select id="inputState" class="form-control" name="status">
-                        @if($user->status == \App\Enums\UserStatus::ACTIVE)
-                            <option value="{{\App\Enums\UserStatus::ACTIVE}}">ACTIVE</option>
-                            <option value="{{\App\Enums\UserStatus::INACTIVE}}">INACTIVE</option>
-                            <option value="{{\App\Enums\UserStatus::BAN}}">BAN</option>
-                        @elseif($user->status == \App\Enums\UserStatus::INACTIVE)
-                            <option value="{{\App\Enums\UserStatus::INACTIVE}}">INACTIVE</option>
-                            <option value="{{\App\Enums\UserStatus::ACTIVE}}">ACTIVE</option>
-                            <option value="{{\App\Enums\UserStatus::ACTIVE}}">BAN</option>
-                        @else
-                            <option value="{{\App\Enums\UserStatus::BAN}}">BAN</option>
-                            <option value="{{\App\Enums\UserStatus::ACTIVE}}">ACTIVE</option>
-                            <option value="{{\App\Enums\UserStatus::ACTIVE}}">INACTIVE</option>
-                        @endif
-                    </select>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="thumbnail">Image</label>
-                    <input type="file" class="form-control" id="thumbnail" name="thumbnail" accept="image/*">
-                    <img width="100px" height="100px" src="{{ asset('storage/'.$user->image) }}" alt="Avatar">
-                </div>
-            </div>
-            <button type="submit" class="btn btn-success">Save</button>
-        </form>
-        <div class="row mb-3">
-            <div class="col-md-6"></div>
-            <div class="col-md-6 d-flex justify-content-between align-items-center">
-                <a href="{{route('admin.detail.users.company', $user->id)}}" class="btn btn-warning">{{ __('home.info_company') }}</a>
-                <form action="{{route('admin.delete.users', $user->id)}}" method="post">
-                    @method('DELETE')
-                    @csrf
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-            </div>
+            </form>
         </div>
     </div>
-    <script src="{{ asset('js/admin/update-user.js') }}"></script>
 @endsection
