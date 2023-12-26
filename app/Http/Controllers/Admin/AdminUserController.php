@@ -117,7 +117,6 @@ class AdminUserController extends Controller
         if ($roleNames->contains('seller')) {
             $isSeller = true;
         }
-
         return view('admin.user-manager.update-user', compact('user', 'isAdmin', 'isSeller'));
     }
 
