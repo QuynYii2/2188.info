@@ -208,6 +208,9 @@
                 @endif
                 </tbody>
             </table>
+            <div class="d-flex align-items-center justify-content-between">
+                {{ $users->links('vendor.pagination.default') }}
+            </div>
         </div>
     </div>
 
