@@ -65,7 +65,9 @@ class OrderController extends Controller
     {
         (new HomeController())->getLocale($request);
         $order = Order::find($id);
-        $orderItems = OrderItem::where('order_id', $id)->get();
+        $orderItems = OrderItem::where('order_id', $id)
+            ->orderBy('id', 'desc')
+            ->get();
         return view('backend.order.detail', compact('order', 'orderItems'));
     }
 }

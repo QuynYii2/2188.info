@@ -2115,11 +2115,11 @@ body {
   padding: 5px 45px 5px 15px;
 }
 
-.form_memberInfo .btn-register, .form_info-member-person .btn-register, .form-detail_postRFQ .btn-register {
+.form_memberInfo .btn-register, .form_info-member-person .btn-register, .form-detail_postRFQ .btn-register, .add-attributes-modal .btn-register {
   padding: 12px 16px;
   background: var(--secon-1, #F47621);
 }
-.form_memberInfo .form-group button, .form_info-member-person .form-group button, .form-detail_postRFQ .form-group button {
+.form_memberInfo .form-group button, .form_info-member-person .form-group button, .form-detail_postRFQ .form-group button, .add-attributes-modal .form-group button {
   display: flex;
   padding: 12px 16px;
   justify-content: center;
@@ -2133,28 +2133,28 @@ body {
   font-weight: 600;
   line-height: normal;
 }
-.form_memberInfo .day_register, .form_info-member-person .day_register, .form-detail_postRFQ .day_register {
+.form_memberInfo .day_register, .form_info-member-person .day_register, .form-detail_postRFQ .day_register, .add-attributes-modal .day_register {
   color: #000;
   font-size: 16px;
   font-style: normal;
   font-weight: 800;
   line-height: normal;
 }
-.form_memberInfo .label_form, .form_info-member-person .label_form, .form-detail_postRFQ .label_form {
+.form_memberInfo .label_form, .form_info-member-person .label_form, .form-detail_postRFQ .label_form, .add-attributes-modal .label_form {
   color: #000;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
 }
-.form_memberInfo .label_item-member, .form_info-member-person .label_item-member, .form-detail_postRFQ .label_item-member {
+.form_memberInfo .label_item-member, .form_info-member-person .label_item-member, .form-detail_postRFQ .label_item-member, .add-attributes-modal .label_item-member {
   color: var(--Black, #000);
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
 }
-.form_memberInfo textarea, .form_info-member-person textarea, .form-detail_postRFQ textarea {
+.form_memberInfo textarea, .form_info-member-person textarea, .form-detail_postRFQ textarea, .add-attributes-modal textarea {
   border-radius: 8px;
   border: 1px solid var(--Grey-medium, #BFBFBF);
   background: var(--White-Light, #F3F3F3);
@@ -2169,7 +2169,7 @@ body {
   font-weight: 600;
   line-height: normal;
 }
-.form_memberInfo input[type=text], .form_memberInfo input[type=number], .form_memberInfo input[type=email], .form_memberInfo input[type=password], .form_memberInfo input[type=tel], .form_memberInfo select, .form_info-member-person input[type=text], .form_info-member-person input[type=number], .form_info-member-person input[type=email], .form_info-member-person input[type=password], .form_info-member-person input[type=tel], .form_info-member-person select, .form-detail_postRFQ input[type=text], .form-detail_postRFQ input[type=number], .form-detail_postRFQ input[type=email], .form-detail_postRFQ input[type=password], .form-detail_postRFQ input[type=tel], .form-detail_postRFQ select {
+.form_memberInfo input[type=text], .form_memberInfo input[type=number], .form_memberInfo input[type=email], .form_memberInfo input[type=password], .form_memberInfo input[type=tel], .form_memberInfo select, .form_info-member-person input[type=text], .form_info-member-person input[type=number], .form_info-member-person input[type=email], .form_info-member-person input[type=password], .form_info-member-person input[type=tel], .form_info-member-person select, .form-detail_postRFQ input[type=text], .form-detail_postRFQ input[type=number], .form-detail_postRFQ input[type=email], .form-detail_postRFQ input[type=password], .form-detail_postRFQ input[type=tel], .form-detail_postRFQ select, .add-attributes-modal input[type=text], .add-attributes-modal input[type=number], .add-attributes-modal input[type=email], .add-attributes-modal input[type=password], .add-attributes-modal input[type=tel], .add-attributes-modal select {
   border-radius: 8px;
   border: 1px solid var(--Grey-medium, #BFBFBF);
   background: var(--White-Light, #F3F3F3);
@@ -2186,11 +2186,11 @@ body {
   font-weight: 600;
   line-height: normal;
 }
-.form_memberInfo select.form-control:not([size]):not([multiple]), .form_info-member-person select.form-control:not([size]):not([multiple]), .form-detail_postRFQ select.form-control:not([size]):not([multiple]) {
+.form_memberInfo select.form-control:not([size]):not([multiple]), .form_info-member-person select.form-control:not([size]):not([multiple]), .form-detail_postRFQ select.form-control:not([size]):not([multiple]), .add-attributes-modal select.form-control:not([size]):not([multiple]) {
   padding: 10px;
   height: 48px;
 }
-.form_memberInfo .form-check input[type=checkbox], .form_info-member-person .form-check input[type=checkbox], .form-detail_postRFQ .form-check input[type=checkbox] {
+.form_memberInfo .form-check input[type=checkbox], .form_info-member-person .form-check input[type=checkbox], .form-detail_postRFQ .form-check input[type=checkbox], .add-attributes-modal .form-check input[type=checkbox] {
   margin: 8px;
   -webkit-appearance: none;
   appearance: none;
@@ -2207,7 +2207,8 @@ body {
 .form_memberInfo .form-check input[type=checkbox]:before,
 .form_memberInfo .form-check input[type=checkbox]:after, .form_info-member-person .form-check input[type=checkbox]:before,
 .form_info-member-person .form-check input[type=checkbox]:after, .form-detail_postRFQ .form-check input[type=checkbox]:before,
-.form-detail_postRFQ .form-check input[type=checkbox]:after {
+.form-detail_postRFQ .form-check input[type=checkbox]:after, .add-attributes-modal .form-check input[type=checkbox]:before,
+.add-attributes-modal .form-check input[type=checkbox]:after {
   content: "";
   position: absolute;
   background: #F47621;
@@ -2217,26 +2218,26 @@ body {
   left: 10%;
   transform-origin: left center;
 }
-.form_memberInfo .form-check input[type=checkbox]:before, .form_info-member-person .form-check input[type=checkbox]:before, .form-detail_postRFQ .form-check input[type=checkbox]:before {
+.form_memberInfo .form-check input[type=checkbox]:before, .form_info-member-person .form-check input[type=checkbox]:before, .form-detail_postRFQ .form-check input[type=checkbox]:before, .add-attributes-modal .form-check input[type=checkbox]:before {
   transform: rotate(45deg) translate(-0.05em, -0.05em) scaleX(0);
   transition: transform 200ms ease-in 200ms;
 }
-.form_memberInfo .form-check input[type=checkbox]:after, .form_info-member-person .form-check input[type=checkbox]:after, .form-detail_postRFQ .form-check input[type=checkbox]:after {
+.form_memberInfo .form-check input[type=checkbox]:after, .form_info-member-person .form-check input[type=checkbox]:after, .form-detail_postRFQ .form-check input[type=checkbox]:after, .add-attributes-modal .form-check input[type=checkbox]:after {
   width: 0.5em;
   transform: rotate(-45deg) translateY(0.2em) scaleX(0);
   transform-origin: left center;
   transition: transform 200ms ease-in;
 }
-.form_memberInfo .form-check input[type=checkbox]:checked:before, .form_info-member-person .form-check input[type=checkbox]:checked:before, .form-detail_postRFQ .form-check input[type=checkbox]:checked:before {
+.form_memberInfo .form-check input[type=checkbox]:checked:before, .form_info-member-person .form-check input[type=checkbox]:checked:before, .form-detail_postRFQ .form-check input[type=checkbox]:checked:before, .add-attributes-modal .form-check input[type=checkbox]:checked:before {
   transform: rotate(45deg) translate(-0.05em, -0.05em) scaleX(1);
   transition: transform 200ms ease-in;
 }
-.form_memberInfo .form-check input[type=checkbox]:checked:after, .form_info-member-person .form-check input[type=checkbox]:checked:after, .form-detail_postRFQ .form-check input[type=checkbox]:checked:after {
+.form_memberInfo .form-check input[type=checkbox]:checked:after, .form_info-member-person .form-check input[type=checkbox]:checked:after, .form-detail_postRFQ .form-check input[type=checkbox]:checked:after, .add-attributes-modal .form-check input[type=checkbox]:checked:after {
   width: 0.5em;
   transform: rotate(-45deg) translateY(0.2em) scaleX(1);
   transition: transform 200ms ease-out 200ms;
 }
-.form_memberInfo .form-check input[type=checkbox]:focus, .form_info-member-person .form-check input[type=checkbox]:focus, .form-detail_postRFQ .form-check input[type=checkbox]:focus {
+.form_memberInfo .form-check input[type=checkbox]:focus, .form_info-member-person .form-check input[type=checkbox]:focus, .form-detail_postRFQ .form-check input[type=checkbox]:focus, .add-attributes-modal .form-check input[type=checkbox]:focus {
   outline: 0.05em dotted rgba(0, 0, 0, 0.25);
 }
 
@@ -2725,6 +2726,231 @@ body {
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+}
+
+.order-managers {
+  margin-top: 40px;
+  color: var(--Black, #000);
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.search-order {
+  display: flex;
+  padding: 32px 16px;
+  align-items: center;
+  gap: 24px;
+  background: var(--White, #FFF);
+}
+.search-order input {
+  border-radius: 8px;
+  border: 1px solid var(--Grey-Light, #D6D6D6);
+  background: var(--White-Light, #F3F3F3);
+  display: flex;
+  padding: 12px 16px;
+  align-items: center;
+  gap: 8px;
+  min-height: 50px;
+  color: var(--Grey-Dark, #929292);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.search-order .btn-clear {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  align-items: center;
+  display: flex;
+  padding: 10px;
+}
+.search-order .btn-clear a {
+  color: #FF0000;
+}
+.search-order button {
+  display: flex;
+  width: 151px;
+  padding: 12px 16px;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--secon-1, #F47621);
+  border: 0;
+}
+
+.card .card-body .export-excel button {
+  background: var(--secon-1, #F47621);
+  display: flex;
+  width: 151px;
+  padding: 8px 16px;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  border: 0;
+  margin-bottom: 12px;
+}
+.card .card-body table, .card .card-body td, .card .card-body th, .card .card-body tr {
+  border: 0;
+}
+.card .card-body table input[type=checkbox], .card .card-body td input[type=checkbox], .card .card-body th input[type=checkbox], .card .card-body tr input[type=checkbox] {
+  accent-color: #F47621;
+  display: flex;
+  width: 16px;
+  height: 16px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+.card .card-body table input[type=checkbox]:checked::before, .card .card-body td input[type=checkbox]:checked::before, .card .card-body th input[type=checkbox]:checked::before, .card .card-body tr input[type=checkbox]:checked::before {
+  color: #FFFFFF !important;
+}
+.card .card-body thead {
+  color: var(--Grey-Dark, #929292);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.card .card-body tbody {
+  color: #000;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.card .card-body tbody .btn-order {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 8px;
+  background: var(--Grey-Dark, #929292);
+  border: 0;
+  color: var(--White, #FFF);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.price-order-managers {
+  color: #E60000;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.price-order-managers p {
+  color: var(--Grey-Dark, #929292);
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-decoration-line: line-through;
+}
+
+.quantity-order-managers {
+  color: var(--Grey-Dark, #929292);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  display: flex;
+}
+.quantity-order-managers p {
+  color: #000;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.btn-add-attributes button {
+  color: var(--White, #FFF);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  background: var(--secon-1, #F47621);
+}
+
+.add-attributes-modal .modal-body .form-field {
+  margin-bottom: 24px;
+}
+.add-attributes-modal .modal-body .form-field label {
+  color: #000;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.add-attributes-modal .modal-body .form-field input {
+  border: 1px solid var(--Grey-light, #D6D6D6);
+  width: 100%;
+  display: flex;
+  padding: 12px 16px;
+  align-items: flex-start;
+  gap: 10px;
+  align-self: stretch;
+  color: var(--Grey, #A9A9A9);
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.name-product-order {
+  color: #000;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.name-product-order .product-image-order img {
+  border-radius: 10px;
+  object-fit: cover;
+  border: 1px solid var(--Grey-Medium, #BFBFBF);
+  width: 100%;
+}
+.name-product-order .image-list {
+  padding: 0;
+  overflow: auto;
+  display: flex;
+}
+.name-product-order .image-list li.image-item {
+  display: flex;
+}
+.name-product-order .image-list li.image-item img {
+  border-radius: 10px;
+  object-fit: cover;
+  border: 1px solid var(--Grey-Medium, #BFBFBF);
+  width: 100px;
+  height: 100px;
+}
+
+.order-detail__info {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.order-detail__info span {
+  color: var(--Grey-Dark, #929292);
+}
+.order-detail__info .order-detail-product {
+  color: #000;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.order-detail__info .order-detail-product span {
+  color: #000000;
 }
 
 /* end profile account */
