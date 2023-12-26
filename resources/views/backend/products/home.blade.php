@@ -439,7 +439,7 @@
             <div class="title-small">{{ __('home.bảng hiệu quả hoạt động giúp người bán hiểu rõ hơn về hoạt động buôn bán của shop mình dựa trên những chỉ tiêu sau') }}
                 :
             </div>
-            <ul class="nav" id="myTab" role="tablist">
+            <ul class="nav w-100 d-flex flex-wrap" id="myTab" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
                        aria-controls="home" aria-selected="true">{{ __('home.vi phạm về đăng bán') }}
@@ -457,7 +457,7 @@
                     </a>
                 </li>
             </ul>
-            <div class="tab-content" id="myTabContent">
+            <div class="tab-content w-100" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <table class="table">
                         <thead class="thead-light">
