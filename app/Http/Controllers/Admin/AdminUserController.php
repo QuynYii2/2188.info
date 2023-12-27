@@ -132,9 +132,22 @@ class AdminUserController extends Controller
             }
 
             $password = $request->input('password');
+            $password_confirm = $request->input('password_confirm');
+            $new_password_confirm = $request->input('new_password_confirm');
 
             if ($password) {
-                $user->password = Hash::make($password);
+                if (!Hash::check($password, $user->password)) {
+                    alert()->error('Error', 'Error, Password incorrect!');
+                    return back();
+                }
+
+                if ($password_confirm != $new_password_confirm) {
+                    alert()->error('Error', 'Error, Password or Password confirm incorrect!');
+                    return back();
+                }
+
+                $new_password = Hash::make($password_confirm);
+                $user->password = $new_password;
             }
 
             if ($request->hasFile('thumbnail')) {
@@ -405,6 +418,10 @@ class AdminUserController extends Controller
         $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
 
         $categories_two_parent = collect($categories_two_parent_array);
+        if (!$company) {
+            alert()->error('Error', 'Error, Company not found!');
+            return back();
+        }
 
         return view('admin.user-manager.detail-company', compact(
             'user',
