@@ -40,9 +40,15 @@
                     <div class="form-group">
                         <label for="number_clearance" class="label_form">{{ __('home.Number clearance')}} <span
                                     class="text-danger">*</span></label>
-                        <input type="number" class="form-control" id="number_clearance" name="number_clearance"
-                               value="{{ $createCompany ? $createCompany['number_clearance'] : old('number_clearance', $exitsMember ? $exitsMember->number_clearance: '') }}"
-                               placeholder="{{ __('home.Customs clearance number (enter numbers only)')}}" required>
+                        <div class="d-flex">
+                            <input type="number" class="form-control col-6" id="number_clearance" name="number_clearance"
+                                   value="{{ $createCompany ? $createCompany['number_clearance'] : old('number_clearance', $exitsMember ? $exitsMember->number_clearance: '') }}"
+                                   placeholder="{{ __('home.Customs clearance number (enter numbers only)')}}" required>
+                            <div class="col-6">
+                            <a href="https://unipass.customs.go.kr/csp/persIndex.do" class="border-radius-8 w-50 btn bg-member-primary solid btn-register">{{ __('home.Get a customs clearance number') }}</a>
+                            </div>
+                        </div>
+
                     </div>
                     <label for="email" class="label_form">{{ __('home.company information') }} <span
                                 class="text-danger">*</span></label>

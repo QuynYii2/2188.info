@@ -157,6 +157,7 @@ return [
     'description' => 'Mô tả sản phẩm',
     'specification' => 'Thông số chi tiết',
     'company information' => 'Thông tin công ty',
+    'Get a customs clearance number' => 'Lấy số mã hải quan',
     'review' => 'Đánh giá',
     'read more' => 'Xem tất cả',
     'read less' => 'Thu gọn',

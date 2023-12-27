@@ -144,6 +144,7 @@ return [
     'description' => '설명',
     'specification' => '사양',
     'company information' => '회사 정보',
+    'Get a customs clearance number' => '통관번호 받기',
     'review' => '후기',
     'read more' => '더 보기',
     'read less' => '덜 보기',
