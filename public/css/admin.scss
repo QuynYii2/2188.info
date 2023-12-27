@@ -271,6 +271,31 @@ button {
   }
 }
 
+.btnCreateDefault {
+  background: var(--secon-1, #F47621);
+  padding: 8px 16px;
+  width: 200px;
+  color: var(--White, #FFF);
+  font-size: 16px;
+  font-weight: 600;
+
+  &:hover {
+    color: var(--secon-1, #F47621);
+    background: var(--White, #FFF);
+    border: 1px solid #F47621;
+  }
+}
+
+.iconDelete{
+  color: #ff0000;
+}
+
+.input-custom{
+  border-radius: 8px;
+  border: 1px solid var(--Grey-medium, #BFBFBF);
+  background: var(--White-Light, #F3F3F3);
+}
+
 /* Your properties css*/
 .s24w6 {
   font-size: 24px;
@@ -298,4 +323,9 @@ button {
 .s12w5 {
   font-size: 12px;
   font-weight: 500;
+}
+
+.s12w6{
+  font-size: 12px;
+  font-weight: 600;
 }

@@ -2,17 +2,10 @@
 <link href="{{asset('css/voucher.css')}}" rel="stylesheet">
 <div class="container-fluid">
     @if(!isset($isAdminUpdate))
-{{--        @include('frontend.pages.member.header-button')--}}
         <h3 class="text-center mt-5">{{ __('home.Congratulations, you have registered as a member') }} {{$company->member}}</h3>
     @endif
     <div class="start-page mb-3">
         <div class="background pt-3 justify-content-center pb-3">
-{{--            @if(!isset($isAdminUpdate))--}}
-{{--                <div class="form-title text-center solid-3x pt-2 pb-3 bg-member-green">--}}
-{{--                    <div class="title text-primary"--}}
-{{--                         style="font-size: 35px; font-weight: 600">{{ __('home.Sign up company information') }}</div>--}}
-{{--                </div>--}}
-{{--            @endif--}}
             <div class="">
                 @if($company->member == \App\Enums\RegisterMember::BUYER)
                     @include('frontend.pages.registerMember.buyer')
