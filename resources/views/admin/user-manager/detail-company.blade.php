@@ -12,10 +12,22 @@
         </a>
         <h5 class="text-center s20w6 mt-3">Company Information</h5>
         <form>
-            <div class="form-group">
-                <label class="s12w6" for="datetime_register">Datetime Register</label>
-                <input disabled type="text" class="form-control input-custom" id="datetime_register"
-                       value="{{ \Carbon\Carbon::parse($company->datetime_register)->format('Y-m-d H:i:s') }}">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label class="s12w6" for="datetime_register">Datetime Register</label>
+                    <input disabled type="text" class="form-control input-custom" id="datetime_register"
+                           value="{{ \Carbon\Carbon::parse($company->datetime_register)->format('Y-m-d H:i:s') }}">
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="s12w6" for="total_date">Total number of days traded</label>
+                    <input disabled type="text" class="form-control input-custom" id="total_date"
+                           value="{{  $date_time }}">
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="s12w6" for="custom">Custom Code</label>
+                    <input disabled type="text" class="form-control input-custom" id="custom"
+                           value="{{ $company->custom }}">
+                </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">

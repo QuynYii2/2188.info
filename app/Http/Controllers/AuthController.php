@@ -2,20 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\CoinStatus;
 use App\Enums\MemberRegisterInfoStatus;
-use App\Enums\MemberRegisterPersonSourceStatus;
-use App\Enums\MemberRegisterType;
-use App\Enums\MemberStatus;
 use App\Enums\PermissionUserStatus;
 use App\Enums\RegisterMember;
-use App\Enums\RegisterMemberPrice;
 use App\Enums\UserStatus;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Libraries\GeoIP;
-use App\Models\Category;
 use App\Models\City;
-use App\Models\Coin;
 use App\Models\Member;
 use App\Models\MemberRegisterInfo;
 use App\Models\MemberRegisterPersonSource;
@@ -29,7 +22,6 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Session;
 use Laravel\Socialite\Facades\Socialite;
 
 
@@ -66,6 +58,17 @@ class AuthController extends Controller
         }
     }
 
+    private function getLocale(Request $request)
+    {
+        $ipAddress = $request->ip();
+        $geoIp = new GeoIP();
+        $locale = 'kr';
+        if ($locale !== null && is_array($locale)) {
+            $locale = $locale['countryCode'];
+        }
+        return $locale;
+    }
+
     public function showLoginForm($locale)
     {
         app()->setLocale($locale);
@@ -74,85 +77,6 @@ class AuthController extends Controller
         } else {
             return view('frontend/pages/login');
         }
-    }
-
-    public function login(Request $request)
-    {
-        $loginField = $request->input('login_field');
-        $isEmail = filter_var($loginField, FILTER_VALIDATE_EMAIL);
-
-        if ($isEmail) {
-            $credentials = [
-                'email' => $loginField,
-                'password' => $request->input('password'),
-            ];
-        } else {
-            $credentials = [
-                'phone' => $loginField,
-                'password' => $request->input('password'),
-            ];
-        }
-
-        $user = User::where($isEmail ? 'email' : 'phone', $loginField)->first();
-
-
-        if ($user && $user->status !== UserStatus::ACTIVE) {
-            toast('Tài khoản của bạn đã bị khóa.', 'error', 'top-right');
-            return back();
-        }
-
-        $locale = app()->getLocale();
-
-        $isAdmin = false;
-        if ($user) {
-            $role_id = DB::table('role_user')->where('user_id', $user->id)->get();
-
-            foreach ($role_id as $item) {
-                if ($item->role_id == 1) {
-                    $isAdmin = true;
-                }
-            }
-
-        }
-
-        if (Auth::attempt($credentials)) {
-            $request->session()->put('login', $loginField);
-            $login = $request->session()->get('login');
-            $token = md5(uniqid());
-            User::where('id', Auth::id())->update(['token' => $token]);
-
-            $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
-
-            $memberLogistic = Member::where('name', RegisterMember::LOGISTIC)->first();
-            $memberTrust = Member::where('name', RegisterMember::TRUST)->first();
-
-            $isMember = null;
-            if ($memberPerson) {
-                $member = MemberRegisterInfo::where([
-                    ['id', $memberPerson->member_id],
-                    ['status', MemberRegisterInfoStatus::ACTIVE]
-                ])->first();
-                if ($member) {
-                    $isMember = true;
-                }
-
-                if ($isAdmin == true) {
-                    return redirect()->route('seller.products.home');
-                }
-
-                if ($isMember && $member->member_id == $memberLogistic->id) {
-                    return redirect()->route('stand.register.member.index', ['id' => $member->id]);
-                } elseif ($isMember && $member->member_id == $memberTrust->id) {
-                    return redirect()->route('trust.register.member.index');
-                } else {
-                    return redirect()->route('homepage');
-                }
-            }
-        } else {
-            toast('Tên đăng nhập hoặc mật khẩu không chính xác', 'error', 'top-right');
-        }
-
-        return back();
     }
 
     public function getGoogleSignInUrl()
@@ -248,6 +172,90 @@ class AuthController extends Controller
         }
     }
 
+    public function login(Request $request)
+    {
+        $loginField = $request->input('login_field');
+        $isEmail = filter_var($loginField, FILTER_VALIDATE_EMAIL);
+
+        if ($isEmail) {
+            $credentials = [
+                'email' => $loginField,
+                'password' => $request->input('password'),
+            ];
+        } else {
+            $credentials = [
+                'phone' => $loginField,
+                'password' => $request->input('password'),
+            ];
+        }
+
+        $user = User::where($isEmail ? 'email' : 'phone', $loginField)->first();
+
+
+        if ($user && $user->status !== UserStatus::ACTIVE) {
+            toast('Tài khoản của bạn đã bị khóa.', 'error', 'top-right');
+            return back();
+        }
+
+        $locale = app()->getLocale();
+
+        $isAdmin = false;
+        if ($user) {
+            $role_id = DB::table('role_user')->where('user_id', $user->id)->get();
+
+            foreach ($role_id as $item) {
+                if ($item->role_id == 1) {
+                    $isAdmin = true;
+                }
+            }
+
+        }
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->put('login', $loginField);
+            $login = $request->session()->get('login');
+            $token = md5(uniqid());
+            User::where('id', Auth::id())->update(['token' => $token]);
+
+            $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+            $company = MemberRegisterInfo::find($memberPerson->member_id);
+            $now = now();
+            $timeDifference = $now->diffInMinutes($company->created_at);
+            $company->total_date = $timeDifference;
+            $company->save();
+
+            $memberLogistic = Member::where('name', RegisterMember::LOGISTIC)->first();
+            $memberTrust = Member::where('name', RegisterMember::TRUST)->first();
+
+            $isMember = null;
+            if ($memberPerson) {
+                $member = MemberRegisterInfo::where([
+                    ['id', $memberPerson->member_id],
+                    ['status', MemberRegisterInfoStatus::ACTIVE]
+                ])->first();
+                if ($member) {
+                    $isMember = true;
+                }
+
+                if ($isAdmin == true) {
+                    return redirect()->route('seller.products.home');
+                }
+
+                if ($isMember && $member->member_id == $memberLogistic->id) {
+                    return redirect()->route('stand.register.member.index', ['id' => $member->id]);
+                } elseif ($isMember && $member->member_id == $memberTrust->id) {
+                    return redirect()->route('trust.register.member.index');
+                } else {
+                    return redirect()->route('homepage');
+                }
+            }
+        } else {
+            toast('Tên đăng nhập hoặc mật khẩu không chính xác', 'error', 'top-right');
+        }
+
+        return back();
+    }
+
     public function getListNation()
     {
         $listNation = DB::table('countries')->where('isShow', '1')->orderBy('continents')->orderBy('name')->get([
@@ -280,6 +288,39 @@ class AuthController extends Controller
         return $states;
     }
 
+    public function createLocation(Request $request)
+    {
+        $request = $request->input();
+        $id_reg = Cache::get('id-member-reg');
+
+        switch ($request['what_create']) {
+            case "0":
+                $this->createNation($request);
+                break;
+            case "1":
+                $this->createProvince($request);
+                break;
+            case "2":
+                $this->createDistrict($request);
+        }
+        return back();
+    }
+
+    public function createNation($request)
+    {
+        $name = $request['nation-input'];
+        $tableCheck = 'countries';
+        $columnCheckIso2 = 'iso2';
+        $columnCheckIso3 = 'iso3';
+        $iso2 = $this->generateIso2($tableCheck, $columnCheckIso2);
+        $iso3 = $this->generateIso3($tableCheck, $columnCheckIso3);
+        DB::table('countries')->insert([
+            'name' => $name,
+            'iso2' => $iso2,
+            'iso3' => $iso3,
+            'continents' => $request['continents'],
+        ]);
+    }
 
     public function generateIso2($table, $column)
     {
@@ -325,41 +366,6 @@ class AuthController extends Controller
         return null;
     }
 
-
-    public function createLocation(Request $request)
-    {
-        $request = $request->input();
-        $id_reg = Cache::get('id-member-reg');
-
-        switch ($request['what_create']) {
-            case "0":
-                $this->createNation($request);
-                break;
-            case "1":
-                $this->createProvince($request);
-                break;
-            case "2":
-                $this->createDistrict($request);
-        }
-        return back();
-    }
-
-    public function createNation($request)
-    {
-        $name = $request['nation-input'];
-        $tableCheck = 'countries';
-        $columnCheckIso2 = 'iso2';
-        $columnCheckIso3 = 'iso3';
-        $iso2 = $this->generateIso2($tableCheck, $columnCheckIso2);
-        $iso3 = $this->generateIso3($tableCheck, $columnCheckIso3);
-        DB::table('countries')->insert([
-            'name' => $name,
-            'iso2' => $iso2,
-            'iso3' => $iso3,
-            'continents' => $request['continents'],
-        ]);
-    }
-
     public function createProvince($request)
     {
         $province_name = $request['province-input'];
@@ -378,6 +384,11 @@ class AuthController extends Controller
                 'state_code' => $iso2
             ]);
         }
+    }
+
+    public function getIn4FromCodeNation($code)
+    {
+        return DB::table('countries')->where('iso2', $code)->first(['id', 'name']);
     }
 
     public function createDistrict($request)
@@ -402,16 +413,6 @@ class AuthController extends Controller
         }
     }
 
-    public function createCommune($request)
-    {
-
-    }
-
-    public function getIn4FromCodeNation($code)
-    {
-        return DB::table('countries')->where('iso2', $code)->first(['id', 'name']);
-    }
-
     public function getIn4FromCodeProvince($code)
     {
         return DB::table('states')->where('state_code', $code)->first([
@@ -422,6 +423,11 @@ class AuthController extends Controller
             'country_code',
             'country_name'
         ]);
+    }
+
+    public function createCommune($request)
+    {
+
     }
 
     public function getListStateByNation($id)
@@ -454,16 +460,5 @@ class AuthController extends Controller
     {
         Auth::logout();
         return redirect('/');
-    }
-
-    private function getLocale(Request $request)
-    {
-        $ipAddress = $request->ip();
-        $geoIp = new GeoIP();
-        $locale = 'kr';
-        if ($locale !== null && is_array($locale)) {
-            $locale = $locale['countryCode'];
-        }
-        return $locale;
     }
 }
