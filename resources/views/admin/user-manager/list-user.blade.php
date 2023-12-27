@@ -47,6 +47,19 @@
                             @endforeach
                         @endif
                     </select>
+                    @php
+                        $isAdmin = checkAdmin();
+                    @endphp
+                    @if($isAdmin && Auth::user()->is_admin == 1)
+                        <select id="region" class="form-control c929292s16w6" name="region">
+                            <option value="" selected>Region</option>
+                            <option value="kr">Korea</option>
+                            <option value="vi">VietNam</option>
+                            <option value="cn">China</option>
+                            <option value="jp">Japan</option>
+                            <option value="en">Other</option>
+                        </select>
+                    @endif
                 </div>
                 <div class="list-button d-flex align-items-center">
                     <button type="submit" class="btn btnSearchProduct cFFFs16w6">
@@ -81,7 +94,10 @@
                             $memberPerson = \App\Models\MemberRegisterPersonSource::where('email', $user->email)
                                 ->where('status', \App\Enums\MemberRegisterPersonSourceStatus::ACTIVE)
                                 ->first();
-                            $company = MemberRegisterInfo::find($memberPerson->member_id);
+                            $company = null;
+                            if ($memberPerson){
+                                $company = MemberRegisterInfo::find($memberPerson->member_id);
+                            }
                         @endphp
                         <tr>
                             <th scope="row">
@@ -97,21 +113,25 @@
                                 {{$user->phone}}
                             </td>
                             <td>
-                                {{ $company->name_en }}
+                                @if($company)
+                                    {{ $company->name_en }}
+                                @endif
                             </td>
                             <td>
                                 {{$user->member}}
                             </td>
                             @php
-                                $list_categories = \App\Models\Category::whereIn('id', explode(',', $company->category_id))
+                                $cateName = null;
+                                if ($company){
+                                    $list_categories = \App\Models\Category::whereIn('id', explode(',', $company->category_id))
                                     ->where('status', \App\Enums\CategoryStatus::ACTIVE)
                                     ->get();
-                                $cateName = null;
-                                foreach ($list_categories as $item){
-                                    if ($cateName){
-                                        $cateName = $cateName .','. $item->name;
-                                    } else{
-                                         $cateName = $item->name;
+                                    foreach ($list_categories as $item){
+                                        if ($cateName){
+                                            $cateName = $cateName .','. $item->name;
+                                        } else{
+                                             $cateName = $item->name;
+                                        }
                                     }
                                 }
                             @endphp
@@ -138,10 +158,12 @@
                             </td>
                             <td>
                                 <div class="d-flex align-items-center list-icon-action">
-                                    <a href="{{route('stand.register.member.index', $company->id)}}"
-                                       class="iconView">
-                                        <i class="fa-solid fa-eye"></i>
-                                    </a>
+                                    @if($company)
+                                        <a href="{{route('stand.register.member.index', $company->id)}}"
+                                           class="iconView">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </a>
+                                    @endif
                                     <a href="{{route('admin.private.update.users', $user->id)}}"
                                        class="iconDetail">
                                         <i class="fa-solid fa-pen-to-square"></i>

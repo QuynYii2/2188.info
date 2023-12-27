@@ -18,6 +18,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -26,15 +27,20 @@ class AdminUserController extends Controller
     public function listUser(Request $request)
     {
         (new HomeController())->getLocale($request);
-        $locale = app()->getLocale();
-        if (!$locale) {
-            $locale = $request->session()->get('locale');
+        if (checkAdmin() && Auth::user()->is_admin == 1) {
+            $users = User::where('status', '!=', UserStatus::DELETED)
+                ->orderBy('id', 'desc')->paginate(30);
+        } else {
+            $locale = app()->getLocale();
+            if (!$locale) {
+                $locale = $request->session()->get('locale');
+            }
+            if (!$locale) {
+                $locale = 'kr';
+            }
+            $users = User::where('region', $locale)->where('status', '!=', UserStatus::DELETED)
+                ->orderBy('id', 'desc')->paginate(30);
         }
-        if (!$locale) {
-            $locale = 'kr';
-        }
-        $users = User::where('region', $locale)->where('status', '!=', UserStatus::DELETED)
-            ->orderBy('id', 'desc')->paginate(30);
         $members = Member::where('status', MemberStatus::ACTIVE)->get();
 
         $roles = Role::all();
@@ -545,6 +551,7 @@ class AdminUserController extends Controller
         $keyword = $request->input('keyword');
         $member = $request->input('member');
         $category = $request->input('category');
+        $region = $request->input('region');
 
         $users = User::query();
 
@@ -571,7 +578,23 @@ class AdminUserController extends Controller
                 ->where('member_register_infos.category_id', 'like', '%' . $category . '%');
         }
 
-        $users = $users->paginate(30);
+        if (checkAdmin() && Auth::user()->is_admin == 1) {
+            if ($region) {
+                $users->where('users.region', $region);
+            }
+        } else {
+            $locale = app()->getLocale();
+            if (!$locale) {
+                $locale = $request->session()->get('locale');
+            }
+            if (!$locale) {
+                $locale = 'kr';
+            }
+           $users->where('users.region', $locale);
+        }
+
+        $users = $users->orderBy('id', 'desc')->paginate(30);
+
         $members = Member::where('status', MemberStatus::ACTIVE)->get();
 
         $roles = Role::all();
