@@ -136,6 +136,7 @@ return [
     'description' => 'Description',
     'specification' => 'Specification',
     'company information' => 'Company information',
+    'Get a customs clearance number' => 'Get a customs clearance number',
     'review' => 'Review',
     'read more' => 'Read more',
     'read less' => 'Read less',

@@ -54,6 +54,9 @@
 .upload-icon {
     padding: 30px 70px;
 }
+.border-radius-8 {
+    border-radius: 8px;
+}
 
 .member-name {
     font-size: 26px;
