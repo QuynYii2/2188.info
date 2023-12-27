@@ -13,8 +13,6 @@ use App\Models\Category;
 use App\Models\Member;
 use App\Models\MemberRegisterInfo;
 use App\Models\MemberRegisterPersonSource;
-use App\Models\Order;
-use App\Models\Product;
 use App\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
@@ -156,26 +154,29 @@ class AdminUserController extends Controller
                 $user->image = $avatarPath;
             }
 
-            $user->name = $request->input('name');
-            $user->address = $request->input('address');
-            $user->region = $request->input('region');
 
-            $user->email = $request->input('email');
-            $user->phone = $request->input('phone');
-            $user->status = $request->input('status');
-
+            $member = $request->input('member');
+            $user->member = $member;
             $companyPerson = MemberRegisterPersonSource::where('email', $user->email)->first();
 
-            $role = $request->input('role');
+            $user->name = $request->input('name') ?? $user->name;
+            $user->address = $request->input('address') ?? $user->address;
+            $user->region = $request->input('region') ?? $user->region;
 
-            DB::table('role_user')->where('user_id', $id)->delete();
-
-            $this->insertRole($role, $id, $request);
+            $user->email = $request->input('email') ?? $user->email;
+            $user->phone = $request->input('phone') ?? $user->phone;
+            $user->status = $request->input('status');
 
             $user->save();
             if ($companyPerson) {
-                $companyPerson->email = $request->input('email');
-                $companyPerson->phone = $request->input('phone');
+                $company = MemberRegisterInfo::find($companyPerson->member_id);
+                $company->member = $member;
+                $member_id = Member::where('name', $member)->first();
+                $company->member_id = $member_id->id;
+                $company->save();
+
+                $companyPerson->email = $request->input('email') ?? $user->email;
+                $companyPerson->phone = $request->input('phone') ?? $user->phone;
                 $companyPerson->save();
             }
             alert()->success('Success', 'Save information user success');
@@ -198,36 +199,6 @@ class AdminUserController extends Controller
         $user->save();
         alert()->success('Success', 'Delete success');
         return redirect(route('admin.list.users'));
-    }
-
-    private function insertRole($role, $id, Request $request)
-    {
-        (new HomeController())->getLocale($request);
-        $adminRole = Role::where('name', 'super_admin')->first();
-        $seller = Role::where('name', 'seller')->first();
-        $buyer = Role::where('name', 'buyer')->first();
-        if ($role == 'ADMIN') {
-            DB::table('role_user')->insert([
-                [
-                    'role_id' => $adminRole->id,
-                    'user_id' => $id
-                ],
-                [
-                    'role_id' => $seller->id,
-                    'user_id' => $id
-                ]
-            ]);
-        } elseif ($role == 'SELLER') {
-            DB::table('role_user')->insert([
-                'role_id' => $seller->id,
-                'user_id' => $id
-            ]);
-        } else {
-            DB::table('role_user')->insert([
-                'role_id' => $buyer->id,
-                'user_id' => $id
-            ]);
-        }
     }
 
     public function processCreate(Request $request)
@@ -360,6 +331,36 @@ class AdminUserController extends Controller
         } catch (Exception $exception) {
             alert()->error('Error', 'Error, Please try again');
             return back();
+        }
+    }
+
+    private function insertRole($role, $id, Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        $adminRole = Role::where('name', 'super_admin')->first();
+        $seller = Role::where('name', 'seller')->first();
+        $buyer = Role::where('name', 'buyer')->first();
+        if ($role == 'ADMIN') {
+            DB::table('role_user')->insert([
+                [
+                    'role_id' => $adminRole->id,
+                    'user_id' => $id
+                ],
+                [
+                    'role_id' => $seller->id,
+                    'user_id' => $id
+                ]
+            ]);
+        } elseif ($role == 'SELLER') {
+            DB::table('role_user')->insert([
+                'role_id' => $seller->id,
+                'user_id' => $id
+            ]);
+        } else {
+            DB::table('role_user')->insert([
+                'role_id' => $buyer->id,
+                'user_id' => $id
+            ]);
         }
     }
 
@@ -604,57 +605,11 @@ class AdminUserController extends Controller
                 ->where('member_register_infos.category_id', 'like', '%' . $category . '%');
         }
 
-        $results = $users->paginate(10);
+        $users = $users->paginate(30);
+        $members = Member::where('status', MemberStatus::ACTIVE)->get();
 
-        $results = $this->renderToHTML($results);
-        return response()->json($results);
+        $roles = Role::all();
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
+        return view('admin.user-manager.list-user', compact('members', 'users', 'roles', 'categories', 'keyword'));
     }
-
-    public function renderToHTML($users)
-    {
-        $html = '';
-
-        foreach ($users as $index => $user) {
-            $html .= '<tr>
-                        <th scope="row">' . $index . '</th>
-                        <td class="table-name">' . $user->name . '</td>
-                        <td class="table-email">' . $user->email . '</td>
-                        <td>' . $user->phone . '</td>
-                        <td class="table-role">';
-            $user_roles = DB::table('role_user')->where('user_id', $user->id)->get();
-            if ($user_roles->isEmpty()) {
-                $html .= 'buyer';
-            }
-
-            foreach ($user_roles as $user_role) {
-                $role = Role::find($user_role->role_id);
-                $html .= $role->name . '<br>';
-            }
-
-            $html .= '</td>
-                        <td class="table-member">' . $user->member . '</td>
-                        <td>' . $user->region . '</td>
-                        <td>';
-            $orders = Order::where('user_id', $user->id)->get();
-            $html .= count($orders) . '</td><td>';
-
-            $products = Product::where('user_id', $user->id)->get();
-            $html .= count($products) . '</td>
-                        <td>' . $user->status . '</td>
-                        <td>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <a href="' . route('admin.private.update.users', $user->id) . '"
-                                   class="btn btn-primary">Detail</a>
-                                <form action="' . route('admin.delete.users', $user->id) . '" method="post">
-                                    <input type="hidden" value="' . csrf_token() . '">
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>';
-        }
-
-        return $html;
-    }
-
 }
