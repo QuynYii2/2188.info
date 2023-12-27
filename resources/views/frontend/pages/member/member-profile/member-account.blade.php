@@ -23,11 +23,11 @@
                role="tab" aria-controls="nav-1" aria-selected="true">
                 {{ __('home.info_company') }}
             </a>
-            <a class="nav-item link-tabs nav-link" data-toggle="tab" data-target="#nav-2" role="tab"
+            <a class="nav-item link-tabs nav-link navlink"  data-toggle="tab" data-target="#nav-2" role="tab"
                aria-controls="nav-2" aria-selected="false">
                 {{ __('home.Registrator Information') }}
             </a>
-            <a class="nav-item link-tabs nav-link" data-toggle="tab" data-target="#nav-3"
+            <a class="nav-item link-tabs nav-link navlink"  data-toggle="tab" data-target="#nav-3"
                role="tab" aria-controls="nav-3" aria-selected="false">
                 {{ __('home.Representative Information') }}
             </a>

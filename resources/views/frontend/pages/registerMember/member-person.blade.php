@@ -134,13 +134,13 @@
                    required>
         </div>
         <div class="text-center">
-            <button type="button" id="buttonRegister"
+            <button type="button" id="buttonRegisterPerson"
                     class="w-50 btn bg-member-primary mr-3 btn-register">{{ __('home.sign up') }}</button>
         </div>
         <input type="text" class="form-control" name="member" value="{{$member}}" hidden="">
         <input id="localeInput" name="locale" class="d-none">
         <input type="text" class="d-none" id="valueID">
-        <button class="d-none" id="btnSubmitFormRegister" type="submit">Done</button>
+        <button class="d-none" id="btnSubmitFormRegisterPerson" type="submit">Done</button>
     </form>
 </div>
 <script>
@@ -154,9 +154,13 @@
     getDate();
 
     $(document).ready(function () {
+        $('.navlink').on('click', function () {
+            loadNav();
+        })
+
         function checkActive() {
             let element = document.getElementById("nav-2");
-            if (element.classList.contains('active')) {
+            if (element.classList.contains('show')) {
                 loadNav();
             }
         }
@@ -208,7 +212,7 @@
             function submitBtn() {
                 $('#buttonCheckID').attr('disabled', false);
 
-                $('#buttonRegister').on('click', function () {
+                $('#buttonRegisterPerson').on('click', function () {
                     // $('#formRegisterMember').trigger('submit');
                     localStorage.removeItem('message');
                     localStorage.removeItem('valueInput');
@@ -216,14 +220,14 @@
                     if (!item || item == 'null' || item == '') {
                         alert('Please click button check ID!');
                     } else {
-                        $('#btnSubmitFormRegister').trigger('click');
+                        $('#btnSubmitFormRegisterPerson').trigger('click');
                     }
                 })
             }
 
             function submitBtnDefault() {
-                $('#buttonRegister').on('click', function () {
-                    $('#btnSubmitFormRegister').trigger('click');
+                $('#buttonRegisterPerson').on('click', function () {
+                    $('#btnSubmitFormRegisterPerson').trigger('click');
                 })
             }
 

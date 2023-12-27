@@ -134,8 +134,8 @@ const ID_WARD_1 = 'wards-select-1'
 
 let country_code = ''
 let city_code = ''
-getListNation();
-getListNation1();
+// getListNation();
+// getListNation1();
 
 function getListNation() {
     let url = urlGetLocation
@@ -338,19 +338,19 @@ function getListWard1(id) {
 }
 
 function makeHTMLFromJson(data, id_where) {
-    const selectElement = document.getElementById(id_where);
-    selectElement.innerHTML = '';
-
-
-    data.forEach(option => {
-        const optionElement = document.createElement('option');
-
-        optionElement.value = getValueForOption(option);
-
-        optionElement.textContent = option.name;
-
-        selectElement.appendChild(optionElement);
-    })
+    // const selectElement = document.getElementById(id_where);
+    // selectElement.innerHTML = '';
+    //
+    //
+    // data.forEach(option => {
+    //     const optionElement = document.createElement('option');
+    //
+    //     optionElement.value = getValueForOption(option);
+    //
+    //     optionElement.textContent = option.name;
+    //
+    //     selectElement.appendChild(optionElement);
+    // })
 }
 
 function clearDataOption() {
