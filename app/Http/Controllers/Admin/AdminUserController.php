@@ -376,7 +376,6 @@ class AdminUserController extends Controller
         $companyPerson = MemberRegisterPersonSource::where('email', $user->email)->first();
         $company = null;
         $member = null;
-        $exitsMember = null;
         if ($companyPerson) {
             $company = MemberRegisterInfo::where([
                 ['id', $companyPerson->member_id],
@@ -384,56 +383,23 @@ class AdminUserController extends Controller
             ])->first();
 
             $member = Member::find($company->member_id);
-            $exitsMember = $company;
         }
 
-        $categories_no_parent = Category::where([
-            ['status', CategoryStatus::ACTIVE],
-            ['parent_id', null]
-        ])->get();
 
-        $categories_one_parent_array = null;
-        foreach ($categories_no_parent as $category) {
-            $categories_oneparent = Category::where([
-                ['status', CategoryStatus::ACTIVE],
-                ['parent_id', $category->id]
-            ])->get();
-            foreach ($categories_oneparent as $item) {
-                $categories_one_parent_array[] = $item;
-            }
-        }
-
-        $categories_one_parent = collect($categories_one_parent_array);
-
-        $categories_two_parent_array = null;
-        foreach ($categories_one_parent as $category) {
-            $categories_twoparent = Category::where([
-                ['status', CategoryStatus::ACTIVE],
-                ['parent_id', $category->id]
-            ])->get();
-            foreach ($categories_twoparent as $item) {
-                $categories_two_parent_array[] = $item;
-            }
-        }
-
-        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
-
-        $categories_two_parent = collect($categories_two_parent_array);
         if (!$company) {
             alert()->error('Error', 'Error, Company not found!');
             return back();
         }
 
+        $time = (new HomeController())->calcTimeDiff($company->created_at);
+        $date_time = $time[0] . $time[1];
+
         return view('admin.user-manager.detail-company', compact(
             'user',
             'company',
+            'date_time',
             'companyPerson',
-            'member',
-            'categories',
-            'categories_no_parent',
-            'categories_one_parent',
-            'categories_two_parent',
-            'exitsMember'));
+            'member',));
     }
 
     public function updateCompany($id, Request $request)

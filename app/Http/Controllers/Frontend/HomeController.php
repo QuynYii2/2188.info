@@ -719,6 +719,26 @@ class HomeController extends Controller
         return $currency;
     }
 
+    public function calcTimeDiff($createdAt)
+    {
+        $now = now();
+        $timeDifference = $now->diffInMinutes($createdAt);
+
+        $isTime =  ' minutes ago';
+        if ($timeDifference < 60) {
+            $timeAgo = $timeDifference;
+        } elseif ($timeDifference >= 60 && $timeDifference < 1440) {
+            $hours = floor($timeDifference / 60);
+            $isTime = ' hours ago';
+            $timeAgo = $hours;
+        } else {
+            $days = floor($timeDifference / 1440);
+            $isTime = ' days ago';
+            $timeAgo = $days;
+        }
+        return [$timeAgo, $isTime];
+    }
+
     private function checkEmail($email)
     {
         $find1 = strpos($email, '@');
