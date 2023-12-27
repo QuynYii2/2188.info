@@ -45,11 +45,14 @@
 .upload-item-input{
     margin-top: 16px;
     height: 120px;
-    padding: 33px 66px;
+    /*padding: 33px 66px;*/
     border: 1px dashed  #ccc;
     border-radius: 8px;
     max-width: 200px;
     cursor: pointer;
+}
+.upload-icon {
+    padding: 30px 70px;
 }
 
 .member-name {

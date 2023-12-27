@@ -405,7 +405,6 @@ class RegisterMemberController extends Controller
             } else {
                 $gpkdPath = null;
             }
-
             $code_business = $request->input('code_business');
             $type_business = $request->input('type_business');
 
