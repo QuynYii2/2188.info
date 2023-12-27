@@ -1,48 +1,21 @@
-@php use App\Models\MemberRegisterInfo;use App\Models\Role; @endphp
-@php use App\Models\Order; @endphp
-@php use App\Models\Product; @endphp
+@php use App\Models\MemberRegisterInfo;use App\Models\Order;use App\Models\Product; @endphp
+@php @endphp
+@php @endphp
 @extends('backend.layouts.master')
 @section('title')
     User Manager
 @endsection
 @section('content')
-    <style>
-        .pagination {
-            height: 100px;
-            font-size: 24px;
-        }
-
-        .pagination li a {
-            margin: 4px;
-            padding: 4px;
-            color: #cccccc;
-            text-decoration: none;
-        }
-
-        .pagination li.active {
-            color: rgba(255, 165, 0, 0.93);
-        }
-
-        .pagination li a:hover {
-            color: rgba(238, 207, 51, 0.82);
-        }
-
-        ul.pagination > li:first-child {
-            margin-right: 8px;
-        }
-
-        ul.pagination > li:last-child {
-            margin-left: 8px;
-        }
-    </style>
     <div class="container-fluid list-user-page">
         <div class="title s24w6">
             List user
         </div>
-        <form class="form-search mt-3">
+        <form class="form-search mt-3" method="post" action="{{ route('admin.search.users') }}">
+            @csrf
             <div class="search-user bg-white d-flex justify-content-between align-items-center">
                 <div class="list-input d-flex align-items-center">
-                    <input type="text" class="form-control c929292s16w6" id="keyword" placeholder="Name/email/phone">
+                    <input type="text" class="form-control c929292s16w6" name="keyword" id="keyword"
+                           placeholder="Name/email/phone" value="{{ isset($keyword) ? $keyword : ''}}">
                     <select id="member" class="form-control c929292s16w6" name="member">
                         <option value="" selected>Member</option>
                         @if($members->isNotEmpty())
@@ -76,20 +49,14 @@
                     </select>
                 </div>
                 <div class="list-button d-flex align-items-center">
-                    <button type="button" onclick="searchListUser();" class="btn btnSearchProduct cFFFs16w6">
+                    <button type="submit" class="btn btnSearchProduct cFFFs16w6">
                         Submit
                     </button>
-                    <button type="reset" class="btn brnClear cF00s14w6">Clear All</button>
+                    <a href="{{route('admin.list.users')}}" class="btn brnClear cF00s14w6">Clear All</a>
                 </div>
             </div>
         </form>
         <div class="list-user mt-3 bg-white">
-            <div class="button-create text-right">
-                <a href="{{ route('admin.processCreate.users') }}" class="btn btnCreate">
-                    <i class="fa-solid fa-plus"></i>
-                    Add new member
-                </a>
-            </div>
             <table class="table mt-3" id="tableUser">
                 <thead>
                 <tr>
@@ -97,7 +64,7 @@
                     <th scope="col">FullName</th>
                     <th scope="col">Email</th>
                     <th scope="col">Phone</th>
-                    <th scope="col">Role</th>
+                    <th scope="col">Company Name</th>
                     <th scope="col">Member</th>
                     <th scope="col">Category</th>
                     <th scope="col">Region</th>
@@ -110,6 +77,12 @@
                 <tbody id="tbody-user">
                 @if(!$users->isEmpty())
                     @foreach($users as $user)
+                        @php
+                            $memberPerson = \App\Models\MemberRegisterPersonSource::where('email', $user->email)
+                                ->where('status', \App\Enums\MemberRegisterPersonSourceStatus::ACTIVE)
+                                ->first();
+                            $company = MemberRegisterInfo::find($memberPerson->member_id);
+                        @endphp
                         <tr>
                             <th scope="row">
                                 {{ $loop->index + 1 }}
@@ -124,51 +97,26 @@
                                 {{$user->phone}}
                             </td>
                             <td>
-                                @php
-                                    $user_roles = DB::table('role_user')->where('user_id', $user->id)->get();
-                                @endphp
-                                @if($user_roles->isEmpty())
-                                    buyer
-                                @endif
-                                @foreach($user_roles as $user_role)
-                                    @php
-                                        $role = Role::find($user_role->role_id)
-                                    @endphp
-                                    {{$role->name}}
-                                    <br>
-                                @endforeach
+                                {{ $company->name_en }}
                             </td>
                             <td>
                                 {{$user->member}}
                             </td>
                             @php
-                                $cates = MemberRegisterInfo::where('user_id', $user->id)->first('category_id');
-                                $cateName = [];
-                                if($cates){
-                                $cates = explode(',', $cates->category_id);
-                                $listCate = \App\Models\Category::whereIn('id', $cates)->get();
-                                foreach ($listCate as $cate) {
-                                    switch (locationHelper()) {
-                                        case 'kr':
-                                            array_push($cateName, $cate->name_kr);
-                                            break;
-                                        case 'cn':
-                                            array_push($cateName, $cate->name_zh);
-                                            break;
-                                        case 'jp':
-                                            array_push($cateName, $cate->name_ja);
-                                            break;
-                                        case 'vi':
-                                            array_push($cateName, $cate->name_vi);
-                                            break;
-                                        default:
-                                            array_push($cateName, $cate->name_en);
+                                $list_categories = \App\Models\Category::whereIn('id', explode(',', $company->category_id))
+                                    ->where('status', \App\Enums\CategoryStatus::ACTIVE)
+                                    ->get();
+                                $cateName = null;
+                                foreach ($list_categories as $item){
+                                    if ($cateName){
+                                        $cateName = $cateName .','. $item->name;
+                                    } else{
+                                         $cateName = $item->name;
                                     }
-                                }
                                 }
                             @endphp
                             <td>
-                                {{ implode(', ', $cateName) }}
+                                {{ $cateName }}
                             </td>
                             <td>
                                 {{$user->region}}
@@ -189,7 +137,11 @@
                                 {{$user->status}}
                             </td>
                             <td>
-                                <div class="d-flex justify-content-between align-items-center list-icon-action">
+                                <div class="d-flex align-items-center list-icon-action">
+                                    <a href="{{route('stand.register.member.index', $company->id)}}"
+                                       class="iconView">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
                                     <a href="{{route('admin.private.update.users', $user->id)}}"
                                        class="iconDetail">
                                         <i class="fa-solid fa-pen-to-square"></i>
@@ -209,31 +161,8 @@
                 </tbody>
             </table>
             <div class="d-flex align-items-center justify-content-between">
-                {{ $users->links('vendor.pagination.default') }}
+                {{ $users->links('vendor.pagination.bootstrap-4') }}
             </div>
         </div>
     </div>
-
-    <script>
-        function searchListUser() {
-            let keyword = $('#keyword').val();
-            let member = $('#member').val();
-            let category = $('#category').val();
-
-            let url = "{{route('admin.search.users')}}";
-            $.ajax({
-                url: url,
-                type: 'POST',
-                data: {
-                    keyword: keyword,
-                    member: member,
-                    category: category,
-                    _token: '{{csrf_token()}}'
-                },
-                success: function (data) {
-                    $('#tbody-user').html(data);
-                }
-            });
-        }
-    </script>
 @endsection

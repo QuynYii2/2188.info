@@ -85,7 +85,6 @@
                                                     @else
                                                         {{ ($category->name_en) }}
                                                     @endif
-                                                    <i class="fa-solid fa-angle-right"></i>
                                                 </a>
                                             </div>
                                         </div>
@@ -125,7 +124,36 @@
                 </div>
             </div>
     </div>
+    @php
+        $isAdmin = checkAdmin();
+        $users = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->get();
+        $source = null;
+        $represent = null;
+        if (count($users) == 2){
+            foreach ($users as $user){
+                if ($user->type == \App\Enums\MemberRegisterType::SOURCE){
+                    $source = $user;
+                } else {
+                    $represent = $user;
+                }
+            }
+        } else {
+            $represent = $source = $users[0];
+        }
 
+        $userSource = \App\Models\User::where('email', $source->email)->first();
+        $userRepresent = \App\Models\User::where('email', $represent->email)->first();
+    @endphp
+    @if($isAdmin)
+        <div class="manager-member d-flex align-items-center justify-content-end">
+            <a href="{{ route('admin.private.update.users', $userSource->id) }}" class="btn btn-primary">
+                Manager member source
+            </a>
+            <a href="{{ route('admin.private.update.users', $userRepresent->id) }}" class="btn btn-primary">
+                Manager member represent
+            </a>
+        </div>
+    @endif
     <div class="mt-3 container">
         <div id="data-wrapper">
             @include('products-member')
@@ -303,7 +331,7 @@
 
         function checkItem() {
             let products = document.getElementsByClassName('thumbnailProduct');
-            if(products.length < 6){
+            if (products.length < 6) {
                 $('.auto-load').hide();
             }
         }
@@ -317,6 +345,7 @@
                 infinteLoadMore(page);
             }
         }
+
         /*------------------------------------------
         --------------------------------------------
         Call on Scroll
@@ -328,7 +357,7 @@
                 console.log(products.length)
                 setTimeout(() => {
                     page++;
-                    if(products.length > 6){
+                    if (products.length > 6) {
                         infinteLoadMore(page);
                     }
                 }, 1500);
