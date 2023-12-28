@@ -553,18 +553,18 @@ class AdminUserController extends Controller
         $category = $request->input('category');
         $region = $request->input('region');
 
-        $users = User::query();
+        $users = DB::table('users');
 
         if ($keyword) {
             $users->where('users.name', 'like', '%' . $keyword . '%');
         }
 
         if ($keyword) {
-            $users->where('users.email', 'like', '%' . $keyword . '%');
+            $users->orWhere('users.email', 'like', '%' . $keyword . '%');
         }
 
         if ($keyword) {
-            $users->where('users.phone', 'like', '%' . $keyword . '%');
+            $users->orWhere('users.phone', 'like', '%' . $keyword . '%');
         }
 
         if ($member) {
@@ -572,10 +572,9 @@ class AdminUserController extends Controller
         }
 
         if ($category) {
-            $users
-                ->join('member_register_infos', 'users.id', '=',
-                    'member_register_infos.user_id')
-                ->where('member_register_infos.category_id', 'like', '%' . $category . '%');
+            $users->join('member_register_person_sources', 'users.email', '=', 'member_register_person_sources.email')
+                ->join('member_register_infos', 'member_register_infos.id', '=', 'member_register_person_sources.member_id')
+                ->whereRaw('FIND_IN_SET(?, member_register_infos.category_id)', [$category]);
         }
 
         if (checkAdmin() && Auth::user()->is_admin == 1) {
@@ -590,10 +589,10 @@ class AdminUserController extends Controller
             if (!$locale) {
                 $locale = 'kr';
             }
-           $users->where('users.region', $locale);
+            $users->where('users.region', $locale);
         }
 
-        $users = $users->orderBy('id', 'desc')->paginate(30);
+        $users = $users->orderBy('users.id', 'desc')->paginate(30);
 
         $members = Member::where('status', MemberStatus::ACTIVE)->get();
 
