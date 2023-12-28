@@ -36,11 +36,4 @@
         </div>
     </div>
 </div>
-<script>
-    var urlGetLocation = `{{ route('location.nation.get') }}`;
-    var token = `{{ csrf_token() }}`;
-    var urlGetState = `{{ route('location.state.get', ['id' => ':id']) }}`;
-    var urlGetCity = `{{ route('location.city.get', ['id' => ':id', 'code' => ':code']) }}`;
-
-</script>
-{{--<script src="{{ asset('js/frontend/pages/member/detail-company.js') }}"></script> --}}
+<script src="{{ asset('js/frontend/pages/member/detail-company.js') }}"></script>
