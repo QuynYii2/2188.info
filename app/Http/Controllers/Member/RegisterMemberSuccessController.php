@@ -40,10 +40,6 @@ class RegisterMemberSuccessController extends Controller
     {
         (new HomeController())->getLocale($request);
         $company = MemberRegisterInfo::find($id);
-        if ($company && $company->member != RegisterMember::LOGISTIC) {
-            alert()->warning('Company require member logistic!');
-            return back();
-        }
         $memberAccounts = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->get();
         if (!$memberAccounts->isEmpty()) {
             $products = \App\Models\Product::where(function ($query) use ($company, $memberAccounts) {
