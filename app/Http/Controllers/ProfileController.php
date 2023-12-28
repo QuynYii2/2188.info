@@ -31,12 +31,12 @@ class ProfileController extends Controller
     public function memberInfo(Request $request)
     {
         (new HomeController())->getLocale($request);
-        $getMemberId = \App\Models\MemberRegisterPersonSource::where('email' , Auth::user()->email)->value('member_id');
-        $memberId = \App\Models\MemberRegisterPersonSource::where('member_id',$getMemberId)->value('id');
-        $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+        $getMemberId = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->value('member_id');
+        $memberId = \App\Models\MemberRegisterPersonSource::where('member_id', $getMemberId)->value('id');
         $memberPersonSource = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
-        $company = MemberRegisterInfo::find($memberPerson->member_id);
+        $company = MemberRegisterInfo::find($memberPersonSource->member_id);
         $member = Member::find($company->member_id);
+        $member_id = $company->id;
         $exitsMember = $company;
 
         $categories_no_parent = Category::where([
@@ -104,8 +104,8 @@ class ProfileController extends Controller
         }
         return view('frontend.pages.member.member-profile.member-account', compact('company', 'member', 'exitsMember',
             'categories_no_parent', 'categories_one_parent', 'categories_two_parent',
-            'categories', 'memberPerson','memberPersonSource','person','memberRepresent',
-            'memberSource', 'staffUsers','userRepresent','memberList'));
+            'categories', 'memberPerson', 'memberPersonSource', 'person', 'memberRepresent',
+            'memberSource', 'staffUsers', 'userRepresent', 'memberList', 'member_id'));
     }
 
     public function memberPerson(Request $request)
@@ -114,7 +114,7 @@ class ProfileController extends Controller
 
         $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
         $company = MemberRegisterInfo::find($memberPerson->member_id);
-        $member = $company->id;
+        $member_id = $company->id;
 
         $memberPersonSource = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
         $exitsMember = null;
@@ -127,7 +127,7 @@ class ProfileController extends Controller
         return view('frontend.pages.profile.member-person', compact(
             'memberPersonSource',
             'exitsMember',
-            'member',
+            'member_id',
         ));
     }
 

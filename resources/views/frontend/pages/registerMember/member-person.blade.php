@@ -137,7 +137,7 @@
             <button type="button" id="buttonRegisterPerson"
                     class="w-50 btn bg-member-primary mr-3 btn-register">{{ __('home.sign up') }}</button>
         </div>
-        <input type="text" class="form-control" name="member" value="{{$member}}" hidden="">
+        <input type="text" class="form-control" name="member_id" value="{{$member_id}}" hidden="">
         <input id="localeInput" name="locale" class="d-none">
         <input type="text" class="d-none" id="valueID">
         <button class="d-none" id="btnSubmitFormRegisterPerson" type="submit">Done</button>

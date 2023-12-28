@@ -566,7 +566,7 @@ class RegisterMemberController extends Controller
             $email = $request->input('email');
             $rank = $request->input('rank');
             $sns_account = $request->input('sns_account');
-            $member = $request->input('member');
+            $member = $request->input('member_id');
             //
             $datetime_register = Carbon::now()->addHours(7);
             $name_en = $request->input('name_en');
@@ -759,7 +759,7 @@ class RegisterMemberController extends Controller
             return back()->with('create', $create);
         } catch (\Exception $exception) {
             alert()->error('Error', 'Error, Please try again!');
-            return back()->with('create', $create);
+            return back();
         }
     }
 
