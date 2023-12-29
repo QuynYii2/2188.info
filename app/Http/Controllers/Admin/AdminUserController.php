@@ -567,6 +567,14 @@ class AdminUserController extends Controller
             $users->orWhere('users.phone', 'like', '%' . $keyword . '%');
         }
 
+        if ($keyword) {
+            $users->join('member_register_person_sources', 'users.email', '=', 'member_register_person_sources.email')
+                ->join('member_register_infos', 'member_register_infos.id', '=', 'member_register_person_sources.member_id')
+                ->orWhere('member_register_infos.name', 'like', '%' . $keyword . '%')
+                ->orWhere('member_register_infos.name_kr', 'like', '%' . $keyword . '%')
+                ->orWhere('member_register_infos.name_en', 'like', '%' . $keyword . '%');
+        }
+
         if ($member) {
             $users->where('users.member', $member);
         }

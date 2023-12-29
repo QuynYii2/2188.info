@@ -271,6 +271,19 @@ button {
   }
 }
 
+/* List warehouse page */
+.warehouse-page {
+  .form-search {
+    padding: 32px 16px;
+  }
+
+  .warehouse-table {
+    padding: 16px;
+  }
+
+
+}
+
 .btnCreateDefault {
   background: var(--secon-1, #F47621);
   padding: 8px 16px;
@@ -286,14 +299,34 @@ button {
   }
 }
 
-.iconDelete{
+.iconDelete {
   color: #ff0000;
 }
 
-.input-custom{
+.input-custom {
+  padding: 10px 8px;
   border-radius: 8px;
   border: 1px solid var(--Grey-medium, #BFBFBF);
   background: var(--White-Light, #F3F3F3);
+}
+
+.list-button {
+  .btnSearchProduct {
+    background: var(--secon-1, #F47621);
+    width: 150px;
+    padding: 12px 16px;
+    margin: 0 24px;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  .brnClear {
+    &:hover {
+      color: #fa1a1a;
+    }
+  }
 }
 
 /* Your properties css*/
@@ -325,7 +358,17 @@ button {
   font-weight: 500;
 }
 
-.s12w6{
+.s12w6 {
   font-size: 12px;
   font-weight: 600;
+}
+
+.c929292s12w5 {
+  color: var(--Grey-Dark, #929292);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
