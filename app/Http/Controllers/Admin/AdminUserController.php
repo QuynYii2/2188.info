@@ -29,7 +29,7 @@ class AdminUserController extends Controller
         (new HomeController())->getLocale($request);
         if (checkAdmin() && Auth::user()->is_admin == 1) {
             $users = User::where('status', '!=', UserStatus::DELETED)
-                ->orderBy('id', 'desc')->paginate(30);
+                ->orderBy('id', 'desc')->get();
         } else {
             $locale = app()->getLocale();
             if (!$locale) {
@@ -39,7 +39,7 @@ class AdminUserController extends Controller
                 $locale = 'kr';
             }
             $users = User::where('region', $locale)->where('status', '!=', UserStatus::DELETED)
-                ->orderBy('id', 'desc')->paginate(30);
+                ->orderBy('id', 'desc')->get();
         }
         $members = Member::where('status', MemberStatus::ACTIVE)->get();
 
@@ -580,9 +580,13 @@ class AdminUserController extends Controller
         }
 
         if ($category) {
-            $users->join('member_register_person_sources', 'users.email', '=', 'member_register_person_sources.email')
-                ->join('member_register_infos', 'member_register_infos.id', '=', 'member_register_person_sources.member_id')
-                ->whereRaw('FIND_IN_SET(?, member_register_infos.category_id)', [$category]);
+            if ($keyword){
+                $users->whereRaw('FIND_IN_SET(?, member_register_infos.category_id)', [$category]);
+            } else {
+                $users->join('member_register_person_sources', 'users.email', '=', 'member_register_person_sources.email')
+                    ->join('member_register_infos', 'member_register_infos.id', '=', 'member_register_person_sources.member_id')
+                    ->whereRaw('FIND_IN_SET(?, member_register_infos.category_id)', [$category]);
+            }
         }
 
         if (checkAdmin() && Auth::user()->is_admin == 1) {
@@ -600,7 +604,7 @@ class AdminUserController extends Controller
             $users->where('users.region', $locale);
         }
 
-        $users = $users->orderBy('users.id', 'desc')->paginate(30);
+        $users = $users->orderBy('users.id', 'desc')->get();
 
         $members = Member::where('status', MemberStatus::ACTIVE)->get();
 

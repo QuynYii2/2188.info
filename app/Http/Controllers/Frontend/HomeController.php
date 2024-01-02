@@ -421,7 +421,7 @@ class HomeController extends Controller
                 $arrayNameCategory = $this->getCategoryIds($categoryCompany, $categoryDefault);
 
                 if (empty($arrayNameCategory)) {
-                    $arrayNameCategory[] = $categoryDefault[0]->id;
+                    $arrayNameCategory[] = 0;
                 }
 
                 $category_id = implode(',', $arrayNameCategory);
