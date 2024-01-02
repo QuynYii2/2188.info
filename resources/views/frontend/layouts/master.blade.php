@@ -60,7 +60,7 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
             window.location.href = 'https://www.wid21.com/kr/';
         }
 
-        checkLocalhost();
+        // checkLocalhost();
     </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">

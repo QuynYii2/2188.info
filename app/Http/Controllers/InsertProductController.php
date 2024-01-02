@@ -20,8 +20,17 @@ use Illuminate\Support\Facades\DB;
 
 class InsertProductController extends Controller
 {
-    public function insertProductFromLazada($key)
+    public function insertProductFromLazada($keyword)
     {
+        $key = null;
+        $arrayKeyword = explode('_', $keyword);
+        foreach ($arrayKeyword as $item_keyword) {
+            if ($key) {
+                $key = $key . ' ' . $item_keyword;
+            } else {
+                $key = $item_keyword;
+            }
+        }
         try {
             $role = Role::where('name', 'super_admin')->first();
             $adminRole = DB::table('role_user')->where('role_id', $role->id)->first();
@@ -55,12 +64,14 @@ class InsertProductController extends Controller
                     $arrayGalleries = null;
                     $arrayGalleries = $product->thumbnails;
                     $listGalleries = null;
-                    foreach ($arrayGalleries as $gallery) {
-                        $httpImg = $http . $gallery->image;
-                        if ($listGalleries) {
-                            $listGalleries = $listGalleries . ',' . $httpImg;
-                        } else {
-                            $listGalleries = $httpImg;
+                    if (is_array($arrayGalleries)) {
+                        foreach ($arrayGalleries as $gallery) {
+                            $httpImg = $http . $gallery->image;
+                            if ($listGalleries) {
+                                $listGalleries = $listGalleries . ',' . $httpImg;
+                            } else {
+                                $listGalleries = $httpImg;
+                            }
                         }
                     }
 
