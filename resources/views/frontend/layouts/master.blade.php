@@ -8,6 +8,11 @@
       if (Auth::check()){
          $current_user = Auth::user();
          $current_company_person = \App\Models\MemberRegisterPersonSource::where('email', $current_user->email)->first();
+         if (!$current_company_person){
+                $user_parent = \App\Models\StaffUsers::where('user_id', Auth::id())->first();
+                $user = \App\Models\User::find($user_parent->parent_user_id);
+                $current_company_person = \App\Models\MemberRegisterPersonSource::where('email', $user->email)->first();
+         }
          $current_company = \App\Models\MemberRegisterInfo::find($current_company_person->member_id);
          $member_logistic = \App\Models\Member::where('name', \App\Enums\RegisterMember::LOGISTIC)->first();
          $member_trust = \App\Models\Member::where('name', \App\Enums\RegisterMember::TRUST)->first();

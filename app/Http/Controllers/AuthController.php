@@ -13,6 +13,7 @@ use App\Models\Member;
 use App\Models\MemberRegisterInfo;
 use App\Models\MemberRegisterPersonSource;
 use App\Models\Permission;
+use App\Models\StaffUsers;
 use App\Models\State;
 use App\Models\User;
 use Carbon\Carbon;
@@ -218,6 +219,12 @@ class AuthController extends Controller
             User::where('id', Auth::id())->update(['token' => $token]);
 
             $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+            if (!$memberPerson) {
+                $user_parent = StaffUsers::where('user_id', Auth::id())->first();
+                $user = User::find($user_parent->parent_user_id);
+                $memberPerson = MemberRegisterPersonSource::where('email', $user->email)->first();
+            }
+
             $company = MemberRegisterInfo::find($memberPerson->member_id);
             $now = now();
             $timeDifference = $now->diffInMinutes($company->created_at);

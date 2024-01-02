@@ -3,7 +3,6 @@
 @section('title', 'Register Member')
 
 @section('content')
-    <link rel="stylesheet" href="{{asset('css/register_member.css')}}">
     <link href="{{asset('css/voucher.css')}}" rel="stylesheet">
     <div class=" container-fluid">
         <div class="start-page mb-3">

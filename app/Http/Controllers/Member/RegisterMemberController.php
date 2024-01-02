@@ -128,6 +128,7 @@ class RegisterMemberController extends Controller
         if (Auth::check()) {
             $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
         }
+        $member_id = $member;
         $memberPersonSource = null;
         if ($exitMemberPerson && $exitMemberPerson->type == MemberRegisterType::REPRESENT) {
             $memberPersonSource = MemberRegisterPersonSource::find($exitMemberPerson->person);
@@ -145,7 +146,7 @@ class RegisterMemberController extends Controller
             'registerMember',
             'memberPersonSource',
             'exitsMember',
-            'member'
+            'member_id'
         ));
     }
 
@@ -351,6 +352,52 @@ class RegisterMemberController extends Controller
     }
 
     /*Đăng kí thông tin hội viên không phải là hội viên buyer*/
+
+    private function createUser($fullName, $email, $phoneNumber, $password, $member, $request)
+    {
+//        $locale = app()->getLocale();
+//        if (!$locale) {
+//            $locale = 'kr';
+//        }
+        $locale = $request->input('locale');
+
+        $user = new User;
+        $user->name = $fullName;
+        $user->email = $email;
+        $user->phone = $phoneNumber;
+        $user->address = 'Default';
+        $user->rental_code = 'Default';
+        $user->social_media = 'Default';
+        $user->industry = 'Default';
+        $user->product_name = 'Default';
+        $user->product_code = 'Default';
+        $user->password = $password;
+        $user->type_account = 'seller';
+        $user->region = $locale;
+        $user->member = $member;
+        $user->image = 'Default';
+        $user->save();
+
+        $newUser = User::where('email', $email)->first();
+        if ($member != RegisterMember::BUYER) {
+            $roleUser = DB::table('role_user')->insert([
+                'role_id' => 2,
+                'user_id' => $newUser->id
+            ]);
+        }
+
+//        $currentUser = Auth::user();
+//        $seller = (new HomeController())->checkSellerOrAdmin();
+//        if ($seller == false) {
+//            $roleUser = DB::table('role_user')->insert([
+//                'role_id' => 2,
+//                'user_id' => $currentUser->id
+//            ]);
+//        }
+    }
+
+    /*Đăng kí thông tin người đăng kí*/
+
     public function registerMemberInfo(Request $request)
     {
         try {
@@ -422,7 +469,11 @@ class RegisterMemberController extends Controller
                 $code_3 = implode(',', $code_3);
             }
 
-            $categoryIds = $code_1 . ',' . $code_2 . ',' . $code_3;
+            if (is_array($code_4)) {
+                $code_4 = implode(',', $code_4);
+            }
+
+            $categoryIds = $code_1 . ',' . $code_2 . ',' . $code_3 . ',' . $code_4;
             $arrayCategoryID = explode(',', $categoryIds);
             sort($arrayCategoryID);
             $categoryIds = implode(',', $arrayCategoryID);
@@ -443,6 +494,7 @@ class RegisterMemberController extends Controller
             $code_1_item = $code_1;
             $code_2_item = $code_2;
             $code_3_item = $code_3;
+            $code_4_item = $code_4;
 
             $create = [
                 'user_id' => $id,
@@ -473,7 +525,7 @@ class RegisterMemberController extends Controller
                 'code_1' => $code_1_item,
                 'code_2' => $code_2_item,
                 'code_3' => $code_3_item,
-                'code_4' => $code_4,
+                'code_4' => $code_4_item,
             ];
 
             if ($exitMemberPerson) {
@@ -555,7 +607,6 @@ class RegisterMemberController extends Controller
         }
     }
 
-    /*Đăng kí thông tin người đăng kí*/
     public function registerMemberPerson(Request $request)
     {
         try {
@@ -763,6 +814,21 @@ class RegisterMemberController extends Controller
         }
     }
 
+    /*Show form đăng kí thông tin người đại diện*/
+
+    private function updateUser($user, $fullName, $email, $phoneNumber, $member)
+    {
+        if ($user) {
+            $user->name = $fullName;
+            $user->email = $email;
+            $user->phone = $phoneNumber;
+            $user->member = $member;
+            $user->save();
+        }
+    }
+
+    /*Đăng kí thông tin người đại diện*/
+
     public function showSubscriptionOptions(Request $request, $member)
     {
         (new HomeController())->getLocale($request);
@@ -774,7 +840,8 @@ class RegisterMemberController extends Controller
         return view('frontend.pages.registerMember.subscription-options', compact('member', 'register'));
     }
 
-    /*Show form đăng kí thông tin người đại diện*/
+    /*Show form thanh toán đăng ký hội viên*/
+
     public function showRegisterMemberPersonRepresent($person, $registerMember, Request $request)
     {
         (new HomeController())->getLocale($request);
@@ -795,7 +862,8 @@ class RegisterMemberController extends Controller
         ));
     }
 
-    /*Đăng kí thông tin người đại diện*/
+    /*Thanh toán đăng ký hội viên*/
+
     public function registerMemberPersonRepresent(Request $request)
     {
         $create = null;
@@ -967,14 +1035,16 @@ class RegisterMemberController extends Controller
         }
     }
 
-    /*Show form thanh toán đăng ký hội viên*/
+    /*Show form success hội viên*/
+
     public function showPaymentMember($registerMember, Request $request)
     {
         (new HomeController())->getLocale($request);
         return view('frontend.pages.registerMember.payment-member', compact('registerMember'));
     }
 
-    /*Thanh toán đăng ký hội viên*/
+    /*Show form register membership*/
+
     public function paymentMember(Request $request)
     {
         try {
@@ -1020,7 +1090,6 @@ class RegisterMemberController extends Controller
         }
     }
 
-    /*Show form success hội viên*/
     public function successRegisterMember($registerMember, Request $request)
     {
         (new HomeController())->getLocale($request);
@@ -1028,6 +1097,7 @@ class RegisterMemberController extends Controller
     }
 
     /*Show form register membership*/
+
     public function registerMemberShip($member, Request $request)
     {
         (new HomeController())->getLocale($request);
@@ -1081,7 +1151,8 @@ class RegisterMemberController extends Controller
         }
     }
 
-    /*Show form register membership*/
+    /*Show form nhập verify code để send mail*/
+
     public function congratulationRegisterMember($member, Request $request)
     {
         (new HomeController())->getLocale($request);
@@ -1095,6 +1166,8 @@ class RegisterMemberController extends Controller
         return view('frontend.pages.registerMember.congratulation',
             compact('memberRepresent', 'memberSource', 'company', 'member'));
     }
+
+    /*Verify code*/
 
     public function congratulationRegisterMemberLogistic($member, Request $request)
     {
@@ -1110,7 +1183,6 @@ class RegisterMemberController extends Controller
             compact('memberRepresent', 'memberSource', 'company', 'member'));
     }
 
-    /*Show form nhập verify code để send mail*/
     public function processVerifyEmail($email, Request $request)
     {
         (new HomeController())->getLocale($request);
@@ -1119,7 +1191,6 @@ class RegisterMemberController extends Controller
         ));
     }
 
-    /*Verify code*/
     public function verifyEmail(Request $request)
     {
         try {
@@ -1193,6 +1264,8 @@ class RegisterMemberController extends Controller
             'arrayCategory'));
     }
 
+    /*Private function*/
+
     public function getCategoryTwoParent(Request $request)
     {
         $listCategoryID = $request->input('listCategoryID');
@@ -1225,7 +1298,6 @@ class RegisterMemberController extends Controller
         }
     }
 
-    /*Private function*/
     private function getArrayIds(Request $request, $input)
     {
         $listCategoryName[] = null;
@@ -1254,17 +1326,6 @@ class RegisterMemberController extends Controller
         return $arrayIds;
     }
 
-    private function updateUser($user, $fullName, $email, $phoneNumber, $member)
-    {
-        if ($user) {
-            $user->name = $fullName;
-            $user->email = $email;
-            $user->phone = $phoneNumber;
-            $user->member = $member;
-            $user->save();
-        }
-    }
-
     private function sendMail($data, $email)
     {
         Mail::send('frontend/widgets/mailCode', $data, function ($message) use ($email) {
@@ -1272,49 +1333,6 @@ class RegisterMemberController extends Controller
             ('Verify mail');
             $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
         });
-    }
-
-    private function createUser($fullName, $email, $phoneNumber, $password, $member, $request)
-    {
-//        $locale = app()->getLocale();
-//        if (!$locale) {
-//            $locale = 'kr';
-//        }
-        $locale = $request->input('locale');
-
-        $user = new User;
-        $user->name = $fullName;
-        $user->email = $email;
-        $user->phone = $phoneNumber;
-        $user->address = 'Default';
-        $user->rental_code = 'Default';
-        $user->social_media = 'Default';
-        $user->industry = 'Default';
-        $user->product_name = 'Default';
-        $user->product_code = 'Default';
-        $user->password = $password;
-        $user->type_account = 'seller';
-        $user->region = $locale;
-        $user->member = $member;
-        $user->image = 'Default';
-        $user->save();
-
-        $newUser = User::where('email', $email)->first();
-        if ($member != RegisterMember::BUYER) {
-            $roleUser = DB::table('role_user')->insert([
-                'role_id' => 2,
-                'user_id' => $newUser->id
-            ]);
-        }
-
-//        $currentUser = Auth::user();
-//        $seller = (new HomeController())->checkSellerOrAdmin();
-//        if ($seller == false) {
-//            $roleUser = DB::table('role_user')->insert([
-//                'role_id' => 2,
-//                'user_id' => $currentUser->id
-//            ]);
-//        }
     }
     // End register member
 }

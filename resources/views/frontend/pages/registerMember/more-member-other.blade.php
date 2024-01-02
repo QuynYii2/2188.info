@@ -41,11 +41,13 @@
                         <label for="number_clearance" class="label_form">{{ __('home.Number clearance')}} <span
                                     class="text-danger">*</span></label>
                         <div class="d-flex">
-                            <input type="number" class="form-control col-6" id="number_clearance" name="number_clearance"
+                            <input type="number" class="form-control col-6" id="number_clearance"
+                                   name="number_clearance"
                                    value="{{ $createCompany ? $createCompany['number_clearance'] : old('number_clearance', $exitsMember ? $exitsMember->number_clearance: '') }}"
                                    placeholder="{{ __('home.Customs clearance number (enter numbers only)')}}" required>
                             <div class="col-6">
-                            <a href="https://unipass.customs.go.kr/csp/persIndex.do" class="border-radius-8 w-50 btn bg-member-primary solid btn-register">{{ __('home.Get a customs clearance number') }}</a>
+                                <a href="https://unipass.customs.go.kr/csp/persIndex.do"
+                                   class="border-radius-8 w-50 btn bg-member-primary solid btn-register">{{ __('home.Get a customs clearance number') }}</a>
                             </div>
                         </div>
 
@@ -241,139 +243,95 @@
                         </div>
                     </div>
                     <div class="label_form">{{ __('home.PLU') }} <span class="text-danger">*</span></div>
-                    <div class="form-group">
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="code_1" class="label_item-member">{{ __('home.1st classification') }} <span
-                                            class="text-danger">*</span></label>
-                                <div class="multiselect" style="position: relative">
-                                    <div class="selectBox" id="code_1_item" onclick="showCheckboxes()">
-                                        <select>
-                                            <option id="inputCheckboxCategory">{{ __('home.Select the applicable category') }}</option>
-                                        </select>
-                                        <div class="overSelect"></div>
-                                    </div>
-                                    @if($exitsMember)
-                                        @php
-                                            $listCategory = $exitsMember->category_id;
-                                            $arrayCategory = explode(',', $listCategory);
-                                        @endphp
-                                        <div id="code_1" class="mt-1 checkboxes">
-                                            @foreach($categories_no_parent as $category)
-                                                @foreach($arrayCategory as $item)
-                                                    @php
-                                                        $isChecked = false;
-                                                        if ($category->id == $item){
-                                                            $isChecked = true;
-                                                            break;
-                                                        }
-                                                    @endphp
-                                                @endforeach
-                                                <label class="ml-2 d-flex align-items-center"
-                                                       for="code_1-{{$category->id}}">
-                                                    <input type="checkbox" id="code_1-{{$category->id}}"
-                                                           name="code_1[]"
-                                                           value="{{ ($category->id) }}"
-                                                           {{ $isChecked ? 'checked' : '' }}
-                                                           class="inputCheckboxCategory mr-2 p-3"/>
-                                                    <span class="labelCheckboxCategory">
-                                                            @if(locationHelper() == 'kr')
-                                                            <div class="item-text">{{ $category->name_ko }}</div>
-                                                        @elseif(locationHelper() == 'cn')
-                                                            <div class="item-text">{{$category->name_zh}}</div>
-                                                        @elseif(locationHelper() == 'jp')
-                                                            <div class="item-text">{{$category->name_ja}}</div>
-                                                        @elseif(locationHelper() == 'vi')
-                                                            <div class="item-text">{{$category->name_vi}}</div>
-                                                        @else
-                                                            <div class="item-text">{{$category->name_en}}</div>
-                                                        @endif</span>
-                                                </label>
-                                            @endforeach
-                                        </div>
-                                    @else
-                                        <div id="code_1" class="mt-1  checkboxes">
-                                            @foreach($categories_no_parent as $category)
-                                                <label class="ml-2 d-flex align-items-center"
-                                                       for="type_business-{{$category->id}}">
-                                                    <input type="checkbox" id="type_business-{{$category->id}}"
-                                                           {{--                                           name="code_1[]"--}}
-                                                           value="{{ ($category->id) }}"
-                                                           class="inputCheckboxCategory mr-2 p-3"/>
-                                                    <span class="labelCheckboxCategory">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="code_1" class="label_item-member">{{ __('home.1st classification') }} <span
+                                        class="text-danger">*</span></label>
+                            <select id="code_1" class="form-select form-control" name="code_1">
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}">
                                         @if(locationHelper() == 'kr')
-                                                            <div class="item-text">{{ $category->name_ko }}</div>
-                                                        @elseif(locationHelper() == 'cn')
-                                                            <div class="item-text">{{$category->name_zh}}</div>
-                                                        @elseif(locationHelper() == 'jp')
-                                                            <div class="item-text">{{$category->name_ja}}</div>
-                                                        @elseif(locationHelper() == 'vi')
-                                                            <div class="item-text">{{$category->name_vi}}</div>
-                                                        @else
-                                                            <div class="item-text">{{$category->name_en}}</div>
-                                                        @endif
-                                    </span>
-                                                </label>
-                                            @endforeach
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="code_2" class="label_item-member">
-                                    {{ __('home.2nd classification') }}<span class="text-danger">*</span>
-                                </label>
-                                <div class="multiselect" style="position: relative">
-                                    <div class="selectBox" id="code_2_item" onclick="showCheckboxes2()">
-                                        <select>
-                                            <option id="inputCheckboxCategory1">{{ __('home.Select the applicable category') }}</option>
-                                        </select>
-                                        <div class="overSelect"></div>
-                                    </div>
-                                    @if($exitsMember)
-                                        @php
-                                            $listCategory = $exitsMember->category_id;
-                                            $arrayCategory = explode(',', $listCategory);
-                                        @endphp
-                                        <input value="{{$listCategory}}" id="inputArrayCategory" class="d-none">
-                                        <div id="code_2" class="mt-1 checkboxes">
-
-                                        </div>
-                                    @else
-                                        <div id="code_2" class="mt-1  checkboxes">
-
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
+                                            {{ $category->name_ko }}
+                                        @elseif(locationHelper() == 'cn')
+                                            {{$category->name_zh}}
+                                        @elseif(locationHelper() == 'jp')
+                                            {{$category->name_ja}}
+                                        @elseif(locationHelper() == 'vi')
+                                            {{$category->name_vi}}
+                                        @else
+                                            {{$category->name_en}}
+                                        @endif
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label for="code_3" class="label_item-member">
-                                    {{ __('home.3rd classification') }} <span class="text-danger">*</span>
-                                </label>
-                                <div class="multiselect" style="position: relative">
-                                    <div class="selectBox" id="code_3_item" onclick="showCheckboxes1()">
-                                        <select>
-                                            <option id="inputCheckboxCategory2">{{ __('home.Select the applicable category') }}</option>
-                                        </select>
-                                        <div class="overSelect"></div>
-                                    </div>
-                                    @if($exitsMember)
-                                        @php
-                                            $listCategory = $exitsMember->category_id;
-                                            $arrayCategory = explode(',', $listCategory);
-                                        @endphp
-                                        <div id="code_3" class="mt-1 checkboxes">
-
-                                        </div>
-                                    @else
-                                        <div id="code_3" class="mt-1  checkboxes">
-
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
+                        <div class="form-group col-md-6">
+                            <label for="code_2" class="label_item-member">
+                                {{ __('home.2nd classification') }}<span class="text-danger">*</span>
+                            </label>
+                            <select id="code_2" class="form-select form-control" name="code_2">
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}">
+                                        @if(locationHelper() == 'kr')
+                                            {{ $category->name_ko }}
+                                        @elseif(locationHelper() == 'cn')
+                                            {{$category->name_zh}}
+                                        @elseif(locationHelper() == 'jp')
+                                            {{$category->name_ja}}
+                                        @elseif(locationHelper() == 'vi')
+                                            {{$category->name_vi}}
+                                        @else
+                                            {{$category->name_en}}
+                                        @endif
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="code_3" class="label_item-member">
+                                {{ __('home.3rd classification') }} <span class="text-danger">*</span>
+                            </label>
+                            <select id="code_3" class="form-select form-control" name="code_3">
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}">
+                                        @if(locationHelper() == 'kr')
+                                            {{ $category->name_ko }}
+                                        @elseif(locationHelper() == 'cn')
+                                            {{$category->name_zh}}
+                                        @elseif(locationHelper() == 'jp')
+                                            {{$category->name_ja}}
+                                        @elseif(locationHelper() == 'vi')
+                                            {{$category->name_vi}}
+                                        @else
+                                            {{$category->name_en}}
+                                        @endif
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="code_4" class="label_item-member">
+                                {{ __('home.4th classification') }} <span class="text-danger">*</span>
+                            </label>
+                            <select id="code_4" class="form-select form-control" name="code_4">
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}">
+                                        @if(locationHelper() == 'kr')
+                                            {{ $category->name_ko }}
+                                        @elseif(locationHelper() == 'cn')
+                                            {{$category->name_zh}}
+                                        @elseif(locationHelper() == 'jp')
+                                            {{$category->name_ja}}
+                                        @elseif(locationHelper() == 'vi')
+                                            {{$category->name_vi}}
+                                        @else
+                                            {{$category->name_en}}
+                                        @endif
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
@@ -396,9 +354,6 @@
                     @if($isUpdate)
                         <input type="text" name="updateInfo" value="abcdef" class="d-none">
                     @endif
-                    <input type="text" name="code_1" class="d-none" id="input_code1">
-                    <input type="text" name="code_2" class="d-none" id="input_code2">
-                    <input type="text" name="code_3" class="d-none" id="input_code3">
                     <button class="d-none" id="btnSubmitFormRegister" type="submit">Done</button>
                     <div class="text-center">
                         <button type="button" id="buttonRegister"
@@ -407,8 +362,8 @@
                 </form>
 </div>
 <script>
-    window.addEventListener('load', function() {
-        document.querySelector('input[type="file"]').addEventListener('change', function() {
+    window.addEventListener('load', function () {
+        document.querySelector('input[type="file"]').addEventListener('change', function () {
             if (this.files && this.files[0]) {
                 var img = document.querySelector('img');
                 img.onload = () => {
@@ -434,23 +389,8 @@
     updateFormattedDate();
     $(document).ready(function () {
         $('#buttonRegister').on('click', function () {
-            // $('#formRegisterMember').trigger('submit');
-            let isChecked = checkCategory('inputCheckboxCategory');
-            let isChecked1 = checkCategory('inputCheckboxCategory1');
-            let isChecked2 = checkCategory('inputCheckboxCategory2');
-
-            if (isChecked && isChecked1 && isChecked2) {
-                $('#btnSubmitFormRegister').trigger('click');
-            } else {
-                alert('Bạn chưa chọn category');
-            }
+            $('#btnSubmitFormRegister').trigger('click');
         })
-
-        function checkCategory(className) {
-            let items = document.getElementsByClassName(className);
-            let isChecked = Array.from(items).some(item => item.checked);
-            return isChecked;
-        }
 
         let type_business = $('#type_business');
         let manufacture = $('.manufacture');
@@ -488,103 +428,5 @@
             $('.giay_phep').remove();
             $('#giay_phep_kinh_doanhLabel').append(imgFile);
         });
-
-        function removeArray(arr) {
-            var what, a = arguments, L = a.length, ax;
-            while (L > 1 && arr.length) {
-                what = a[--L];
-                while ((ax = arr.indexOf(what)) !== -1) {
-                    arr.splice(ax, 1);
-                }
-            }
-            return arr;
-        }
-
-        function getListName(array, items) {
-            for (let i = 0; i < items.length; i++) {
-                if (items[i].checked) {
-                    if (array.length == 0) {
-                        array.push(items[i].nextElementSibling.innerText);
-                    } else {
-                        let name = array.includes(items[i].nextElementSibling.innerText);
-                        if (!name) {
-                            array.push(items[i].nextElementSibling.innerText);
-                        }
-                    }
-                } else {
-                    removeArray(array, items[i].nextElementSibling.innerText)
-                }
-            }
-            return array;
-        }
-
-        function checkArray(array, listItems) {
-            for (let i = 0; i < listItems.length; i++) {
-                if (listItems[i].checked) {
-                    if (array.length == 0) {
-                        array.push(listItems[i].value);
-                    } else {
-                        let check = array.includes(listItems[i].value);
-                        if (!check) {
-                            array.push(listItems[i].value);
-                        }
-                    }
-                } else {
-                    removeArray(array, listItems[i].value);
-                }
-            }
-            return array;
-        }
-
-
-        let arrayItem = [];
-        let arrayNameCategory = [];
-        $('.inputCheckboxCategory').on('click', function () {
-            getInput();
-        })
-
-        async function getInput() {
-            let items = document.getElementsByClassName('inputCheckboxCategory');
-
-            arrayItem = checkArray(arrayItem, items);
-            arrayNameCategory = getListName(arrayNameCategory, items)
-
-            let listName = arrayNameCategory.toString();
-
-            if (listName) {
-                $('#inputCheckboxCategory').text(listName);
-                await renderCategory2(arrayItem);
-            } else {
-                $('#inputCheckboxCategory').text(`{{ __('home.Select the applicable category') }}`);
-            }
-
-            arrayItem.sort();
-            let value = arrayItem.toString();
-            $('#input_code1').val(value);
-        }
-
-        @if($exitsMember)
-        getInput();
-
-        @endif
-        async function renderCategory2(value) {
-            let url = '{{ route('get.category.one.parent') }}';
-            console.log($('#inputArrayCategory').val())
-            $.ajax({
-                url: url,
-                method: 'POST',
-                data: {
-                    listCategoryID: value,
-                    arrayCategory: $('#inputArrayCategory').val(),
-                    _token: '{{ csrf_token() }}',
-                }
-            })
-                .done(function (response) {
-                    $('#code_2').empty().append(response);
-                })
-                .fail(function (_, textStatus) {
-
-                });
-        }
     })
 </script>

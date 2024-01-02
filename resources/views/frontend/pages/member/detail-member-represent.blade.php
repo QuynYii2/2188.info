@@ -5,7 +5,7 @@
     <div class="start-page mb-3">
         <div class="background pt-3 justify-content-center pb-3">
             <div class="">
-                @if($memberPerson->type == \App\Enums\MemberRegisterType::REPRESENT)
+                @if($memberPerson->type == \App\Enums\MemberRegisterType::REPRESENT && $memberPerson->email == Auth::user()->email)
                     @include('frontend.pages.registerMember.member-person-repersent')
                 @endif
             </div>
