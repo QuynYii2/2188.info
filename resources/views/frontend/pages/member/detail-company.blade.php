@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="{{asset('css/register_member.css')}}">
 <link href="{{asset('css/voucher.css')}}" rel="stylesheet">
 <div class="container-fluid">
     @if(!isset($isAdminUpdate))

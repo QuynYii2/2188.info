@@ -31,9 +31,12 @@ class ProfileController extends Controller
     public function memberInfo(Request $request)
     {
         (new HomeController())->getLocale($request);
-        $getMemberId = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->value('member_id');
-        $memberId = \App\Models\MemberRegisterPersonSource::where('member_id', $getMemberId)->value('id');
         $memberPersonSource = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+        if (!$memberPersonSource) {
+            $user_parent = StaffUsers::where('user_id', Auth::id())->first();
+            $user = User::find($user_parent->parent_user_id);
+            $memberPersonSource = MemberRegisterPersonSource::where('email', $user->email)->first();
+        }
         $company = MemberRegisterInfo::find($memberPersonSource->member_id);
         $member = Member::find($company->member_id);
         $member_id = $company->id;
@@ -72,10 +75,7 @@ class ProfileController extends Controller
 
         $categories_two_parent = collect($categories_two_parent_array);
 
-        $exitMemberPerson = null;
-        if (Auth::check()) {
-            $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
-        }
+        $exitMemberPerson = $memberPersonSource;
 
         if ($exitMemberPerson && $exitMemberPerson->type == MemberRegisterType::SOURCE) {
             $person = $exitMemberPerson;
@@ -84,19 +84,15 @@ class ProfileController extends Controller
         }
         $memberPerson = $exitMemberPerson;
 
-        $person = $person->id;
-        $memberRepresent = MemberRegisterPersonSource::find($memberId);
-        if (!$memberRepresent) {
-            return back();
+        if (isset($person)) {
+            $person = $person->id;
         }
+        $memberRepresent = $memberPersonSource;
         $memberSource = MemberRegisterPersonSource::find($memberRepresent->person);
-        $findMember = $memberRepresent->email;
-        $userRepresent = User::where('email', $findMember)->first();
+        $userRepresent = User::where('email', $memberRepresent->email)->first();
         $staffUsers = StaffUsers::where('parent_user_id', $userRepresent->id)->get();
-        $company = null;
         $memberList = null;
         if ($memberPerson) {
-            $company = MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
             $memberList = MemberPartner::where([
                 ['company_id_source', $company->id],
                 ['status', MemberPartnerStatus::ACTIVE]

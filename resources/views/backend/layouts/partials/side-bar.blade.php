@@ -24,6 +24,11 @@
 
      $isAdmin = (new \App\Http\Controllers\Frontend\HomeController())->checkAdmin();
      $memberPerson = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+     if (!$memberPerson){
+          $user_parent = \App\Models\StaffUsers::where('user_id', Auth::id())->first();
+          $user = \App\Models\User::find($user_parent->parent_user_id);
+          $memberPerson = \App\Models\MemberRegisterPersonSource::where('email', $user->email)->first();
+     }
      $getMemberId = $memberPerson->member_id;
      $memberId = \App\Models\MemberRegisterPersonSource::where('member_id',$getMemberId)->value('id');
      $isMember = null;

@@ -1,7 +1,28 @@
-@php use App\Http\Controllers\Frontend\HomeController;use Illuminate\Support\Facades\Auth;
+@php use Illuminate\Support\Facades\Auth;
  $currentRouteName = Route::getCurrentRoute()->getName();
  $arrNameNeedHid = ['stand.register.member.index','home.login','show.register.member.ship','show.register.member.logistic.congratulation','register.show','show.register.member','show.register.member.info','show.register.member.person.source', 'partner.register.member.index', 'parent.register.member.locale', 'chat.message.received', 'chat.message.sent', 'chat.message.show','staff.member.info'];
-$isRoute = in_array($currentRouteName, $arrNameNeedHid);
+ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
+ $isLogisticAndTrust = null;
+ $isAdmin = (new \App\Http\Controllers\Frontend\HomeController())->checkAdmin();
+ if (!$isAdmin){
+      if (Auth::check()){
+         $current_user = Auth::user();
+         $current_company_person = \App\Models\MemberRegisterPersonSource::where('email', $current_user->email)->first();
+         if (!$current_company_person){
+                $user_parent = \App\Models\StaffUsers::where('user_id', Auth::id())->first();
+                $user = \App\Models\User::find($user_parent->parent_user_id);
+                $current_company_person = \App\Models\MemberRegisterPersonSource::where('email', $user->email)->first();
+         }
+         $current_company = \App\Models\MemberRegisterInfo::find($current_company_person->member_id);
+         $member_logistic = \App\Models\Member::where('name', \App\Enums\RegisterMember::LOGISTIC)->first();
+         $member_trust = \App\Models\Member::where('name', \App\Enums\RegisterMember::TRUST)->first();
+         if ($current_company->member_id == $member_logistic->id || $current_company->member_id == $member_trust->id){
+             $isLogisticAndTrust = true;
+         }
+     }
+ } else {
+     $isLogisticAndTrust = true;
+ }
 @endphp
         <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -60,7 +81,9 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
             window.location.href = 'https://www.wid21.com/kr/';
         }
 
+        @if($isLogisticAndTrust)
         // checkLocalhost();
+        @endif
     </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
