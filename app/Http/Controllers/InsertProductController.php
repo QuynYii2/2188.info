@@ -77,6 +77,10 @@ class InsertProductController extends Controller
 
                     $galleryList = $listGalleries;
 
+                    if (!$galleryList){
+                        $galleryList = $thumbnail;
+                    }
+
 //                    $oldPrice = number_format(convertCurrency('VND', 'USD', $product->sku->def->price), 0, ',', '.');
 //                    $price = number_format(convertCurrency('VND', 'USD', $product->sku->def->promotionPrice), 0, ',', '.');
 
@@ -147,53 +151,57 @@ class InsertProductController extends Controller
 
                     $newProduct->user_id = $adminRole->user_id;
 
-                    $newProduct->save();
+                    $success = null;
+                    if ($galleryList) {
+                        $success = $newProduct->save();
+                    }
 
-                    $arrayAttributes = $productItem->sku->props;
-                    if ($arrayAttributes) {
-                        foreach ($arrayAttributes as $attribute) {
-                            $newAttribute = Attribute::where('serve', $serve)->where('serve_id', $attribute->pid)->first();
-                            if (!$newAttribute) {
-                                $newAttribute = new Attribute();
-                            }
-
-                            $newAttribute->serve = $serve;
-                            $newAttribute->serve_id = $attribute->pid;
-                            $newAttribute->name = $attribute->name;
-
-                            $name_vi = $ld->translateText($attribute->name, 'vi');
-                            $name_ja = $ld->translateText($attribute->name, 'ja');
-                            $name_ko = $ld->translateText($attribute->name, 'ko');
-                            $name_en = $ld->translateText($attribute->name, 'en');
-                            $name_zh = $ld->translateText($attribute->name, 'zh-CN');
-
-                            $newAttribute->name_en = $name_en;
-                            $newAttribute->name_ko = $name_ko;
-                            $newAttribute->name_ja = $name_ja;
-                            $newAttribute->name_zh = $name_zh;
-                            $newAttribute->name_vi = $name_vi;
-
-                            $newAttribute->user_id = $adminRole->user_id;;
-
-                            $newAttribute->slug = \Str::slug($name);
-
-                            $newAttribute->status = AttributeStatus::ACTIVE;
-
-                            $newAttribute->save();
-
-                            $arrayProperties = $attribute->values;
-
-                            $arrayPropertyIDs = null;
-                            foreach ($arrayProperties as $property) {
-                                $newProperty = Properties::where('serve', $serve)->where('serve_id', $property->vid)->first();
-                                if (!$newProperty) {
-                                    $newProperty = new Properties();
+                    if ($success) {
+                        $arrayAttributes = $productItem->sku->props;
+                        if ($arrayAttributes) {
+                            foreach ($arrayAttributes as $attribute) {
+                                $newAttribute = Attribute::where('serve', $serve)->where('serve_id', $attribute->pid)->first();
+                                if (!$newAttribute) {
+                                    $newAttribute = new Attribute();
                                 }
 
-                                $newProperty->serve = $serve;
-                                $newProperty->serve_id = $property->vid;
+                                $newAttribute->serve = $serve;
+                                $newAttribute->serve_id = $attribute->pid;
+                                $newAttribute->name = $attribute->name;
 
-                                $newProperty->name = $property->name;
+                                $name_vi = $ld->translateText($attribute->name, 'vi');
+                                $name_ja = $ld->translateText($attribute->name, 'ja');
+                                $name_ko = $ld->translateText($attribute->name, 'ko');
+                                $name_en = $ld->translateText($attribute->name, 'en');
+                                $name_zh = $ld->translateText($attribute->name, 'zh-CN');
+
+                                $newAttribute->name_en = $name_en;
+                                $newAttribute->name_ko = $name_ko;
+                                $newAttribute->name_ja = $name_ja;
+                                $newAttribute->name_zh = $name_zh;
+                                $newAttribute->name_vi = $name_vi;
+
+                                $newAttribute->user_id = $adminRole->user_id;;
+
+                                $newAttribute->slug = \Str::slug($name);
+
+                                $newAttribute->status = AttributeStatus::ACTIVE;
+
+                                $newAttribute->save();
+
+                                $arrayProperties = $attribute->values;
+
+                                $arrayPropertyIDs = null;
+                                foreach ($arrayProperties as $property) {
+                                    $newProperty = Properties::where('serve', $serve)->where('serve_id', $property->vid)->first();
+                                    if (!$newProperty) {
+                                        $newProperty = new Properties();
+                                    }
+
+                                    $newProperty->serve = $serve;
+                                    $newProperty->serve_id = $property->vid;
+
+                                    $newProperty->name = $property->name;
 
 //                            $name_vi = $ld->translateText($property->name, 'vi');
 //                            $name_ja = $ld->translateText($property->name, 'ja');
@@ -201,89 +209,90 @@ class InsertProductController extends Controller
 //                            $name_en = $ld->translateText($property->name, 'en');
 //                            $name_zh = $ld->translateText($property->name, 'zh-CN');
 
-                                $newProperty->name_en = $property->name;
-                                $newProperty->name_ko = $property->name;
-                                $newProperty->name_ja = $property->name;
-                                $newProperty->name_zh = $property->name;
-                                $newProperty->name_vi = $property->name;
+                                    $newProperty->name_en = $property->name;
+                                    $newProperty->name_ko = $property->name;
+                                    $newProperty->name_ja = $property->name;
+                                    $newProperty->name_zh = $property->name;
+                                    $newProperty->name_vi = $property->name;
 
-                                $newProperty->status = ProductStatus::ACTIVE;
+                                    $newProperty->status = ProductStatus::ACTIVE;
 
-                                $newProperty->slug = \Str::slug($name);
+                                    $newProperty->slug = \Str::slug($name);
 
-                                $newProperty->attribute_id = $newAttribute->id;
-                                $newProperty->save();
+                                    $newProperty->attribute_id = $newAttribute->id;
+                                    $newProperty->save();
 
-                                $arrayPropertyIDs[] = $newProperty->id;
-                            }
+                                    $arrayPropertyIDs[] = $newProperty->id;
+                                }
 
-                            $product_attribute = [
-                                'product_id' => $newProduct->id,
-                                'attribute_id' => $newAttribute->id,
-                                'value' => implode(',', $arrayPropertyIDs),
-                                'status' => 'ACTIVE',
-                            ];
-
-                            DB::table('product_attribute')->updateOrInsert(
-                                [
+                                $product_attribute = [
                                     'product_id' => $newProduct->id,
                                     'attribute_id' => $newAttribute->id,
-                                ],
-                                $product_attribute
-                            );
-                        }
+                                    'value' => implode(',', $arrayPropertyIDs),
+                                    'status' => 'ACTIVE',
+                                ];
 
-                        $arrayVariables = $productItem->sku->base;
-                        if ($arrayVariables) {
-                            foreach ($arrayVariables as $variable) {
-                                $productMapping = $variable->propMap;
-                                $arrayAttributeProperty = explode(';', $productMapping);
-                                $variItem = null;
-                                foreach ($arrayAttributeProperty as $attribute_property) {
-                                    $arrayItem = explode(':', $attribute_property);
+                                DB::table('product_attribute')->updateOrInsert(
+                                    [
+                                        'product_id' => $newProduct->id,
+                                        'attribute_id' => $newAttribute->id,
+                                    ],
+                                    $product_attribute
+                                );
+                            }
 
-                                    $attributeItem = Attribute::where('serve', $serve)->where('serve_id', $arrayItem[0])->first();
-                                    $propertyItem = Properties::where('serve', $serve)->where('serve_id', $arrayItem[1])->first();
+                            $arrayVariables = $productItem->sku->base;
+                            if ($arrayVariables) {
+                                foreach ($arrayVariables as $variable) {
+                                    $productMapping = $variable->propMap;
+                                    $arrayAttributeProperty = explode(';', $productMapping);
+                                    $variItem = null;
+                                    foreach ($arrayAttributeProperty as $attribute_property) {
+                                        $arrayItem = explode(':', $attribute_property);
 
-                                    if ($attributeItem && $propertyItem) {
-                                        $att_pro = $attributeItem->id . '-' . $propertyItem->id;
+                                        $attributeItem = Attribute::where('serve', $serve)->where('serve_id', $arrayItem[0])->first();
+                                        $propertyItem = Properties::where('serve', $serve)->where('serve_id', $arrayItem[1])->first();
 
-                                        if ($variItem) {
-                                            $variItem = $variItem . ',' . $att_pro;
+                                        if ($attributeItem && $propertyItem) {
+                                            $att_pro = $attributeItem->id . '-' . $propertyItem->id;
+
+                                            if ($variItem) {
+                                                $variItem = $variItem . ',' . $att_pro;
+                                            } else {
+                                                $variItem = $att_pro;
+                                            }
                                         } else {
-                                            $variItem = $att_pro;
+                                            $variItem = '';
                                         }
-                                    } else {
-                                        $variItem = '';
                                     }
-                                }
 
-                                $variation = Variation::where('product_id', $newProduct->id)
-                                    ->where('variation', $variItem)
-                                    ->first();
-                                if (!$variation) {
-                                    $variation = new Variation();
+                                    $variation = Variation::where('product_id', $newProduct->id)
+                                        ->where('variation', $variItem)
+                                        ->first();
+                                    if (!$variation) {
+                                        $variation = new Variation();
 
-                                    $variation->product_id = $newProduct->id;
-                                    $variation->user_id = $adminRole->user_id;
+                                        $variation->product_id = $newProduct->id;
+                                        $variation->user_id = $adminRole->user_id;
 
-                                    $variation->variation = $variItem;
-                                }
+                                        $variation->variation = $variItem;
+                                    }
 
-                                $variation->quantity = $variable->quantity;
+                                    $variation->quantity = $variable->quantity;
 
 //                                $variation->price = number_format(convertCurrency('VND', 'USD', $variable->promotionPrice), 0, ',', '.');
 //                                $variation->old_price = number_format(convertCurrency('VND', 'USD', $variable->promotionPrice), 0, ',', '.');
-                                $variation->price = $variable->promotionPrice;
-                                $variation->old_price = $variable->promotionPrice;
+                                    $variation->price = $variable->promotionPrice;
+                                    $variation->old_price = $variable->promotionPrice;
 
-                                $variation->description = $newProduct->description;
+                                    $variation->description = $newProduct->description;
 
-                                $variation->thumbnail = $newProduct->thumbnail;
+                                    $variation->thumbnail = $newProduct->thumbnail;
 
-                                $variation->status = VariationStatus::ACTIVE;
+                                    $variation->status = VariationStatus::ACTIVE;
 
-                                $variation->save();
+                                    $variation->save();
+                                }
                             }
                         }
                     }
