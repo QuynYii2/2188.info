@@ -1,6 +1,3 @@
-@php use App\Models\MemberRegisterInfo;use App\Models\Order;use App\Models\Product; @endphp
-@php @endphp
-@php @endphp
 @extends('backend.layouts.master')
 @section('title')
     User Manager
@@ -69,106 +66,8 @@
                     </div>
                 </div>
             </form>
-            <div class="list-user mt-3 bg-white">
-                <table class="table mt-3" id="tableUser">
-                    <tbody id="tbody-user">
-                    <tr>
-                        <th scope="col" class="cursor-pointer"># </th>
-                        <th scope="col" class="cursor-pointer">FullName </th>
-                        <th scope="col" class="cursor-pointer">Email </th>
-                        <th scope="col" class="cursor-pointer">Phone </th>
-                        <th scope="col" class="cursor-pointer">Company Name </th>
-                        <th scope="col" class="cursor-pointer">Member </th>
-                        <th scope="col" class="cursor-pointer">Category </th>
-                        <th scope="col" class="cursor-pointer">Region </th>
-                        <th scope="col" class="cursor-pointer">Status </th>
-                        <th scope="col" class="cursor-pointer">Action </th>
-                    </tr>
-                    @if(!$users->isEmpty())
-                        @foreach($users as $user)
-                            @php
-                                $memberPerson = \App\Models\MemberRegisterPersonSource::where('email', $user->email)
-                                    ->where('status', \App\Enums\MemberRegisterPersonSourceStatus::ACTIVE)
-                                    ->first();
-                                $company = null;
-                                if ($memberPerson){
-                                    $company = MemberRegisterInfo::find($memberPerson->member_id);
-                                }
-                            @endphp
-                            <tr>
-                                <td scope="row">
-                                    {{ $loop->index + 1 }}
-                                </td>
-                                <td>
-                                    {{$user->name}}
-                                </td>
-                                <td>
-                                    {{$user->email}}
-                                </td>
-                                <td>
-                                    {{$user->phone}}
-                                </td>
-                                <td>
-                                    @if($company)
-                                        {{ $company->name_en }}
-                                    @endif
-                                </td>
-                                <td>
-                                    {{$user->member}}
-                                </td>
-                                @php
-                                    $cateName = null;
-                                    if ($company){
-                                        $list_categories = \App\Models\Category::whereIn('id', explode(',', $company->category_id))
-                                        ->where('status', \App\Enums\CategoryStatus::ACTIVE)
-                                        ->get();
-                                        foreach ($list_categories as $item){
-                                            if ($cateName){
-                                                $cateName = $cateName .','. $item->name;
-                                            } else{
-                                                 $cateName = $item->name;
-                                            }
-                                        }
-                                    }
-                                @endphp
-                                <td>
-                                    {{ $cateName }}
-                                </td>
-                                <td>
-                                    {{$user->region}}
-                                </td>
-                                <td>
-                                    {{$user->status}}
-                                </td>
-                                <td>
-                                    <div class="d-flex align-items-center list-icon-action">
-                                        @if($company)
-                                            <a href="{{route('stand.register.member.index', $company->id)}}"
-                                               class="iconView">
-                                                <i class="fa-solid fa-eye"></i>
-                                            </a>
-                                        @endif
-                                        <a href="{{route('admin.private.update.users', $user->id)}}"
-                                           class="iconDetail">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                        </a>
-                                        <form action="{{route('admin.delete.users', $user->id)}}" method="post">
-                                            @method('DELETE')
-                                            @csrf
-                                            <button type="submit" class="btn iconDelete">
-                                                <i class="fa-regular fa-trash-can"></i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    @endif
-                    </tbody>
-                </table>
-                <div class="d-flex align-items-center justify-content-between">
-                    {{ $users->links('vendor.pagination.bootstrap-4') }}
-                </div>
+            <div class="list-user mt-3 bg-white" id="renderTableUser">
+                @include('admin.user-manager.layout.table-user')
             </div>
         </div>
     </div>
