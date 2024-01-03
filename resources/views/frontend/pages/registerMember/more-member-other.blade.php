@@ -247,9 +247,18 @@
                         <div class="form-group col-md-6">
                             <label for="code_1" class="label_item-member">{{ __('home.1st classification') }} <span
                                         class="text-danger">*</span></label>
+                            @php
+                                $code_1 = null;
+                            @endphp
+                            @if($exitsMember)
+                                @php
+                                    $code_1 = $exitsMember->code_1;
+                                @endphp
+                            @endif
                             <select id="code_1" class="form-select form-control" name="code_1">
                                 @foreach($categories as $category)
-                                    <option value="{{ $category->id }}">
+                                    <option {{ $code_1 == $category->id ? 'selected' : '' }}
+                                            value="{{ $category->id }}">
                                         @if(locationHelper() == 'kr')
                                             {{ $category->name_ko }}
                                         @elseif(locationHelper() == 'cn')
@@ -269,9 +278,18 @@
                             <label for="code_2" class="label_item-member">
                                 {{ __('home.2nd classification') }}<span class="text-danger">*</span>
                             </label>
+                            @php
+                                $code_2 = null;
+                            @endphp
+                            @if($exitsMember)
+                                @php
+                                    $code_2 = $exitsMember->code_2;
+                                @endphp
+                            @endif
                             <select id="code_2" class="form-select form-control" name="code_2">
                                 @foreach($categories as $category)
-                                    <option value="{{ $category->id }}">
+                                    <option {{ $code_2 == $category->id ? 'selected' : '' }}
+                                            value="{{ $category->id }}">
                                         @if(locationHelper() == 'kr')
                                             {{ $category->name_ko }}
                                         @elseif(locationHelper() == 'cn')
@@ -293,9 +311,17 @@
                             <label for="code_3" class="label_item-member">
                                 {{ __('home.3rd classification') }} <span class="text-danger">*</span>
                             </label>
+                            @php
+                                $code_3 = null;
+                            @endphp
+                            @if($exitsMember)
+                                @php
+                                    $code_3 = $exitsMember->code_3;
+                                @endphp
+                            @endif
                             <select id="code_3" class="form-select form-control" name="code_3">
                                 @foreach($categories as $category)
-                                    <option value="{{ $category->id }}">
+                                    <option {{ $code_3 == $category->id ? 'selected' : '' }} value="{{ $category->id }}">
                                         @if(locationHelper() == 'kr')
                                             {{ $category->name_ko }}
                                         @elseif(locationHelper() == 'cn')
@@ -315,9 +341,17 @@
                             <label for="code_4" class="label_item-member">
                                 {{ __('home.4th classification') }} <span class="text-danger">*</span>
                             </label>
+                            @php
+                                $code_4 = null;
+                            @endphp
+                            @if($exitsMember)
+                                @php
+                                    $code_4 = $exitsMember->code_4;
+                                @endphp
+                            @endif
                             <select id="code_4" class="form-select form-control" name="code_4">
                                 @foreach($categories as $category)
-                                    <option value="{{ $category->id }}">
+                                    <option {{ $code_4 == $category->id ? 'selected' : '' }} value="{{ $category->id }}">
                                         @if(locationHelper() == 'kr')
                                             {{ $category->name_ko }}
                                         @elseif(locationHelper() == 'cn')
