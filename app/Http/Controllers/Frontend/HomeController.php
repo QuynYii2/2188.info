@@ -724,7 +724,7 @@ class HomeController extends Controller
         $now = now();
         $timeDifference = $now->diffInMinutes($createdAt);
 
-        $isTime =  ' minutes ago';
+        $isTime = ' minutes ago';
         if ($timeDifference < 60) {
             $timeAgo = $timeDifference;
         } elseif ($timeDifference >= 60 && $timeDifference < 1440) {

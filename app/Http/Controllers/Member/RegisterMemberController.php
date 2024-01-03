@@ -203,14 +203,10 @@ class RegisterMemberController extends Controller
 
             if (is_array($code_2)) {
                 $code_2 = implode(',', $code_2);
-            } else {
-                $code_2 = '';
             }
 
             if (is_array($code_1)) {
                 $code_1 = implode(',', $code_1);
-            } else {
-                $code_1 = '';
             }
 
             $categoryIds = $code_1 . ',' . $code_2;
@@ -279,6 +275,10 @@ class RegisterMemberController extends Controller
                 'name_kr' => $name_kr,
                 'address_en' => $address_en,
                 'address_kr' => $address_kr,
+                'code_1' => $code_1,
+                'code_2' => $code_2,
+                'code_3' => $code_1,
+                'code_4' => $code_2,
                 'certify_business' => $certify_business,
             ];
 
