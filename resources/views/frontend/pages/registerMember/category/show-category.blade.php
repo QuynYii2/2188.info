@@ -225,7 +225,7 @@
         @endphp
         @if($exitsMember)
             @php
-                $code_1 = $exitsMember->code_1;
+                $code_1 = \App\Models\Category::find($exitsMember->code_1);
             @endphp
         @endif
         <input type="text" class="d-none" value="{{ $code_1 }}" id="code_1" name="code_1">
@@ -234,7 +234,7 @@
                 <ul>
                     <li class="has_dropdown w-100 bg-white">
                         <p>
-                            <span class="title_code_1">Choose category</span>
+                            <span class="title_code_1">{{ $code_1 ? $code_1->name : 'Choose category' }}</span>
                             <i class="fas fa-angle-down"></i>
                         </p>
                         <ul class="sub_menu">
@@ -297,7 +297,7 @@
         @endphp
         @if($exitsMember)
             @php
-                $code_2 = $exitsMember->code_2;
+                $code_2 = \App\Models\Category::find($exitsMember->code_2);
             @endphp
         @endif
         <input type="text" class="d-none" value="{{ $code_2 }}" id="code_2" name="code_2">
@@ -306,7 +306,7 @@
                 <ul>
                     <li class="has_dropdown w-100 bg-white">
                         <p>
-                            <span class="title_code_3">Choose category</span>
+                            <span class="title_code_3">{{ $code_2 ? $code_2->name : 'Choose category' }}</span>
                             <i class="fas fa-angle-down"></i>
                         </p>
 
@@ -326,7 +326,7 @@
         @endphp
         @if($exitsMember)
             @php
-                $code_3 = $exitsMember->code_3;
+                $code_3 = \App\Models\Category::find($exitsMember->code_3);
             @endphp
         @endif
         <input type="text" class="d-none" value="{{ $code_3 }}" id="code_3" name="code_3">
@@ -335,7 +335,7 @@
                 <ul>
                     <li class="has_dropdown w-100 bg-white">
                         <p>
-                            <span class="title_code_3">Choose category</span>
+                            <span class="title_code_3">{{ $code_3 ? $code_3->name : 'Choose category' }}</span>
                             <i class="fas fa-angle-down"></i>
                         </p>
 
@@ -353,7 +353,7 @@
         @endphp
         @if($exitsMember)
             @php
-                $code_4 = $exitsMember->code_4;
+                $code_4 = \App\Models\Category::find($exitsMember->code_4);
             @endphp
         @endif
         <input type="text" class="d-none" value="{{ $code_4 }}" id="code_4" name="code_4">
@@ -362,7 +362,7 @@
                 <ul>
                     <li class="has_dropdown w-100 bg-white">
                         <p>
-                            <span class="title_code_4">Choose category</span> <i
+                            <span class="title_code_4">{{ $code_4 ? $code_4->name : 'Choose category' }}</span> <i
                                     class="fas fa-angle-down"></i>
                         </p>
 
