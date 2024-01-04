@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CategoryApi;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CoinController;
@@ -380,6 +381,14 @@ Route::middleware(['auth'])->group(function () {
     // Member
     Route::get('/member-view-carts', [ProductController::class, 'cartMemberProduct'])->name('member.view.carts');
     Route::get('/member-get-product-sales', [ProductController::class, 'getPriceSale'])->name('member.product.sales');
+});
+
+/* Api for category */
+Route::group(['prefix' => 'categories'], function () {
+    Route::get('/list', [CategoryApi::class, 'getAllCategories'])->name('categories.show.all');
+    Route::get('/list-no-parent', [CategoryApi::class, 'getAllCategoriesNoParent'])->name('categories.show.all.no.category');
+    Route::get('/list-by-parent/{id}', [CategoryApi::class, 'getAllCategoriesByParent'])->name('categories.show.all.by.category');
+    Route::get('/list-same-parent/{id}', [CategoryApi::class, 'getListCategoriesSameParent'])->name('categories.show.all.same.category');
 });
 
 // Backend v2

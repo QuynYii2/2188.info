@@ -1,16 +1,3 @@
-<style>
-    #tableMemberOther th, #tableMemberOther td {
-        vertical-align: middle !important;
-    }
-
-    #tableMemberOther th {
-        width: 150px;
-    }
-
-    #tableMemberOther td {
-        width: 500px;
-    }
-</style>
 @php
     $createCompany = null;
     if(session('createCompany')){
@@ -242,132 +229,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="label_form">{{ __('home.PLU') }} <span class="text-danger">*</span></div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="code_1" class="label_item-member">{{ __('home.1st classification') }} <span
-                                        class="text-danger">*</span></label>
-                            @php
-                                $code_1 = null;
-                            @endphp
-                            @if($exitsMember)
-                                @php
-                                    $code_1 = $exitsMember->code_1;
-                                @endphp
-                            @endif
-                            <select id="code_1" class="form-select form-control" name="code_1">
-                                @foreach($categories as $category)
-                                    <option {{ $code_1 == $category->id ? 'selected' : '' }}
-                                            value="{{ $category->id }}">
-                                        @if(locationHelper() == 'kr')
-                                            {{ $category->name_ko }}
-                                        @elseif(locationHelper() == 'cn')
-                                            {{$category->name_zh}}
-                                        @elseif(locationHelper() == 'jp')
-                                            {{$category->name_ja}}
-                                        @elseif(locationHelper() == 'vi')
-                                            {{$category->name_vi}}
-                                        @else
-                                            {{$category->name_en}}
-                                        @endif
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="code_2" class="label_item-member">
-                                {{ __('home.2nd classification') }}<span class="text-danger">*</span>
-                            </label>
-                            @php
-                                $code_2 = null;
-                            @endphp
-                            @if($exitsMember)
-                                @php
-                                    $code_2 = $exitsMember->code_2;
-                                @endphp
-                            @endif
-                            <select id="code_2" class="form-select form-control" name="code_2">
-                                @foreach($categories as $category)
-                                    <option {{ $code_2 == $category->id ? 'selected' : '' }}
-                                            value="{{ $category->id }}">
-                                        @if(locationHelper() == 'kr')
-                                            {{ $category->name_ko }}
-                                        @elseif(locationHelper() == 'cn')
-                                            {{$category->name_zh}}
-                                        @elseif(locationHelper() == 'jp')
-                                            {{$category->name_ja}}
-                                        @elseif(locationHelper() == 'vi')
-                                            {{$category->name_vi}}
-                                        @else
-                                            {{$category->name_en}}
-                                        @endif
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="code_3" class="label_item-member">
-                                {{ __('home.3rd classification') }} <span class="text-danger">*</span>
-                            </label>
-                            @php
-                                $code_3 = null;
-                            @endphp
-                            @if($exitsMember)
-                                @php
-                                    $code_3 = $exitsMember->code_3;
-                                @endphp
-                            @endif
-                            <select id="code_3" class="form-select form-control" name="code_3">
-                                @foreach($categories as $category)
-                                    <option {{ $code_3 == $category->id ? 'selected' : '' }} value="{{ $category->id }}">
-                                        @if(locationHelper() == 'kr')
-                                            {{ $category->name_ko }}
-                                        @elseif(locationHelper() == 'cn')
-                                            {{$category->name_zh}}
-                                        @elseif(locationHelper() == 'jp')
-                                            {{$category->name_ja}}
-                                        @elseif(locationHelper() == 'vi')
-                                            {{$category->name_vi}}
-                                        @else
-                                            {{$category->name_en}}
-                                        @endif
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="code_4" class="label_item-member">
-                                {{ __('home.4th classification') }} <span class="text-danger">*</span>
-                            </label>
-                            @php
-                                $code_4 = null;
-                            @endphp
-                            @if($exitsMember)
-                                @php
-                                    $code_4 = $exitsMember->code_4;
-                                @endphp
-                            @endif
-                            <select id="code_4" class="form-select form-control" name="code_4">
-                                @foreach($categories as $category)
-                                    <option {{ $code_4 == $category->id ? 'selected' : '' }} value="{{ $category->id }}">
-                                        @if(locationHelper() == 'kr')
-                                            {{ $category->name_ko }}
-                                        @elseif(locationHelper() == 'cn')
-                                            {{$category->name_zh}}
-                                        @elseif(locationHelper() == 'jp')
-                                            {{$category->name_ja}}
-                                        @elseif(locationHelper() == 'vi')
-                                            {{$category->name_vi}}
-                                        @else
-                                            {{$category->name_en}}
-                                        @endif
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
+                    @include('frontend.pages.registerMember.category.show-category')
                     <div class="form-group">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="gridCheck" required>
@@ -425,6 +287,7 @@
         $('#buttonRegister').on('click', function () {
             $('#btnSubmitFormRegister').trigger('click');
         })
+
 
         let type_business = $('#type_business');
         let manufacture = $('.manufacture');
