@@ -5,17 +5,16 @@ use App\Http\Controllers\Admin\AdminPostRFQController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\ConfigProjectController;
+use App\Http\Controllers\Admin\CreateCompanyController;
 use App\Http\Controllers\Seller\CategoryController;
 use App\Http\Controllers\Seller\ProductController;
 use App\Http\Controllers\Seller\TopSellerConfigController;
 use App\Http\Controllers\SetupMarketingController;
 use Illuminate\Support\Facades\Route;
 
-// Admin
-// Route User
 // Các route dành cho super admin
 Route::get('/dashboard', 'AdminController@dashboard');
-//User
+/* User */
 Route::prefix('user')->group(function () {
     Route::get('/list-users', [AdminUserController::class, 'listUser'])->name('admin.list.users');
     Route::get('/detail-users/{id}', [AdminUserController::class, 'detail'])->name('admin.detail.users');
@@ -32,7 +31,7 @@ Route::prefix('user')->group(function () {
     Route::get('/search-users', [AdminUserController::class, 'searchUser'])->name('admin.search.users');
 });
 //    Route::post('down-permission', [\App\Http\Controllers\PermissionRankController::class, 'downRank'])->name('permission.down.rank');
-// Admin Config
+/* Admin Config */
 Route::prefix('configs')->group(function () {
     Route::get('/list', [ConfigProjectController::class, 'index'])->name('admin.configs.show');
     Route::get('/create', [ConfigProjectController::class, 'processCreate'])->name('admin.configs.processCreate');
@@ -41,18 +40,18 @@ Route::prefix('configs')->group(function () {
     Route::put('/update/{id}', [ConfigProjectController::class, 'update'])->name('admin.configs.update');
     Route::delete('/delete/{id}', [ConfigProjectController::class, 'delete'])->name('admin.configs.delete');
 });
-// Top seller config
+/* Top seller config */
 Route::get('/seller-configs', [TopSellerConfigController::class, 'index'])->name('seller.config.show');
 Route::get('/seller-config/create', [TopSellerConfigController::class, 'processCreate'])->name('seller.config.processCreate');
 Route::post('/seller-config', [TopSellerConfigController::class, 'create'])->name('seller.config.create');
 Route::delete('/seller-config/{id}', [TopSellerConfigController::class, 'delete'])->name('seller.config.delete');
-// Admin banner
+/* Admin banner */
 Route::get('/banners', [BannerController::class, 'index'])->name('admin.banners.show');
 Route::get('/banners/create', [BannerController::class, 'processCreate'])->name('admin.banners.processCreate');
 Route::post('/banners', [BannerController::class, 'create'])->name('admin.banners.create');
 Route::post('/banners/{id}', [BannerController::class, 'update'])->name('admin.banners.update');
 Route::delete('/banners/{id}', [BannerController::class, 'delete'])->name('admin.banners.delete');
-// Categories
+/* Categories */
 Route::get('/categories', [CategoryController::class, 'index'])->name('seller.categories.index');
 Route::get('/categories/create', [CategoryController::class, 'create'])->name('seller.categories.create');
 Route::post('/categories', [CategoryController::class, 'store'])->name('seller.categories.store');
@@ -78,10 +77,16 @@ Route::get('/address/get-by-id/{id}', [AdminAddressController::class, 'getById']
 Route::delete('/address/delete/{id}', [AdminAddressController::class, 'delete'])->name('admin.address.delete');
 Route::post('/address/change-status/{id}', [AdminAddressController::class, 'changeStatus'])->name('admin.address.change.status');
 Route::get('/address/change-show/{id}', [AdminAddressController::class, 'changeShow'])->name('admin.address.change.show');
-/* Admin route postRFQ*/
+/* Admin route postRFQ */
 Route::prefix('post-rfq')->group(function () {
     Route::get('/list', [AdminPostRFQController::class, 'index'])->name('admin.post.rfq.show');
     Route::get('/detail/{id}', [AdminPostRFQController::class, 'detail'])->name('admin.post.rfq.detail');
     Route::put('/update/{id}', [AdminPostRFQController::class, 'update'])->name('admin.post.rfq.update');
     Route::delete('/delete/{id}', [AdminPostRFQController::class, 'delete'])->name('admin.post.rfq.delete');
+});
+/* Admin create member */
+Route::prefix('member/create')->group(function () {
+    Route::get('company', [CreateCompanyController::class, 'processCreateCompany'])->name('admin.member.create.company');
+    Route::get('person', [CreateCompanyController::class, 'processCreateUserPerson'])->name('admin.member.create.person');
+    Route::get('represent', [CreateCompanyController::class, 'processCreateUserRepresent'])->name('admin.member.create.represent');
 });
