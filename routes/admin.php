@@ -86,7 +86,10 @@ Route::prefix('post-rfq')->group(function () {
 });
 /* Admin create member */
 Route::prefix('member/create')->group(function () {
-    Route::get('company', [CreateCompanyController::class, 'processCreateCompany'])->name('admin.member.create.company');
-    Route::get('person', [CreateCompanyController::class, 'processCreateUserPerson'])->name('admin.member.create.person');
-    Route::get('represent', [CreateCompanyController::class, 'processCreateUserRepresent'])->name('admin.member.create.represent');
+    Route::get('company', [CreateCompanyController::class, 'processCreateCompany'])->name('admin.member.process.create.company');
+    Route::post('company', [CreateCompanyController::class, 'createCompany'])->name('admin.member.create.company');
+    Route::get('person/{custom}', [CreateCompanyController::class, 'processCreateUserPerson'])->name('admin.member.process.create.person');
+    Route::post('person', [CreateCompanyController::class, 'createUserPerson'])->name('admin.member.create.person');
+    Route::get('represent/{code}', [CreateCompanyController::class, 'processCreateUserRepresent'])->name('admin.member.process.create.represent');
+    Route::post('represent', [CreateCompanyController::class, 'createUserRepresent'])->name('admin.member.create.represent');
 });

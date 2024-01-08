@@ -68,7 +68,7 @@
             </form>
             <div class="list-user mt-3 bg-white" id="renderTableUser">
                 <div class="d-flex align-items-center justify-content-end">
-                    <a class="btn btnCreateDefault" href="{{ route('admin.member.create.company') }}">
+                    <a class="btn btnCreateDefault" href="{{ route('admin.member.process.create.company') }}">
                         <i class="fa-solid fa-plus"></i>
                         Add new company</a>
                 </div>
