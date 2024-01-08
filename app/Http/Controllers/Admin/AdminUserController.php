@@ -198,9 +198,23 @@ class AdminUserController extends Controller
         (new HomeController())->getLocale($request);
         $user = User::find($id);
         if (!$user || $user->status == UserStatus::DELETED) {
-            alert()->success('Success', 'Deleted');
-            return redirect(route('admin.list.users'));
+            alert()->error('Not found', 'User not found');
+            return back();
         }
+
+        $role_user = DB::table('role_user')->where('user_id', $id)->get();
+        $isAdmin = false;
+        foreach ($role_user as $item) {
+            $role = Role::find($item->role_id);
+            if ($role->name == 'super_admin'){
+                $isAdmin = true;
+            }
+        }
+        if ($isAdmin){
+            alert()->error('Permission denied!', 'Cannot delete account!');
+            return back();
+        }
+
         $user->status = UserStatus::DELETED;
         $user->save();
         alert()->success('Success', 'Delete success');
@@ -580,7 +594,7 @@ class AdminUserController extends Controller
         }
 
         if ($category) {
-            if ($keyword){
+            if ($keyword) {
                 $users->whereRaw('FIND_IN_SET(?, member_register_infos.category_id)', [$category]);
             } else {
                 $users->join('member_register_person_sources', 'users.email', '=', 'member_register_person_sources.email')
