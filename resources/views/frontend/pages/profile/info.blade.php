@@ -367,21 +367,21 @@
                         @csrf
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="inputPassword" class="col-form-label">Mật khẩu hiện tại</label>
+                                <label for="inputPassword" class="col-form-label">{{ __('home.Current password') }}</label>
                                 <div>
-                                    <input type="password" class="form-control" name="current-password" required>
+                                    <input type="password" id="inputPassword" class="form-control" name="current-password" required>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputPassword" class="col-form-label">Mật khẩu mới</label>
+                                <label for="inputPasswordNew" class="col-form-label">{{ __('home.New password') }}</label>
                                 <div>
-                                    <input type="password" class="form-control" name="new-password">
+                                    <input type="password" id="inputPasswordNew" class="form-control" name="new-password">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputPassword" class="col-form-label">Nhập lại mật khẩu mới</label>
+                                <label for="inputPasswordCf" class="col-form-label">{{ __('home.New password confirm') }}</label>
                                 <div>
-                                    <input type="password" class="form-control" name="renew-password"
+                                    <input type="password" id="inputPasswordCf" class="form-control" name="renew-password"
                                            onchange="checkPasswordMatch()">
                                 </div>
                             </div>

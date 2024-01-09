@@ -1048,6 +1048,10 @@ return [
     '2188 Main' => 'Trang chủ 2188',
     'manager page' => 'Trang quản lí',
 
+    'Current password' => 'Mật khẩu hiện tại',
+    'New password' => 'Mật khẩu mới',
+    'New password confirm' => 'Nhập lại mật khẩu mới',
+
     'Register member buyer' => 'Đăng ký Hội viên Mua hàng',
     'Register member trust' => 'Đăng ký công ty Hội viên Tin cậy',
     'Register member logistic' => 'Đăng ký công ty',
