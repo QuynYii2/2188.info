@@ -68,7 +68,7 @@ return [
     'phone number' => '전화번호',
     'email' => '이메일 주소',
     'security' => '보안',
-    'change password' => '登录及注册会员',
+    'change password' => '비밀번호 업데이트',
     'set pin code' => 'PIN 코드 설정',
     'link social network' => 'SNS 계정 연결',
     'save changes' => '저장',
@@ -1111,6 +1111,10 @@ return [
     'Find password/id Login' => '아이디 및 비번 찾기',
     '2188 Main' => '2188 메인',
     'manager page' => '관리 페이지',
+
+    'Current password' => '현재 비밀번호',
+    'New password' => '새 비밀번호',
+    'New password confirm' => '새 비밀번호 확인',
 
     'Register member buyer' => '구매회원가입',
     'Register member trust' => '성실회원 회사등록',

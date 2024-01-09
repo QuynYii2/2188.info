@@ -1068,6 +1068,10 @@ return [
     'Đặt hàng thành công' => 'Order Success',
     'manager page' => 'Management page',
 
+    'Current password' => 'Current password',
+    'New password' => 'New password',
+    'New password confirm' => 'New password confirm',
+
     'Register member buyer' => 'Register as a Purchase Member',
     'Register member trust' => 'Register as a Trusted Member company',
     'Register member logistic' => 'Sign up company information',
