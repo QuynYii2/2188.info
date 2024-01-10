@@ -53,13 +53,13 @@
                                 <label for="password" class="label_item-member">{{ __('home.Password') }} <span
                                             class="text-danger">*</span></label>
                                 <input type="password" class="form-control" id="password" name="password"
-                                       placeholder="*********" required>
+                                       placeholder="" required>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="passwordConfirm" class="label_item-member">{{ __('home.Password') }} <span
                                             class="text-danger">*</span></label>
                                 <input type="password" class="form-control" id="passwordConfirm"
-                                       name="passwordConfirm" placeholder="*********"
+                                       name="passwordConfirm" placeholder=""
                                        required>
                             </div>
                         </div>

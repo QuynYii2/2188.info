@@ -95,7 +95,7 @@ class AdminAddressController extends Controller
 
         $name = $request['name'];
         $nameEN = $request['name_en'];
-        $sort_index = $request['sort_index'];
+        $sort_index = $request['sort_index']  ?? 1;
         $status = $request['status'];
         $isShow = $request['isShow'] ?? 1;
         $codeParent = $request['up_code'];
@@ -138,7 +138,7 @@ class AdminAddressController extends Controller
 
         $name = $request['name'];
         $nameEN = $request['name_en'];
-        $sort_index = $request['sort_index'];
+        $sort_index = $request['sort_index'] ?? 1;
         $status = $request['status'];
         $isShow = $request['isShow'] ?? 1;
 

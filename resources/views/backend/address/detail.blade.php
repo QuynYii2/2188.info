@@ -118,7 +118,7 @@
                                 <tr>
                                     <th scope="row"><label for="a8">{{ __('home.stt') }}</label></th>
                                     <td>
-                                        <input type="number" id="sort_index" name="sort_index"
+                                        <input type="number" min="1" value="1" id="sort_index" name="sort_index"
                                                style="width:98%;">
                                     </td>
                                     <th scope="row">{{ __('home.Use this or not?') }}</th>
