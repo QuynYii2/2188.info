@@ -4,7 +4,7 @@
 
 @section('content')
     <link href="{{asset('css/voucher.css')}}" rel="stylesheet">
-    <div class=" container-fluid">
+    <div class="container">
         <div class="start-page mb-3">
             <div class="background container-fluid pt-3 justify-content-center pb-3">
                 <div class="form-title text-center pt-2 pb-3 ">

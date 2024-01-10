@@ -67,23 +67,27 @@
                             <form method="post" action="{{ route('login.submit') }}" id="formLogin">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1" class="login-element">Email:</label>
+                                    <label for="exampleInputEmail1" class="login-element">{{ __('home.email') }}:</label>
                                     <input type="email" name="login_field" class="form-control" id="exampleInputEmail1"
                                            aria-describedby="emailHelp">
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputPassword" class="login-element">Password:</label>
+                                    <label for="exampleInputPassword" class="login-element">{{ __('home.Password') }}:</label>
                                     <input type="password" name="password" class="form-control"
                                            id="exampleInputPassword">
                                 </div>
+                                <div class="form-group">
+                                    <label for="phone" class="login-element">{{ __('home.Phone Number') }}:</label>
+                                    <input type="number" name="phone" class="form-control" id="phone">
+                                </div>
                                 <div class="float-right">
-                                    <a href="#" class="text-decoration-none text-password-forget">Forgot password?</a>
+                                    <a href="#" class="text-decoration-none text-password-forget">{{ __('home.Find password/id Login') }}</a>
                                 </div>
                                 <div class="text-center mt-5">
-                                    <button type="submit" id="btnLogin" class="btn bg-main">Login</button>
+                                    <button type="submit" id="btnLogin" class="btn bg-main">{{ __('home.sign in') }}</button>
                                 </div>
                                 <div class="text-center mt-3 text-no-account">
-                                    <p>Do not have an account?<span> <a class="text-main" href="{{ route('register.show') }}">Sign up</a></span></p>
+                                    <p>Do not have an account?<span> <a class="text-main" href="{{ route('register.show') }}">{{ __('home.sign up') }}</a></span></p>
                                 </div>
                             </form>
                         </div>
