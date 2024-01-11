@@ -1083,5 +1083,6 @@ return [
     'thêm vùng' => 'Add region',
     'Tổng doanh thu' => 'Total revenue',
     'Quay lại danh sách' => 'Back to the list',
+    '**Please enter 4 digits of your registered mobile' => '**Please enter 4 digits of your registered mobile',
     'Cập nhập password' => 'Update password'
 ];

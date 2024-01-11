@@ -1061,6 +1061,7 @@ return [
     'thêm vùng' => 'Thêm vùng',
     'Tổng doanh thu' => 'Tổng doanh thu',
     'Quay lại danh sách' => 'Quay lại danh sách',
+    '**Please enter 4 digits of your registered mobile' => '**Vui lòng nhập 4 chữ số của số điện thoại di động đã đăng ký của bạn',
     'Cập nhập password' => 'Cập nhập password'
 ];
 

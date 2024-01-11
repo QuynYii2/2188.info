@@ -1122,5 +1122,6 @@ return [
     'hình thức vận chuyển' => '배송 양식',
     'Tổng doanh thu' => '총 수익',
     'Quay lại danh sách' => '목록으로 돌아가기',
+    '**Please enter 4 digits of your registered mobile' => '**등록된 핸드폰 번호 마지막 4자리 수를 입력하세요',
     'Cập nhập password' => '비밀번호 업데이트'
 ];

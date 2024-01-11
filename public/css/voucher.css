@@ -19,7 +19,7 @@
 }
 
 
-.multiselect #checkboxes{
+.multiselect #checkboxes {
     position: absolute;
     background: white;
     top: 58px;
@@ -62,4 +62,7 @@
     background-color: #cccccc;
 }
 
-
+.modalAddress {
+    max-width: 1000px;
+    width: 100%;
+}
