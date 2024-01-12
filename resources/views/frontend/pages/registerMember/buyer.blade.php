@@ -30,15 +30,19 @@
                                value="{{ $create ? $create['number_clearance'] : old('number_clearance', $exitsMember ? $exitsMember->number_clearance : '') }}"
                                name="number_clearance">
                     </div>
-                    <label for="name_en" class="label_item-member">{{ __('home.Full Name') }}
-                        <span class="text-danger">*</span></label>
                     <div class="form-group">
+                        <label for="name_en" class="label_item-member">{{ __('home.Full Name') }}
+                            <span class="text-danger">*</span></label>
                         <input type="text" class="form-control mb-2" id="name_en" name="name_en"
                                value="{{ $create ? $create['name_en'] : old('name_en', $exitsMember ? $exitsMember->name_en : '') }}"
-                               placeholder="{{ __('home.English only') }}" required>
+                               placeholder="" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="name" class="label_item-member">{{ __('home.Full Name') }}
+                            <span class="text-danger">*</span></label>
                         <input type="text" class="form-control mt-2" id="name" name="name"
                                value="{{ $create ? $create['name'] : old('name', $exitsMember ? $exitsMember->name : '') }}"
-                               placeholder="{{ __('home.Local language') }}" required>
+                               placeholder="" required>
                     </div>
                     <label for="code" class="label_item-member">{{ __('home.ID') }} <span
                                 class="text-danger">*</span></label>
@@ -102,7 +106,7 @@
                             <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="sns_account" name="sns_account"
                                value="{{ $create ? $create['sns_account'] : old('sns_account', $exitsMember ? $exitsMember->sns_account : '') }}"
-                               placeholder="{{ __('home.ID Kakao Talk') }}" required>
+                               placeholder="" required>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
@@ -117,6 +121,7 @@
                                 @endphp
                             @endif
                             <select id="code_1" class="form-select form-control" name="code_1">
+                                <option value="">{{ __('home.Choose category') }}</option>
                                 @foreach($categories as $category)
                                     <option {{ $code_1 == $category->id ? 'selected' : '' }}
                                             value="{{ $category->id }}">
@@ -147,6 +152,7 @@
                                 @endphp
                             @endif
                             <select id="code_2" class="form-select form-control" name="code_2">
+                                <option value="">{{ __('home.Choose category') }}</option>
                                 @foreach($categories as $category)
                                     <option {{ $code_2 == $category->id ? 'selected' : '' }}
                                             value="{{ $category->id }}">
@@ -186,7 +192,7 @@
                         </div>
                         <div class="form-group col-md-12">
                             <input type="text" name="detail-address" id="detail-address"
-                                   class="form-control" placeholder="{{ __('home.Address detail') }}"
+                                   class="form-control" placeholder=""
                                    value="{{ $create ? $create['address_en'] : old('address_en', $exitsMember ? $exitsMember->address_en : '') }}">
                         </div>
                         <input type="hidden" id="address_code" name="address_code">
@@ -214,7 +220,7 @@
                             </div>
                             <div class="form-group col-md-12">
                                 <input type="text" name="detail-address-1" id="detail-address-1"
-                                       class="form-control" placeholder="{{ __('home.Address detail') }}"
+                                       class="form-control" placeholder=""
                                        value="{{ $create ? $create['address_kr'] : old('address_kr', $exitsMember ? $exitsMember->address_kr : '') }}">
                             </div>
                         </div>
