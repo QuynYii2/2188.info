@@ -79,7 +79,7 @@
         function getDate() {
             let nowTime = new Date().toLocaleDateString('en-GB');
             $('#datetime_register').val(nowTime);
-            let text = 'Day register: ' + nowTime;
+            let text = `{{ __('home.Day register') }}` + ': ' + nowTime;
             $('.day_register').text(text);
         }
 

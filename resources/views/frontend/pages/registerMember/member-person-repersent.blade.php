@@ -25,7 +25,7 @@
     <form class="p-3 form_info-member-person" action="{{route('register.member.represent')}}" method="post">
         @csrf
         <input type="text" class="form-control" name="person" value="{{ ($person) }}" hidden="">
-        <div class="day_register title-input">Day register:</div>
+        <div class="day_register title-input">{{ __('home.Day register') }}</div>
         <div class="label_form">{{ __('home.full name') }} <span class="text-danger">*</span></div>
         <div class="form-group">
             <input type="text" class="form-control mb-2" id="name_en" name="name_en"
@@ -121,7 +121,7 @@
     function getDate() {
         let nowTime = new Date().toLocaleDateString('en-GB');
         $('#datetime_register').val(nowTime);
-        let text = 'Day register: ' + nowTime;
+        let text = `{{ __('home.Day register') }}` + ': ' + nowTime;
         $('.day_register').text(text);
     }
 

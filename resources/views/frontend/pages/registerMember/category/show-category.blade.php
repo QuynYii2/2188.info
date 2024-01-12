@@ -234,7 +234,7 @@
                 <ul>
                     <li class="has_dropdown w-100 bg-white">
                         <p>
-                            <span class="title_code_1">{{ $code_1 ? $code_1->name : 'Choose category' }}</span>
+                            <span class="title_code_1">{{ $code_1 ? $code_1->name :  __('home.Choose category')  }}</span>
                             <i class="fas fa-angle-down"></i>
                         </p>
                         <ul class="sub_menu">
@@ -306,7 +306,7 @@
                 <ul>
                     <li class="has_dropdown w-100 bg-white">
                         <p>
-                            <span class="title_code_3">{{ $code_2 ? $code_2->name : 'Choose category' }}</span>
+                            <span class="title_code_3">{{ $code_2 ? $code_2->name : __('home.Choose category') }}</span>
                             <i class="fas fa-angle-down"></i>
                         </p>
 
@@ -335,7 +335,7 @@
                 <ul>
                     <li class="has_dropdown w-100 bg-white">
                         <p>
-                            <span class="title_code_3">{{ $code_3 ? $code_3->name : 'Choose category' }}</span>
+                            <span class="title_code_3">{{ $code_3 ? $code_3->name : __('home.Choose category') }}</span>
                             <i class="fas fa-angle-down"></i>
                         </p>
 
@@ -362,7 +362,7 @@
                 <ul>
                     <li class="has_dropdown w-100 bg-white">
                         <p>
-                            <span class="title_code_4">{{ $code_4 ? $code_4->name : 'Choose category' }}</span> <i
+                            <span class="title_code_4">{{ $code_4 ? $code_4->name : __('home.Choose category') }}</span> <i
                                     class="fas fa-angle-down"></i>
                         </p>
 
@@ -427,7 +427,7 @@
             }
         }
         main_html = `<ul>
-                         <li class="has_dropdown w-100 bg-white"><p>  <span class="title_code_${data}">Choose category</span> <i class="fas fa-angle-down"></i></p>
+                         <li class="has_dropdown w-100 bg-white"><p>  <span class="title_code_${data}">{{ __('home.Choose category') }}</span> <i class="fas fa-angle-down"></i></p>
                             <ul class="sub_menu">
                               <li class="has_dropdown"><p> ${category.name} <i class="fas fa-angle-right"></i></p>
                                 <ul class="sub_menu">

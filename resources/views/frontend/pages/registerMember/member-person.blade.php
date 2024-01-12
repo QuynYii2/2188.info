@@ -25,7 +25,7 @@
     <form class="p-3 form_info-member-person" action="{{route('register.member.source')}}" method="post"
           id="formRegisterMember">
         @csrf
-        <div class="day_register title-input">Day register:</div>
+        <div class="day_register title-input">{{ __('home.Day register') }}:</div>
         <div class="label_form">{{ __('home.Position') }} <span class="text-danger">*</span></div>
         <div class="form-row">
             @if(!Auth::check())
@@ -147,7 +147,7 @@
     function getDate() {
         let nowTime = new Date().toLocaleDateString('en-GB');
         $('#datetime_register').val(nowTime);
-        let text = 'Day register: ' + nowTime;
+        let text = `{{ __('home.Day register') }}` + ': ' + nowTime;
         $('.day_register').text(text);
     }
 
@@ -235,7 +235,8 @@
                 $('#buttonCheckID').attr('disabled', false);
                 let message;
                 const memberInput = $('#code');
-                let urlCheckID = `{{route('member.checkId')}}`;
+                let urlCheckID = `
+        {{route('member.checkId')}}`;
                 let code = memberInput.val();
 
                 if (code) {
@@ -243,7 +244,8 @@
                         url: urlCheckID,
                         method: 'POST',
                         data: {
-                            _token: `{{ csrf_token() }}`,
+                            _token: `
+        {{ csrf_token() }}`,
                             memberID: code,
                         },
                     })

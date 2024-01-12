@@ -447,7 +447,7 @@ return [
     'The Foreign Wholesale Order feature is only available to corporate members (Trusted members) and above' => '해외도매는 기업전용 (성실회원 이상) 가능합니다.',
     'Upgrade Instructions' => '등업안내',
     'Please upgrade your membership to use' => '회원등업후 이용 가능합니다.',
-        'Close' => '닫기',
+    'Close' => '닫기',
     'Create your account and enjoy a new shopping experience.' => '계정을 만들고 새로운 쇼핑 경험을 즐겨보십시오.',
     'Follow' => '지정거래처로 추가',
     // ban dich moi
@@ -987,7 +987,7 @@ return [
     'Post RFQ Success' => 'RFQ 게시 성공',
 
 
-        'Please enter express delivery or receiving address' => ' 상품을 발송하거나 수취할수 있는 주소를 등록하세요',
+    'Please enter express delivery or receiving address' => ' 상품을 발송하거나 수취할수 있는 주소를 등록하세요',
     'Allow receiving notifications via SMS message' => '를 수신합니다',
     'Allow receiving notifications via Email' => '을 수신합니다',
 

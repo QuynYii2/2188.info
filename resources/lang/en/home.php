@@ -1034,8 +1034,7 @@ return [
     'Max Budget' => 'Max Budget',
     'Post RFQ' => 'Post RFQ',
     'Mail Send Seller' => 'Mail Send Seller',
-
-        'Phone Number Login' => 'Phone Number',
+    'Phone Number Login' => 'Phone Number',
     'information verification Login' => 'Information verification',
     'Verify Code Login' => 'Verify Code',
     'Find password/id Login' => 'Find password or ID',
@@ -1071,7 +1070,7 @@ return [
     'Current password' => 'Current password',
     'New password' => 'New password',
     'New password confirm' => 'New password confirm',
-
+    'Choose category' => 'Choose category',
     'Register member buyer' => 'Register as a Purchase Member',
     'Register member trust' => 'Register as a Trusted Member company',
     'Register member logistic' => 'Sign up company information',
