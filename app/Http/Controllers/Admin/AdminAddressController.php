@@ -23,6 +23,7 @@ class AdminAddressController extends Controller
                 return [
                     'id' => $pAddress->id,
                     'code' => $pAddress->code,
+                    'isShow' => $pAddress->isShow,
                     'name' => $pAddress->name,
                     'name_en' => $pAddress->name_en,
                     'total_child' => $cAddresses->count(),
@@ -45,6 +46,7 @@ class AdminAddressController extends Controller
                 return [
                     'id' => $pAddress->id,
                     'code' => $pAddress->code,
+                    'isShow' => $pAddress->isShow,
                     'name' => $pAddress->name,
                     'name_en' => $pAddress->name_en,
                     'total_child' => $cAddresses->count(),
@@ -68,6 +70,7 @@ class AdminAddressController extends Controller
                     'id' => $state->id,
                     'name' => $state->name,
                     'code' => $state->code,
+                    'isShow' => $state->isShow,
                     'name_en' => $state->name_en,
                     'total_child' => $cities->count(),
                     'child' => $cities->toArray(),
@@ -95,7 +98,7 @@ class AdminAddressController extends Controller
 
         $name = $request['name'];
         $nameEN = $request['name_en'];
-        $sort_index = $request['sort_index']  ?? 1;
+        $sort_index = $request['sort_index'] ?? 1;
         $status = $request['status'];
         $isShow = $request['isShow'] ?? 1;
         $codeParent = $request['up_code'];
@@ -201,8 +204,12 @@ class AdminAddressController extends Controller
                     ->orderBy('sort_index', 'asc')
                     ->get();
 
+                $parent = Address::where('code', $state->up_code)->first();
+
                 return [
+                    'parent' => $parent->name ?? $parent->name_en,
                     'name' => $state->name,
+                    'sort_index' => $state->sort_index,
                     'code' => $state->code,
                     'name_en' => $state->name_en,
                     'total_child' => $cities->count(),
