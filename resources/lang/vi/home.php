@@ -1047,7 +1047,7 @@ return [
     'Sửa địa chỉ' => 'Sửa địa chỉ',
     '2188 Main' => 'Trang chủ 2188',
     'manager page' => 'Trang quản lí',
-
+    'Choose category' => 'Chọn loại danh mục',
     'Current password' => 'Mật khẩu hiện tại',
     'New password' => 'Mật khẩu mới',
     'New password confirm' => 'Nhập lại mật khẩu mới',
