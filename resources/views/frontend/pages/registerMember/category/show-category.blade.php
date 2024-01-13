@@ -403,7 +403,6 @@
         let main_html = ``;
         let category = response.category;
         let list_child_one = response.child;
-        let htmsadadl = ``;
         let html = ``;
         for (let i = 0; i < list_child_one.length; i++) {
             let child_one = list_child_one[i];
