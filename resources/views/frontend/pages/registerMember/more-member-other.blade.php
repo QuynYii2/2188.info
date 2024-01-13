@@ -24,21 +24,25 @@
                     <div class="d-none" id="text-category">{{ __('home.Select the applicable category') }}</div>
                     <div class="day_register title-input">{{ __('home.Day register') }}: <span
                                 id="formattedDate"></span></div>
-                    <div class="form-group">
-                        <label for="number_clearance" class="label_form">{{ __('home.Number clearance')}} <span
-                                    class="text-danger">*</span></label>
-                        <div class="d-flex">
-                            <input type="number" class="form-control col-6" id="number_clearance"
-                                   name="number_clearance"
-                                   value="{{ $createCompany ? $createCompany['number_clearance'] : old('number_clearance', $exitsMember ? $exitsMember->number_clearance: '') }}"
-                                   placeholder="{{ __('home.Customs clearance number (enter numbers only)')}}" required>
-                            <div class="col-6">
-                                <a href="https://unipass.customs.go.kr/csp/persIndex.do"
-                                   class="border-radius-8 w-100 btn bg-member-primary solid btn-register">{{ __('home.Get a customs clearance number') }}</a>
+                    @if($member->name == \App\Enums\RegisterMember::LOGISTIC)
+                        <div class="form-group">
+                            <label for="number_clearance" class="label_form">{{ __('home.Number clearance')}} <span
+                                        class="text-danger">*</span></label>
+                            <div class="d-flex">
+                                <input type="number" class="form-control col-6" id="number_clearance"
+                                       name="number_clearance"
+                                       value="{{ $createCompany ? $createCompany['number_clearance'] : old('number_clearance', $exitsMember ? $exitsMember->number_clearance: '') }}"
+                                       placeholder="{{ __('home.Customs clearance number (enter numbers only)')}}"
+                                       required>
+                                <div class="col-6">
+                                    <a href="https://unipass.customs.go.kr/csp/persIndex.do"
+                                       class="border-radius-8 w-100 btn bg-member-primary solid btn-register">{{ __('home.Get a customs clearance number') }}</a>
+                                </div>
                             </div>
-                        </div>
 
-                    </div>
+                        </div>
+                    @endif
+
                     <label for="email" class="label_form">{{ __('home.company information') }} <span
                                 class="text-danger">*</span></label>
                     <div class="form-row">
@@ -58,10 +62,18 @@
                                    name="homepage" placeholder="{{ __('home.Home') }}" required>
                         </div>
                         <div class="form-group col-md-6">
-                            <input type="number" class="form-control" id="number_business"
-                                   value="{{ $createCompany ? $createCompany['number_business'] : old('number_business', $exitsMember ? $exitsMember->number_business :'') }}"
-                                   name="number_business" placeholder="{{ __('home.Business registration number') }}"
-                                   required>
+                            @if($member->name == \App\Enums\RegisterMember::TRUST)
+                                <input type="number" class="form-control" id="number_business"
+                                       value="{{ $createCompany ? $createCompany['number_business'] : old('number_business', $exitsMember ? $exitsMember->number_business :'') }}"
+                                       name="number_business" placeholder="Business registration card"
+                                       required>
+                            @else
+                                <input type="number" class="form-control" id="number_business"
+                                       value="{{ $createCompany ? $createCompany['number_business'] : old('number_business', $exitsMember ? $exitsMember->number_business :'') }}"
+                                       name="number_business"
+                                       placeholder="{{ __('home.Business registration number') }}"
+                                       required>
+                            @endif
                         </div>
                         <div class="form-group col-md-6">
                             <input type="number" class="form-control" id="phone"
@@ -158,77 +170,99 @@
                             </div>
                         </div>
                     </div>
-                    <div class="label_form">{{ __('home.Business industry') }} <span class="text-danger">*</span></div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="type_business" class="label_item-member">{{ __('home.Business') }}</label>
-                            <select id="type_business" name="type_business" class="form-control">
-                                <option @if($exitsMember)
-                                            @if($exitsMember->type_business == 'distributive')
-                                                selected
-                                        @endif
-                                        @endif value="distributive">{{ __('home.distributive') }}</option>
-                                <option @if($exitsMember)
-                                            @if($exitsMember->type_business == 'manufacture')
-                                                selected
-                                        @endif
-                                        @endif value="manufacture">{{ __('home.manufacture') }}</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="code_business"
-                                   class="label_item-member">{{ __('home.Business industry') }}</label>
-                            <select id="code_business" name="code_business" class="form-control">
-                                <option @if($exitsMember)
-                                            @if($exitsMember->code_business == 'wholesale')
-                                                selected
-                                        @endif
-                                        @endif class="distributive"
-                                        value="wholesale">{{ __('home.wholesale') }}</option>
-                                <option @if($exitsMember)
-                                            @if($exitsMember->code_business == 'retail')
-                                                selected
-                                        @endif
-                                        @endif class="distributive" value="retail">{{ __('home.retail') }}</option>
-                                <option @if($exitsMember)
-                                            @if($exitsMember->code_business == 'ecommerce')
-                                                selected
-                                        @endif
-                                        @endif class="distributive"
-                                        value="ecommerce">{{ __('home.ecommerce') }}</option>
-                                <option @if($exitsMember)
-                                            @if($exitsMember->code_business == 'home shopping')
-                                                selected
-                                        @endif
-                                        @endif class="distributive"
-                                        value="home shopping">{{ __('home.home shopping') }}</option>
-                                <option @if($exitsMember)
-                                            @if($exitsMember->code_business == 'commerce')
-                                                selected
-                                        @endif
-                                        @endif class="distributive" value="commerce">{{ __('home.commerce') }}</option>
 
-                                <option @if($exitsMember)
-                                            @if($exitsMember->code_business == 'manufacture')
-                                                selected
-                                        @endif
-                                        @endif class="manufacture d-none"
-                                        value="manufacture">{{ __('home.manufacture') }}</option>
-                                <option @if($exitsMember)
-                                            @if($exitsMember->code_business == 'assemble')
-                                                selected
-                                        @endif
-                                        @endif class="manufacture d-none"
-                                        value="assemble">{{ __('home.assemble') }}</option>
-                                <option @if($exitsMember)
-                                            @if($exitsMember->code_business == 'machining')
-                                                selected
-                                        @endif
-                                        @endif class="manufacture d-none"
-                                        value="machining">{{ __('home.machining') }}</option>
-                            </select>
+                    @if($member->name == \App\Enums\RegisterMember::LOGISTIC)
+                        <div class="label_form">{{ __('home.Business industry') }} <span class="text-danger">*</span>
                         </div>
-                    </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="type_business" class="label_item-member">{{ __('home.Business') }}</label>
+                                <select id="type_business" name="type_business" class="form-control">
+                                    <option @if($exitsMember)
+                                                @if($exitsMember->type_business == 'distributive')
+                                                    selected
+                                            @endif
+                                            @endif value="distributive">{{ __('home.distributive') }}</option>
+                                    <option @if($exitsMember)
+                                                @if($exitsMember->type_business == 'manufacture')
+                                                    selected
+                                            @endif
+                                            @endif value="manufacture">{{ __('home.manufacture') }}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="code_business"
+                                       class="label_item-member">{{ __('home.Business industry') }}</label>
+                                <select id="code_business" name="code_business" class="form-control">
+                                    <option @if($exitsMember)
+                                                @if($exitsMember->code_business == 'wholesale')
+                                                    selected
+                                            @endif
+                                            @endif class="distributive"
+                                            value="wholesale">
+                                        {{ __('home.wholesale') }}
+                                    </option>
+                                    <option @if($exitsMember)
+                                                @if($exitsMember->code_business == 'retail')
+                                                    selected
+                                            @endif
+                                            @endif class="distributive"
+                                            value="retail">
+                                        {{ __('home.retail') }}
+                                    </option>
+                                    <option @if($exitsMember)
+                                                @if($exitsMember->code_business == 'ecommerce')
+                                                    selected
+                                            @endif
+                                            @endif class="distributive"
+                                            value="ecommerce">
+                                        {{ __('home.ecommerce') }}
+                                    </option>
+                                    <option @if($exitsMember)
+                                                @if($exitsMember->code_business == 'home shopping')
+                                                    selected
+                                            @endif
+                                            @endif class="distributive"
+                                            value="home shopping">
+                                        {{ __('home.home shopping') }}
+                                    </option>
+                                    <option @if($exitsMember)
+                                                @if($exitsMember->code_business == 'commerce')
+                                                    selected
+                                            @endif
+                                            @endif class="distributive"
+                                            value="commerce">
+                                        {{ __('home.commerce') }}
+                                    </option>
+                                    <option @if($exitsMember)
+                                                @if($exitsMember->code_business == 'manufacture')
+                                                    selected
+                                            @endif
+                                            @endif class="manufacture d-none"
+                                            value="manufacture">
+                                        {{ __('home.manufacture') }}
+                                    </option>
+                                    <option @if($exitsMember)
+                                                @if($exitsMember->code_business == 'assemble')
+                                                    selected
+                                            @endif
+                                            @endif class="manufacture d-none"
+                                            value="assemble">
+                                        {{ __('home.assemble') }}
+                                    </option>
+                                    <option @if($exitsMember)
+                                                @if($exitsMember->code_business == 'machining')
+                                                    selected
+                                            @endif
+                                            @endif class="manufacture d-none"
+                                            value="machining">
+                                        {{ __('home.machining') }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    @endif
+
                     @include('frontend.pages.registerMember.category.show-category')
                     <div class="form-group">
                         <div class="form-check">

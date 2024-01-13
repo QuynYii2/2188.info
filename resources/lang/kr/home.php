@@ -64,7 +64,7 @@ return [
     'date of birth' => '생녕월일',
     'gender' => '성별',
     'nationality' => '국적',
-    'phone number and email' => '전화번호 및 이메일 주소',
+    'phone number and email' => '핸드폰 번호',
     'phone number' => '전화번호',
     'email' => '이메일 주소',
     'security' => '보안',

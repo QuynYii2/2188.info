@@ -56,7 +56,7 @@ return [
     'date of birth' => 'Date of birth',
     'gender' => 'Gender',
     'nationality' => 'Nationality',
-    'phone number and email' => 'Phone number and email',
+    'phone number and email' => 'Cell phone number',
     'phone number' => 'Phone number',
     'email' => 'Email',
     'security' => 'Security',

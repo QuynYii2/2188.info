@@ -70,7 +70,7 @@ return [
     'date of birth' => 'Ngày sinh',
     'gender' => 'Giới tính',
     'nationality' => 'Quốc tịch',
-    'phone number and email' => 'Số điện thoại và email',
+    'phone number and email' => 'Số điện thoại di động',
     'phone number' => 'Số điện thoại',
     'email' => 'Địa chỉ email',
     'security' => 'Bảo mật',
