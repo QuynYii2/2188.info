@@ -7,14 +7,10 @@ use Illuminate\Http\Request;
 
 class AddressController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $states = Address::where('code', 'not like', '%!%')
+            ->where('isShow', '=', '1')
             ->cursor()
             ->map(function ($state) {
                 $cities = Address::where('code', 'like', $state->code.'!__')
@@ -47,38 +43,12 @@ class AddressController extends Controller
         return $checkRegion;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Address  $address
-     * @return \Illuminate\Http\Response
-     */
     public function show($code)
     {
         $checkRegion = 0;
 
         $listAddress = Address::where('code', $code)
+            ->where('isShow', '=', '1')
             ->cursor()
             ->map(function ($pAddress) use (&$checkRegion) {
                 $checkRegion = $this->splitStateCode($pAddress->code, $checkRegion);
@@ -110,6 +80,7 @@ class AddressController extends Controller
     public function showRegion($code)
     {
         $listAddress = Address::where('code', 'like', $code . '!__')
+            ->where('isShow', '=', '1')
             ->orderBy('sort_index', 'asc')
             ->cursor()
             ->map(function ($pAddress) {
@@ -130,40 +101,5 @@ class AddressController extends Controller
                 return $cAddress['total_child'] != 0;
             });
         return response()->json($listAddress);
-    }
-
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Address  $address
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Address $address)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Address  $address
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Address $address)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Address  $address
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Address $address)
-    {
-        //
     }
 }
