@@ -198,8 +198,8 @@ class RegisterMemberController extends Controller
 
             $price = 0;
 
-            $code_1 = $request->input('code_1');
-            $code_2 = $request->input('code_2');
+            $code_1 = $request->input('code_1') ?? 30;
+            $code_2 = $request->input('code_2') ?? 31;
 
             if (is_array($code_2)) {
                 $code_2 = implode(',', $code_2);
