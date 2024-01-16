@@ -111,6 +111,7 @@
                         <input type="file" class="form-control" id="giay_phep_kinh_doanh" accept="image/*"
                                style="visibility:hidden;"
                                name="giay_phep_kinh_doanh" {{ $exitsMember ? '' : 'required' }}>
+                        <div class="imagePreview"></div>
                         @if($exitsMember && $exitsMember->giay_phep_kinh_doanh)
                             <img src="{{ asset('storage/'.$exitsMember->giay_phep_kinh_doanh) }}" alt="" width="60px"
                                  height="60px" id="giay_phep_kinh_doanh_preview">
@@ -292,16 +293,30 @@
                 </form>
 </div>
 <script>
-    window.addEventListener('load', function () {
-        document.querySelector('input[type="file"]').addEventListener('change', function () {
-            if (this.files && this.files[0]) {
-                var img = document.querySelector('img');
-                img.onload = () => {
-                    URL.revokeObjectURL(img.src);  // no longer needed, free memory
-                }
+    let  imgInp = $('#giay_phep_kinh_doanh');
 
-                img.src = URL.createObjectURL(this.files[0]); // set src to blob url
+    $(function() {
+        var imagesPreview = function(input, placeToInsertImagePreview) {
+
+            if (input.files) {
+                var filesAmount = input.files.length;
+
+                for (i = 0; i < filesAmount; i++) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(event) {
+                        $($.parseHTML('<img>')).attr('src', event.target.result).addClass('w-25').appendTo(placeToInsertImagePreview);
+                    }
+
+                    reader.readAsDataURL(input.files[i]);
+                }
             }
+
+        };
+
+        imgInp.on('change', function() {
+            $('.imagePreview').empty();
+            imagesPreview(this, 'div.imagePreview');
         });
     });
 </script>
@@ -349,15 +364,7 @@
 
         $("#giay_phep_kinh_doanh").change(function () {
             var filename = this.files[0].name;
-            var imgFile = `
-                           <div class="giay_phep d-flex align-items-center justify-content-center">
-                            <img style="width: 130px;" id="myImg" src="#">
-                          </div>
-                       `;
-            // $('#giay_phep_kinh_doanhLabel').find('svg').remove();
-            $('.upload-item-input').remove();
-            $('.giay_phep').remove();
-            $('#giay_phep_kinh_doanhLabel').append(imgFile);
+            $('#giay_phep_kinh_doanhLabel').text(filename);
         });
     })
 </script>
