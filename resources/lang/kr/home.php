@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'welcome' => '환영합니다',
+    'A welcome' => '환영합니다',
     'about' => '회사소개',
     'contact' => '연락처',
     'search' => '검색',

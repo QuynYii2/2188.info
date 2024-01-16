@@ -37,7 +37,7 @@
 
     <div class="modal fade" id="modal-address" tabindex="-1" aria-labelledby="modal-addressLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modalAddress">
-            <div class="modal-content">
+            <div class="modal-content modalAddressContent">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">{{ __('home.address') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">

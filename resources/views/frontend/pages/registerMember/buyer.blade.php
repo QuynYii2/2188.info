@@ -16,38 +16,45 @@
                       enctype="multipart/form-data">
                     @csrf
                     @endif
-                    <input type="text" class="d-none" name="member_id" value="{{ $member->id }}">
-                    <input type="text" class="d-none" name="member" value="{{ ($member->name) }}">
+                    <input autocomplete="off" type="text" class="d-none" name="member_id" value="{{ $member->id }}">
+                    <input autocomplete="off" type="text" class="d-none" name="member" value="{{ ($member->name) }}">
                     <div class="d-none" id="text-category">{{ __('home.Select the applicable category') }}</div>
                     <div class="day_register title-input">{{ __('home.Day register') }}: <span
                                 id="formattedDate"></span></div>
                     <div class="form-group">
-                        <label for="number_clearance"
-                               class="label_item-member clearance-member">{{ __('home.Number clearance')}} <span
+                        <label for="number_clearance" class="label_form">{{ __('home.Number clearance')}} <span
                                     class="text-danger">*</span></label>
-                        <input type="number" class="form-control" id="number_clearance"
-                               placeholder="{{ __('home.Number clearance')}}"
-                               value="{{ $create ? $create['number_clearance'] : old('number_clearance', $exitsMember ? $exitsMember->number_clearance : '') }}"
-                               name="number_clearance">
+                        <div class="d-flex">
+                            <input autocomplete="off" type="number" class="form-control col-6" id="number_clearance"
+                                   name="number_clearance"
+                                   value="{{ $create ? $create['number_clearance'] : old('number_clearance', $exitsMember ? $exitsMember->number_clearance : '') }}"
+                                   placeholder="{{ __('home.Customs clearance number (enter numbers only)')}}"
+                                   required>
+                            <div class="col-6">
+                                <a href="https://unipass.customs.go.kr/csp/persIndex.do"
+                                   class="border-radius-8 w-100 btn bg-member-primary solid btn-register">{{ __('home.Get a customs clearance number') }}</a>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="form-group">
-                        <label for="name_en" class="label_item-member">{{ __('home.Full Name') }}
+                        <label for="name_en" class="label_item-member">{{ __('home.Name English') }}
                             <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control mb-2" id="name_en" name="name_en"
+                        <input autocomplete="off" type="text" class="form-control mb-2" id="name_en" name="name_en"
                                value="{{ $create ? $create['name_en'] : old('name_en', $exitsMember ? $exitsMember->name_en : '') }}"
                                placeholder="" required>
                     </div>
                     <div class="form-group">
-                        <label for="name" class="label_item-member">{{ __('home.Full Name') }}
+                        <label for="name" class="label_item-member">{{ __('home.Name Default') }}
                             <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control mt-2" id="name" name="name"
+                        <input autocomplete="off" type="text" class="form-control mt-2" id="name" name="name"
                                value="{{ $create ? $create['name'] : old('name', $exitsMember ? $exitsMember->name : '') }}"
                                placeholder="" required>
                     </div>
                     <label for="code" class="label_item-member">{{ __('home.ID') }} <span
                                 class="text-danger">*</span></label>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="code" name="code"
+                        <input autocomplete="off" type="text" class="form-control" id="code" name="code"
                                value="{{ $create ? $create['code'] : old('code', $exitsMember ? $exitsMember->code : '') }}"
                                required>
                     </div>
@@ -56,13 +63,13 @@
                             <div class="form-group col-md-6">
                                 <label for="password" class="label_item-member">{{ __('home.Password') }} <span
                                             class="text-danger">*</span></label>
-                                <input type="password" class="form-control" id="password" name="password"
+                                <input autocomplete="off" type="password" class="form-control" id="password" name="password"
                                        placeholder="" required>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="passwordConfirm" class="label_item-member">{{ __('home.Password') }} <span
                                             class="text-danger">*</span></label>
-                                <input type="password" class="form-control" id="passwordConfirm"
+                                <input autocomplete="off" type="password" class="form-control" id="passwordConfirm"
                                        name="passwordConfirm" placeholder=""
                                        required>
                             </div>
@@ -72,13 +79,13 @@
                         <div class="form-group col-md-6">
                             <label for="phoneNumber" class="label_item-member">{{ __('home.phone number') }} <span
                                         class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
+                            <input autocomplete="off" type="text" class="form-control" id="phoneNumber" name="phoneNumber"
                                    value="{{ $create ? $create['phone'] : old('phone', $exitsMember ? $exitsMember->phone : '') }}"
                                    required>
                         </div>
                         <div class="form-group col-md-6 justify-content-between align-items-center d-flex">
                             <div class="form-check mt-4">
-                                <input class="form-check-input" type="checkbox" id="gridCheck1" required>
+                                <input autocomplete="off" class="form-check-input" type="checkbox" id="gridCheck1" required>
                                 <label class="form-check-label label_item-member" for="gridCheck1">
                                     {{ __('home.Allow receiving notifications via SMS message') }}
                                 </label>
@@ -88,13 +95,13 @@
                         <div class="form-group col-md-6">
                             <label for="email" class="label_item-member">{{ __('home.email') }} <span
                                         class="text-danger">*</span></label>
-                            <input type="email" class="form-control" id="email" name="email"
+                            <input autocomplete="off" type="email" class="form-control" id="email" name="email"
                                    value="{{ $create ? $create['email'] : old('email', $exitsMember ? $exitsMember->email : '') }}"
                                    required>
                         </div>
                         <div class="form-group col-md-6 justify-content-between align-items-center d-flex">
                             <div class="form-check mt-4">
-                                <input class="form-check-input" type="checkbox" id="gridCheck2" required>
+                                <input autocomplete="off" class="form-check-input" type="checkbox" id="gridCheck2" required>
                                 <label class="form-check-label label_item-member" for="gridCheck2">
                                     {{ __('home.Allow receiving notifications via Email') }}
                                 </label>
@@ -104,7 +111,7 @@
                     <div class="form-group">
                         <label for="sns_account" class="label_item-member">{{ __('home.SNS Account') }}
                             <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="sns_account" name="sns_account"
+                        <input autocomplete="off" type="text" class="form-control" id="sns_account" name="sns_account"
                                value="{{ $create ? $create['sns_account'] : old('sns_account', $exitsMember ? $exitsMember->sns_account : '') }}"
                                placeholder="" required>
                     </div>
@@ -176,50 +183,50 @@
                     <label for="detail-address" class="label_item-member">{{ __('home.Address English') }}</label>
                     <div class="form-row">
                         <div class="form-group col-md-4 address-above" data-toggle="modal" data-target="#modal-address">
-                            <input type="text" readonly class="form-control" id="countries-select"
+                            <input autocomplete="off" type="text" readonly class="form-control" id="countries-select"
                                    placeholder="{{ __('home.Select country') }}"
                                    name="countries-select">
                         </div>
                         <div class="form-group col-md-4 address-above" data-toggle="modal" data-target="#modal-address">
-                            <input type="text" readonly class="form-control" id="cities-select"
+                            <input autocomplete="off" type="text" readonly class="form-control" id="cities-select"
                                    placeholder="{{ __('home.Choose the city') }}"
                                    name="cities-select">
                         </div>
                         <div class="form-group col-md-4 address-above" data-toggle="modal" data-target="#modal-address">
-                            <input type="text" readonly class="form-control" id="provinces-select"
+                            <input autocomplete="off" type="text" readonly class="form-control" id="provinces-select"
                                    placeholder="{{ __('home.Select district/district') }}"
                                    name="provinces-select">
                         </div>
                         <div class="form-group col-md-12">
-                            <input type="text" name="detail-address" id="detail-address"
+                            <input autocomplete="off" type="text" name="detail-address" id="detail-address"
                                    class="form-control" placeholder=""
                                    value="{{ $create ? $create['address_en'] : old('address_en', $exitsMember ? $exitsMember->address_en : '') }}">
                         </div>
-                        <input type="hidden" id="address_code" name="address_code">
+                        <input autocomplete="off" type="hidden" id="address_code" name="address_code">
                     </div>
                     <label for="detail-address-1" class="label_item-member">{{ __('home.Address Korea') }}</label>
                     <div class="form-group">
                         <div class="form-row">
                             <div class="form-group col-md-4 address-below" data-toggle="modal"
                                  data-target="#modal-address">
-                                <input type="text" readonly class="form-control" id="countries-select-1"
+                                <input autocomplete="off" type="text" readonly class="form-control" id="countries-select-1"
                                        placeholder="{{ __('home.Select country') }}"
                                        name="countries-select-1">
                             </div>
                             <div class="form-group col-md-4 address-below" data-toggle="modal"
                                  data-target="#modal-address">
-                                <input type="text" readonly class="form-control" id="cities-select-1"
+                                <input autocomplete="off" type="text" readonly class="form-control" id="cities-select-1"
                                        placeholder="{{ __('home.Choose the city') }}"
                                        name="cities-select-1">
                             </div>
                             <div class="form-group col-md-4 address-below" data-toggle="modal"
                                  data-target="#modal-address">
-                                <input type="text" readonly class="form-control" id="provinces-select-1"
+                                <input autocomplete="off" type="text" readonly class="form-control" id="provinces-select-1"
                                        placeholder="{{ __('home.Select district/district') }}"
                                        name="provinces-select-1">
                             </div>
                             <div class="form-group col-md-12">
-                                <input type="text" name="detail-address-1" id="detail-address-1"
+                                <input autocomplete="off" type="text" name="detail-address-1" id="detail-address-1"
                                        class="form-control" placeholder=""
                                        value="{{ $create ? $create['address_kr'] : old('address_kr', $exitsMember ? $exitsMember->address_kr : '') }}">
                             </div>
@@ -227,7 +234,7 @@
                     </div>
                     <div class="form-group">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck" required>
+                            <input autocomplete="off" class="form-check-input" type="checkbox" id="gridCheck" required>
                             <label class="form-check-label text-checkout" for="gridCheck">
                                 I have read, understand and accept Global's Agree to Terms,
                                 <a class="text-policy" href="#">Agree to the Information Collection Policy</a> and
@@ -236,7 +243,7 @@
                         </div>
                     </div>
 
-                    <input id="localeInput" name="locale" class="d-none">
+                    <input autocomplete="off" id="localeInput" name="locale" class="d-none">
                     <button type="submit" id="btnSubmitFormRegister"
                             class="d-none btn btn-primary">{{ __('home.sign up') }}</button>
                     <div class="text-center">
