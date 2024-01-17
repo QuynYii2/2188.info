@@ -401,7 +401,7 @@ return [
     'View Cart' => '장바구니 보기',
     'Grand Total' => '총계',
     'Xem chi tiết' => '자세히 보기',
-    'Sign up now' => '지금 회원가입 하십시오',
+    'Sign up now' => '회원가입',
     'Product Management' => '계정 관리',
     'Agree to the terms and conditions of the member' => '회원약관에 동의합니다',
     'Check the rules you must agree to below' => '아래에서 동의해야 하는 규칙을 확인하세요',
