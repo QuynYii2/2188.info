@@ -7,12 +7,12 @@
 @endphp
 <div class="">
     @if(isset($isAdminUpdate))
-        <form class="form_memberInfo" action="{{route('admin.edit.users.company', $isAdminUpdate->id)}}" method="post"
+        <form autocomplete="off" class="form_memberInfo" action="{{route('admin.edit.users.company', $isAdminUpdate->id)}}" method="post"
               id="formRegisterMember">
             @csrf
             @method('PUT')
             @else
-                <form class="form_memberInfo" action="{{route('register.member.info')}}" method="post"
+                <form autocomplete="off" class="form_memberInfo" action="{{route('register.member.info')}}" method="post"
                       id="formRegisterMember" enctype="multipart/form-data">
                     @csrf
                     @endif

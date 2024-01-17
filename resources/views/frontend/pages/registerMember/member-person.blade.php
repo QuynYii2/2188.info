@@ -22,7 +22,7 @@
     <input type="text" class="d-none" id="inputCheckExitMember" value="{{$memberPersonSource->code}}">
 @endif
 <div class="">
-    <form class="p-3 form_info-member-person" action="{{route('register.member.source')}}" method="post"
+    <form autocomplete="off" class="p-3 form_info-member-person" action="{{route('register.member.source')}}" method="post"
           id="formRegisterMember">
         @csrf
         <div class="day_register title-input">{{ __('home.Day register') }}:</div>
