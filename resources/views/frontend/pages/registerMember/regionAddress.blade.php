@@ -165,13 +165,13 @@
             arrAddress.forEach((value, index) => {
                 if (index == 0) {
                     $('#countries-select').val(value.name_en ?? value.name)
-                    $('#countries-select-1').val(value.name)
+                    $('#countries-select-1').val(value.name ?? value.name_en)
                 } else if (index == 1) {
                     $('#cities-select').val(value.value.name_en ?? value.name)
                     $('#cities-select-1').val(value.name ?? value.name_en)
                 } else {
-                    add_3 += value.name + ', '
-                    add_3_en += value.name_en + ', '
+                    add_3 += value.name ?? value.name_en + ', '
+                    add_3_en += value.name_en ?? value.name + ', '
                 }
             });
             if (add_3) {
