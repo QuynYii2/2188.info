@@ -13,6 +13,7 @@ return [
     |
     */
 
-    'Cell phone number' => 'Cell phone number',
-    'Confirm password' => 'Confirm password',
+    'Cell phone number' => 'Số điện thoại di động',
+    'Confirm password' => 'Xác nhận mật khẩu',
+
 ];

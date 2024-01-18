@@ -13,6 +13,7 @@ return [
     |
     */
 
-    'Cell phone number' => 'Cell phone number',
-    'Confirm password' => 'Confirm password',
+    'Cell phone number' => '핸드폰번호',
+    'Confirm password' => '비밀번호확인',
+
 ];
