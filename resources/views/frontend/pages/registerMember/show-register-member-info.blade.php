@@ -9,11 +9,11 @@
             <div class="background container-fluid pt-3 justify-content-center pb-3">
                 <div class="form-title text-center pt-2 pb-3 ">
                     @if($member->name == \App\Enums\RegisterMember::BUYER)
-                        <div class="title text-primary">{{ __('home.Register member buyer') }}</div>
+                        <div class="title text-primary">{{ __('auth.Register member buyer') }}</div>
                     @elseif($member->name == \App\Enums\RegisterMember::TRUST)
-                        <div class="title text-primary">{{ __('home.Register member trust') }}</div>
+                        <div class="title text-primary">{{ __('auth.Register member trust') }}</div>
                     @else
-                        <div class="title text-primary">{{ __('home.Register member logistic') }}</div>
+                        <div class="title text-primary">{{ __('auth.Register member logistic') }}</div>
                     @endif
                 </div>
                 @php

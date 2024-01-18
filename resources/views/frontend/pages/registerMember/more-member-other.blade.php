@@ -7,12 +7,14 @@
 @endphp
 <div class="">
     @if(isset($isAdminUpdate))
-        <form autocomplete="off" class="form_memberInfo" action="{{route('admin.edit.users.company', $isAdminUpdate->id)}}" method="post"
+        <form autocomplete="off" class="form_memberInfo"
+              action="{{route('admin.edit.users.company', $isAdminUpdate->id)}}" method="post"
               id="formRegisterMember">
             @csrf
             @method('PUT')
             @else
-                <form autocomplete="off" class="form_memberInfo" action="{{route('register.member.info')}}" method="post"
+                <form autocomplete="off" class="form_memberInfo" action="{{route('register.member.info')}}"
+                      method="post"
                       id="formRegisterMember" enctype="multipart/form-data">
                     @csrf
                     @endif
@@ -36,7 +38,7 @@
                         <div class="form-group col-md-6">
                             <input autocomplete="off" type="text" class="form-control" id="name_kr" name="name_kr"
                                    value="{{ $createCompany ? $createCompany['name_kr'] : old('name_kr', $exitsMember ? $exitsMember->name_kr :'') }}"
-                                   placeholder="{{ __('home.Name Korea')}}">
+                                   placeholder="{{ __('auth.Name Korea')}}">
                         </div>
                         <div class="form-group col-md-6">
                             <input autocomplete="off" type="text" class="form-control" id="homepage"
@@ -44,18 +46,10 @@
                                    name="homepage" placeholder="{{ __('home.Home') }}" required>
                         </div>
                         <div class="form-group col-md-6">
-                            @if($member->name == \App\Enums\RegisterMember::TRUST)
-                                <input autocomplete="off" type="number" class="form-control" id="number_business"
-                                       value="{{ $createCompany ? $createCompany['number_business'] : old('number_business', $exitsMember ? $exitsMember->number_business :'') }}"
-                                       name="number_business" placeholder="Business registration card"
-                                       required>
-                            @else
-                                <input autocomplete="off" type="number" class="form-control" id="number_business"
-                                       value="{{ $createCompany ? $createCompany['number_business'] : old('number_business', $exitsMember ? $exitsMember->number_business :'') }}"
-                                       name="number_business"
-                                       placeholder="{{ __('home.Business registration number') }}"
-                                       required>
-                            @endif
+                            <input autocomplete="off" type="number" class="form-control" id="number_business"
+                                   value="{{ $createCompany ? $createCompany['number_business'] : old('number_business', $exitsMember ? $exitsMember->number_business :'') }}"
+                                   name="number_business" placeholder="{{ __('auth.Business registration card') }}"
+                                   required>
                         </div>
                         <div class="form-group col-md-6">
                             <input autocomplete="off" type="number" class="form-control" id="phone"
@@ -67,10 +61,18 @@
                                    value="{{ $createCompany ? $createCompany['fax'] : old('fax', $exitsMember ? $exitsMember->fax :'') }}"
                                    name="fax" placeholder="{{ __('home.Fax') }}">
                         </div>
-                        <div class="form-group col-md-12">
+                        <div class="form-group col-md-8">
                             <input autocomplete="off" type="email" class="form-control" id="email"
                                    value="{{ $createCompany ? $createCompany['email'] : old('email', $exitsMember ? $exitsMember->email: '') }}"
                                    name="email" placeholder="{{ __('home.email') }}">
+                        </div>
+                        <div class="form-group col-md-4 d-flex align-items-center">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="checkEmail">
+                                <label class="form-check-label text-checkout" for="checkEmail">
+                                    {{ __('auth.Email Acceptance') }}
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -90,7 +92,8 @@
                             </div>
 
                         </label>
-                        <input autocomplete="off" type="file" class="form-control" id="giay_phep_kinh_doanh" accept="image/*"
+                        <input autocomplete="off" type="file" class="form-control" id="giay_phep_kinh_doanh"
+                               accept="image/*"
                                style="visibility:hidden;"
                                name="giay_phep_kinh_doanh" {{ $exitsMember ? '' : 'required' }}>
                         <div class="imagePreview"></div>
@@ -130,7 +133,8 @@
                         <div class="form-row">
                             <div class="form-group col-md-4 address-below" data-toggle="modal"
                                  data-target="#modal-address">
-                                <input autocomplete="off" type="text" readonly class="form-control" id="countries-select-1"
+                                <input autocomplete="off" type="text" readonly class="form-control"
+                                       id="countries-select-1"
                                        placeholder="{{ __('home.Select country') }}"
                                        name="countries-select-1">
                             </div>
@@ -142,7 +146,8 @@
                             </div>
                             <div class="form-group col-md-4 address-below" data-toggle="modal"
                                  data-target="#modal-address">
-                                <input autocomplete="off" type="text" readonly class="form-control" id="provinces-select-1"
+                                <input autocomplete="off" type="text" readonly class="form-control"
+                                       id="provinces-select-1"
                                        placeholder="{{ __('home.Select district/district') }}"
                                        name="provinces-select-1">
                             </div>
@@ -183,10 +188,10 @@
                 </form>
 </div>
 <script>
-    let  imgInp = $('#giay_phep_kinh_doanh');
+    let imgInp = $('#giay_phep_kinh_doanh');
 
-    $(function() {
-        var imagesPreview = function(input, placeToInsertImagePreview) {
+    $(function () {
+        var imagesPreview = function (input, placeToInsertImagePreview) {
 
             if (input.files) {
                 var filesAmount = input.files.length;
@@ -194,7 +199,7 @@
                 for (i = 0; i < filesAmount; i++) {
                     var reader = new FileReader();
 
-                    reader.onload = function(event) {
+                    reader.onload = function (event) {
                         $($.parseHTML('<img>')).attr('src', event.target.result).addClass('w-25').appendTo(placeToInsertImagePreview);
                     }
 
@@ -204,7 +209,7 @@
 
         };
 
-        imgInp.on('change', function() {
+        imgInp.on('change', function () {
             $('.imagePreview').empty();
             imagesPreview(this, 'div.imagePreview');
         });

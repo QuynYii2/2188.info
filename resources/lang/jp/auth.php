@@ -15,5 +15,14 @@ return [
 
     'Cell phone number' => '핸드폰번호',
     'Confirm password' => '비밀번호확인',
+    'Business registration card' => 'Business registration card',
+    'Email Acceptance' => 'Email Acceptance',
+    'Register member buyer' => '구매회원가입',
+    'Register member trust' => '성실회원 회사등록',
+    'Register member logistic' => '물류회원 회사등록',
+    'Name Korea' => 'Name Korea',
+    'Name' => 'Name',
+    'English' => 'English',
+    'Korea' => 'Korea',
 
 ];

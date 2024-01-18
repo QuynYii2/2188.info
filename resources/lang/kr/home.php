@@ -1118,7 +1118,7 @@ return [
 
     'Register member buyer' => '구매회원가입',
     'Register member trust' => '성실회원 회사등록',
-    'Register member logistic' => '회사등록',
+    'Register member logistic' => '물류회원 회사등록',
     'hình thức vận chuyển' => '배송 양식',
     'Tổng doanh thu' => '총 수익',
     'Quay lại danh sách' => '목록으로 돌아가기',
