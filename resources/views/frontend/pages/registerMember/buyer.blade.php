@@ -32,7 +32,9 @@
                                    required>
                             <div class="col-6">
                                 <a href="https://unipass.customs.go.kr/csp/persIndex.do"
-                                   class="border-radius-8 w-100 btn bg-member-primary solid btn-register">{{ __('home.Get a customs clearance number') }}</a>
+                                   class="border-radius-8 w-100 btn bg-member-primary solid btn-register">
+                                    <span class="small">{{ __('home.Get a customs clearance number') }}</span>
+                                </a>
                             </div>
                         </div>
 
@@ -206,4 +208,13 @@
     }
 
     updateFormattedDate();
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var inputElements = document.querySelectorAll('form.form_memberInfo input');
+        inputElements.forEach(function(input) {
+            input.value = '';
+        });
+    });
 </script>
