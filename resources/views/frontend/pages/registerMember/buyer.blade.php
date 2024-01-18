@@ -116,8 +116,8 @@
                                value="{{ $create ? $create['sns_account'] : old('sns_account', $exitsMember ? $exitsMember->sns_account : '') }}"
                                placeholder="" required>
                     </div>
-                    <div class="label_form">{{ __('home.Address Business') }} <span class="text-danger">*</span></div>
-                    <label for="detail-address" class="label_item-member">{{ __('home.Address English') }}</label>
+                    <div class="label_form">{{ __('auth.Address Business') }} <span class="text-danger">*</span></div>
+                    <label for="detail-address" class="label_item-member">{{ __('auth.Address English') }}</label>
                     <div class="form-row">
                         <div class="form-group col-md-4 address-above" data-toggle="modal" data-target="#modal-address">
                             <input autocomplete="off" type="text" readonly class="form-control" id="countries-select"
@@ -141,7 +141,7 @@
                         </div>
                         <input autocomplete="off" type="hidden" id="address_code" name="address_code">
                     </div>
-                    <label for="detail-address-1" class="label_item-member">{{ __('home.Address Korea') }}</label>
+                    <label for="detail-address-1" class="label_item-member">{{ __('auth.Address Korea') }}</label>
                     <div class="form-group">
                         <div class="form-row">
                             <div class="form-group col-md-4 address-below" data-toggle="modal"

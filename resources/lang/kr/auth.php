@@ -13,8 +13,8 @@ return [
     |
     */
 
-    'Cell phone number' => '핸드폰번호',
-    'Confirm password' => '비밀번호확인',
+    'Cell phone number' => '핸드폰 번호',
+    'Confirm password' => '비밀번호 확인',
     'Business registration card' => '사업자등록번호',
     'Email Acceptance' => '메일을 수신합니다',
     'Register member buyer' => '구매회원가입',
@@ -24,5 +24,7 @@ return [
     'Name' => '성명',
     'English' => '영문',
     'Korea' => '한글',
-
+    'Address Business' => '사업장 주소',
+    'Address English' => '사업장 주소(영문)',
+    'Address Korea' => '사업장 주소(한글)',
 ];

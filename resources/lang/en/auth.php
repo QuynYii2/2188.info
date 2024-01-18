@@ -24,4 +24,8 @@ return [
     'Name' => 'Name',
     'English' => 'English',
     'Korea' => 'Korea',
+    'Address Business' => 'Address Business',
+    'Address English' => 'Address Business(English)',
+    'Address Korea' => 'Address Business(Korea)',
+
 ];
