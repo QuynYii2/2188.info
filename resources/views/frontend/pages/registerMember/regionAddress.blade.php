@@ -162,18 +162,30 @@
             let add_3 = '';
             let add_3_en = '';
             resetAddress();
+            console.log(arrAddress);
             arrAddress.forEach((value, index) => {
-                if (index == 0) {
-                    $('#countries-select').val(value.name_en ?? value.name)
-                    $('#countries-select-1').val(value.name ?? value.name_en)
-                } else if (index == 1) {
-                    $('#cities-select').val(value.value.name_en ?? value.name)
-                    $('#cities-select-1').val(value.name ?? value.name_en)
-                } else {
-                    add_3 += value.name ?? value.name_en + ', '
-                    add_3_en += value.name_en ?? value.name + ', '
+                const name = value.name === 'null' ? value.name_en : value.name;
+                const name_en = value.name_en === 'null' ? value.name : value.name_en;
+
+                switch (index) {
+                    case 0:
+                        $('#countries-select').val(name_en);
+                        $('#countries-select-1').val(name);
+                        break;
+                    case 1:
+                        $('#cities-select').val(name_en);
+                        $('#cities-select-1').val(name);
+                        break;
+                    default:
+                        add_3 += name + ', ';
+                        add_3_en += name_en + ', ';
+                        break;
                 }
             });
+
+            add_3 = add_3.slice(0, -2);
+            add_3_en = add_3_en.slice(0, -2);
+
             if (add_3) {
                 add_3 = add_3.slice(0, -2);
                 add_3_en = add_3_en.slice(0, -2);
