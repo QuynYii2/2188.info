@@ -39,19 +39,18 @@
                         </div>
 
                     </div>
+                    <label for="name_en" class="label_item-member">{{ __('auth.Name') }}<span class="text-danger">*</span></label>
                     <div class="form-group">
-                        <label for="name_en" class="label_item-member">{{ __('home.Name English') }}
-                            <span class="text-danger">*</span></label>
                         <input autocomplete="off" type="text" class="form-control mb-2" id="name_en" name="name_en"
                                value="{{ $create ? $create['name_en'] : old('name_en', $exitsMember ? $exitsMember->name_en : '') }}"
-                               placeholder="" required>
+                               placeholder="{{ __('auth.English') }}" required>
                     </div>
                     <div class="form-group">
-                        <label for="name" class="label_item-member">{{ __('home.Name Default') }}
+                        <label for="name" class="d-none label_item-member">{{ __('home.Name Default') }}
                             <span class="text-danger">*</span></label>
                         <input autocomplete="off" type="text" class="form-control mt-2" id="name" name="name"
                                value="{{ $create ? $create['name'] : old('name', $exitsMember ? $exitsMember->name : '') }}"
-                               placeholder="" required>
+                               placeholder="{{ __('auth.Korea') }}" required>
                     </div>
                     <label for="code" class="label_item-member">{{ __('home.ID') }} <span
                                 class="text-danger">*</span></label>
