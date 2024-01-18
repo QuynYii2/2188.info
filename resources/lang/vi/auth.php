@@ -24,4 +24,8 @@ return [
     'Name' => 'Tên',
     'English' => 'tiếng Anh',
     'Korea' => 'tiếng Hàn',
+    'Address Business' => 'Địa chỉ công ty',
+    'Address English' => 'Địa chỉ công ty(tiếng Anh)',
+    'Address Korea' => 'Địa chỉ công ty(tiếng Hàn)',
+
 ];

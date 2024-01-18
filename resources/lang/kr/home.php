@@ -597,8 +597,8 @@ return [
     'Career' => '업종선택',
     // nganh hang
     'Industry' => '품목선택',
-    'Address English' => '사업장주소(영문)',
-    'Address Korea' => '사업장주소(한글)',
+    'Address English' => '사업장 주소(영문)',
+    'Address Korea' => '사업장 주소(한글)',
     'Address detail' => '상세주소',
     // so dang ky kinh odanh
     'Business registration number' => '사업자등록번호',
@@ -1047,7 +1047,7 @@ return [
     'No sent messages' => '보낸 메시지가 없습니다',
     //
     'Select file' => '파일선택 (사업자등록사본을 첨부하세요)',
-    'Address Business' => '사업장주소',
+    'Address Business' => '사업장 주소',
     'Language English' => '영문',
     'Language Local' => '자국어',
     'đơn giá' => '단가',
