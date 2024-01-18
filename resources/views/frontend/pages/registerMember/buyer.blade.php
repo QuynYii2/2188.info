@@ -212,9 +212,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var inputElements = document.querySelectorAll('form.form_memberInfo input');
-        inputElements.forEach(function(input) {
-            input.value = '';
-        });
+        var passwordInput = document.getElementById('password');
+        passwordInput.setAttribute('autocomplete', 'new-password');
     });
 </script>
