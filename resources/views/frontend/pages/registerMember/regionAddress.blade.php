@@ -164,11 +164,11 @@
             resetAddress();
             arrAddress.forEach((value, index) => {
                 if (index == 0) {
-                    $('#countries-select').val(value.name_en)
+                    $('#countries-select').val(value.name_en ?? value.name)
                     $('#countries-select-1').val(value.name)
                 } else if (index == 1) {
-                    $('#cities-select').val(value.name_en)
-                    $('#cities-select-1').val(value.name)
+                    $('#cities-select').val(value.value.name_en ?? value.name)
+                    $('#cities-select-1').val(value.name ?? value.name_en)
                 } else {
                     add_3 += value.name + ', '
                     add_3_en += value.name_en + ', '

@@ -69,7 +69,7 @@
                                        placeholder="" required>
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="passwordConfirm" class="label_item-member">{{ __('home.Password') }} <span
+                                <label for="passwordConfirm" class="label_item-member">{{ __('auth.Confirm password') }} <span
                                             class="text-danger">*</span></label>
                                 <input autocomplete="off" type="password" class="form-control" id="passwordConfirm"
                                        name="passwordConfirm" placeholder=""
@@ -79,7 +79,7 @@
                     @endif
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="phoneNumber" class="label_item-member">{{ __('home.phone number') }} <span
+                            <label for="phoneNumber" class="label_item-member">{{ __('auth.Cell phone number') }} <span
                                         class="text-danger">*</span></label>
                             <input autocomplete="off" type="text" class="form-control" id="phoneNumber" name="phoneNumber"
                                    value="{{ $create ? $create['phone'] : old('phone', $exitsMember ? $exitsMember->phone : '') }}"
