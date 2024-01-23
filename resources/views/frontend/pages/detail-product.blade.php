@@ -920,7 +920,7 @@
         <div class="section margin-layout-index margin-top-layout container-fluid mt-3">
             <div class="d-flex justify-content-start align-items-center">
                 <div class="content-products">
-                    {{ __('home.Related Product') }}
+                    {{ __('home.Related Products') }}
                 </div>
             </div>
 
@@ -940,7 +940,7 @@
         <div class="section margin-layout-index margin-top-layout container-fluid mt-3">
             <div class="d-flex justify-content-start align-items-center">
                 <div class="content-products">
-                    {{ __('home.Recently viewed products') }}
+                    {{ __('detail-product.Recently viewed products') }}
                 </div>
             </div>
 

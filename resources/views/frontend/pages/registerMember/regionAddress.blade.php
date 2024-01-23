@@ -111,12 +111,14 @@
                 name: name,
                 name_en: name_en
             });
+
+            let name_item = name === 'null' ? name_en : name;
             if (result.ok) {
                 let data = await result.json();
                 nation_code = code;
-                nation_name = name ?? name_en;
+                nation_name = name_item;
                 document.getElementById('title-div').style.display = 'block';
-                document.getElementById('title-main').innerHTML = name ?? name_en;
+                document.getElementById('title-main').innerHTML = name_item;
                 if (typeof data === 'object') {
                     data = Object.values(data);
                 }
