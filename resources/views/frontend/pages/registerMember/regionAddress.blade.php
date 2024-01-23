@@ -103,7 +103,7 @@
                 url = '{{ route('address.show.region', ['code' => ':code']) }}';
                 url = url.replace(':code', code);
             } else {
-                url = '{{ route('address.show.region', ['code' => ':code']) }}';
+                url = '{{ route('api.address.detail', ['code' => ':code']) }}';
                 url = url.replace(':code', code);
             }
             let result = await fetch(url);

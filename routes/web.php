@@ -427,6 +427,6 @@ Route::post('deleteCart/{id}', [CartController::class, 'deleteCart'])->name('del
 // CheckID
 Route::post('/checkID', [RegisterMemberController::class, 'checkID'])->name('member.checkId');
 
-Route::get('/address/list', [\App\Http\Controllers\AddressController::class, 'index'])->name('address.index');
-Route::get('/address/detail/{code}', [\App\Http\Controllers\AddressController::class, 'show'])->name('address.detail');
-Route::get('/address/detail-region/{code}', [\App\Http\Controllers\AddressController::class, 'showRegion'])->name('address.show.region');
+Route::get('api/address/list', [\App\Http\Controllers\AddressController::class, 'index'])->name('address.index');
+Route::get('api/address/detail/{code}', [\App\Http\Controllers\AddressController::class, 'show'])->name('api.address.detail');
+Route::get('api/address/detail-region/{code}', [\App\Http\Controllers\AddressController::class, 'showRegion'])->name('address.show.region');
