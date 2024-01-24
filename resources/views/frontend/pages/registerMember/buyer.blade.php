@@ -7,12 +7,14 @@
 @endphp
 <div class="">
     @if(isset($isAdminUpdate))
-        <form autocomplete="off" class="form_memberInfo" action="{{route('admin.edit.users.company', $isAdminUpdate->id)}}" method="post"
+        <form autocomplete="off" class="form_memberInfo"
+              action="{{route('admin.edit.users.company', $isAdminUpdate->id)}}" method="post"
               enctype="multipart/form-data">
             @csrf
             @method('PUT')
             @else
-                <form autocomplete="off" class="form_memberInfo" action="{{route('register.member.buyer')}}" method="post"
+                <form autocomplete="off" class="form_memberInfo" action="{{route('register.member.buyer')}}"
+                      method="post"
                       enctype="multipart/form-data">
                     @csrf
                     @endif
@@ -39,7 +41,8 @@
                         </div>
 
                     </div>
-                    <label for="name_en" class="label_item-member">{{ __('auth.Name') }}<span class="text-danger">*</span></label>
+                    <label for="name_en" class="label_item-member">{{ __('auth.Name') }}<span
+                                class="text-danger">*</span></label>
                     <div class="form-group">
                         <input autocomplete="off" type="text" class="form-control mb-2" id="name_en" name="name_en"
                                value="{{ $create ? $create['name_en'] : old('name_en', $exitsMember ? $exitsMember->name_en : '') }}"
@@ -64,11 +67,13 @@
                             <div class="form-group col-md-6">
                                 <label for="password" class="label_item-member">{{ __('home.Password') }} <span
                                             class="text-danger">*</span></label>
-                                <input autocomplete="off" type="password" class="form-control" id="password" name="password"
+                                <input autocomplete="off" type="password" class="form-control" id="password"
+                                       name="password"
                                        placeholder="" required>
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="passwordConfirm" class="label_item-member">{{ __('auth.Confirm password') }} <span
+                                <label for="passwordConfirm" class="label_item-member">{{ __('auth.Confirm password') }}
+                                    <span
                                             class="text-danger">*</span></label>
                                 <input autocomplete="off" type="password" class="form-control" id="passwordConfirm"
                                        name="passwordConfirm" placeholder=""
@@ -80,13 +85,15 @@
                         <div class="form-group col-md-6">
                             <label for="phoneNumber" class="label_item-member">{{ __('auth.Cell phone number') }} <span
                                         class="text-danger">*</span></label>
-                            <input autocomplete="off" type="text" class="form-control" id="phoneNumber" name="phoneNumber"
+                            <input autocomplete="off" type="text" class="form-control" id="phoneNumber"
+                                   name="phoneNumber"
                                    value="{{ $create ? $create['phone'] : old('phone', $exitsMember ? $exitsMember->phone : '') }}"
                                    required>
                         </div>
                         <div class="form-group col-md-6 justify-content-between align-items-center d-flex">
                             <div class="form-check mt-4">
-                                <input autocomplete="off" class="form-check-input" type="checkbox" id="gridCheck1" required>
+                                <input autocomplete="off" class="form-check-input" type="checkbox" id="gridCheck1"
+                                       required>
                                 <label class="form-check-label label_item-member" for="gridCheck1">
                                     {{ __('home.Allow receiving notifications via SMS message') }}
                                 </label>
@@ -102,7 +109,8 @@
                         </div>
                         <div class="form-group col-md-6 justify-content-between align-items-center d-flex">
                             <div class="form-check mt-4">
-                                <input autocomplete="off" class="form-check-input" type="checkbox" id="gridCheck2" required>
+                                <input autocomplete="off" class="form-check-input" type="checkbox" id="gridCheck2"
+                                       required>
                                 <label class="form-check-label label_item-member" for="gridCheck2">
                                     {{ __('home.Allow receiving notifications via Email') }}
                                 </label>
@@ -135,9 +143,15 @@
                                    name="provinces-select">
                         </div>
                         <div class="form-group col-md-12">
-                            <input autocomplete="off" type="text" name="detail-address" id="detail-address"
-                                   class="form-control" placeholder=""
-                                   value="{{ $create ? $create['address_en'] : old('address_en', $exitsMember ? $exitsMember->address_en : '') }}">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"
+                                         id="detail_address_en">{{ __('home.Address detail') }}</div>
+                                </div>
+                                <input autocomplete="off" type="text" name="detail-address" id="detail-address"
+                                       class="form-control" placeholder="{{ __('home.Address detail') }}"
+                                       value="{{ $create ? $create['address_en'] : old('address_en', $exitsMember ? $exitsMember->address_en : '') }}">
+                            </div>
                         </div>
                         <input autocomplete="off" type="hidden" id="address_code" name="address_code">
                     </div>
@@ -145,7 +159,8 @@
                     <div class="form-group">
                         <div class="form-row">
                             <div class="form-group col-md-4 address-below">
-                                <input autocomplete="off" type="text" readonly class="form-control" id="countries-select-1"
+                                <input autocomplete="off" type="text" readonly class="form-control"
+                                       id="countries-select-1"
                                        placeholder="{{ __('home.Select country') }}"
                                        name="countries-select-1">
                             </div>
@@ -155,14 +170,21 @@
                                        name="cities-select-1">
                             </div>
                             <div class="form-group col-md-4 address-below">
-                                <input autocomplete="off" type="text" readonly class="form-control" id="provinces-select-1"
+                                <input autocomplete="off" type="text" readonly class="form-control"
+                                       id="provinces-select-1"
                                        placeholder="{{ __('home.Select district/district') }}"
                                        name="provinces-select-1">
                             </div>
                             <div class="form-group col-md-12">
-                                <input autocomplete="off" type="text" name="detail-address-1" id="detail-address-1"
-                                       class="form-control" placeholder=""
-                                       value="{{ $create ? $create['address_kr'] : old('address_kr', $exitsMember ? $exitsMember->address_kr : '') }}">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"
+                                             id="detail_address_kr">{{ __('home.Address detail') }}</div>
+                                    </div>
+                                    <input autocomplete="off" type="text" name="detail-address-1" id="detail-address-1"
+                                           class="form-control" placeholder="{{ __('home.Address detail') }}"
+                                           value="{{ $create ? $create['address_kr'] : old('address_kr', $exitsMember ? $exitsMember->address_kr : '') }}">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -207,7 +229,7 @@
 </script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         var passwordInput = document.getElementById('password');
         passwordInput.setAttribute('autocomplete', 'new-password');
     });
