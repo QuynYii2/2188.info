@@ -131,21 +131,18 @@
                     <label for="detail-address-1" class="label_item-member">{{ __('home.Address Korea') }}</label>
                     <div class="form-group">
                         <div class="form-row">
-                            <div class="form-group col-md-4 address-below" data-toggle="modal"
-                                 data-target="#modal-address">
+                            <div class="form-group col-md-4 address-below">
                                 <input autocomplete="off" type="text" readonly class="form-control"
                                        id="countries-select-1"
                                        placeholder="{{ __('home.Select country') }}"
                                        name="countries-select-1">
                             </div>
-                            <div class="form-group col-md-4 address-below" data-toggle="modal"
-                                 data-target="#modal-address">
+                            <div class="form-group col-md-4 address-below">
                                 <input autocomplete="off" type="text" readonly class="form-control" id="cities-select-1"
                                        placeholder="{{ __('home.Choose the city') }}"
                                        name="cities-select-1">
                             </div>
-                            <div class="form-group col-md-4 address-below" data-toggle="modal"
-                                 data-target="#modal-address">
+                            <div class="form-group col-md-4 address-below">
                                 <input autocomplete="off" type="text" readonly class="form-control"
                                        id="provinces-select-1"
                                        placeholder="{{ __('home.Select district/district') }}"
