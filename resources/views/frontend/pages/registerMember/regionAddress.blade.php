@@ -165,9 +165,25 @@
             let add_3_en = '';
             resetAddress();
             console.log(arrAddress);
+
+            let list_name_en = null;
+            let list_name_kr = null;
+
             arrAddress.forEach((value, index) => {
                 const name = value.name === 'null' ? value.name_en : value.name;
                 const name_en = value.name_en === 'null' ? value.name : value.name_en;
+
+                if (list_name_en) {
+                    list_name_en = list_name_en + ', ' + name;
+                } else {
+                    list_name_en = name;
+                }
+
+                if (list_name_kr) {
+                    list_name_kr = list_name_kr + ', ' + name_en;
+                } else {
+                    list_name_kr = name_en;
+                }
 
                 switch (index) {
                     case 0:
@@ -185,6 +201,8 @@
                 }
             });
 
+            console.log(add_3, add_3_en)
+
             add_3 = add_3.slice(0, -2);
             add_3_en = add_3_en.slice(0, -2);
 
@@ -195,6 +213,9 @@
                 $('#provinces-select-1').val(add_3);
             }
             $('#address_code').val(nation_code);
+
+            $('#detail_address_en').text(list_name_en)
+            $('#detail_address_kr').text(list_name_kr)
         }
 
         function resetAddress() {

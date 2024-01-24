@@ -122,9 +122,15 @@
                                    name="provinces-select">
                         </div>
                         <div class="form-group col-md-12">
-                            <input autocomplete="off" type="text" name="detail-address" id="detail-address"
-                                   class="form-control" placeholder="{{ __('home.Address detail') }}"
-                                   value="{{ $createCompany ? $createCompany['address_en'] : old('address_en', $exitsMember ? $exitsMember->address_en : '') }}">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"
+                                         id="detail_address_en">{{ __('home.Address detail') }}</div>
+                                </div>
+                                <input autocomplete="off" type="text" name="detail-address" id="detail-address"
+                                       class="form-control" placeholder="{{ __('home.Address detail') }}"
+                                       value="{{ $createCompany ? $createCompany['address_en'] : old('address_en', $exitsMember ? $exitsMember->address_en : '') }}">
+                            </div>
                         </div>
                         <input autocomplete="off" type="hidden" id="address_code" name="address_code">
                     </div>
@@ -149,9 +155,15 @@
                                        name="provinces-select-1">
                             </div>
                             <div class="form-group col-md-12">
-                                <input autocomplete="off" type="text" name="detail-address-1" id="detail-address-1"
-                                       class="form-control" placeholder="{{ __('home.Address detail') }}"
-                                       value="{{ $createCompany ? $createCompany['address_kr'] : old('address_kr', $exitsMember ? $exitsMember->address_kr : '') }}">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"
+                                             id="detail_address_en">{{ __('home.Address detail') }}</div>
+                                    </div>
+                                    <input autocomplete="off" type="text" name="detail-address-1" id="detail-address-1"
+                                           class="form-control" placeholder="{{ __('home.Address detail') }}"
+                                           value="{{ $createCompany ? $createCompany['address_kr'] : old('address_kr', $exitsMember ? $exitsMember->address_kr : '') }}">
+                                </div>
                             </div>
                         </div>
                     </div>
