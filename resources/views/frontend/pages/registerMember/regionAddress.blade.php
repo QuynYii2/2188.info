@@ -155,7 +155,7 @@
                 }
                 str += `</tr>`
             })
-            const t_p_Body = document.getElementById('p-r-table');
+            const t_p_Body = document.getElementById('p-r-table');                                  `1`
             t_p_Body.innerHTML = str;
 
         }
@@ -164,7 +164,6 @@
             let add_3 = '';
             let add_3_en = '';
             resetAddress();
-            console.log(arrAddress);
 
             let list_name_en = null;
             let list_name_kr = null;
@@ -174,15 +173,15 @@
                 const name_en = value.name_en === 'null' ? value.name : value.name_en;
 
                 if (list_name_en) {
-                    list_name_en = list_name_en + ', ' + name;
+                    list_name_en = list_name_en + ', ' + name_en;
                 } else {
-                    list_name_en = name;
+                    list_name_en = name_en;
                 }
 
                 if (list_name_kr) {
-                    list_name_kr = list_name_kr + ', ' + name_en;
+                    list_name_kr = list_name_kr + ', ' + name;
                 } else {
-                    list_name_kr = name_en;
+                    list_name_kr = name;
                 }
 
                 switch (index) {
@@ -201,14 +200,12 @@
                 }
             });
 
-            console.log(add_3, add_3_en)
-
-            add_3 = add_3.slice(0, -2);
-            add_3_en = add_3_en.slice(0, -2);
+            // add_3 = add_3.slice(0, -2);
+            // add_3_en = add_3_en.slice(0, -2);
 
             if (add_3) {
-                add_3 = add_3.slice(0, -2);
-                add_3_en = add_3_en.slice(0, -2);
+                // add_3 = add_3.slice(0, -2);
+                // add_3_en = add_3_en.slice(0, -2);
                 $('#provinces-select').val(add_3_en);
                 $('#provinces-select-1').val(add_3);
             }
