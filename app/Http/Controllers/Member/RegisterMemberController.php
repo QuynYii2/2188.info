@@ -154,6 +154,7 @@ class RegisterMemberController extends Controller
     /*Riêng là hội viên BUYER khi đăng ký sẽ gộp các bước lại làm một bước*/
     public function registerMemberBuyer(Request $request)
     {
+        $error = __('message-alert.Error');
         try {
             /* Check user exited*/
             $memberID = $request->input('member_id');
@@ -282,27 +283,31 @@ class RegisterMemberController extends Controller
                 'certify_business' => $certify_business,
             ];
 
+            $error_password = __('message-alert.Error, Password or Password confirm incorrect!');
             if (!Hash::check($passwordConfirm, $password)) {
-                alert()->error('Error', 'Error, Password or Password confirm incorrect!');
+                alert()->error($error, $error_password);
                 return back()->with('create', $create);
             }
 
             $userOld = User::where('email', $email)->first();
             if ($userOld) {
-                alert()->error('Error', 'Error, Email is user used!');
+                $error_email = __('message-alert.Error, Email is user used!');
+                alert()->error($error, $error_email);
                 return back()->with('create', $create);
             }
 
             $memberOld = MemberRegisterPersonSource::where('email', $email)->first();
             if ($memberOld) {
-                alert()->error('Error', 'Error, Email in member used!');
+                $error_email = __('message-alert.Error, Email in member used!');
+                alert()->error($error, $error_email);
                 return back()->with('create', $create);
             }
 
             $success = MemberRegisterInfo::create($create);
 
             if (!$success) {
-                alert()->error('Error', 'Register error, Please try again!');
+                $error_register = __('message-alert.Register error, Please try again!');
+                alert()->error($error, $error_register);
                 return back()->with('create', $create);
             }
 
@@ -340,13 +345,17 @@ class RegisterMemberController extends Controller
             ])->first();
 
             if ($save) {
-                alert()->success('Success', 'Success, Create success! Please continue next steps');
+                $success_message = __('message-alert.Success');
+                $success_create = __('message-alert.Success, Create success! Please continue next steps');
+                alert()->success($success_message, $success_create);
                 return redirect(route('show.register.member.congratulation', $member->id));
             }
-            alert()->error('Error', 'Error, Create error!');
+            $error_create = __('message-alert.Error, Create error!');
+            alert()->error($error, $error_create);
             return back()->with('create', $create);
         } catch (\Exception $exception) {
-            alert()->error('Error', 'Error, Please try again!');
+            $error_again = __('message-alert.Error, Please try again!');
+            alert()->error($error, $error_again);
             return back()->with('create', $create);
         }
     }
@@ -400,134 +409,134 @@ class RegisterMemberController extends Controller
 
     public function registerMemberInfo(Request $request)
     {
+        $error = __('message-alert.Error');
+        $memberID = $request->input('member_id');
+
+        $companyName = $request->input('name_en');
+        $email = $request->input('email');
+        $homepage = $request->input('homepage');
+        $numberBusiness = $request->input('number_business');
+        $phoneNumber = $request->input('phone');
+        $fax = $request->input('fax');
+        if (!$fax) {
+            $fax = 'default';
+        }
+        $registerMember = $request->input('member');
+        //
+        $datetime_register = Carbon::now()->addHours(7);
+        $number_clearance = $request->input('number_clearance');
+        $name_en = $request->input('name_en');
+        $name_kr = $request->input('name_kr');
+
+        $comma = ',';
+        $address_en =
+            $request->input('countries-select') . $comma .
+            $request->input('cities-select') . $comma .
+            $request->input('provinces-select') . $comma .
+            $request->input('detail-address');
+        $address_kr =
+            $request->input('countries-select-1') . $comma .
+            $request->input('cities-select-1') . $comma .
+            $request->input('provinces-select-1') . $comma .
+            $request->input('detail-address-1');
+        $address = $address_en;
+        //file
+        if ($request->hasFile('certify_business')) {
+            $gpkd = $request->file('certify_business');
+            $certify_business = $gpkd->store('certify_business', 'public');
+        } else {
+            $certify_business = '';
+        }
+
+        $status_business = $request->input('status_business');
+
+        $code_1 = $request->input('code_1');
+        $code_2 = $request->input('code_2');
+        $code_3 = $request->input('code_3');
+        $code_4 = $request->input('code_4');
+
+        if ($request->hasFile('giay_phep_kinh_doanh')) {
+            $gpkd = $request->file('giay_phep_kinh_doanh');
+            $gpkdPath = $gpkd->store('giay_phep_kinh_doanh', 'public');
+        } else {
+            $gpkdPath = null;
+        }
+        $code_business = $request->input('code_business');
+        $type_business = $request->input('type_business');
+
+        $updateInfo = $request->input('updateInfo');
+
+        if (is_array($code_1)) {
+            $code_1 = implode(',', $code_1);
+        }
+
+        if (is_array($code_2)) {
+            $code_2 = implode(',', $code_2);
+        }
+
+        if (is_array($code_3)) {
+            $code_3 = implode(',', $code_3);
+        }
+
+        if (is_array($code_4)) {
+            $code_4 = implode(',', $code_4);
+        }
+
+        $categoryIds = $code_1 . ',' . $code_2 . ',' . $code_3 . ',' . $code_4;
+        $arrayCategoryID = explode(',', $categoryIds);
+        sort($arrayCategoryID);
+        $categoryIds = implode(',', $arrayCategoryID);
+
+        $id = 0;
+
+        if ($registerMember == RegisterMember::LOGISTIC || $registerMember == RegisterMember::TRUST || $registerMember == RegisterMember::BUYER) {
+            $status = MemberRegisterInfoStatus::ACTIVE;
+        } else {
+            $status = MemberRegisterInfoStatus::INACTIVE;
+        }
+
+        $exitMemberPerson = null;
+        if (Auth::check()) {
+            $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+        }
+
+        $code_1_item = $code_1;
+        $code_2_item = $code_2;
+        $code_3_item = $code_3;
+        $code_4_item = $code_4;
+
+        $create = [
+            'user_id' => $id,
+            'name' => $companyName,
+            'phone' => $phoneNumber,
+            'fax' => $fax,
+            'email' => $email,
+            'homepage' => $homepage,
+            'code_fax' => 'default',
+            'category_id' => $categoryIds,
+            'code_business' => $code_business ?? '',
+            'number_business' => $numberBusiness,
+            'type_business' => $type_business ?? '',
+            'member' => $registerMember,
+            'address' => $address,
+            'member_id' => $memberID,
+            'status' => $status,
+            'giay_phep_kinh_doanh' => $gpkdPath,
+
+            'datetime_register' => $datetime_register,
+            'number_clearance' => $number_clearance ?? '',
+            'name_en' => $name_en,
+            'name_kr' => $name_kr,
+            'address_en' => $address_en,
+            'address_kr' => $address_kr,
+            'certify_business' => $certify_business,
+            'status_business' => $status_business,
+            'code_1' => $code_1_item,
+            'code_2' => $code_2_item,
+            'code_3' => $code_3_item,
+            'code_4' => $code_4_item,
+        ];
         try {
-            $memberID = $request->input('member_id');
-
-            $companyName = $request->input('name_en');
-            $email = $request->input('email');
-            $homepage = $request->input('homepage');
-            $numberBusiness = $request->input('number_business');
-            $phoneNumber = $request->input('phone');
-            $fax = $request->input('fax');
-            if (!$fax) {
-                $fax = 'default';
-            }
-            $registerMember = $request->input('member');
-            //
-            $datetime_register = Carbon::now()->addHours(7);
-            $number_clearance = $request->input('number_clearance');
-            $name_en = $request->input('name_en');
-            $name_kr = $request->input('name_kr');
-
-            $comma = ',';
-            $address_en =
-                $request->input('countries-select') . $comma .
-                $request->input('cities-select') . $comma .
-                $request->input('provinces-select') . $comma .
-                $request->input('detail-address');
-            $address_kr =
-                $request->input('countries-select-1') . $comma .
-                $request->input('cities-select-1') . $comma .
-                $request->input('provinces-select-1') . $comma .
-                $request->input('detail-address-1');
-            $address = $address_en;
-            //file
-            if ($request->hasFile('certify_business')) {
-                $gpkd = $request->file('certify_business');
-                $certify_business = $gpkd->store('certify_business', 'public');
-            } else {
-                $certify_business = '';
-            }
-
-            $status_business = $request->input('status_business');
-
-            $code_1 = $request->input('code_1');
-            $code_2 = $request->input('code_2');
-            $code_3 = $request->input('code_3');
-            $code_4 = $request->input('code_4');
-
-            if ($request->hasFile('giay_phep_kinh_doanh')) {
-                $gpkd = $request->file('giay_phep_kinh_doanh');
-                $gpkdPath = $gpkd->store('giay_phep_kinh_doanh', 'public');
-            } else {
-                $gpkdPath = null;
-            }
-            $code_business = $request->input('code_business');
-            $type_business = $request->input('type_business');
-
-            $updateInfo = $request->input('updateInfo');
-
-            if (is_array($code_1)) {
-                $code_1 = implode(',', $code_1);
-            }
-
-            if (is_array($code_2)) {
-                $code_2 = implode(',', $code_2);
-            }
-
-            if (is_array($code_3)) {
-                $code_3 = implode(',', $code_3);
-            }
-
-            if (is_array($code_4)) {
-                $code_4 = implode(',', $code_4);
-            }
-
-            $categoryIds = $code_1 . ',' . $code_2 . ',' . $code_3 . ',' . $code_4;
-            $arrayCategoryID = explode(',', $categoryIds);
-            sort($arrayCategoryID);
-            $categoryIds = implode(',', $arrayCategoryID);
-
-            $id = 0;
-
-            if ($registerMember == RegisterMember::LOGISTIC || $registerMember == RegisterMember::TRUST || $registerMember == RegisterMember::BUYER) {
-                $status = MemberRegisterInfoStatus::ACTIVE;
-            } else {
-                $status = MemberRegisterInfoStatus::INACTIVE;
-            }
-
-            $exitMemberPerson = null;
-            if (Auth::check()) {
-                $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
-            }
-
-            $code_1_item = $code_1;
-            $code_2_item = $code_2;
-            $code_3_item = $code_3;
-            $code_4_item = $code_4;
-
-            $create = [
-                'user_id' => $id,
-                'name' => $companyName,
-                'phone' => $phoneNumber,
-                'fax' => $fax,
-                'email' => $email,
-                'homepage' => $homepage,
-                'code_fax' => 'default',
-                'category_id' => $categoryIds,
-                'code_business' => $code_business ?? '',
-                'number_business' => $numberBusiness,
-                'type_business' => $type_business ?? '',
-                'member' => $registerMember,
-                'address' => $address,
-                'member_id' => $memberID,
-                'status' => $status,
-                'giay_phep_kinh_doanh' => $gpkdPath,
-
-                'datetime_register' => $datetime_register,
-                'number_clearance' => $number_clearance ?? '',
-                'name_en' => $name_en,
-                'name_kr' => $name_kr,
-                'address_en' => $address_en,
-                'address_kr' => $address_kr,
-                'certify_business' => $certify_business,
-                'status_business' => $status_business,
-                'code_1' => $code_1_item,
-                'code_2' => $code_2_item,
-                'code_3' => $code_3_item,
-                'code_4' => $code_4_item,
-            ];
-
             if ($exitMemberPerson) {
                 $exitsMember = MemberRegisterInfo::where([
                     ['id', $exitMemberPerson->member_id],
@@ -567,7 +576,8 @@ class RegisterMemberController extends Controller
 
                 $success = $exitsMember->save();
                 if ($success) {
-                    alert()->success('Success', 'Success, Update success!');
+                    $success_message = __('message-alert.Success');
+                    alert()->success($success_message, 'Success, Update success!');
                     if ($updateInfo) {
                         return back()->with('createCompany', $create);
                     }
@@ -576,13 +586,15 @@ class RegisterMemberController extends Controller
                         'registerMember' => $registerMember
                     ]));
                 }
-                alert()->error('Error', 'Error, Create error!');
+                $error_create = __('message-alert.Error, Create error!');
+                alert()->error($error, $error_create);
                 return back()->with('createCompany', $create);
 
             } else {
                 $memberOld = MemberRegisterPersonSource::where('email', $email)->first();
                 if ($memberOld) {
-                    alert()->error('Error', 'Error, Email in member used!');
+                    $error_email = __('message-alert.Error, Email in member used!');
+                    alert()->error($error, $error_email);
                     return back()->with('createCompany', $create);
                 }
 
@@ -593,22 +605,27 @@ class RegisterMemberController extends Controller
                 ])->orderBy('created_at', 'desc')->first();
             }
             if ($success) {
-                alert()->success('Success', 'Success, Create success! Please continue next steps');
+                $success_message = __('message-alert.Success');
+                $success_create = __('message-alert.Success, Create success! Please continue next steps');
+                alert()->success($success_message, $success_create);
                 return redirect(route('show.register.member.person.source', [
                     'member_id' => $newUser->id,
                     'registerMember' => $registerMember
                 ]));
             }
-            alert()->error('Error', 'Error, Create error!');
+            $error_create = __('message-alert.Error, Create error!');
+            alert()->error($error, $error_create);
             return back()->with('createCompany', $create);
         } catch (\Exception $exception) {
-            alert()->error('Error', 'Error, Please try again!');
+            $error_again = __('message-alert.Error, Please try again!');
+            alert()->error($error, $error_again);
             return back()->with('createCompany', $create);
         }
     }
 
     public function registerMemberPerson(Request $request)
     {
+        $error = __('message-alert.Error');
         try {
             $fullName = $request->input('name');
             $password = $request->input('password');
@@ -685,7 +702,8 @@ class RegisterMemberController extends Controller
             ];
 
             if (!Hash::check($passwordConfirm, $password)) {
-                alert()->error('Error', 'Error, Password or Password confirm incorrect!');
+                $error_password = __('message-alert.Error, Password or Password confirm incorrect!');
+                alert()->error($error, $error_password);
                 return back()->with('create', $create);
             }
 
@@ -726,24 +744,28 @@ class RegisterMemberController extends Controller
 
                     $register = MemberRegisterInfo::find($member);
 
+                    $success_alert = __('message-alert.Success');
                     if ($route == 'profile.member.person') {
-                        alert()->success('Success', 'Success, Update success!');
+                        alert()->success($success_alert, 'Success, Update success!');
                         return back()->with('create', $create);
                     }
 
-                    alert()->success('Success', 'Success, Create success! Please continue next steps');
+                    $success_create = __('message-alert.Success, Create success! Please continue next steps');
+                    alert()->success($success_alert, $success_create);
                     return redirect(route('show.register.member.person.represent', [
                         'person_id' => $memberPersonSource->id,
                         'registerMember' => $register->member
                     ]));
                 } else {
                     if ($userOld) {
-                        alert()->error('Error', 'Error, Email is user used!');
+                        $error_email = __('message-alert.Error, Email is user used!');
+                        alert()->error($error, $error_email);
                         return back()->with('create', $create);
                     }
 
                     if ($memberOld) {
-                        alert()->error('Error', 'Error, Email in member used!');
+                        $error_email = __('message-alert.Error, Email in member used!');
+                        alert()->error($error, $error_email);
                         return back()->with('create', $create);
                     }
                     if ($exitsMember->member != RegisterMember::TRUST) {
@@ -767,17 +789,19 @@ class RegisterMemberController extends Controller
                 }
             } else {
                 if ($userOld) {
-                    alert()->error('Error', 'Error, Email is user used!');
+                    $error_email = __('message-alert.Error, Email is user used!');
+                    alert()->error($error, $error_email);
                     return back()->with('create', $create);
                 }
 
                 if ($memberOld) {
-                    alert()->error('Error', 'Error, Email in member used!');
+                    $error_email = __('message-alert.Error, Email in member used!');
+                    alert()->error($error, $error_email);
                     return back()->with('create', $create);
                 }
 
                 if ($memberOld_v2) {
-                    alert()->error('Error', 'Error, Code in member used!');
+                    alert()->error($error, 'Error, Code in member used!');
                     return back()->with('create', $create);
                 }
 
@@ -806,10 +830,12 @@ class RegisterMemberController extends Controller
                 }
                 return redirect(route('subscription.options.member.person', $member->id));
             }
-            alert()->error('Error', 'Error, Create error!');
+            $error_create = __('message-alert.Error, Create error!');
+            alert()->error($error, $error_create);
             return back()->with('create', $create);
         } catch (\Exception $exception) {
-            alert()->error('Error', 'Error, Please try again!');
+            $error_again = __('message-alert.Error, Please try again!');
+            alert()->error($error, $error_again);
             return back();
         }
     }
@@ -867,6 +893,8 @@ class RegisterMemberController extends Controller
     public function registerMemberPersonRepresent(Request $request)
     {
         $create = null;
+        $error = __('message-alert.Error');
+        $success = __('message-alert.Success');
         try {
             $fullName = $request->input('name');
             $password = $request->input('password');
@@ -916,7 +944,8 @@ class RegisterMemberController extends Controller
             ];
 
             if (!Hash::check($passwordConfirm, $password)) {
-                alert()->error('Error', 'Error, Password or Password confirm incorrect!');
+                $error_password = __('message-alert.Error, Password or Password confirm incorrect!');
+                alert()->error($error, $error_password);
                 return back()->with('create', $create);
             }
 
@@ -968,19 +997,21 @@ class RegisterMemberController extends Controller
                     $memberPerson->save();
 
                     if ($route == 'profile.member.represent') {
-                        alert()->success('Success', 'Success, Update success!');
+                        alert()->success($success, 'Success, Update success!');
                         return back()->with('create', $create);
                     }
 
-                    alert()->success('Success', 'Success');
+                    alert()->success($success, $success);
                     return redirect(route('show.register.member.ship', $memberBefore->member_id));
                 } else {
                     if ($userOld) {
-                        alert()->error('Error', 'Error, Email is user used!');
+                        $error_email = __('message-alert.Error, Email is user used!');
+                        alert()->error($error, $error_email);
                         return back()->with('create', $create);
                     }
                     if ($memberOld) {
-                        alert()->error('Error', 'Error, Email in member used!');
+                        $error_email = __('message-alert.Error, Email in member used!');
+                        alert()->error($error, $error_email);
                         return back()->with('create', $create);
                     }
                     $this->updateUser($user, $fullName, $email, $phoneNumber, $exitsMember->member);
@@ -989,21 +1020,23 @@ class RegisterMemberController extends Controller
                     $memberPerson->verifyCode = '';
                     $success = $memberPerson->save();
                     if ($route == 'profile.member.represent') {
-                        alert()->success('Success', 'Success, Update success!');
+                        alert()->success($success, 'Success, Update success!');
                         return back()->with('create', $create);
                     }
                 }
             } else {
                 if ($userOld) {
-                    alert()->error('Error', 'Error, Email is user used!');
+                    $error_email = __('message-alert.Error, Email is user used!');
+                    alert()->error($error, $error_email);
                     return back()->with('create', $create);
                 }
                 if ($memberOld) {
-                    alert()->error('Error', 'Error, Email in member used!');
+                    $error_email = __('message-alert.Error, Email in member used!');
+                    alert()->error($error, $error_email);
                     return back()->with('create', $create);
                 }
                 if ($memberOld_v2) {
-                    alert()->error('Error', 'Error, Code in member used!');
+                    alert()->error($error, 'Error, Code in member used!');
                     return back()->with('create', $create);
                 }
                 $this->createUser($fullName, $email, $phoneNumber, $password, $memberAccount->member, $request);
@@ -1016,17 +1049,19 @@ class RegisterMemberController extends Controller
             ])->first();
             $register = MemberRegisterInfo::find($member->member_id);
             if ($success) {
-                alert()->success('Success', 'Success, Create success! Please continue next steps');
+                $success_create = __('message-alert.Success, Create success! Please continue next steps');
+                alert()->success($success, $success_create);
                 if ($register->member == RegisterMember::TRUST) {
                     return redirect(route('show.register.member.congratulation', $member->id));
                 }
                 return redirect(route('show.register.member.ship', $member->id));
             }
-            alert()->error('Error', 'Error, Create error!');
+            $error_create = __('message-alert.Error, Create error!');
+            alert()->error($error, $error_create);
             return back()->with('create', $create);
         } catch (\Exception $exception) {
-            dd($exception);
-            alert()->error('Error', 'Error, Please try again!');
+            $error_create = __('message-alert.Error, Please try again!');
+            alert()->error($error, $error_create);
             if ($create) {
                 return back()->with('create', $create);
             } else {

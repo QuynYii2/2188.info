@@ -21,7 +21,12 @@
         </div>
     </div>
 
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var passwordInput = document.getElementById('password');
+            passwordInput.setAttribute('autocomplete', 'new-password');
+        });
+    </script>
     <script>
         $(document).ready(function () {
             $('#register_membership').on('change', function () {

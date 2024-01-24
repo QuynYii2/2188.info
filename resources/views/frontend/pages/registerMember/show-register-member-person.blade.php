@@ -21,5 +21,11 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var passwordInput = document.getElementById('password');
+            passwordInput.setAttribute('autocomplete', 'new-password');
+        });
+    </script>
 @endsection
 
