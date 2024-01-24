@@ -120,17 +120,17 @@
                     <label for="detail-address" class="label_item-member">{{ __('auth.Address English') }}</label>
                     <div class="form-row">
                         <div class="form-group col-md-4 address-above" data-toggle="modal" data-target="#modal-address">
-                            <input autocomplete="off" type="text" readonly class="form-control" id="countries-select"
+                            <input autocomplete="off" type="text" class="form-control" id="countries-select"
                                    placeholder="{{ __('home.Select country') }}"
                                    name="countries-select">
                         </div>
                         <div class="form-group col-md-4 address-above" data-toggle="modal" data-target="#modal-address">
-                            <input autocomplete="off" type="text" readonly class="form-control" id="cities-select"
+                            <input autocomplete="off" type="text" class="form-control" id="cities-select"
                                    placeholder="{{ __('home.Choose the city') }}"
                                    name="cities-select">
                         </div>
                         <div class="form-group col-md-4 address-above" data-toggle="modal" data-target="#modal-address">
-                            <input autocomplete="off" type="text" readonly class="form-control" id="provinces-select"
+                            <input autocomplete="off" type="text" class="form-control" id="provinces-select"
                                    placeholder="{{ __('home.Select district/district') }}"
                                    name="provinces-select">
                         </div>
@@ -144,20 +144,17 @@
                     <label for="detail-address-1" class="label_item-member">{{ __('auth.Address Korea') }}</label>
                     <div class="form-group">
                         <div class="form-row">
-                            <div class="form-group col-md-4 address-below" data-toggle="modal"
-                                 data-target="#modal-address">
+                            <div class="form-group col-md-4 address-below">
                                 <input autocomplete="off" type="text" readonly class="form-control" id="countries-select-1"
                                        placeholder="{{ __('home.Select country') }}"
                                        name="countries-select-1">
                             </div>
-                            <div class="form-group col-md-4 address-below" data-toggle="modal"
-                                 data-target="#modal-address">
+                            <div class="form-group col-md-4 address-below">
                                 <input autocomplete="off" type="text" readonly class="form-control" id="cities-select-1"
                                        placeholder="{{ __('home.Choose the city') }}"
                                        name="cities-select-1">
                             </div>
-                            <div class="form-group col-md-4 address-below" data-toggle="modal"
-                                 data-target="#modal-address">
+                            <div class="form-group col-md-4 address-below">
                                 <input autocomplete="off" type="text" readonly class="form-control" id="provinces-select-1"
                                        placeholder="{{ __('home.Select district/district') }}"
                                        name="provinces-select-1">
