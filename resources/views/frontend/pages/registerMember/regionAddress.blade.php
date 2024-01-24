@@ -155,7 +155,8 @@
                 }
                 str += `</tr>`
             })
-            const t_p_Body = document.getElementById('p-r-table');                                  `1`
+            const t_p_Body = document.getElementById('p-r-table');
+            `1`
             t_p_Body.innerHTML = str;
 
         }
@@ -211,7 +212,13 @@
             }
             $('#address_code').val(nation_code);
 
-            $('#detail_address_en').text(list_name_en)
+            let array_name_en = list_name_en.replace(' ', '').split(',');
+            array_name_en.reverse();
+            let main_name_en = array_name_en.toString();
+
+            $('#select_address').val(main_name_en)
+            $('#detail_address_en').text(main_name_en)
+            $('#select_address_kr').val(list_name_kr)
             $('#detail_address_kr').text(list_name_kr)
         }
 

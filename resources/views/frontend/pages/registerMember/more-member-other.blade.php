@@ -104,22 +104,26 @@
                     </div>
 
                     <div class="label_form">{{ __('home.Address Business') }} <span class="text-danger">*</span></div>
-                    <label for="detail-address" class="label_item-member">{{ __('home.Address English') }}</label>
+                    <label for="select_address" class="label_item-member">{{ __('home.Address English') }}</label>
                     <div class="form-row">
-                        <div class="form-group col-md-4 address-above" data-toggle="modal" data-target="#modal-address">
-                            <input autocomplete="off" type="text" readonly class="form-control" id="countries-select"
-                                   placeholder="{{ __('home.Select country') }}"
-                                   name="countries-select">
-                        </div>
-                        <div class="form-group col-md-4 address-above" data-toggle="modal" data-target="#modal-address">
-                            <input autocomplete="off" type="text" readonly class="form-control" id="cities-select"
-                                   placeholder="{{ __('home.Choose the city') }}"
-                                   name="cities-select">
-                        </div>
-                        <div class="form-group col-md-4 address-above" data-toggle="modal" data-target="#modal-address">
-                            <input autocomplete="off" type="text" readonly class="form-control" id="provinces-select"
-                                   placeholder="{{ __('home.Select district/district') }}"
-                                   name="provinces-select">
+{{--                        <div class="form-group col-md-4 address-above" data-toggle="modal" data-target="#modal-address">--}}
+{{--                            <input autocomplete="off" type="text" readonly class="form-control" id="countries-select"--}}
+{{--                                   placeholder="{{ __('home.Select country') }}"--}}
+{{--                                   name="countries-select">--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group col-md-4 address-above" data-toggle="modal" data-target="#modal-address">--}}
+{{--                            <input autocomplete="off" type="text" readonly class="form-control" id="cities-select"--}}
+{{--                                   placeholder="{{ __('home.Choose the city') }}"--}}
+{{--                                   name="cities-select">--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group col-md-4 address-above" data-toggle="modal" data-target="#modal-address">--}}
+{{--                            <input autocomplete="off" type="text" readonly class="form-control" id="provinces-select"--}}
+{{--                                   placeholder="{{ __('home.Select district/district') }}"--}}
+{{--                                   name="provinces-select">--}}
+{{--                        </div>--}}
+                        <div class="form-group col-md-12" data-toggle="modal" data-target="#modal-address">
+                            <input autocomplete="off" type="text" readonly name="select_address" id="select_address"
+                                   class="form-control" placeholder="{{ __('home.Select country') }}">
                         </div>
                         <div class="form-group col-md-12">
                             <div class="input-group mb-2">
@@ -137,28 +141,32 @@
                     <label for="detail-address-1" class="label_item-member">{{ __('home.Address Korea') }}</label>
                     <div class="form-group">
                         <div class="form-row">
-                            <div class="form-group col-md-4 address-below">
-                                <input autocomplete="off" type="text" readonly class="form-control"
-                                       id="countries-select-1"
-                                       placeholder="{{ __('home.Select country') }}"
-                                       name="countries-select-1">
-                            </div>
-                            <div class="form-group col-md-4 address-below">
-                                <input autocomplete="off" type="text" readonly class="form-control" id="cities-select-1"
-                                       placeholder="{{ __('home.Choose the city') }}"
-                                       name="cities-select-1">
-                            </div>
-                            <div class="form-group col-md-4 address-below">
-                                <input autocomplete="off" type="text" readonly class="form-control"
-                                       id="provinces-select-1"
-                                       placeholder="{{ __('home.Select district/district') }}"
-                                       name="provinces-select-1">
+{{--                            <div class="form-group col-md-4 address-below">--}}
+{{--                                <input autocomplete="off" type="text" readonly class="form-control"--}}
+{{--                                       id="countries-select-1"--}}
+{{--                                       placeholder="{{ __('home.Select country') }}"--}}
+{{--                                       name="countries-select-1">--}}
+{{--                            </div>--}}
+{{--                            <div class="form-group col-md-4 address-below">--}}
+{{--                                <input autocomplete="off" type="text" readonly class="form-control" id="cities-select-1"--}}
+{{--                                       placeholder="{{ __('home.Choose the city') }}"--}}
+{{--                                       name="cities-select-1">--}}
+{{--                            </div>--}}
+{{--                            <div class="form-group col-md-4 address-below">--}}
+{{--                                <input autocomplete="off" type="text" readonly class="form-control"--}}
+{{--                                       id="provinces-select-1"--}}
+{{--                                       placeholder="{{ __('home.Select district/district') }}"--}}
+{{--                                       name="provinces-select-1">--}}
+{{--                            </div>--}}
+                            <div class="form-group col-md-12">
+                                <input autocomplete="off" type="text" readonly name="select_address_kr" id="select_address_kr"
+                                       class="form-control" placeholder="{{ __('home.Select country') }}">
                             </div>
                             <div class="form-group col-md-12">
                                 <div class="input-group mb-2">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text"
-                                             id="detail_address_en">{{ __('home.Address detail') }}</div>
+                                             id="detail_address_kr">{{ __('home.Address detail') }}</div>
                                     </div>
                                     <input autocomplete="off" type="text" name="detail-address-1" id="detail-address-1"
                                            class="form-control" placeholder="{{ __('home.Address detail') }}"
