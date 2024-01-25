@@ -1068,7 +1068,7 @@ return [
     'manager_products' => '계정 관리',
 
     'Address management' => '주소관리 ',
-    'Add continent' => '상위 지역명',
+    'Add continent' => '대륙 추가',
     'Use this or not?' => '사용여부',
     'yes' => '사용',
     'no' => '미사용',

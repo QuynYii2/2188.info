@@ -324,7 +324,7 @@
                                     <div class="mt5 text-center"><span class="minBtn ml20"> <span class="cursor-pointer button-create-region"
                                                                                                             data-id="'${item.id}'"
                                                                                                              onclick="createOrEditRegion('${item.code}','${item.name_en ?? item.name}', '${MODE_CREATE}', '${elementTd}', '${i}' , '${item.id}')"
-                                                                                                             data-toggle="modal" data-target="#createRegion">{{ __('home.Add nation') }}</span></span>
+                                                                                                             data-toggle="modal" data-target="#createRegion">{{ __('home.thêm tỉnh thành') }}</span></span>
                                     </div>
                                 </th>`
                 if (item.total_child) {
