@@ -381,6 +381,16 @@ Route::middleware(['auth'])->group(function () {
     // Member
     Route::get('/member-view-carts', [ProductController::class, 'cartMemberProduct'])->name('member.view.carts');
     Route::get('/member-get-product-sales', [ProductController::class, 'getPriceSale'])->name('member.product.sales');
+
+    Route::prefix('address')->group(function () {
+        Route::get('index', [\App\Http\Controllers\Seller\AddressController::class, 'index'])->name('address.manage.index');
+        Route::get('index_v2', [\App\Http\Controllers\Seller\AddressController::class, 'indexV2'])->name('address.manage.index_v2');
+        Route::get('detail/{id}', [\App\Http\Controllers\Seller\AddressController::class, 'detail'])->name('address.manage.detail');
+        Route::get('add', [\App\Http\Controllers\Seller\AddressController::class, 'create'])->name('address.manage.add');
+        Route::post('update-star-nation/{id}', [\App\Http\Controllers\Seller\AddressController::class, 'updateStarNation'])->name('address.manage.update.star.nation');
+        Route::post('update-star-state/{id}', [\App\Http\Controllers\Seller\AddressController::class, 'updateStarState'])->name('address.manage.update.star.state');
+        Route::post('update-star-city/{id}', [\App\Http\Controllers\Seller\AddressController::class, 'updateStarCity'])->name('address.manage.update.star.city');
+    });
 });
 
 /* Api for category */
@@ -399,16 +409,6 @@ Route::group(['prefix' => 'seller', 'middleware' => 'role.seller-or-admin'], fun
 // Admin
 Route::group(['prefix' => 'admin', 'middleware' => 'role.admin'], function () {
     require_once __DIR__ . '/admin.php';
-});
-
-Route::prefix('address')->group(function () {
-    Route::get('index', [\App\Http\Controllers\Seller\AddressController::class, 'index'])->name('address.manage.index');
-    Route::get('index_v2', [\App\Http\Controllers\Seller\AddressController::class, 'indexV2'])->name('address.manage.index_v2');
-    Route::get('detail/{id}', [\App\Http\Controllers\Seller\AddressController::class, 'detail'])->name('address.manage.detail');
-    Route::get('add', [\App\Http\Controllers\Seller\AddressController::class, 'create'])->name('address.manage.add');
-    Route::post('update-star-nation/{id}', [\App\Http\Controllers\Seller\AddressController::class, 'updateStarNation'])->name('address.manage.update.star.nation');
-    Route::post('update-star-state/{id}', [\App\Http\Controllers\Seller\AddressController::class, 'updateStarState'])->name('address.manage.update.star.state');
-    Route::post('update-star-city/{id}', [\App\Http\Controllers\Seller\AddressController::class, 'updateStarCity'])->name('address.manage.update.star.city');
 });
 
 // Seller
