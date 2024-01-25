@@ -75,7 +75,7 @@
                             </div>
                         </div>
                         <div class="form-group col-md-6">
-                            <button type="button" id="btnChecking" class="btn btn-outline-warning">Check email</button>
+                            <button type="button" id="btnChecking" class="btn btn-outline-warning">{{ __('auth.Check email') }}</button>
                         </div>
                     </div>
                     <div class="form-group">
@@ -202,7 +202,7 @@
                     @endif
                     <button class="d-none" id="btnSubmitFormRegister" type="submit">Done</button>
                     <div class="text-center">
-                        <p class="text-center text-danger" id="messageValid">Please check email to continue...</p>
+                        <p class="text-center text-danger" id="messageValid">{{ __('auth.Please check email to continue...') }}</p>
                         <button type="button" id="buttonRegister"
                                 class="w-50 btn bg-member-primary solid mr-3 btn-register">{{ __('home.next') }}</button>
                     </div>

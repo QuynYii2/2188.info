@@ -24,4 +24,7 @@ return [
     'Error, Create error!' => 'エラー、作成エラー!',
     'Error, Please try again!' => 'エラー。もう一度お試しください。',
     'Email is available!' => '電子メールが利用可能です',
+    'Please check email to continue...' => '続行するにはメールを確認してください...',
+    'Check email' => 'メールアドレスの重複確認',
+
 ];

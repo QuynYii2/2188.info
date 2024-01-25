@@ -24,4 +24,6 @@ return [
     'Error, Create error!' => '오류, 생성 오류입니다!',
     'Error, Please try again!' => '오류, 다시 시도하십시오!',
     'Email is available!' => '이메일을 사용할 수 있습니다',
+    'Please check email to continue...' => '이메일 주소가 중복하는지 확인하십시오...',
+    'Check email' => '이메일주소 중복확인',
 ];

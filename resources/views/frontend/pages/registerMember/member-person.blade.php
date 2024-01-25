@@ -125,7 +125,7 @@
                 </div>
             </div>
             <div class="form-group col-md-6">
-                <button type="button" id="btnChecking" class="btn btn-outline-warning">Check email</button>
+                <button type="button" id="btnChecking" class="btn btn-outline-warning">{{ __('auth.Check email') }}</button>
             </div>
         </div>
         <label for="sns_account" class="label_form">{{ __('home.SNS Account') }} <span
@@ -137,7 +137,7 @@
                    required>
         </div>
         <div class="text-center">
-            <p class="text-center text-danger" id="messageValid">Please check email to continue...</p>
+            <p class="text-center text-danger" id="messageValid">{{ __('auth.Please check email to continue...') }}</p>
             <button type="button" id="buttonRegisterPerson"
                     class="w-50 btn bg-member-primary mr-3 btn-register">{{ __('home.sign up') }}</button>
         </div>

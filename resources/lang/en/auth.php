@@ -27,5 +27,7 @@ return [
     'Address Business' => 'Address Business',
     'Address English' => 'Address Business(English)',
     'Address Korea' => 'Address Business(Korea)',
+    'Please check email to continue...' => 'Please check email to continue...',
+    'Check email' => 'Check email',
 
 ];
