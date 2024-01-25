@@ -57,6 +57,52 @@ class AddressController extends Controller
         return view('backend.address.index', compact('listNation', 'paginationInfo'));
     }
 
+
+    public function indexV2(Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        $perPage = $request->query('perPage', 5);
+        $countries = Country::orderBy('isShow', 'desc')->orderBy('name')
+            ->paginate($perPage);
+        $listNation = [];
+
+        foreach ($countries as $country) {
+            $states = State::where('country_code', $country->iso2)
+                ->where('country_name', $country->name)
+                ->orderBy('isShow', 'desc')
+                ->get();
+
+            $stateData = $states->map(function ($state) {
+                $cities = City::where('state_code', $state->state_code)
+                    ->where('country_code', $state->country_code)
+                    ->orderBy('isShow', 'desc')
+                    ->get(['id', 'name', 'city_code', 'state_code', 'isShow']);
+
+                return [
+                    'id' => $state->id,
+                    'name' => $state->name,
+                    'state_code' => $state->state_code,
+                    'country_code' => $state->country_code,
+                    'isShow' => $state->isShow,
+                    'total_child' => $cities->count(),
+                    'child' => $cities->toArray(),
+                ];
+            });
+
+            $listNation[] = [
+                'id' => $country->id,
+                'name' => $country->name,
+                'country_code' => $country->iso2,
+                'isShow' => $country->isShow,
+                'total_child' => $states->count(),
+                'child' => $stateData,
+            ];
+        }
+
+        $paginationInfo = $countries;
+        return view('backend.address.index_v2', compact('listNation', 'paginationInfo'));
+    }
+
     public function detail(Request $request, $id)
     {
         (new HomeController())->getLocale($request);
