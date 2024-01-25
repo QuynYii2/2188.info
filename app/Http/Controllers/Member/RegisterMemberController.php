@@ -1040,7 +1040,7 @@ class RegisterMemberController extends Controller
                     return back()->with('create', $create);
                 }
                 $this->createUser($fullName, $email, $phoneNumber, $password, $memberAccount->member, $request);
-                $success = MemberRegisterPersonSource::create($create);
+                $save = MemberRegisterPersonSource::create($create);
             }
 
             $member = MemberRegisterPersonSource::where([
@@ -1048,7 +1048,7 @@ class RegisterMemberController extends Controller
                 ['isVerify', 0]
             ])->first();
             $register = MemberRegisterInfo::find($member->member_id);
-            if ($success) {
+            if ($save) {
                 $success_create = __('message-alert.Success, Create success! Please continue next steps');
                 alert()->success($success, $success_create);
                 if ($register->member == RegisterMember::TRUST) {

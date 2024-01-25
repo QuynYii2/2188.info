@@ -112,7 +112,7 @@
     <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('js/vendor/jquery-3.3.1.min.js') }}"></script>
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <script>
         $(document).ready(function () {

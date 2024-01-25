@@ -23,4 +23,5 @@ return [
     'Success, Create success! Please continue next steps' => 'Success, Create success! Please continue next steps',
     'Error, Create error!' => 'Error, Create error!',
     'Error, Please try again!' => 'Error, Please try again!',
+    'Email is available!' => 'Email is available!',
 ];

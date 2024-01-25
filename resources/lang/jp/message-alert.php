@@ -23,4 +23,5 @@ return [
     'Success, Create success! Please continue next steps' => '成功、成功を生み出す！ 次のステップに進んでください',
     'Error, Create error!' => 'エラー、作成エラー!',
     'Error, Please try again!' => 'エラー。もう一度お試しください。',
+    'Email is available!' => '電子メールが利用可能です',
 ];

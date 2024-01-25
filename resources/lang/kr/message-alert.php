@@ -23,4 +23,5 @@ return [
     'Success, Create success! Please continue next steps' => '성공, 생성이 성공했습니다! 다음 단계를 계속 진행십시오',
     'Error, Create error!' => '오류, 생성 오류입니다!',
     'Error, Please try again!' => '오류, 다시 시도하십시오!',
+    'Email is available!' => '이메일을 사용할 수 있습니다',
 ];

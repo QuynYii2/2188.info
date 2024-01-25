@@ -116,6 +116,9 @@
                                 </label>
                             </div>
                         </div>
+                        <div class="form-group col-md-6">
+                            <button type="button" id="btnChecking" class="btn btn-outline-warning">Check email</button>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="sns_account" class="label_item-member">{{ __('home.SNS Account') }}
@@ -127,21 +130,21 @@
                     <div class="label_form">{{ __('auth.Address Business') }} <span class="text-danger">*</span></div>
                     <label for="select_address" class="label_item-member">{{ __('auth.Address English') }}</label>
                     <div class="form-row">
-{{--                        <div class="form-group col-md-4 address-above" data-toggle="modal" data-target="#modal-address">--}}
-{{--                            <input autocomplete="off" type="text" class="form-control" id="countries-select"--}}
-{{--                                   placeholder="{{ __('home.Select country') }}"--}}
-{{--                                   name="countries-select">--}}
-{{--                        </div>--}}
-{{--                        <div class="form-group col-md-4 address-above" data-toggle="modal" data-target="#modal-address">--}}
-{{--                            <input autocomplete="off" type="text" class="form-control" id="cities-select"--}}
-{{--                                   placeholder="{{ __('home.Choose the city') }}"--}}
-{{--                                   name="cities-select">--}}
-{{--                        </div>--}}
-{{--                        <div class="form-group col-md-4 address-above" data-toggle="modal" data-target="#modal-address">--}}
-{{--                            <input autocomplete="off" type="text" class="form-control" id="provinces-select"--}}
-{{--                                   placeholder="{{ __('home.Select district/district') }}"--}}
-{{--                                   name="provinces-select">--}}
-{{--                        </div>--}}
+                        {{--                        <div class="form-group col-md-4 address-above" data-toggle="modal" data-target="#modal-address">--}}
+                        {{--                            <input autocomplete="off" type="text" class="form-control" id="countries-select"--}}
+                        {{--                                   placeholder="{{ __('home.Select country') }}"--}}
+                        {{--                                   name="countries-select">--}}
+                        {{--                        </div>--}}
+                        {{--                        <div class="form-group col-md-4 address-above" data-toggle="modal" data-target="#modal-address">--}}
+                        {{--                            <input autocomplete="off" type="text" class="form-control" id="cities-select"--}}
+                        {{--                                   placeholder="{{ __('home.Choose the city') }}"--}}
+                        {{--                                   name="cities-select">--}}
+                        {{--                        </div>--}}
+                        {{--                        <div class="form-group col-md-4 address-above" data-toggle="modal" data-target="#modal-address">--}}
+                        {{--                            <input autocomplete="off" type="text" class="form-control" id="provinces-select"--}}
+                        {{--                                   placeholder="{{ __('home.Select district/district') }}"--}}
+                        {{--                                   name="provinces-select">--}}
+                        {{--                        </div>--}}
                         <div class="form-group col-md-12" data-toggle="modal" data-target="#modal-address">
                             <input autocomplete="off" type="text" readonly name="select_address" id="select_address"
                                    class="form-control" placeholder="{{ __('home.Select country') }}">
@@ -162,25 +165,26 @@
                     <label for="detail-address-1" class="label_item-member">{{ __('auth.Address Korea') }}</label>
                     <div class="form-group">
                         <div class="form-row">
-{{--                            <div class="form-group col-md-4 address-below">--}}
-{{--                                <input autocomplete="off" type="text" readonly class="form-control"--}}
-{{--                                       id="countries-select-1"--}}
-{{--                                       placeholder="{{ __('home.Select country') }}"--}}
-{{--                                       name="countries-select-1">--}}
-{{--                            </div>--}}
-{{--                            <div class="form-group col-md-4 address-below">--}}
-{{--                                <input autocomplete="off" type="text" readonly class="form-control" id="cities-select-1"--}}
-{{--                                       placeholder="{{ __('home.Choose the city') }}"--}}
-{{--                                       name="cities-select-1">--}}
-{{--                            </div>--}}
-{{--                            <div class="form-group col-md-4 address-below">--}}
-{{--                                <input autocomplete="off" type="text" readonly class="form-control"--}}
-{{--                                       id="provinces-select-1"--}}
-{{--                                       placeholder="{{ __('home.Select district/district') }}"--}}
-{{--                                       name="provinces-select-1">--}}
-{{--                            </div>--}}
+                            {{--                            <div class="form-group col-md-4 address-below">--}}
+                            {{--                                <input autocomplete="off" type="text" readonly class="form-control"--}}
+                            {{--                                       id="countries-select-1"--}}
+                            {{--                                       placeholder="{{ __('home.Select country') }}"--}}
+                            {{--                                       name="countries-select-1">--}}
+                            {{--                            </div>--}}
+                            {{--                            <div class="form-group col-md-4 address-below">--}}
+                            {{--                                <input autocomplete="off" type="text" readonly class="form-control" id="cities-select-1"--}}
+                            {{--                                       placeholder="{{ __('home.Choose the city') }}"--}}
+                            {{--                                       name="cities-select-1">--}}
+                            {{--                            </div>--}}
+                            {{--                            <div class="form-group col-md-4 address-below">--}}
+                            {{--                                <input autocomplete="off" type="text" readonly class="form-control"--}}
+                            {{--                                       id="provinces-select-1"--}}
+                            {{--                                       placeholder="{{ __('home.Select district/district') }}"--}}
+                            {{--                                       name="provinces-select-1">--}}
+                            {{--                            </div>--}}
                             <div class="form-group col-md-12">
-                                <input autocomplete="off" type="text" readonly name="select_address_kr" id="select_address_kr"
+                                <input autocomplete="off" type="text" readonly name="select_address_kr"
+                                       id="select_address_kr"
                                        class="form-control" placeholder="{{ __('home.Select country') }}">
                             </div>
                             <div class="form-group col-md-12">
@@ -211,6 +215,7 @@
                     <button type="submit" id="btnSubmitFormRegister"
                             class="d-none btn btn-primary">{{ __('home.sign up') }}</button>
                     <div class="text-center">
+                        <p class="text-center text-danger" id="messageValid">Please check email to continue...</p>
                         <button type="button" id="buttonRegister"
                                 class="w-50 btn bg-member-primary solid mr-3 btn-register">{{ __('home.next') }}</button>
                     </div>
@@ -241,4 +246,63 @@
         var passwordInput = document.getElementById('password');
         passwordInput.setAttribute('autocomplete', 'new-password');
     });
+</script>
+<script>
+    let index = 0;
+    let buttonRegister = $('#buttonRegister');
+    let messageValid = $('#messageValid');
+
+    $(document).ready(function () {
+        handleClickBtnAndShowValid(index);
+
+        $('#btnChecking').click(function () {
+            handleCheckEmail();
+        })
+    })
+
+    async function handleCheckEmail() {
+        let checkUrl = `{{ route('api.checking.email.all') }}`;
+        let email = $('#email').val();
+        if (!email) {
+            alert('Please enter your email!');
+            return;
+        }
+        await $.ajax({
+            url: checkUrl,
+            method: 'POST',
+            data: {
+                email: email
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response, textStatus, jqXHR) {
+                if (jqXHR.status === 200) {
+                    index = 1;
+                    alert(response.message);
+                    handleClickBtnAndShowValid(index);
+                } else {
+                    index = 0;
+                    alert(response.message);
+                    handleClickBtnAndShowValid(index);
+                }
+            },
+            error: function (error) {
+                console.log(error);
+                index = 0;
+                alert(error.responseJSON.message);
+                handleClickBtnAndShowValid(index);
+            }
+        });
+    }
+
+    function handleClickBtnAndShowValid(index) {
+        if (index === 0) {
+            messageValid.removeClass('d-none');
+            buttonRegister.prop('disabled', true);
+        } else {
+            messageValid.addClass('d-none');
+            buttonRegister.prop('disabled', false);
+        }
+    }
 </script>

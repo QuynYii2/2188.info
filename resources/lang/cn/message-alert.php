@@ -23,4 +23,5 @@ return [
     'Success, Create success! Please continue next steps' => '成功，创造新的成功！ 请继续下一步',
     'Error, Create error!' => '错误，创建一个新错误',
     'Error, Please try again!' => '错误，请稍后重试',
+    'Email is available!' => '电子邮件可用',
 ];

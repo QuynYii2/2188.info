@@ -23,4 +23,5 @@ return [
     'Success, Create success! Please continue next steps' => 'Thành công, tạo mới thành công! Vui lòng tiếp tục thực hiện bước tiếp theo',
     'Error, Create error!' => 'Lỗi, Tạo mới lỗi',
     'Error, Please try again!' => 'Lỗi, Vui lòng thử lại sau',
+    'Email is available!' => 'Email đang sẵn có',
 ];

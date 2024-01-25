@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\CategoryApi;
+use App\Http\Controllers\Api\MainApiController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CoinController;
@@ -399,6 +400,12 @@ Route::group(['prefix' => 'categories'], function () {
     Route::get('/list-no-parent', [CategoryApi::class, 'getAllCategoriesNoParent'])->name('categories.show.all.no.category');
     Route::get('/list-by-parent/{id}', [CategoryApi::class, 'getAllCategoriesByParent'])->name('categories.show.all.by.category');
     Route::get('/list-same-parent/{id}', [CategoryApi::class, 'getListCategoriesSameParent'])->name('categories.show.all.same.category');
+});
+/*Api for check email*/
+Route::group(['prefix' => 'api/checking/email'], function () {
+    Route::post('/all', [MainApiController::class, 'checkEmail'])->name('api.checking.email.all');
+    Route::post('/user', [MainApiController::class, 'checkEmailUser'])->name('api.checking.email.user');
+    Route::post('/company', [MainApiController::class, 'checkEmailCompany'])->name('api.checking.email.company');
 });
 
 // Backend v2
