@@ -403,6 +403,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'role.admin'], function () {
 
 Route::prefix('address')->group(function () {
     Route::get('index', [\App\Http\Controllers\Seller\AddressController::class, 'index'])->name('address.manage.index');
+    Route::get('index_v2', [\App\Http\Controllers\Seller\AddressController::class, 'indexV2'])->name('address.manage.index_v2');
     Route::get('detail/{id}', [\App\Http\Controllers\Seller\AddressController::class, 'detail'])->name('address.manage.detail');
     Route::get('add', [\App\Http\Controllers\Seller\AddressController::class, 'create'])->name('address.manage.add');
     Route::post('update-star-nation/{id}', [\App\Http\Controllers\Seller\AddressController::class, 'updateStarNation'])->name('address.manage.update.star.nation');
