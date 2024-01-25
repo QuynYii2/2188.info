@@ -124,6 +124,9 @@
                     </label>
                 </div>
             </div>
+            <div class="form-group col-md-6">
+                <button type="button" id="btnChecking" class="btn btn-outline-warning">{{ __('auth.Check email') }}</button>
+            </div>
         </div>
         <label for="sns_account" class="label_form">{{ __('home.SNS Account') }} <span
                     class="text-danger">*</span></label>
@@ -134,6 +137,7 @@
                    required>
         </div>
         <div class="text-center">
+            <p class="text-center text-danger" id="messageValid">{{ __('auth.Please check email to continue...') }}</p>
             <button type="button" id="buttonRegisterPerson"
                     class="w-50 btn bg-member-primary mr-3 btn-register">{{ __('home.sign up') }}</button>
         </div>
@@ -269,4 +273,63 @@
             }
         }
     })
+</script>
+<script>
+    let index = 0;
+    let buttonRegister = $('#buttonRegisterPerson');
+    let messageValid = $('#messageValid');
+
+    $(document).ready(function () {
+        handleClickBtnAndShowValid(index);
+
+        $('#btnChecking').click(function () {
+            handleCheckEmail();
+        })
+    })
+
+    async function handleCheckEmail() {
+        let checkUrl = `{{ route('api.checking.email.all') }}`;
+        let email = $('#email').val();
+        if (!email) {
+            alert('Please enter your email!');
+            return;
+        }
+        await $.ajax({
+            url: checkUrl,
+            method: 'POST',
+            data: {
+                email: email
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response, textStatus, jqXHR) {
+                if (jqXHR.status === 200) {
+                    index = 1;
+                    alert(response.message);
+                    handleClickBtnAndShowValid(index);
+                } else {
+                    index = 0;
+                    alert(response.message);
+                    handleClickBtnAndShowValid(index);
+                }
+            },
+            error: function (error) {
+                console.log(error);
+                index = 0;
+                alert(error.responseJSON.message);
+                handleClickBtnAndShowValid(index);
+            }
+        });
+    }
+
+    function handleClickBtnAndShowValid(index) {
+        if (index === 0) {
+            messageValid.removeClass('d-none');
+            buttonRegister.prop('disabled', true);
+        } else {
+            messageValid.addClass('d-none');
+            buttonRegister.prop('disabled', false);
+        }
+    }
 </script>

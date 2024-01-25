@@ -27,5 +27,7 @@ return [
     'Address Business' => '사업장 주소',
     'Address English' => '사업장 주소(영문)',
     'Address Korea' => '사업장 주소(한글)',
+    'Please check email to continue...' => '请检查您的电子邮件以继续...',
+    'Check email' => '查看电子邮件',
 
 ];

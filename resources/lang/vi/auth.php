@@ -27,5 +27,6 @@ return [
     'Address Business' => 'Địa chỉ công ty',
     'Address English' => 'Địa chỉ công ty(tiếng Anh)',
     'Address Korea' => 'Địa chỉ công ty(tiếng Hàn)',
-
+    'Please check email to continue...' => 'Vui lòng kiểm tra email để tiếp tục...',
+    'Check email' => 'Kiểm tra email',
 ];
