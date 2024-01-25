@@ -134,13 +134,14 @@
 
                                 <input type="text" class="d-none" id="up_code" name="up_code" value="">
                                 <input type="text" class="d-none" id="mode" name="mode" value="">
+                                <input type="text" class="d-none" id="private_editor" name="private_editor" value="">
                                 </tbody>
                             </table>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary"
-                                data-dismiss="modal">{{ __('home.Close') }}</button>
+                                data-dismiss="modal" id="btnCloseModal">{{ __('home.Close') }}</button>
                         <button type="button" class="btn btn-primary" data-dismiss="modal"
                                 onclick="handleSubmitFormAddress()">{{ __('home.Lưu') }}</button>
                     </div>
@@ -302,7 +303,7 @@
             let result = await fetch(url);
 
 
-            if (result.ok){
+            if (result.ok) {
                 let data = await result.json();
 
                 supRenderAddressChild(data, code);
@@ -332,8 +333,8 @@
                     let listChild = item.child;
                     for (let j = 0; j < listChild.length; j++) {
                         let child = listChild[j];
-                        str += ` <span class="nation" id="span-id-${child.code}">`;
-                        str += `<span
+                        str += ` <span class="nation" id="span_id_${child.id}">`;
+                        str += `<span id="span_text_${cItem.id}"
                             class="tit cursor-pointer" data-num="${index_main}"
                             onclick="getListAddressChild('${child.code}', '${child.name_en ?? child.name ?? ''}', ${index_main})">${child.name_en ?? ''} ${child.name ?? ''}</span>
                      <span class="cursor-pointer" data-toggle="modal" data-target="#createRegion"
@@ -346,8 +347,8 @@
                 str += `</tr>`
             }
             const t_p_Body = document.getElementById('c-table');
-            t_p_Body.querySelectorAll('tr').forEach(e=>{
-                if (Number(e.getAttribute('id').replace("data-num-", "")) >= index_main - 1){
+            t_p_Body.querySelectorAll('tr').forEach(e => {
+                if (Number(e.getAttribute('id').replace("data-num-", "")) >= index_main - 1) {
                     t_p_Body.removeChild(e)
                 }
             })
@@ -386,6 +387,8 @@
         }
 
         function loadDataToModal(data) {
+            document.getElementById('private_editor').value = data.id;
+            document.getElementById('up_name').value = data.parent ?? data.name_en;
             document.getElementById('up_name').value = data.parent ?? data.name_en;
             document.getElementById('name_en').value = data.name_en;
             document.getElementById('name').value = data.name;
@@ -401,88 +404,88 @@
             const isTable = checkLevel == 1;
             let str = '';
 
-           if (data_num){
-               data.forEach((pItem, index) => {
-                   let classTd, classTh;
-                   let code = pItem.code;
-                   let arrayCode = code.split('!');
-                   if(index == 0){
-                       if (arrayCode.length > 3){
-                           classTh = data_num % 2 == 0 ? 'bg-color-th2' : 'bg-color-th1';
-                           classTd = data_num % 2 == 0 ? 'bg-color-td2' : 'bg-color-td1';
-                       } else {
-                           classTh = index % 2 == 0 ? 'bg-color-th2' : 'bg-color-th1';
-                           classTd = index % 2 == 0 ? 'bg-color-td2' : 'bg-color-td1';
-                       }
-                   } else {
-                       classTh = index % 2 == 0 ? 'bg-color-th2' : 'bg-color-th1';
-                       classTd = index % 2 == 0 ? 'bg-color-td2' : 'bg-color-td1';
-                   }
+            if (data_num) {
+                data.forEach((pItem, index) => {
+                    let classTd, classTh;
+                    let code = pItem.code;
+                    let arrayCode = code.split('!');
+                    if (index == 0) {
+                        if (arrayCode.length > 3) {
+                            classTh = data_num % 2 == 0 ? 'bg-color-th2' : 'bg-color-th1';
+                            classTd = data_num % 2 == 0 ? 'bg-color-td2' : 'bg-color-td1';
+                        } else {
+                            classTh = index % 2 == 0 ? 'bg-color-th2' : 'bg-color-th1';
+                            classTd = index % 2 == 0 ? 'bg-color-td2' : 'bg-color-td1';
+                        }
+                    } else {
+                        classTh = index % 2 == 0 ? 'bg-color-th2' : 'bg-color-th1';
+                        classTd = index % 2 == 0 ? 'bg-color-td2' : 'bg-color-td1';
+                    }
 
-                   str += `<tr id="data-num-${index_main}" data-num="${index_main}"><th class="cont ${classTh} "><div class="text-center"><span class="cursor-pointer">${pItem.name_en ?? pItem.name ?? ''}</span></div>
+                    str += `<tr id="data-num-${index_main}" data-num="${index_main}"><th class="cont ${classTh} "><div class="text-center"><span class="cursor-pointer">${pItem.name_en ?? pItem.name ?? ''}</span></div>
                                     <div class="mt5 text-center"><span class="minBtn ml20"> <span class="cursor-pointer button-create-region"
                                                                                                             data-id="'${pItem.id}'"
                                                                                                              onclick="createOrEditRegion('${pItem.code}','${pItem.name_en ?? pItem.name}', '${MODE_CREATE}', '${elementTd}', '${index}' , '${pItem.id}', this)"
                                                                                                              data-toggle="modal" data-target="#createRegion">{{ __('home.Add nation') }}</span></span>
                                     </div>
                                 </th>`
-                   if (pItem.total_child) {
-                       str += `<td class="${classTd} w-100" id="td-region-${index}">`;
-                       pItem.child.forEach((cItem) => {
-                           str += ` <span class="nation" id="span-id-${cItem.code}">`;
-                           if (isTable) {
-                               str += ``;
-                           }
-                           str += `<span
+                    if (pItem.total_child) {
+                        str += `<td class="${classTd} w-100" id="td-region-${index}">`;
+                        pItem.child.forEach((cItem) => {
+                            str += ` <span class="nation" id="span_id_${cItem.id}">`;
+                            if (isTable) {
+                                str += ``;
+                            }
+                            str += `<span id="span_text_${cItem.id}"
                             class="tit cursor-pointer" data-num="${index_main}"
                             onclick="getListAddressChild('${cItem.code}', '${cItem.name_en ?? cItem.name ?? ''}', ${index_main})">${cItem.name_en ?? ''} ${cItem.name ?? ''}</span>
                      <span class="cursor-pointer" data-toggle="modal" data-target="#createRegion"
                     onclick="createOrEditRegion('${cItem.id}','${cItem.name_en ?? cItem.name}', '${MODE_EDIT}', '${elementTd}', '${index}', '${cItem.id}')">▤</span>
                     </span>`
-                       })
-                       str += `</td>`;
-                   }
-                   str += `</tr>`
-               })
-           } else {
-               data.forEach((pItem, index) => {
-                   const classTh = index % 2 == 0 ? 'bg-color-th2' : 'bg-color-th1';
-                   const classTd = index % 2 == 0 ? 'bg-color-td2' : 'bg-color-td1';
+                        })
+                        str += `</td>`;
+                    }
+                    str += `</tr>`
+                })
+            } else {
+                data.forEach((pItem, index) => {
+                    const classTh = index % 2 == 0 ? 'bg-color-th2' : 'bg-color-th1';
+                    const classTd = index % 2 == 0 ? 'bg-color-td2' : 'bg-color-td1';
 
-                   str += `<tr id="data-num-${index_main}" data-num="${index_main}"><th class="cont ${classTh} "><div class="text-center"><span class="tit cursor-pointer ${pItem.isShow} ${pItem.isShow == 1 ? 'orange' : 'grey'} " onclick="setIsShow('${pItem.id}')" id="myStar-${pItem.id}">★ </span><span class="cursor-pointer">${pItem.name_en ?? pItem.name ?? ''}</span></div>
+                    str += `<tr id="data-num-${index_main}" data-num="${index_main}"><th class="cont ${classTh} "><div class="text-center"><span class="tit cursor-pointer ${pItem.isShow} ${pItem.isShow == 1 ? 'orange' : 'grey'} " onclick="setIsShow('${pItem.id}')" id="myStar-${pItem.id}">★ </span><span class="cursor-pointer">${pItem.name_en ?? pItem.name ?? ''}</span></div>
                                     <div class="mt5 text-center"><span class="minBtn ml20"> <span class="cursor-pointer button-create-region"
                                                                                                             data-id="'${pItem.id}'"
                                                                                                              onclick="createOrEditRegion('${pItem.code}','${pItem.name_en ?? pItem.name}', '${MODE_CREATE}', '${elementTd}', '${index}' , '${pItem.id}', this)"
                                                                                                              data-toggle="modal" data-target="#createRegion">{{ __('home.Add nation') }}</span></span>
                                     </div>
                                 </th>`
-                   if (pItem.total_child) {
-                       str += `<td class="${classTd} w-100" id="td-region-${index}">`;
-                       pItem.child.forEach((cItem) => {
-                           str += ` <span class="nation" id="span-id-${cItem.code}">`;
-                           if (isTable) {
-                               str += `<span class="tit cursor-pointer ${cItem.isShow == 1 ? 'orange' : 'grey'} " onclick="setIsShow('${cItem.id}')" id="myStar-${cItem.id}">★ </span>`;
-                           }
-                           str += `<span
+                    if (pItem.total_child) {
+                        str += `<td class="${classTd} w-100" id="td-region-${index}">`;
+                        pItem.child.forEach((cItem) => {
+                            str += ` <span class="nation" id="span_id_${cItem.id}">`;
+                            if (isTable) {
+                                str += `<span class="tit cursor-pointer ${cItem.isShow == 1 ? 'orange' : 'grey'} " onclick="setIsShow('${cItem.id}')" id="myStar-${cItem.id}">★ </span>`;
+                            }
+                            str += `<span id="span_text_${cItem.id}"
                             class="tit cursor-pointer" data-num="${index_main}"
                             onclick="getListAddressChild('${cItem.code}', '${cItem.name_en ?? cItem.name ?? ''}', ${index_main})">${cItem.name_en ?? ''} ${cItem.name ?? ''}</span>
                      <span class="cursor-pointer" data-toggle="modal" data-target="#createRegion"
                     onclick="createOrEditRegion('${cItem.id}','${cItem.name_en ?? cItem.name}', '${MODE_EDIT}', '${elementTd}', '${index}', '${cItem.id}')">▤</span>
                     </span>`
-                       })
-                       str += `</td>`;
-                   }
-                   str += `</tr>`
-               })
-           }
+                        })
+                        str += `</td>`;
+                    }
+                    str += `</tr>`
+                })
+            }
 
             if (isTable) {
                 const t_p_Body = document.getElementById('p-table');
                 t_p_Body.innerHTML = str;
             } else {
                 const t_p_Body = document.getElementById('c-table');
-                t_p_Body.querySelectorAll('tr').forEach(e=>{
-                    if (Number(e.getAttribute('id').replace("data-num-", "")) > data_num){
+                t_p_Body.querySelectorAll('tr').forEach(e => {
+                    if (Number(e.getAttribute('id').replace("data-num-", "")) > data_num) {
                         t_p_Body.removeChild(e)
                     }
                 })
@@ -492,14 +495,18 @@
         }
 
         async function handleSubmitFormAddress() {
+            let mode = document.getElementById('mode').value;
+            let name_en = document.getElementById('name_en').value;
+            let name = document.getElementById('name').value;
+
             const formData = new FormData();
             formData.append('up_name', document.getElementById('up_name').value);
-            formData.append('name_en', document.getElementById('name_en').value);
-            formData.append('name', document.getElementById('name').value);
+            formData.append('name_en', name_en);
+            formData.append('name', name);
             formData.append('sort_index', document.getElementById('sort_index').value);
             formData.append('status', document.querySelector('input[name="status"]:checked').value);
             formData.append('up_code', document.getElementById('up_code').value);
-            formData.append('mode', document.getElementById('mode').value);
+            formData.append('mode', mode);
             formData.append('_token', document.querySelector('input[name="_token"]').value);
 
             const result = await fetch('{{ route("admin.address.modify") }}', {
@@ -508,7 +515,13 @@
             });
             if (result.ok) {
                 isCallback = false;
-                handleAfterCreateOrEdit(document.getElementById('up_code').value, document.getElementById('up_name').value, document.getElementById('data_num').value);
+                if (mode == MODE_CREATE) {
+                    handleAfterCreateOrEdit(document.getElementById('up_code').value, document.getElementById('up_name').value, document.getElementById('data_num').value);
+                } else {
+                    let id = $('#private_editor').val();
+                    $(`#span_text_${id}`).html(name_en + ' ' + name);
+                    $('#btnCloseModal').trigger('click');
+                }
                 isCallback = true;
             }
         }
@@ -617,7 +630,7 @@
                     var elementsArray = Array.from(elements);
 
                     // Lặp qua mảng và xóa từng phần tử
-                    elementsArray.forEach(function(element) {
+                    elementsArray.forEach(function (element) {
                         element.remove();
                     });
 

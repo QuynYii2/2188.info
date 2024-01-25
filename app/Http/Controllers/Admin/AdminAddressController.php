@@ -207,6 +207,7 @@ class AdminAddressController extends Controller
                 $parent = Address::where('code', $state->up_code)->first();
 
                 return [
+                    'id' => $state->id,
                     'parent' => $parent->name ?? $parent->name_en,
                     'name' => $state->name,
                     'sort_index' => $state->sort_index,
