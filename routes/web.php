@@ -438,3 +438,5 @@ Route::post('/checkID', [RegisterMemberController::class, 'checkID'])->name('mem
 Route::get('api/address/list', [\App\Http\Controllers\AddressController::class, 'index'])->name('address.index');
 Route::get('api/address/detail/{code}', [\App\Http\Controllers\AddressController::class, 'show'])->name('api.address.detail');
 Route::get('api/address/detail-region/{code}', [\App\Http\Controllers\AddressController::class, 'showRegion'])->name('address.show.region');
+Route::get('api/address/get-address-nn21-kr', [\App\Http\Controllers\AddressController::class, 'getDataAddressFromNn21Kr']);
+Route::get('api/address/remove-data', [\App\Http\Controllers\AddressController::class, 'removeData']);
