@@ -123,14 +123,14 @@ class AddressController extends Controller
             }
         }
 
-        $startIndex = 7000;
-        $endIndex = 7010;
-
-        for ($i = $startIndex; $i <= $endIndex; $i++) {
-            if (array_key_exists($i, $listDataFromNn21Kr)) {
-                $listDataFromNn21Kr[$i]->parent_id = null;
-            }
-        }
+//        $startIndex = 7000;
+//        $endIndex = 7010;
+//
+//        for ($i = $startIndex; $i <= $endIndex; $i++) {
+//            if (array_key_exists($i, $listDataFromNn21Kr)) {
+                $listDataFromNn21Kr[7009]->parent_id = null;
+//            }
+//        }
         $timeEnd = 60 * 60 * 24 * 30;
         Cache::put('listDataFromNn21Kr', $listDataFromNn21Kr, $timeEnd);
         return response()->json(['message' => 'success']);
