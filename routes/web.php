@@ -441,3 +441,4 @@ Route::get('api/address/detail-region/{code}', [\App\Http\Controllers\AddressCon
 Route::get('api/address/get-address-nn21-kr', [\App\Http\Controllers\AddressController::class, 'getDataAddressFromNn21Kr']);
 Route::get('api/address/get-continent-nn21-kr', [\App\Http\Controllers\AddressController::class, 'getListContinents']);
 Route::get('api/address/remove-data', [\App\Http\Controllers\AddressController::class, 'removeData']);
+Route::get('api/address/update-name-en', [\App\Http\Controllers\AddressController::class, 'updateNameEnAddress']);

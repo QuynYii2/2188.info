@@ -123,14 +123,6 @@ class AddressController extends Controller
             }
         }
 
-//        $startIndex = 7000;
-//        $endIndex = 7010;
-//
-//        for ($i = $startIndex; $i <= $endIndex; $i++) {
-//            if (array_key_exists($i, $listDataFromNn21Kr)) {
-                $listDataFromNn21Kr[7009]->parent_id = null;
-//            }
-//        }
         $timeEnd = 60 * 60 * 24 * 30;
         Cache::put('listDataFromNn21Kr', $listDataFromNn21Kr, $timeEnd);
         return response()->json(['message' => 'success']);
@@ -188,6 +180,18 @@ class AddressController extends Controller
         $address->save();
     }
 
+    public function updateNameEnAddress()
+    {
+        $listAddress = Address::all();
+
+        foreach ($listAddress as $key => $item) {
+            $item->name_en = $this->callApiReEngName($item->created_by);
+            error_log($key);
+            $item->save();
+        }
+
+    }
+
     private function callApiReEngName($code)
     {
         $url = 'http://118.27.193.239:8088/region/regionList2DepthJson';
@@ -237,7 +241,6 @@ class AddressController extends Controller
             return $this->callApi();
         });
 
-        $haftListDataFromNn21Kr = count($listDataFromNn21Kr) >> 1;
         while (true) {
 
             $check = false;
@@ -262,41 +265,19 @@ class AddressController extends Controller
                     $this->saveDataToDB($value, $item->code);
                     $value->parent_id = null;
                     Cache::put('listDataFromNn21Kr', $listDataFromNn21Kr, $timeEnd);
-                    error_log(Address::count() . ' - ' . count($listDataFromNn21Kr) . ' - ' . $haftListDataFromNn21Kr);
+                    error_log(Address::count() . ' - ' . count($listDataFromNn21Kr) . ' - ' );
 
-                    if (Address::count() >= count($listDataFromNn21Kr) || Address::count() == $haftListDataFromNn21Kr) {
+                    if (Address::count() >= count($listDataFromNn21Kr)) {
                         break;
                     }
                 }
-                if (Address::count() >= count($listDataFromNn21Kr) || Address::count() == $haftListDataFromNn21Kr) {
+                if (Address::count() >= count($listDataFromNn21Kr) ) {
                     break;
                 }
-//                $foundKeyIndex = array_search($item->created_by, array_column($listDataFromNn21Kr, 'parent_id'));
-//
-//                if (!$foundKeyIndex) {
-//                    continue;
-//                }
-//
-//                if (!array_key_exists($foundKeyIndex, $listDataFromNn21Kr)) {
-//                    continue;
-//                }
-//
-//                $address = $listDataFromNn21Kr[$foundKeyIndex];
-//
-//                $listDataFromNn21Kr[$foundKeyIndex]->parent_id = null;
-//
-//                $this->saveDataToDB($address, $item->code);
-//
-//                error_log(Address::count() . ' - ' . count($listDataFromNn21Kr) . ' - ' . $haftListDataFromNn21Kr);
-//
-//                Cache::put('listDataFromNn21Kr', $listDataFromNn21Kr, $timeEnd);
-//                if (Address::count() >= count($listDataFromNn21Kr) || Address::count() == $haftListDataFromNn21Kr) {
-//                    break;
-//                }
             }
 
             Cache::put('listDataFromNn21Kr', $listDataFromNn21Kr, $timeEnd);
-            if (Address::count() >= count($listDataFromNn21Kr) || Address::count() == $haftListDataFromNn21Kr || !$check) {
+            if (Address::count() >= count($listDataFromNn21Kr) || !$check) {
                 break;
             }
         }
