@@ -106,50 +106,26 @@ class AddressController extends Controller
         return response()->json($listAddress);
     }
 
-    public function getDataAddressFromNn21Kr()
+    public function getListContinents()
     {
-        $timeEnd = 60 * 60 * 24 * 30;
-
         $cacheKey = 'listDataFromNn21Kr';
         $listDataFromNn21Kr = Cache::get($cacheKey, function () {
             return $this->callApi();
         });
 
-
         foreach ($listDataFromNn21Kr as $key => $item) {
-            if ($item->id == 10000) {
-                unset($listDataFromNn21Kr[$key]);
-                continue;
+            if ($item->parent_id == 99999) {
+                $item->parent_id = null;
             }
             if ($item->parent_id == 10000) {
                 $this->saveDataToDB($item);
-                unset($listDataFromNn21Kr[$key]);
+                $item->parent_id = null;
             }
         }
+
+        $timeEnd = 60 * 60 * 24 * 30;
         Cache::put('listDataFromNn21Kr', $listDataFromNn21Kr, $timeEnd);
-
-        sort($listDataFromNn21Kr);
-
-        while (!empty($listDataFromNn21Kr)) {
-            $listAddress = Address::all();
-
-            foreach ($listAddress as $item) {
-                foreach ($listDataFromNn21Kr as $key => $address) {
-//chưa check lỗi 940
-                    if ($item->created_by != $address->parent_id ) {
-                        continue;
-                    }
-
-                    $this->saveDataToDB($address, $item->code);
-                    unset($listDataFromNn21Kr[$key]);
-                    error_log(count($listDataFromNn21Kr));
-                }
-                Cache::put('listDataFromNn21Kr', $listDataFromNn21Kr, $timeEnd);
-            }
-        }
-
         return response()->json(['message' => 'success']);
-
     }
 
     private function callApi()
@@ -193,12 +169,27 @@ class AddressController extends Controller
         }
         $address = new Address();
         $address->code = $code;
-        $address->name = $item->name;
-        $address->name_en = $this->callApiReEngName($item->id);
+        $address->name = $item->name ?? '';
+//        $address->name_en = $item->name ?? '';
+//        $address->name_en = $this->callApiReEngName($item->id);
         $address->sort_index = $item->sort_seq;
+
         $address->created_by = $item->id;
+        $address->updated_by = $item->parent_id;
 
         $address->save();
+    }
+
+    public function updateNameEnAddress()
+    {
+        $listAddress = Address::all();
+
+        foreach ($listAddress as $key => $item) {
+            $item->name_en = $this->callApiReEngName($item->created_by);
+            error_log($key);
+            $item->save();
+        }
+
     }
 
     private function callApiReEngName($code)
@@ -239,6 +230,60 @@ class AddressController extends Controller
             // Handle exceptions, if any
             return 'Error: ' . $e->getMessage();
         }
+    }
+
+    public function getDataAddressFromNn21Kr()
+    {
+        $timeEnd = 60 * 60 * 24 * 30;
+
+        $cacheKey = 'listDataFromNn21Kr';
+        $listDataFromNn21Kr = Cache::get($cacheKey, function () {
+            return $this->callApi();
+        });
+
+        while (true) {
+
+            $check = false;
+
+            $listAddress = Address::all();
+
+            foreach ($listAddress as $item) {
+
+                if (!in_array($item->created_by, array_column($listDataFromNn21Kr, 'parent_id')))
+                {
+                    continue;
+                }
+
+                $check = true;
+
+                foreach ($listDataFromNn21Kr as $key => $value) {
+
+                    if ($value->parent_id != $item->created_by || $value->upcode_nm != $item->name) {
+                        continue;
+                    }
+
+                    $this->saveDataToDB($value, $item->code);
+                    $value->parent_id = null;
+                    Cache::put('listDataFromNn21Kr', $listDataFromNn21Kr, $timeEnd);
+                    error_log(Address::count() . ' - ' . count($listDataFromNn21Kr) . ' - ' );
+
+                    if (Address::count() >= count($listDataFromNn21Kr)) {
+                        break;
+                    }
+                }
+                if (Address::count() >= count($listDataFromNn21Kr) ) {
+                    break;
+                }
+            }
+
+            Cache::put('listDataFromNn21Kr', $listDataFromNn21Kr, $timeEnd);
+            if (Address::count() >= count($listDataFromNn21Kr) || !$check) {
+                break;
+            }
+        }
+
+        return response()->json(['message' => 'success']);
+
     }
 
     public function removeData()
