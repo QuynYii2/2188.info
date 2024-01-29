@@ -117,7 +117,8 @@
                             </div>
                         </div>
                         <div class="form-group col-md-6">
-                            <button type="button" id="btnChecking" class="btn btn-outline-warning">{{ __('auth.Check email') }}</button>
+                            <button type="button" id="btnChecking"
+                                    class="btn btn-outline-warning">{{ __('auth.Check email') }}</button>
                         </div>
                     </div>
                     <div class="form-group">
@@ -150,15 +151,18 @@
                                    class="form-control" placeholder="{{ __('home.Select country') }}">
                         </div>
                         <div class="form-group col-md-12">
-                            <div class="input-group mb-2">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text"
-                                         id="detail_address_en">{{ __('home.Address detail') }}</div>
-                                </div>
-                                <input autocomplete="off" type="text" name="detail-address" id="detail-address"
-                                       class="form-control" placeholder="{{ __('home.Address detail') }}"
-                                       value="{{ $create ? $create['address_en'] : old('address_en', $exitsMember ? $exitsMember->address_en : '') }}">
-                            </div>
+                            {{--                            <div class="input-group mb-2">--}}
+                            {{--                                <div class="input-group-prepend">--}}
+                            {{--                                    <div class="input-group-text"--}}
+                            {{--                                         id="detail_address_en">{{ __('home.Address detail') }}</div>--}}
+                            {{--                                </div>--}}
+                            {{--                                <input autocomplete="off" type="text" name="detail-address" id="detail-address"--}}
+                            {{--                                       class="form-control" placeholder="{{ __('home.Address detail') }}"--}}
+                            {{--                                       value="{{ $create ? $create['address_en'] : old('address_en', $exitsMember ? $exitsMember->address_en : '') }}">--}}
+                            {{--                            </div>--}}
+                            <input autocomplete="off" type="text" name="detail-address" id="detail-address"
+                                   class="form-control" placeholder="{{ __('home.Address detail') }}"
+                                   value="{{ $create ? $create['address_en'] : old('address_en', $exitsMember ? $exitsMember->address_en : '') }}">
                         </div>
                         <input autocomplete="off" type="hidden" id="address_code" name="address_code">
                     </div>
@@ -188,15 +192,18 @@
                                        class="form-control" placeholder="{{ __('home.Select country') }}">
                             </div>
                             <div class="form-group col-md-12">
-                                <div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text"
-                                             id="detail_address_kr">{{ __('home.Address detail') }}</div>
-                                    </div>
-                                    <input autocomplete="off" type="text" name="detail-address-1" id="detail-address-1"
-                                           class="form-control" placeholder="{{ __('home.Address detail') }}"
-                                           value="{{ $create ? $create['address_kr'] : old('address_kr', $exitsMember ? $exitsMember->address_kr : '') }}">
-                                </div>
+{{--                                <div class="input-group mb-2">--}}
+{{--                                    <div class="input-group-prepend">--}}
+{{--                                        <div class="input-group-text"--}}
+{{--                                             id="detail_address_kr">{{ __('home.Address detail') }}</div>--}}
+{{--                                    </div>--}}
+{{--                                    <input autocomplete="off" type="text" name="detail-address-1" id="detail-address-1"--}}
+{{--                                           class="form-control" placeholder="{{ __('home.Address detail') }}"--}}
+{{--                                           value="{{ $create ? $create['address_kr'] : old('address_kr', $exitsMember ? $exitsMember->address_kr : '') }}">--}}
+{{--                                </div>--}}
+                                <input autocomplete="off" type="text" name="detail-address-1" id="detail-address-1"
+                                       class="form-control" placeholder="{{ __('home.Address detail') }}"
+                                       value="{{ $create ? $create['address_kr'] : old('address_kr', $exitsMember ? $exitsMember->address_kr : '') }}">
                             </div>
                         </div>
                     </div>
@@ -215,7 +222,8 @@
                     <button type="submit" id="btnSubmitFormRegister"
                             class="d-none btn btn-primary">{{ __('home.sign up') }}</button>
                     <div class="text-center">
-                        <p class="text-center text-danger" id="messageValid">{{ __('auth.Please check email to continue...') }}</p>
+                        <p class="text-center text-danger"
+                           id="messageValid">{{ __('auth.Please check email to continue...') }}</p>
                         <button type="button" id="buttonRegister"
                                 class="w-50 btn bg-member-primary solid mr-3 btn-register">{{ __('home.next') }}</button>
                     </div>
