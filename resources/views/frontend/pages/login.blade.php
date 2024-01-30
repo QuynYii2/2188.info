@@ -51,6 +51,10 @@
         background-color: #F47621;
         color: #fff;
     }
+
+    .input_btn {
+        background-color: #fff !important;
+    }
 </style>
 
 @section('content')
@@ -66,16 +70,24 @@
                             <form method="post" action="{{ route('login.submit') }}" id="formLogin">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1" class="login-element">{{ __('home.email') }}
-                                        :</label>
-                                    <input type="email" name="login_field" class="form-control" id="exampleInputEmail1"
-                                           aria-describedby="emailHelp">
+                                    <label class="sr-only" for="exampleInputEmail">{{ __('home.email') }}</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend w-25">
+                                            <div class="input-group-text input_btn full-width">{{ __('home.email') }}</div>
+                                        </div>
+                                        <input type="email" class="form-control" id="exampleInputEmail"
+                                               name="login_field">
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputPassword" class="login-element">{{ __('home.Password') }}
-                                        :</label>
-                                    <input type="password" name="password" class="form-control"
-                                           id="exampleInputPassword">
+                                    <label class="sr-only" for="exampleInputPassword">{ __('home.Password') }}</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend w-25">
+                                            <div class="input-group-text input_btn full-width">{{ __('home.Password') }}</div>
+                                        </div>
+                                        <input type="password" class="form-control" id="exampleInputPassword"
+                                               name="password">
+                                    </div>
                                 </div>
                                 <div class="text-center mt-5">
                                     <button type="submit" id="btnLogin"
