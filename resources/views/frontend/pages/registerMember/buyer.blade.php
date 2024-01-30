@@ -77,7 +77,7 @@
                         <div class="form-group col-md-6">
                             <label for="email" class="label_item-member">{{ __('home.email') }} <span
                                         class="text-danger">*</span>
-                                        <span class="small">{{ __('auth.If you lose your ID or password, a temporary number will be sent to the email address registered here') }}</span>
+                                <span class="small">{{ __('auth.If you lose your ID or password, a temporary number will be sent to the email address registered here') }}</span>
                             </label>
                             <div class="input-group">
                                 <input autocomplete="off" type="email" class="form-control" id="email" name="email"
@@ -155,7 +155,8 @@
                             {{--                                       value="{{ $create ? $create['address_en'] : old('address_en', $exitsMember ? $exitsMember->address_en : '') }}">--}}
                             {{--                            </div>--}}
                             <input autocomplete="off" type="text" name="detail-address" id="detail-address"
-                                   class="form-control" placeholder="{{ __('auth.Please enter your detailed address here') }}"
+                                   class="form-control"
+                                   placeholder="{{ __('auth.Please enter your detailed address here') }}"
                                    value="{{ $create ? $create['address_en'] : old('address_en', $exitsMember ? $exitsMember->address_en : '') }}">
                         </div>
                         <input autocomplete="off" type="hidden" id="address_code" name="address_code">
@@ -186,17 +187,18 @@
                                        class="form-control" placeholder="{{ __('home.Select country') }}">
                             </div>
                             <div class="form-group col-md-12">
-{{--                                <div class="input-group mb-2">--}}
-{{--                                    <div class="input-group-prepend">--}}
-{{--                                        <div class="input-group-text"--}}
-{{--                                             id="detail_address_kr">{{ __('home.Address detail') }}</div>--}}
-{{--                                    </div>--}}
-{{--                                    <input autocomplete="off" type="text" name="detail-address-1" id="detail-address-1"--}}
-{{--                                           class="form-control" placeholder="{{ __('home.Address detail') }}"--}}
-{{--                                           value="{{ $create ? $create['address_kr'] : old('address_kr', $exitsMember ? $exitsMember->address_kr : '') }}">--}}
-{{--                                </div>--}}
+                                {{--                                <div class="input-group mb-2">--}}
+                                {{--                                    <div class="input-group-prepend">--}}
+                                {{--                                        <div class="input-group-text"--}}
+                                {{--                                             id="detail_address_kr">{{ __('home.Address detail') }}</div>--}}
+                                {{--                                    </div>--}}
+                                {{--                                    <input autocomplete="off" type="text" name="detail-address-1" id="detail-address-1"--}}
+                                {{--                                           class="form-control" placeholder="{{ __('home.Address detail') }}"--}}
+                                {{--                                           value="{{ $create ? $create['address_kr'] : old('address_kr', $exitsMember ? $exitsMember->address_kr : '') }}">--}}
+                                {{--                                </div>--}}
                                 <input autocomplete="off" type="text" name="detail-address-1" id="detail-address-1"
-                                       class="form-control" placeholder="{{ __('auth.Please enter your detailed address here') }}"
+                                       class="form-control"
+                                       placeholder="{{ __('auth.Please enter your detailed address here') }}"
                                        value="{{ $create ? $create['address_kr'] : old('address_kr', $exitsMember ? $exitsMember->address_kr : '') }}">
                             </div>
                         </div>

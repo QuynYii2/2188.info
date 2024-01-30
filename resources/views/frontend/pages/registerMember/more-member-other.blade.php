@@ -62,9 +62,13 @@
                                    name="fax" placeholder="{{ __('home.Fax') }}">
                         </div>
                         <div class="form-group col-md-8">
-                            <input autocomplete="off" type="email" class="form-control" id="email"
-                                   value="{{ $createCompany ? $createCompany['email'] : old('email', $exitsMember ? $exitsMember->email: '') }}"
-                                   name="email" placeholder="{{ __('home.email') }}">
+                            <div class="input-group">
+                                <input autocomplete="off" type="email" class="form-control" id="email"
+                                       value="{{ $createCompany ? $createCompany['email'] : old('email', $exitsMember ? $exitsMember->email: '') }}"
+                                       name="email" placeholder="{{ __('home.email') }}">
+                                <button type="button" id="btnChecking"
+                                        class="btn btn-outline-warning">{{ __('auth.Check email') }}</button>
+                            </div>
                         </div>
                         <div class="form-group col-md-4 d-flex align-items-center">
                             <div class="form-check">
@@ -73,10 +77,6 @@
                                     {{ __('auth.Email Acceptance') }}
                                 </label>
                             </div>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <button type="button" id="btnChecking"
-                                    class="btn btn-outline-warning">{{ __('auth.Check email') }}</button>
                         </div>
                     </div>
                     <div class="form-group">
@@ -140,7 +140,7 @@
                             {{--                                       value="{{ $createCompany ? $createCompany['address_en'] : old('address_en', $exitsMember ? $exitsMember->address_en : '') }}">--}}
                             {{--                            </div>--}}
                             <input autocomplete="off" type="text" name="detail-address" id="detail-address"
-                                   class="form-control" placeholder="{{ __('home.Address detail') }}"
+                                   class="form-control" placeholder="{{ __('auth.Please enter your detailed address here') }}"
                                    value="{{ $createCompany ? $createCompany['address_en'] : old('address_en', $exitsMember ? $exitsMember->address_en : '') }}">
                         </div>
                         <input autocomplete="off" type="hidden" id="address_code" name="address_code">
@@ -181,7 +181,7 @@
                                 {{--                                           value="{{ $createCompany ? $createCompany['address_kr'] : old('address_kr', $exitsMember ? $exitsMember->address_kr : '') }}">--}}
                                 {{--                                </div>--}}
                                 <input autocomplete="off" type="text" name="detail-address-1" id="detail-address-1"
-                                       class="form-control" placeholder="{{ __('home.Address detail') }}"
+                                       class="form-control" placeholder="{{ __('auth.Please enter your detailed address here') }}"
                                        value="{{ $createCompany ? $createCompany['address_kr'] : old('address_kr', $exitsMember ? $exitsMember->address_kr : '') }}">
                             </div>
                         </div>
@@ -241,7 +241,7 @@
 
         imgInp.on('change', function () {
             $('.imagePreview').empty();
-            imagesPreview(this, 'div.imagePreview');
+            // imagesPreview(this, 'div.imagePreview');
         });
     });
 </script>
