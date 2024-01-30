@@ -800,11 +800,6 @@ class RegisterMemberController extends Controller
                     return back()->with('create', $create);
                 }
 
-                if ($memberOld_v2) {
-                    alert()->error($error, 'Error, Code in member used!');
-                    return back()->with('create', $create);
-                }
-
                 $this->createUser($fullName, $email, $phoneNumber, $password, $memberAccount->member, $request);
                 $success = MemberRegisterPersonSource::create($create);
             }
@@ -1035,10 +1030,7 @@ class RegisterMemberController extends Controller
                     alert()->error($error, $error_email);
                     return back()->with('create', $create);
                 }
-                if ($memberOld_v2) {
-                    alert()->error($error, 'Error, Code in member used!');
-                    return back()->with('create', $create);
-                }
+
                 $this->createUser($fullName, $email, $phoneNumber, $password, $memberAccount->member, $request);
                 $save = MemberRegisterPersonSource::create($create);
             }
