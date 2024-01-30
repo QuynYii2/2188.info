@@ -343,7 +343,7 @@ class AdminUserController extends Controller
             $person->status = $request->input('status');
             $person->name_en = $request->input('name');
             $person->sns_account = $request->input('sns_account');
-            $person->code = $request->input('code');
+            $person->code = $request->input('code') ?? '';
             $person->save();
 
             alert()->success('Success', 'Save information user success');

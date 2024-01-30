@@ -55,32 +55,6 @@
                                value="{{ $create ? $create['name'] : old('name', $exitsMember ? $exitsMember->name : '') }}"
                                placeholder="{{ __('auth.Korea') }}" required>
                     </div>
-                    <label for="code" class="label_item-member">{{ __('home.ID') }} <span
-                                class="text-danger">*</span></label>
-                    <div class="form-group">
-                        <input autocomplete="off" type="text" class="form-control" id="code" name="code"
-                               value="{{ $create ? $create['code'] : old('code', $exitsMember ? $exitsMember->code : '') }}"
-                               required>
-                    </div>
-                    @if(!$exitsMember)
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="password" class="label_item-member">{{ __('home.Password') }} <span
-                                            class="text-danger">*</span></label>
-                                <input autocomplete="off" type="password" class="form-control" id="password"
-                                       name="password"
-                                       placeholder="" required>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="passwordConfirm" class="label_item-member">{{ __('auth.Confirm password') }}
-                                    <span
-                                            class="text-danger">*</span></label>
-                                <input autocomplete="off" type="password" class="form-control" id="passwordConfirm"
-                                       name="passwordConfirm" placeholder=""
-                                       required>
-                            </div>
-                        </div>
-                    @endif
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="phoneNumber" class="label_item-member">{{ __('auth.Cell phone number') }} <span
@@ -102,10 +76,16 @@
 
                         <div class="form-group col-md-6">
                             <label for="email" class="label_item-member">{{ __('home.email') }} <span
-                                        class="text-danger">*</span></label>
-                            <input autocomplete="off" type="email" class="form-control" id="email" name="email"
-                                   value="{{ $create ? $create['email'] : old('email', $exitsMember ? $exitsMember->email : '') }}"
-                                   required>
+                                        class="text-danger">*</span>
+                                        <span class="small">{{ __('auth.If you lose your ID or password, a temporary number will be sent to the email address registered here') }}</span>
+                            </label>
+                            <div class="input-group">
+                                <input autocomplete="off" type="email" class="form-control" id="email" name="email"
+                                       value="{{ $create ? $create['email'] : old('email', $exitsMember ? $exitsMember->email : '') }}"
+                                       required>
+                                <button type="button" id="btnChecking"
+                                        class="btn btn-outline-warning">{{ __('auth.Check email') }}</button>
+                            </div>
                         </div>
                         <div class="form-group col-md-6 justify-content-between align-items-center d-flex">
                             <div class="form-check mt-4">
@@ -116,17 +96,31 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="form-group col-md-6">
-                            <button type="button" id="btnChecking"
-                                    class="btn btn-outline-warning">{{ __('auth.Check email') }}</button>
-                        </div>
                     </div>
+                    @if(!$exitsMember)
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="password" class="label_item-member">{{ __('home.Password') }} <span
+                                            class="text-danger">*</span></label>
+                                <input autocomplete="off" type="password" class="form-control" id="password"
+                                       name="password"
+                                       placeholder="" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="passwordConfirm" class="label_item-member">{{ __('auth.Confirm password') }}
+                                    <span
+                                            class="text-danger">*</span></label>
+                                <input autocomplete="off" type="password" class="form-control" id="passwordConfirm"
+                                       name="passwordConfirm" placeholder=""
+                                       required>
+                            </div>
+                        </div>
+                    @endif
                     <div class="form-group">
-                        <label for="sns_account" class="label_item-member">{{ __('home.SNS Account') }}
-                            <span class="text-danger">*</span></label>
+                        <label for="sns_account" class="label_item-member">{{ __('home.SNS Account') }}</label>
                         <input autocomplete="off" type="text" class="form-control" id="sns_account" name="sns_account"
                                value="{{ $create ? $create['sns_account'] : old('sns_account', $exitsMember ? $exitsMember->sns_account : '') }}"
-                               placeholder="" required>
+                               placeholder="">
                     </div>
                     <div class="label_form">{{ __('auth.Address Business') }} <span class="text-danger">*</span></div>
                     <label for="select_address" class="label_item-member">{{ __('auth.Address English') }}</label>
@@ -161,7 +155,7 @@
                             {{--                                       value="{{ $create ? $create['address_en'] : old('address_en', $exitsMember ? $exitsMember->address_en : '') }}">--}}
                             {{--                            </div>--}}
                             <input autocomplete="off" type="text" name="detail-address" id="detail-address"
-                                   class="form-control" placeholder="{{ __('home.Address detail') }}"
+                                   class="form-control" placeholder="{{ __('auth.Please enter your detailed address here') }}"
                                    value="{{ $create ? $create['address_en'] : old('address_en', $exitsMember ? $exitsMember->address_en : '') }}">
                         </div>
                         <input autocomplete="off" type="hidden" id="address_code" name="address_code">
@@ -202,14 +196,14 @@
 {{--                                           value="{{ $create ? $create['address_kr'] : old('address_kr', $exitsMember ? $exitsMember->address_kr : '') }}">--}}
 {{--                                </div>--}}
                                 <input autocomplete="off" type="text" name="detail-address-1" id="detail-address-1"
-                                       class="form-control" placeholder="{{ __('home.Address detail') }}"
+                                       class="form-control" placeholder="{{ __('auth.Please enter your detailed address here') }}"
                                        value="{{ $create ? $create['address_kr'] : old('address_kr', $exitsMember ? $exitsMember->address_kr : '') }}">
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="form-check">
-                            <input autocomplete="off" class="form-check-input" type="checkbox" id="gridCheck" required>
+                            <input autocomplete="off" class="form-check-input" type="checkbox" id="gridCheck">
                             <label class="form-check-label text-checkout" for="gridCheck">
                                 I have read, understand and accept Global's Agree to Terms,
                                 <a class="text-policy" href="#">Agree to the Information Collection Policy</a> and

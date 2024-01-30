@@ -29,5 +29,6 @@ return [
     'Address Korea' => 'Address Business(Korea)',
     'Please check email to continue...' => 'Please check email to continue...',
     'Check email' => 'Check email',
-
+    'Please enter your detailed address here' => 'Please enter your detailed address here',
+    'If you lose your ID or password, a temporary number will be sent to the email address registered here' => 'If you lose your ID or password, a temporary number will be sent to the email address registered here',
 ];
