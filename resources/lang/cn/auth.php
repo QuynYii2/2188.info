@@ -29,5 +29,7 @@ return [
     'Address Korea' => '사업장 주소(한글)',
     'Please check email to continue...' => '请检查您的电子邮件以继续...',
     'Check email' => '查看电子邮件',
+    'Please enter your detailed address here' => '请在此输入您的详细地址',
+    'If you lose your ID or password, a temporary number will be sent to the email address registered here' => '如果您丢失了 ID 或密码，临时号码将发送到此处注册的电子邮件地址',
 
 ];

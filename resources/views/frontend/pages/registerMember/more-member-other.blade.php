@@ -190,7 +190,7 @@
                     @include('frontend.pages.registerMember.category.show-category')
                     <div class="form-group">
                         <div class="form-check">
-                            <input autocomplete="off" class="form-check-input" type="checkbox" id="gridCheck" required>
+                            <input autocomplete="off" class="form-check-input" type="checkbox" id="gridCheck">
                             <label class="form-check-label text-checkout" for="gridCheck">
                                 I have read, understand and accept Global's Agree to Terms,
                                 <a class="text-policy" href="#">Agree to the Information Collection Policy</a> and

@@ -29,4 +29,6 @@ return [
     'Address Korea' => 'Địa chỉ công ty(tiếng Hàn)',
     'Please check email to continue...' => 'Vui lòng kiểm tra email để tiếp tục...',
     'Check email' => 'Kiểm tra email',
+    'Please enter your detailed address here' => 'Vui lòng nhập địa chỉ chi tiết của bạn tại đây',
+    'If you lose your ID or password, a temporary number will be sent to the email address registered here' => 'Nếu bạn mất ID hoặc mật khẩu, một số tạm thời sẽ được gửi đến địa chỉ email đã đăng ký tại đây',
 ];

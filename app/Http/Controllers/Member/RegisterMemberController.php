@@ -167,7 +167,7 @@ class RegisterMemberController extends Controller
             $datetime_register = Carbon::now()->addHours(7);
             $number_clearance = $request->input('number_clearance');
             $name_kr = $request->input('name_kr');
-            $codeItem = $request->input('code');
+            $codeItem = $request->input('code') ?? '';
 
             $comma = ',';
             $address_en =

@@ -65,7 +65,8 @@
                             <input hidden="" type="text" id="category_search" name="category_search" value="0">
 
                             <button class="button-right search_header" type="submit">
-                                <i class="fa-solid fa-magnifying-glass d-flex justify-content-center align-items-center" style="font-size: 16px"></i>
+                                <i class="fa-solid fa-magnifying-glass d-flex justify-content-center align-items-center"
+                                   style="font-size: 16px"></i>
                             </button>
 
                             <div class="category-drop input-group-prepend">
@@ -523,20 +524,25 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col-xl-2 col-md-2 select-language">
-                        <div class="dropdown">
-                            <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-                               aria-expanded="false">
-                                English
-                            </a>
+                    <div class="col-xl-2 col-md-2 select-language d-flex">
+{{--                        <div class="dropdown mr-5">--}}
+{{--                            <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown"--}}
+{{--                               aria-expanded="false">--}}
+{{--                                English--}}
+{{--                            </a>--}}
 
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">English</a>
-                                <a class="dropdown-item" href="#">Korea</a>
-                                <a class="dropdown-item" href="#">Japan</a>
-                                <a class="dropdown-item" href="#">China</a>
-                                <a class="dropdown-item" href="#">VietNam</a>
-                            </div>
+{{--                            <div class="dropdown-menu">--}}
+{{--                                <a class="dropdown-item" href="#">English</a>--}}
+{{--                                <a class="dropdown-item" href="#">Korea</a>--}}
+{{--                                <a class="dropdown-item" href="#">Japan</a>--}}
+{{--                                <a class="dropdown-item" href="#">China</a>--}}
+{{--                                <a class="dropdown-item" href="#">VietNam</a>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+                        <div class="auth">
+                            <a href="{{ route('profile.show') }}">
+                                <span class="text">{{ __('home.account information') }}</span>
+                            </a>
                         </div>
                     </div>
                 </div>

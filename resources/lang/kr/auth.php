@@ -27,4 +27,8 @@ return [
     'Address Business' => '사업장 주소',
     'Address English' => '사업장 주소(영문)',
     'Address Korea' => '사업장 주소(한글)',
+    'Please check email to continue...' => '계속하려면 이메일을 확인하세요...',
+    'Check email' => '메일 중복 확인',
+    'Please enter your detailed address here' => '여기에 상세 주소를 입력하세요',
+    'If you lose your ID or password, a temporary number will be sent to the email address registered here' => '아이디나 비번을 분실헀을때 임시번호를 여기 등록된 메일 주소로 전달받게 됩니다',
 ];

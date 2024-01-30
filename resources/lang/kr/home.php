@@ -27,7 +27,7 @@ return [
     'wait a review' => '검토 대기중입니다',
 
     //thông tin tài khoản, thông báo của tôi, quản lý đơn hàng, quản lý đổi trả, sổ địa chỉ, thông tin thanh toán, đánh giá sản phẩm, sản phẩm bạn đã xem, sản phẩm yêu thích, sản phẩm mua sau, nhận xét của tôi, chia sẻ có lời, hợp đồng bảo hiểm, mua trước trả sau, mã giảm giá, quản lý xu của tôi, bookcare của tôi
-    'account information' => '계정 정보',
+    'account information' => '회원정보',
     'my notification' => '나의 알림',
     'order management' => '주문 관리',
     'return management' => '반환 관리',
