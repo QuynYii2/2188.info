@@ -152,6 +152,11 @@ class HomeController extends Controller
         if (Auth::check()) {
             $listCart = Cart::where('user_id', Auth::user()->id)->where('status', CartStatus::WAIT_ORDER)->get();
         }
+        $member_register = MemberRegisterPersonSource::where('email', Auth::check() ? Auth::user()->email : '')
+            ->where('status', '!=', MemberRegisterPersonSourceStatus::DELETED)
+            ->first();
+        $company = MemberRegisterInfo::find($member_register ? $member_register->member_id : '');
+        $member = Member::find($company ? $company->member_id : '');
 
         return view('frontend/index', [
             'productByLocal' => $productByLocal,
@@ -177,6 +182,8 @@ class HomeController extends Controller
             'currentProducts' => $currentProducts,
             'arrayProducts' => $arrayProducts,
             'locale' => $locale,
+            'company' => $company,
+            'member' => $member,
         ]);
     }
 
