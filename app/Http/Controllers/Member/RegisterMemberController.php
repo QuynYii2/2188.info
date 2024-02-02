@@ -633,7 +633,7 @@ class RegisterMemberController extends Controller
             $phoneNumber = $request->input('phoneNumber');
             $email = $request->input('email');
             $rank = $request->input('rank');
-            $sns_account = $request->input('sns_account');
+            $sns_account = $request->input('sns_account') ?? 'default';
             $member = $request->input('member_id');
             //
             $datetime_register = Carbon::now()->addHours(7);
@@ -897,7 +897,7 @@ class RegisterMemberController extends Controller
             $phoneNumber = $request->input('phoneNumber');
             $email = $request->input('email');
             $staff = $request->input('rank');
-            $sns_account = $request->input('sns_account');
+            $sns_account = $request->input('sns_account') ?? 'default';
             $personSource = $request->input('person');
             //
             $datetime_register = Carbon::now()->addHours(7);
