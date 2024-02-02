@@ -95,8 +95,7 @@
                 </div>
             </div>
         @endif
-        <label for="sns_account" class="label_form">{{ __('home.SNS Account') }} <span
-                    class="text-danger">*</span></label>
+        <label for="sns_account" class="label_form">{{ __('home.SNS Account') }}</label>
         <div class="form-group">
             <input type="text" class="form-control" id="sns_account" name="sns_account"
                    placeholder="{{ __('home.SNS Account') }}"
