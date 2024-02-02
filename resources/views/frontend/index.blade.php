@@ -325,7 +325,8 @@
         @endif
 
         @if($member->name == 'TRUST')
-
+            @include('frontend.pages.member.header_member_only_main')
+            @include('frontend.pages.member.tabs_info')
         @endif
 
         <div class="section margin-layout-index margin-top-layout container-fluid mt-3">
