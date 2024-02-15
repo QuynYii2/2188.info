@@ -2,9 +2,9 @@
 
 @section('title', 'Register Member')
 @section('content')
-    <div class="container-fluid">
+    <div class="container">
         <h3 class="text-center mt-5">{{ __('home.Congratulations, you have registered as a member') }} {{$company->member}}</h3>
-        <div class="d-flex justify-content-around mt-5">
+        <div class="d-flex justify-content-start align-items-center mt-5">
             @php
                 $listPermissionID = $member->permission_id;
                 $arrayPermissionID = null;
@@ -36,22 +36,6 @@
                         @endforeach
                     @endif
                 </ol>
-            </div>
-            <div class="">
-                @if($memberSource)
-                    <p>{{ __('home.Representative member') }}:{{$memberSource->name}}</p>
-                @endif
-
-                @if($memberRepresent)
-                    <p>{{ __('home.Registered member') }}:{{$memberRepresent->name}}</p>
-                @endif
-                <p>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                </p>
             </div>
         </div>
     </div>

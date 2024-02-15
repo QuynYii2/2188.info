@@ -203,16 +203,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="form-check">
-                            <input autocomplete="off" class="form-check-input" type="checkbox" id="gridCheck">
-                            <label class="form-check-label text-checkout" for="gridCheck">
-                                I have read, understand and accept Global's Agree to Terms,
-                                <a class="text-policy" href="#">Agree to the Information Collection Policy</a> and
-                                <a class="text-policy" href="#">Agree to the Terms of Information Use</a>
-                            </label>
-                        </div>
-                    </div>
+{{--                    <div class="form-group">--}}
+{{--                        <div class="form-check">--}}
+{{--                            <input autocomplete="off" class="form-check-input" type="checkbox" id="gridCheck">--}}
+{{--                            <label class="form-check-label text-checkout" for="gridCheck">--}}
+{{--                                I have read, understand and accept Global's Agree to Terms,--}}
+{{--                                <a class="text-policy" href="#">Agree to the Information Collection Policy</a> and--}}
+{{--                                <a class="text-policy" href="#">Agree to the Terms of Information Use</a>--}}
+{{--                            </label>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
                     <input autocomplete="off" id="localeInput" name="locale" class="d-none">
                     <button type="submit" id="btnSubmitFormRegister"
