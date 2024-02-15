@@ -66,13 +66,13 @@
                                 <input autocomplete="off" type="email" class="form-control" id="email"
                                        value="{{ $createCompany ? $createCompany['email'] : old('email', $exitsMember ? $exitsMember->email: '') }}"
                                        name="email" placeholder="{{ __('home.email') }}">
-                                <button type="button" id="btnChecking"
-                                        class="btn btn-outline-warning">{{ __('auth.Check email') }}</button>
+{{--                                <button type="button" id="btnChecking"--}}
+{{--                                        class="btn btn-outline-warning">{{ __('auth.Check email') }}</button>--}}
                             </div>
                         </div>
                         <div class="form-group col-md-4 d-flex align-items-center">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="checkEmail">
+                                <input class="form-check-input" type="checkbox" id="checkEmail" checked required>
                                 <label class="form-check-label text-checkout" for="checkEmail">
                                     {{ __('auth.Email Acceptance') }}
                                 </label>
@@ -140,7 +140,8 @@
                             {{--                                       value="{{ $createCompany ? $createCompany['address_en'] : old('address_en', $exitsMember ? $exitsMember->address_en : '') }}">--}}
                             {{--                            </div>--}}
                             <input autocomplete="off" type="text" name="detail-address" id="detail-address"
-                                   class="form-control" placeholder="{{ __('auth.Please enter your detailed address here') }}"
+                                   class="form-control"
+                                   placeholder="{{ __('auth.Please enter your detailed address here') }}"
                                    value="{{ $createCompany ? $createCompany['address_en'] : old('address_en', $exitsMember ? $exitsMember->address_en : '') }}">
                         </div>
                         <input autocomplete="off" type="hidden" id="address_code" name="address_code">
@@ -181,23 +182,24 @@
                                 {{--                                           value="{{ $createCompany ? $createCompany['address_kr'] : old('address_kr', $exitsMember ? $exitsMember->address_kr : '') }}">--}}
                                 {{--                                </div>--}}
                                 <input autocomplete="off" type="text" name="detail-address-1" id="detail-address-1"
-                                       class="form-control" placeholder="{{ __('auth.Please enter your detailed address here') }}"
+                                       class="form-control"
+                                       placeholder="{{ __('auth.Please enter your detailed address here') }}"
                                        value="{{ $createCompany ? $createCompany['address_kr'] : old('address_kr', $exitsMember ? $exitsMember->address_kr : '') }}">
                             </div>
                         </div>
                     </div>
 
                     @include('frontend.pages.registerMember.category.show-category')
-                    <div class="form-group">
-                        <div class="form-check">
-                            <input autocomplete="off" class="form-check-input" type="checkbox" id="gridCheck">
-                            <label class="form-check-label text-checkout" for="gridCheck">
-                                I have read, understand and accept Global's Agree to Terms,
-                                <a class="text-policy" href="#">Agree to the Information Collection Policy</a> and
-                                <a class="text-policy" href="#">Agree to the Terms of Information Use</a>
-                            </label>
-                        </div>
-                    </div>
+{{--                    <div class="form-group">--}}
+{{--                        <div class="form-check">--}}
+{{--                            <input autocomplete="off" class="form-check-input" type="checkbox" id="gridCheck">--}}
+{{--                            <label class="form-check-label text-checkout" for="gridCheck">--}}
+{{--                                I have read, understand and accept Global's Agree to Terms,--}}
+{{--                                <a class="text-policy" href="#">Agree to the Information Collection Policy</a> and--}}
+{{--                                <a class="text-policy" href="#">Agree to the Terms of Information Use</a>--}}
+{{--                            </label>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                     @php
                         $isUpdate = false;
                         $route = \Illuminate\Support\Facades\Route::currentRouteName();
@@ -210,8 +212,8 @@
                     @endif
                     <button class="d-none" id="btnSubmitFormRegister" type="submit">Done</button>
                     <div class="text-center">
-                        <p class="text-center text-danger"
-                           id="messageValid">{{ __('auth.Please check email to continue...') }}</p>
+                        {{--                        <p class="text-center text-danger"--}}
+                        {{--                           id="messageValid">{{ __('auth.Please check email to continue...') }}</p>--}}
                         <button type="button" id="buttonRegister"
                                 class="w-50 btn bg-member-primary solid mr-3 btn-register">{{ __('home.next') }}</button>
                     </div>
@@ -299,10 +301,10 @@
     let messageValid = $('#messageValid');
 
     $(document).ready(function () {
-        handleClickBtnAndShowValid(index);
+        // handleClickBtnAndShowValid(index);
 
         $('#btnChecking').click(function () {
-            handleCheckEmail();
+            // handleCheckEmail();
         })
     })
 

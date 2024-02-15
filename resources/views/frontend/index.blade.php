@@ -239,7 +239,7 @@
             </div>
         </div>
 
-        @if($member->name == 'LOGISTIC')
+        @if(isset($member) && $member->name == 'LOGISTIC')
             <div class="bg-white">
                 @include('frontend.pages.member.header_member_only_main')
                 <div class="row m-0">
@@ -324,7 +324,7 @@
             </div>
         @endif
 
-        @if($member->name == 'TRUST')
+        @if(isset($member) && $member->name == 'TRUST')
             @include('frontend.pages.member.header_member_only_main')
             @include('frontend.pages.member.tabs_info')
         @endif

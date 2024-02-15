@@ -6,46 +6,6 @@
         <div class="">
 
             <table class="table element-bordered text-center" id="tableMemberShip">
-                <thead class="text-center">
-                <tr>
-                    <th rowspan="2" scope="col">{{ __('home.Responsibility') }}</th>
-                    <th rowspan="2" scope="col">{{ __('home.Position') }}</th>
-                    <th colspan="2" scope="col">{{ __('home.namess') }}</th>
-                    <th rowspan="2" scope="col">{{ __('home.ID') }}</th>
-                    <th rowspan="2" scope="col">{{ __('home.Phone Number') }}</th>
-                    <th rowspan="2" scope="col">{{ __('home.email') }}</th>
-                    <th rowspan="2" scope="col">{{ __('home.SNS Account') }}</th>
-                </tr>
-                <tr>
-                    <th scope="col">{{ __('home.Name English') }}</th>
-                    <th scope="col">{{ __('home.Name Korea') }}</th>
-                </tr>
-                </thead>
-                <tbody>
-                @if($memberRepresent)
-                    <tr>
-                        <td>{{ __('home.Representative member') }}</td>
-                        <td>{{$memberRepresent->staff}}</td>
-                        <td>{{$memberRepresent->name_en}}</td>
-                        <td>{{$memberRepresent->name}}</td>
-                        <td>{{$memberRepresent->code}}</td>
-                        <td>{{$memberRepresent->phone}}</td>
-                        <td>{{$memberRepresent->email}}</td>
-                        <td>{{$memberRepresent->sns_account}}</td>
-                    </tr>
-                @endif
-                @if($memberSource)
-                    <tr>
-                        <td>{{ __('home.Registered member') }}</td>
-                        <td>{{$memberSource->staff}}</td>
-                        <td>{{$memberSource->name_en}}</td>
-                        <td>{{$memberSource->name}}</td>
-                        <td>{{$memberSource->code}}</td>
-                        <td>{{$memberSource->phone}}</td>
-                        <td>{{$memberSource->email}}</td>
-                        <td>{{$memberSource->sns_account}}</td>
-                    </tr>
-                @endif
                 <tr class="bg-member-yellow">
                     <td colspan="6"
                         style="font-weight: 400; font-size: 18px">
