@@ -5,9 +5,6 @@
     }
 
 @endphp
-@php
-    app()->setLocale('kr');
-@endphp
 <div class="">
     @if(isset($isAdminUpdate))
         <form autocomplete="off" class="form_memberInfo"
