@@ -21,13 +21,14 @@
 @if($memberPersonSource)
     <input type="text" class="d-none" id="inputCheckExitMember" value="{{$memberPersonSource->code}}">
 @endif
+
 <div class="">
     <form autocomplete="off" class="p-3 form_info-member-person" action="{{route('register.member.source')}}"
           method="post"
           id="formRegisterMember">
         @csrf
         <div class="day_register title-input">{{ __('home.Day register') }}:</div>
-        <div class="label_form">{{ __('home.Position') }} <span class="text-danger">*</span></div>
+        <div class="label_form">{{ __('auth.Position') }} <span class="text-danger">*</span></div>
         <div class="form-row">
             @if(!Auth::check())
                 <div class="form-group col-md-12">
@@ -41,13 +42,13 @@
             @endif
             <div class="form-group col-md-6">
                 <input type="text" class="form-control" id="position" name="position"
-                       placeholder="{{ __('home.Position') }}"
+                       placeholder="{{ __('auth.Position') }}"
                        value="{{ $create ? $create['position'] : old('position', $memberPersonSource ? $memberPersonSource->position : '')}}"
                        required>
             </div>
             <div class="form-group col-md-6">
                 <input type="text" class="form-control" id="rank" name="rank"
-                       placeholder="{{ __('home.Rank') }}"
+                       placeholder="{{ __('auth.Work') }}"
                        value="{{$create ? $create['rank'] : old('rank', $memberPersonSource ? $memberPersonSource->rank : '')}}"
                        required>
             </div>
@@ -55,11 +56,11 @@
         <div class="label_form">{{ __('home.full name') }} <span class="text-danger">*</span></div>
         <div class="form-group">
             <input type="text" class="form-control" id="name_en" name="name_en"
-                   placeholder="{{ __('home.Name English') }}"
+                   placeholder="{{ __('auth.Name English') }}"
                    value="{{$create ? $create['name_en'] : old('name_en', $memberPersonSource ? $memberPersonSource->name_en : '')}}"
                    required>
             <input type="text" class="form-control mt-2" id="name" name="name"
-                   placeholder="{{ __('home.Name Default') }}"
+                   placeholder="{{ __('auth.Name Default') }}"
                    value="{{$create ? $create['name'] : old('name', $memberPersonSource ? $memberPersonSource->name : '')}}"
                    required>
         </div>
@@ -68,8 +69,8 @@
             <div class="form-group col-md-6">
                 <label for="phoneNumber" class="label_form">{{ __('auth.Cell phone number') }} <span
                             class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
-                       placeholder="{{ __('auth.Cell phone number') }}"
+                <input type="number" class="form-control" id="phoneNumber" name="phoneNumber"
+                       placeholder="{{ __('auth.Please enter only numbers') }}"
                        value="{{$create ? $create['phone'] : old('phone', $memberPersonSource ? $memberPersonSource->phone : '')}}"
                        required>
             </div>
@@ -98,7 +99,7 @@
                 <div class="form-check mt-4">
                     <input class="form-check-input" type="checkbox" id="checkBoxEmail">
                     <label class="form-check-label" for="checkBoxEmail">
-                        {{ __('home.Confirm apply notification Email') }}
+                        {{ __('auth.Receive message') }}
                     </label>
                 </div>
             </div>

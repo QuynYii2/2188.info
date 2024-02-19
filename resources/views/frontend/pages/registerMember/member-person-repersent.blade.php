@@ -30,11 +30,11 @@
         <div class="label_form">{{ __('home.full name') }} <span class="text-danger">*</span></div>
         <div class="form-group">
             <input type="text" class="form-control mb-2" id="name_en" name="name_en"
-                   placeholder="{{ __('home.Name English') }}"
+                   placeholder="{{ __('auth.Name English') }}"
                    value="{{$create ? $create['name_en'] : old('name_en', $memberPerson ? $memberPerson->name_en : '')}}"
                    required>
             <input type="text" class="form-control" id="name" name="name"
-                   placeholder="{{ __('home.Name Default') }}"
+                   placeholder="{{ __('auth.Name Default') }}"
                    value="{{$create ? $create['name'] : old('', $memberPerson ? $memberPerson->name : '')}}"
                    required>
         </div>
@@ -44,7 +44,7 @@
                 <label for="phoneNumber" class="label_form">{{ __('auth.Cell phone number') }} <span
                             class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
-                       placeholder="{{ __('auth.Cell phone number') }} "
+                       placeholder="{{ __('auth.Please enter only numbers') }}"
                        value="{{$create ? $create['phone'] : old('phone', $memberPerson  ? $memberPerson ->phone : '')}}"
                        required>
             </div>
@@ -73,7 +73,7 @@
                 <div class="form-check mt-4">
                     <input class="form-check-input" type="checkbox" id="checkBoxEmail">
                     <label class="form-check-label" for="checkBoxEmail">
-                        {{ __('home.Confirm apply notification Email') }}
+                        {{ __('auth.Receive message') }}
                     </label>
                 </div>
             </div>
