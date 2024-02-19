@@ -5,6 +5,9 @@
     }
 
 @endphp
+@php
+    app()->setLocale('kr');
+@endphp
 <div class="">
     @if(isset($isAdminUpdate))
         <form autocomplete="off" class="form_memberInfo"
@@ -33,41 +36,41 @@
                         <div class="form-group col-md-6">
                             <input autocomplete="off" type="text" class="form-control" id="name_en" name="name_en"
                                    value="{{ $createCompany ? $createCompany['name_en'] : old('name_en', $exitsMember ? $exitsMember->name_en : '') }}"
-                                   placeholder="{{ __('home.English only') }}" required>
+                                   placeholder="{{ __('auth.English company name') }}" required>
                         </div>
                         <div class="form-group col-md-6">
                             <input autocomplete="off" type="text" class="form-control" id="name_kr" name="name_kr"
                                    value="{{ $createCompany ? $createCompany['name_kr'] : old('name_kr', $exitsMember ? $exitsMember->name_kr :'') }}"
-                                   placeholder="{{ __('auth.Name Korea')}}">
+                                   placeholder="{{ __('auth.Local language company name')}}">
                         </div>
                         <div class="form-group col-md-6">
                             <input autocomplete="off" type="text" class="form-control" id="homepage"
                                    value="{{ $createCompany ? $createCompany['homepage'] : old('homepage', $exitsMember ? $exitsMember->homepage : '') }}"
-                                   name="homepage" placeholder="{{ __('home.Home') }}" required>
+                                   name="homepage" placeholder="{{ __('auth.Homepage') }}" required>
                         </div>
                         <div class="form-group col-md-6">
                             <input autocomplete="off" type="number" class="form-control" id="number_business"
                                    value="{{ $createCompany ? $createCompany['number_business'] : old('number_business', $exitsMember ? $exitsMember->number_business :'') }}"
-                                   name="number_business" placeholder="{{ __('auth.Business registration card') }}"
+                                   name="number_business" placeholder="{{ __('auth.Business registration number: Please enter numbers only') }}"
                                    required>
                         </div>
                         <div class="form-group col-md-6">
                             <input autocomplete="off" type="number" class="form-control" id="phone"
                                    value="{{ $createCompany ? $createCompany['phone'] : old('phone', $exitsMember ? $exitsMember->phone : '') }}"
-                                   name="phone" placeholder="{{ __('home.Phone Number') }}" required>
+                                   name="phone" placeholder="{{ __('auth.Phone number: Please enter numbers only') }}" required>
                         </div>
                         <div class="form-group col-md-6">
                             <input autocomplete="off" type="number" class="form-control" id="fax"
                                    value="{{ $createCompany ? $createCompany['fax'] : old('fax', $exitsMember ? $exitsMember->fax :'') }}"
-                                   name="fax" placeholder="{{ __('home.Fax') }}">
+                                   name="fax" placeholder="{{ __('auth.Fax: Please enter numbers only') }}">
                         </div>
                         <div class="form-group col-md-8">
                             <div class="input-group">
                                 <input autocomplete="off" type="email" class="form-control" id="email"
                                        value="{{ $createCompany ? $createCompany['email'] : old('email', $exitsMember ? $exitsMember->email: '') }}"
                                        name="email" placeholder="{{ __('home.email') }}">
-{{--                                <button type="button" id="btnChecking"--}}
-{{--                                        class="btn btn-outline-warning">{{ __('auth.Check email') }}</button>--}}
+                                {{--                                <button type="button" id="btnChecking"--}}
+                                {{--                                        class="btn btn-outline-warning">{{ __('auth.Check email') }}</button>--}}
                             </div>
                         </div>
                         <div class="form-group col-md-4 d-flex align-items-center">
@@ -127,7 +130,7 @@
                         {{--                        </div>--}}
                         <div class="form-group col-md-12" data-toggle="modal" data-target="#modal-address">
                             <input autocomplete="off" type="text" readonly name="select_address" id="select_address"
-                                   class="form-control" placeholder="{{ __('home.Select country') }}">
+                                   class="form-control" placeholder="{{ __('auth.English address') }}">
                         </div>
                         <div class="form-group col-md-12">
                             {{--                            <div class="input-group mb-2">--}}
@@ -141,7 +144,7 @@
                             {{--                            </div>--}}
                             <input autocomplete="off" type="text" name="detail-address" id="detail-address"
                                    class="form-control"
-                                   placeholder="{{ __('auth.Please enter your detailed address here') }}"
+                                   placeholder="{{ __('auth.English detail address') }}"
                                    value="{{ $createCompany ? $createCompany['address_en'] : old('address_en', $exitsMember ? $exitsMember->address_en : '') }}">
                         </div>
                         <input autocomplete="off" type="hidden" id="address_code" name="address_code">
@@ -169,7 +172,7 @@
                             <div class="form-group col-md-12">
                                 <input autocomplete="off" type="text" readonly name="select_address_kr"
                                        id="select_address_kr"
-                                       class="form-control" placeholder="{{ __('home.Select country') }}">
+                                       class="form-control" placeholder="{{ __('auth.Local Language Address') }}">
                             </div>
                             <div class="form-group col-md-12">
                                 {{--                                <div class="input-group mb-2">--}}
@@ -183,23 +186,23 @@
                                 {{--                                </div>--}}
                                 <input autocomplete="off" type="text" name="detail-address-1" id="detail-address-1"
                                        class="form-control"
-                                       placeholder="{{ __('auth.Please enter your detailed address here') }}"
+                                       placeholder="{{ __('auth.Local language detail address') }}"
                                        value="{{ $createCompany ? $createCompany['address_kr'] : old('address_kr', $exitsMember ? $exitsMember->address_kr : '') }}">
                             </div>
                         </div>
                     </div>
 
                     @include('frontend.pages.registerMember.category.show-category')
-{{--                    <div class="form-group">--}}
-{{--                        <div class="form-check">--}}
-{{--                            <input autocomplete="off" class="form-check-input" type="checkbox" id="gridCheck">--}}
-{{--                            <label class="form-check-label text-checkout" for="gridCheck">--}}
-{{--                                I have read, understand and accept Global's Agree to Terms,--}}
-{{--                                <a class="text-policy" href="#">Agree to the Information Collection Policy</a> and--}}
-{{--                                <a class="text-policy" href="#">Agree to the Terms of Information Use</a>--}}
-{{--                            </label>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
+                    {{--                    <div class="form-group">--}}
+                    {{--                        <div class="form-check">--}}
+                    {{--                            <input autocomplete="off" class="form-check-input" type="checkbox" id="gridCheck">--}}
+                    {{--                            <label class="form-check-label text-checkout" for="gridCheck">--}}
+                    {{--                                I have read, understand and accept Global's Agree to Terms,--}}
+                    {{--                                <a class="text-policy" href="#">Agree to the Information Collection Policy</a> and--}}
+                    {{--                                <a class="text-policy" href="#">Agree to the Terms of Information Use</a>--}}
+                    {{--                            </label>--}}
+                    {{--                        </div>--}}
+                    {{--                    </div>--}}
                     @php
                         $isUpdate = false;
                         $route = \Illuminate\Support\Facades\Route::currentRouteName();
