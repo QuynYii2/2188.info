@@ -18,9 +18,6 @@
     <link rel="stylesheet" href="{{asset('css/register_member.css')}}">
     <div class="start-page mb-3">
         <div class="background container-fluid pt-3 justify-content-center pb-3">
-            <div class="form-title text-center">
-                <h3 style="font-size: 36px">{{ __('home.commit member') }}</h3>
-            </div>
             <div class="mt-3">
                 <div class="text-center solid p-3 ml-3 mr-3 " style="font-size: 35px; font-weight: 600">
                     <p class="text-primary">
@@ -35,7 +32,7 @@
                 </div>
                 <div class="row ml-3 mr-3">
                     <div class="col-md-6 solid-3 pt-4 pl-0 pr-0">
-                        <h5 class="text-center mix-3 pb-1">{{ __('home.Check the rules you must agree to below') }}</h5>
+                        <h5 class="text-center mix-3 pb-1">{{ __('auth.*You must check the terms and conditions below and agree to these terms and conditions to sign up.') }}</h5>
                         <div class="rules mix-3 pb-5" onclick="validateAll()">
                             <div class="ml-3">
                                 <p class="text-warning" style="font-size: 18px">
@@ -71,7 +68,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 solid-2 pt-4 pl-0 pr-0">
-                        <h5 class="text-center mix-3 pb-1">{{ __('home.Main function only for members') }}</h5>
+                        <h5 class="text-center mix-3 pb-1">{{ __('auth.Main functions of membership') }}</h5>
                         @php
                             $listPermissionID = $member->permission_id;
                             $arrayPermissionID = null;
@@ -94,20 +91,38 @@
                         <div class="col-md-6">
                         </div>
                         <div class="col-md-6">
-                            <div class="all" onclick="validate()">
-                            <span class="text-warning mr-4">
-                                {{ __('home.Agree all') }}
-                            </span>
+                            <div class="all mb-4" onclick="validate()">
+                                <span class="text-warning mr-4">
+                                    {{ __('auth.I agree to all of the above terms and conditions') }}
+                                </span>
                                 <input type="checkbox" id="all" name="all">
-                                <label for="all"> {{ __('home.all') }}</label><br>
+                                <label for="all"></label><br>
                             </div>
-                            <a href="{{route('show.register.member.info', $member->id)}}"
-                               id="register" class="d-none btn btn-success mr-3 btn-register">
-                                {{ __('home.sign up') }}
-                            </a>
-                            <button id="register-btn" class="btn-hidden btn btn-secondary mr-3 btn-register">
-                                {{ __('home.sign up') }}
-                            </button>
+                            @if($member->name == \App\Enums\RegisterMember::BUYER)
+                                <a href="{{route('show.register.member.info', $member->id)}}"
+                                   id="register" class="d-none btn btn-success mr-3 btn-register">
+                                    {{ __('auth.Buy register member') }}
+                                </a>
+                                <button id="register-btn" class="btn-hidden btn btn-secondary mr-3 btn-register">
+                                    {{ __('auth.Buy register member') }}
+                                </button>
+                            @elseif($member->name == \App\Enums\RegisterMember::TRUST)
+                                <a href="{{route('show.register.member.info', $member->id)}}"
+                                   id="register" class="d-none btn btn-success mr-3 btn-register">
+                                    {{ __('auth.Buy register member trust') }}
+                                </a>
+                                <button id="register-btn" class="btn-hidden btn btn-secondary mr-3 btn-register">
+                                    {{ __('auth.Buy register member trust') }}
+                                </button>
+                            @else
+                                <a href="{{route('show.register.member.info', $member->id)}}"
+                                   id="register" class="d-none btn btn-success mr-3 btn-register">
+                                    {{ __('auth.Buy register member logistic') }}
+                                </a>
+                                <button id="register-btn" class="btn-hidden btn btn-secondary mr-3 btn-register">
+                                    {{ __('auth.Buy register member logistic') }}
+                                </button>
+                            @endif
                         </div>
                     </div>
                     <p class="bg-member-green p-4 mb-0 mt-3 "></p>
@@ -116,7 +131,6 @@
         </div>
     </div>
 @endsection
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     function validate() {
         var all = document.getElementById("all");

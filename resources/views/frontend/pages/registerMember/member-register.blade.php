@@ -78,10 +78,17 @@
                                         @endif
                                     </ol>
                                     <div class="col-12 justify-content-center d-flex">
-                                        <a href="{{route('show.register.member', $member->id)}}"
-                                           class="btn btn-primary">{{ __('home.Sign up now') }}</a>
+                                        @if($member->name == \App\Enums\RegisterMember::BUYER)
+                                            <a href="{{route('show.register.member', $member->id)}}"
+                                               class="btn btn-primary">{{ __('auth.Buy register member') }}</a>
+                                        @elseif($member->name == \App\Enums\RegisterMember::TRUST)
+                                            <a href="{{route('show.register.member', $member->id)}}"
+                                               class="btn btn-primary">{{ __('auth.Buy register member trust') }}</a>
+                                        @else
+                                            <a href="{{route('show.register.member', $member->id)}}"
+                                               class="btn btn-primary">{{ __('auth.Buy register member logistic') }}</a>
+                                        @endif
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -91,5 +98,4 @@
         </div>
     </div>
 @endsection
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
