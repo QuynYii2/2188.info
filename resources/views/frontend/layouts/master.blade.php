@@ -1,5 +1,5 @@
 @php use Illuminate\Support\Facades\Auth;
- $currentRouteName = Route::getCurrentRoute()->getName();
+ $currentRouteName = \Illuminate\Support\Facades\Route::getCurrentRoute()->getName();
  $arrNameNeedHid = ['stand.register.member.index','home.login','show.register.member.ship','show.register.member.logistic.congratulation','register.show','show.register.member','show.register.member.info','show.register.member.person.source', 'partner.register.member.index', 'parent.register.member.locale', 'chat.message.received', 'chat.message.sent', 'chat.message.show','staff.member.info'];
  $isRoute = in_array($currentRouteName, $arrNameNeedHid);
  $isLogisticAndTrust = null;
@@ -141,7 +141,61 @@
     @endif
 </div>
 <body>
+<style>
+    .page-login {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 600px;
+        padding: 20px;
+    }
 
+    @media (max-width: 768px) {
+        .page-login {
+            width: 80%;
+            margin: 0 auto;
+        }
+    }
+
+    .login-title {
+        font-size: 24px;
+        font-weight: 600;
+    }
+
+    .login-element {
+        font-size: 12px;
+        font-weight: 400;
+    }
+
+    .text-password-forget {
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    #btnLogin {
+        width: 240px;
+        padding: 12px 16px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #fff;
+    }
+
+    .btn-outline-main {
+        padding: 12px 18px !important;;
+        border: 1px solid #F47621 !important;
+        margin: 8px;
+    }
+
+    .btn-outline-main:hover {
+        background-color: #F47621;
+        color: #fff;
+    }
+
+    .input_btn {
+        background-color: #fff !important;
+    }
+</style>
 <!-- Header -->
 @include('frontend.layouts.partials.header', ['infoUser' => $infoUser ?? '', 'isRoute' => $isRoute ])
 @include('sweetalert::alert')

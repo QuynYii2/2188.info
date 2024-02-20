@@ -157,4 +157,5 @@ storage/.DS_Store
 .idea/*.xml
 #
 composer.lock
+composer.phar
 package-lock.json
