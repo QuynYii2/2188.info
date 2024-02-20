@@ -80,7 +80,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="sr-only" for="exampleInputPassword">{ __('home.Password') }}</label>
+                                    <label class="sr-only" for="exampleInputPassword">{{ __('home.Password') }}</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend w-25">
                                             <div class="input-group-text input_btn full-width">{{ __('home.Password') }}</div>

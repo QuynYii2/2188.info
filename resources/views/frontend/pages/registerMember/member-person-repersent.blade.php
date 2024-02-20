@@ -43,7 +43,7 @@
             <div class="form-group col-md-6">
                 <label for="phoneNumber" class="label_form">{{ __('auth.Cell phone number') }} <span
                             class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
+                <input type="number" class="form-control" id="phoneNumber" name="phoneNumber"
                        placeholder="{{ __('auth.Please enter only numbers') }}"
                        value="{{$create ? $create['phone'] : old('phone', $memberPerson  ? $memberPerson ->phone : '')}}"
                        required>
