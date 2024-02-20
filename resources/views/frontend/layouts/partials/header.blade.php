@@ -320,7 +320,7 @@
                         @else
                             <div class="item text-center">
                                 <div class="d-flex">
-                                    <button class="button_login" onclick="signIn()">
+                                    <button class="button_login" data-toggle="modal" data-target="#loginModal">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24"
                                              viewBox="0 0 25 24" fill="none">
                                             <g clip-path="url(#clip0_439_6384)">
@@ -380,8 +380,19 @@
                                                 </clipPath>
                                             </defs>
                                         </svg>
-                                        <div class="item-text " style="color: #F42121;">
+                                        <br/>
+                                        <span class="item-text " style="color: #F42121;">
                                             Posted my RFQ
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="item text-center">
+                                <div class="d-flex">
+                                    <button class="button_login" data-toggle="modal" data-target="#loginModal">
+                                        <i class="fa-solid fa-message"></i>
+                                        <div class="item-text">
+                                            {{ __('home.Message') }}
                                         </div>
                                     </button>
                                 </div>
@@ -389,10 +400,10 @@
                             <div class="item text-center">
                                 @if(!Auth::user())
                                     <div class="d-flex">
-                                        <button class="button_login" onclick="signIn()">
+                                        <button class="button_login" data-toggle="modal" data-target="#loginModal">
                                             <i class="fa-solid fa-user"></i>
                                             <div class="item-text">
-                                                {{ __('home.sign in') }}/{{ __('home.sign up') }}
+                                                {{ __('home.sign in') }}
                                             </div>
                                         </button>
                                     </div>
@@ -456,17 +467,7 @@
                             </div>
                             <div class="item text-center">
                                 <div class="d-flex">
-                                    <button class="button_login" onclick="signIn()">
-                                        <i class="fa-solid fa-message"></i>
-                                        <div class="item-text">
-                                            {{ __('home.Message') }}
-                                        </div>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="item text-center">
-                                <div class="d-flex">
-                                    <button class="button_login" onclick="signIn()">
+                                    <button class="button_login" data-toggle="modal" data-target="#loginModal">
                                         <i class="fa-solid fa-cart-shopping"></i>
                                         <div class="item-text">
                                             {{ __('home.Cart') }}
@@ -525,20 +526,20 @@
                         </div>
                     </div>
                     <div class="col-xl-2 col-md-2 select-language d-flex">
-{{--                        <div class="dropdown mr-5">--}}
-{{--                            <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown"--}}
-{{--                               aria-expanded="false">--}}
-{{--                                English--}}
-{{--                            </a>--}}
+                        {{--                        <div class="dropdown mr-5">--}}
+                        {{--                            <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown"--}}
+                        {{--                               aria-expanded="false">--}}
+                        {{--                                English--}}
+                        {{--                            </a>--}}
 
-{{--                            <div class="dropdown-menu">--}}
-{{--                                <a class="dropdown-item" href="#">English</a>--}}
-{{--                                <a class="dropdown-item" href="#">Korea</a>--}}
-{{--                                <a class="dropdown-item" href="#">Japan</a>--}}
-{{--                                <a class="dropdown-item" href="#">China</a>--}}
-{{--                                <a class="dropdown-item" href="#">VietNam</a>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
+                        {{--                            <div class="dropdown-menu">--}}
+                        {{--                                <a class="dropdown-item" href="#">English</a>--}}
+                        {{--                                <a class="dropdown-item" href="#">Korea</a>--}}
+                        {{--                                <a class="dropdown-item" href="#">Japan</a>--}}
+                        {{--                                <a class="dropdown-item" href="#">China</a>--}}
+                        {{--                                <a class="dropdown-item" href="#">VietNam</a>--}}
+                        {{--                            </div>--}}
+                        {{--                        </div>--}}
                         <div class="auth">
                             <a href="{{ route('profile.show') }}">
                                 <span class="text">{{ __('home.account information') }}</span>
@@ -974,6 +975,57 @@
             @endif
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('home.Close') }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="container">
+                <div class="page-login">
+                    <div class="bg bg-white p-4 rounded">
+                        <div class="form-title text-center pt-2 mb-5 ">
+                            <div class="title login-title">{{ __('home.sign in') }}</div>
+                        </div>
+                        <div class="login-form-main">
+                            <div class="login-tags">
+                                <form method="post" action="{{ route('login.submit') }}" id="formLogin">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label class="sr-only" for="exampleInputEmail">{{ __('home.email') }}</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend w-25">
+                                                <div class="input-group-text input_btn full-width">{{ __('home.email') }}</div>
+                                            </div>
+                                            <input type="email" class="form-control" id="exampleInputEmail"
+                                                   name="login_field">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="sr-only" for="exampleInputPassword">{ __('home.Password') }}</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend w-25">
+                                                <div class="input-group-text input_btn full-width">{{ __('home.Password') }}</div>
+                                            </div>
+                                            <input type="password" class="form-control" id="exampleInputPassword"
+                                                   name="password">
+                                        </div>
+                                    </div>
+                                    <div class="text-center mt-5">
+                                        <button type="submit" id="btnLogin"
+                                                class="btn bg-main">{{ __('home.sign in') }}</button>
+                                    </div>
+                                    <div class="mt-3 text-no-account d-flex align-items-center justify-content-center">
+                                        <a href="{{ route('register.show') }}"
+                                           class="btn btn-outline-main">{{ __('home.Join member') }}</a>
+                                        <a href="#" class="btn btn-outline-main">{{ __('home.Find password/id Login') }}</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
