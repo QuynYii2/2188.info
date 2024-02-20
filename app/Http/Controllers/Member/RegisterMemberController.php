@@ -1039,18 +1039,9 @@ class RegisterMemberController extends Controller
                 ['email', $email],
                 ['isVerify', 0]
             ])->first();
-            $register = MemberRegisterInfo::find($member->member_id);
-            if ($save) {
-                $success_create = __('message-alert.Success, Create success! Please continue next steps');
-                alert()->success($success, $success_create);
-                if ($register->member == RegisterMember::TRUST) {
-                    return redirect(route('show.register.member.congratulation', $member->id));
-                }
-                return redirect(route('show.register.member.ship', $member->id));
-            }
-            $error_create = __('message-alert.Error, Create error!');
-            alert()->error($error, $error_create);
-            return back()->with('create', $create);
+            $success_create = __('message-alert.Success, Create success! Please continue next steps');
+            alert()->success($success, $success_create);
+            return redirect(route('show.register.member.ship', $member->id));
         } catch (\Exception $exception) {
             $error_create = __('message-alert.Error, Please try again!');
             alert()->error($error, $error_create);
@@ -1136,8 +1127,11 @@ class RegisterMemberController extends Controller
         $findMember = $memberRepresent->email;
         $userRepresent = User::where('email', $findMember)->first();
         $staffUsers = StaffUsers::where('parent_user_id', $userRepresent->id)->get();
+        $company = MemberRegisterInfo::find($memberSource->member_id);
+        $memberName = Member::find($company->member_id);
         return view('frontend.pages.registerMember.membership',
-            compact('memberRepresent', 'memberSource', 'staffUsers', 'userRepresent'));
+            compact('memberRepresent', 'memberSource', 'staffUsers',
+                'userRepresent', 'company', 'memberName'));
     }
 
     public function createNewStaff(Request $request, $id)

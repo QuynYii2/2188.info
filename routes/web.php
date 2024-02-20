@@ -98,87 +98,47 @@ Route::middleware('auth.product')->group(function () {
 // Convert currency
 Route::get('/convert-currency/{total}', [HomeController::class, 'convertCurrency'])->name('convert.currency');
 
-// Start register member
-
-Route::get(
-    '/register-member',
-    [RegisterMemberController::class, 'processRegisterMember']
-)->name('process.register.member');
-Route::get(
-    '/register-member/{registerMember}',
-    [RegisterMemberController::class, 'showRegisterMember']
-)->name('show.register.member');
-Route::get(
-    '/register-member-info/{registerMember}',
-    [RegisterMemberController::class, 'showRegisterMemberInfo']
-)->name('show.register.member.info');
-Route::get(
-    '/register-member-person-source/{member_id}/{registerMember}',
-    [RegisterMemberController::class, 'showRegisterMemberPerson']
-)->name('show.register.member.person.source');
-
-Route::get(
-    '/subscription-options-member-person/{member_id}',
-    [RegisterMemberController::class, 'showSubscriptionOptions']
-)->name('subscription.options.member.person');
-
-Route::get(
-    '/verify-register-member-person-source/{email}',
-    [RegisterMemberController::class, 'processVerifyEmail']
-)->name('show.verify.register.member');
-Route::get(
-    '/register-member-person-source-represent/{person_id}/{registerMember}',
-    [RegisterMemberController::class, 'showRegisterMemberPersonRepresent']
-)->name('show.register.member.person.represent');
-Route::get(
-    '/payment-register-member/{registerMember}',
-    [RegisterMemberController::class, 'showPaymentMember']
-)->name('show.payment.member');
-Route::get(
-    '/payment-register-member-success/{registerMember}',
-    [RegisterMemberController::class, 'successRegisterMember']
-)->name('show.success.payment.member');
-Route::get(
-    '/register-member-ship/{member}',
-    [RegisterMemberController::class, 'registerMemberShip']
-)->name('show.register.member.ship');
-Route::post('/register-member-ship/create-staff/{id}', [RegisterMemberController::class, 'createNewStaff']
-)->name('create.staff.register');
-Route::get(
-    '/congratulation-register-member/{member}',
-    [RegisterMemberController::class, 'congratulationRegisterMember']
-)->name('show.register.member.congratulation');
-
-Route::get(
-    '/congratulation-register-member-logistic/{member}',
-    [RegisterMemberController::class, 'congratulationRegisterMemberLogistic']
-)->name('show.register.member.logistic.congratulation');
+/* Start register member */
+Route::get('/register-member', [RegisterMemberController::class, 'processRegisterMember'])
+    ->name('process.register.member');
+Route::get('/register-member/{registerMember}', [RegisterMemberController::class, 'showRegisterMember'])
+    ->name('show.register.member');
+Route::get('/register-member-info/{registerMember}', [RegisterMemberController::class, 'showRegisterMemberInfo'])
+    ->name('show.register.member.info');
+Route::get('/register-member-person-source/{member_id}/{registerMember}', [RegisterMemberController::class, 'showRegisterMemberPerson'])
+    ->name('show.register.member.person.source');
+Route::get('/subscription-options-member-person/{member_id}', [RegisterMemberController::class, 'showSubscriptionOptions'])
+    ->name('subscription.options.member.person');
+Route::get('/verify-register-member-person-source/{email}', [RegisterMemberController::class, 'processVerifyEmail'])
+    ->name('show.verify.register.member');
+Route::get('/register-member-person-source-represent/{person_id}/{registerMember}', [RegisterMemberController::class, 'showRegisterMemberPersonRepresent'])
+    ->name('show.register.member.person.represent');
+Route::get('/payment-register-member/{registerMember}', [RegisterMemberController::class, 'showPaymentMember'])
+    ->name('show.payment.member');
+Route::get('/payment-register-member-success/{registerMember}', [RegisterMemberController::class, 'successRegisterMember'])
+    ->name('show.success.payment.member');
+Route::get('/register-member-ship/{member}', [RegisterMemberController::class, 'registerMemberShip'])
+    ->name('show.register.member.ship');
+Route::post('/register-member-ship/create-staff/{id}', [RegisterMemberController::class, 'createNewStaff'])
+    ->name('create.staff.register');
+Route::get('/congratulation-register-member/{member}', [RegisterMemberController::class, 'congratulationRegisterMember'])
+    ->name('show.register.member.congratulation');
+Route::get('/congratulation-register-member-logistic/{member}', [RegisterMemberController::class, 'congratulationRegisterMemberLogistic'])
+    ->name('show.register.member.logistic.congratulation');
 //Route::get('/register-member/{registerMember}', [RegisterMemberController::class, 'showRegisterMember'])->name('show.register.member');
-Route::post(
-    '/register-member-buyer',
-    [RegisterMemberController::class, 'registerMemberBuyer']
-)->name('register.member.buyer');
-Route::post(
-    '/register-member-info',
-    [RegisterMemberController::class, 'registerMemberInfo']
-)->name('register.member.info');
-Route::post(
-    '/register-member-source',
-    [RegisterMemberController::class, 'registerMemberPerson']
-)->name('register.member.source');
-Route::post(
-    '/verify-register-member-person-source',
-    [RegisterMemberController::class, 'verifyEmail']
-)->name('verify.register.member');
-Route::post(
-    '/register-member-person-source-represent',
-    [RegisterMemberController::class, 'registerMemberPersonRepresent']
-)->name('register.member.represent');
-Route::post(
-    '/payment-register-member',
-    [RegisterMemberController::class, 'paymentMember']
-)->name('payment.member');
-// End register member
+Route::post('/register-member-buyer', [RegisterMemberController::class, 'registerMemberBuyer'])
+    ->name('register.member.buyer');
+Route::post('/register-member-info', [RegisterMemberController::class, 'registerMemberInfo'])
+    ->name('register.member.info');
+Route::post('/register-member-source', [RegisterMemberController::class, 'registerMemberPerson'])
+    ->name('register.member.source');
+Route::post('/verify-register-member-person-source', [RegisterMemberController::class, 'verifyEmail'])
+    ->name('verify.register.member');
+Route::post('/register-member-person-source-represent', [RegisterMemberController::class, 'registerMemberPersonRepresent'])
+    ->name('register.member.represent');
+Route::post('/payment-register-member', [RegisterMemberController::class, 'paymentMember'])
+    ->name('payment.member');
+/* End register member */
 
 Route::get('/location-nation', [AuthController::class, 'getListNation'])->name('location.nation.get');
 Route::get('/location-state/{id}', [AuthController::class, 'getListStateByNation'])->name('location.state.get');
