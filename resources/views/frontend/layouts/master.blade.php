@@ -67,8 +67,6 @@
                 });
         }
 
-        getLocation();
-
         function checkLocalhost() {
             let mainHost = location.hostname;
             if (mainHost === 'localhost' || mainHost === '127.0.0.1') {
