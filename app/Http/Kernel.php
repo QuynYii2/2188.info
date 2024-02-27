@@ -38,6 +38,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\ChangeLanguageFromDomain::class,
             \App\Http\Middleware\SetLanguage::class,
             \Illuminate\Session\Middleware\StartSession::class,
 
