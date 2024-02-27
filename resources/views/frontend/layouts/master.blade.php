@@ -228,34 +228,9 @@
 
     async function getLanguage() {
         let mainHost = location.hostname;
-        const userLocale = navigator.language || navigator.userLanguage;
-        console.log(userLocale)
 
-        let lang = null;
-
-        switch (userLocale) {
-            case 'vi':
-                lang = 'vi';
-                break;
-            case 'ko':
-                lang = 'kr';
-                break;
-            case 'zh-CN':
-                lang = 'cn';
-                break;
-            case 'ja':
-                lang = 'jp';
-                break;
-            default:
-                lang = 'en';
-                break;
-        }
-
+        let lang = 'vi';
         let url = `{{route('app.change.locale')}}`;
-
-        await changeUrl(url, lang);
-
-        $('#localeInput').val(lang);
 
         if (sessionStorage.getItem('languageRedirected') === 'true' || mainHost === 'localhost' || mainHost === '127.0.0.1') {
             return;
@@ -263,23 +238,9 @@
 
         sessionStorage.setItem('languageRedirected', 'true');
 
-        var redirectURL = 'https://2188.info/';
-
-        var localeMappings = {
-            'vi': 'https://vn.2188.info/',
-            'ko': 'https://kr.2188.info/',
-            'zh': 'https://cn.2188.info/',
-            'ja': 'https://jp.2188.info/'
-        };
-
-        for (var locale in localeMappings) {
-            if (userLocale.startsWith(locale)) {
-                redirectURL = localeMappings[locale];
-                break;
-            }
+        if (mainHost === '2188.info') {
+            await changeUrl(url, lang);
         }
-
-        window.location.href = redirectURL;
     }
 
     async function changeUrl(url, lang) {
